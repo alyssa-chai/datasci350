@@ -28,10 +28,10 @@ editor:
 
 :::{.columns}
 :::{.column width="50%"}
-- A [terminal]{.alert} is the window. A [shell]{.alert} is the program that runs your commands
+- A [terminal]{.alert} is the text window you type into. A [shell]{.alert} is the program inside it that reads your commands and runs them
 - The command line gives you [speed, power, reproducibility, and portability]{.alert}
-- Every command has the same shape: `command options arguments`
-- Options start with a dash, and they combine: `ls -lah`
+- Every [command has the same shape:]{.alert} `command options arguments`
+- [Options start with a dash,]{.alert} and they combine: `ls -lah`
 - `pwd` says where you are, `ls` shows what is there, `cd` moves you
 - `~` is home, `.` is here, `..` is one level up
 - `man`, `tldr`, and `cht.sh` when you get stuck
@@ -83,6 +83,51 @@ Testing the installation:
   ```
 :::
 ::::
+:::
+
+## Installing software: Homebrew
+
+:::{style="margin-top: 30px; font-size: 22px;"}
+:::{.columns}
+:::{.column width="52%"}
+- [Homebrew](https://brew.sh) is a [package manager]{.alert}: it downloads, installs, and updates command line tools for you
+- It works on macOS, Linux, and WSL. Install it by pasting this into your terminal:
+
+```bash
+/bin/bash -c "$(curl -fsSL \
+https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+- After that, installing a tool is one line:
+
+```text
+$ brew install jq
+==> Fetching downloads for: jq
+✔︎ Bottle jq (1.8.2)
+==> Pouring jq--1.8.2.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/jq/1.8.2: 20 files, 1.2MB
+```
+
+- `brew list` shows what you have, `brew upgrade` updates everything, `brew uninstall name` removes one
+- On Windows WSL and Ubuntu you can also use `apt`: `sudo apt install jq`
+:::
+
+:::{.column width="48%"}
+:::{style="text-align: center; margin-top: -30px;"}
+[![](figures/homebrew-home-2026.png){width="88%"}](#){data-modal-type="image" data-modal-url="figures/homebrew-home-2026.png"}
+:::
+:::{style="text-align: center; font-size: 17px;"}
+<https://brew.sh>
+:::
+
+:::{style="background: rgba(27, 58, 107, 0.08); padding: 12px; border-radius: 10px; font-size: 19px; margin-top: 10px;"}
+Packages you may meet in this course and beyond:
+
+- `git`, `gh` (GitHub CLI), `wget`, `curl`, `tree`, `tldr`
+- `jq` (read JSON), `duckdb`, `sqlite`, `pandoc`, `quarto`, `uv`, `neovim`
+:::
+:::
+:::
 :::
 
 # Managing your files 🗂 {background-color="#1B3A6B"}
@@ -168,7 +213,7 @@ rm: testing: is a directory
 ```
 
 - `rmdir` only removes [empty]{.alert} directories
-- For a directory with files in it, use `rm -r` ([recursive]{.alert}). `-r` and `-R` are the same thing
+- For a directory with files in it, use `rm -r` ([recursive]{.alert}). `-r` and `-R` are the same thing for `rm`
 - Adding `-f` ([force]{.alert}) skips the confirmation prompt. Leaving it off is safer, but some shells then ask about every single file
 
 ```{bash, eval=FALSE, echo=TRUE}
@@ -271,7 +316,7 @@ ls figures/tim??.jpg
 :::{style="margin-top: 30px; font-size: 24px;"}
 - `find` locates files and directories by name, size, type, and more
 - Syntax: `find path(s) -options expression`
-- `-iname` matches a name, ignoring capitals:
+- `-iname` matches a name, ignoring capitals (case `i`nsensitive):
 
 ```{bash, echo=TRUE}
 # Must use "." to indicate pwd
@@ -484,7 +529,7 @@ The character count looks high because `wc` also counts the invisible newline `\
 :::
 
 :::{.callout-note}
-Download the `sonnets.txt` file at <https://github.com/danilofreire/datasci350/blob/main/lectures/lecture-04/sonnets.txt>. Click on "Download raw file". Or use `curl` as shown in the code above. [Download curl here](https://curl.se/download.html).
+Download the `sonnets.txt` file at <https://github.com/danilofreire/datasci350/blob/main/lectures/lecture-04/sonnets.txt>. Click on "Download raw file". Or use `curl` as shown in the code above. [Download curl here](https://curl.se/download.html), or install it with `brew install curl` (macOS, Linux, WSL) or `sudo apt install curl` (Ubuntu and WSL).
 :::
 
 ## Read text: `cat`
@@ -537,7 +582,7 @@ tail -n +3024 sonnets.txt ## Show everything from line 3024
 
 ## Search: `grep`
 
-:::{style="margin-top: 30px; font-size: 24px;"}
+:::{style="margin-top: 30px; font-size: 22px;"}
 :::{.columns}
 :::{.column width="50%"}
 - `grep` finds lines that match a pattern
@@ -547,10 +592,13 @@ tail -n +3024 sonnets.txt ## Show everything from line 3024
 ```{bash, echo=TRUE}
 grep -n "Shall I compare thee" sonnets.txt
 ```
+- `-v` ("invert match") does the opposite, showing lines that do *not* match
+- Square brackets hold a [set of characters]{.alert}, and match any [one]{.alert} of them
+- `[,.?]` means "a comma, or a full stop, or a question mark". `[a-z]` is a range, and `[^a-z]` means "anything except"
+- You can put ranges side by side, with no comma between them. `[a-zA-Z0-9]` is every letter, capital or not, plus every digit: `grep "[a-zA-Z0-9]" file.txt`
 :::
 
 :::{.column width="50%"}
-- `-v` ("invert match") does the opposite, showing lines that do *not* match
 - Below: lines with no comma, full stop, or question mark, limited to the first 30
 ```{bash, echo=TRUE}
 grep -v "[,.?]" sonnets.txt | head -n 30
@@ -629,6 +677,12 @@ sed 's/Project Gutenberg/Project Googleberg/g' sonnets.txt | head -n 5
 
 ```{bash, echo=TRUE, eval=FALSE}
 sed '/Project Gutenberg/d' sonnets.txt
+```
+
+- `-n` with `p` prints only the lines you ask for. Here, lines 80 to 85:
+
+```{bash, echo=TRUE}
+sed -n '80,85p' sonnets.txt
 ```
 
 - To read more about `sed`, check out the [GNU documentation](https://www.gnu.org/software/sed/manual/sed.html)
@@ -829,12 +883,15 @@ rm -rf dir*
 - We will call the file `create_project.sh`
 - The first line, `#!/bin/sh`, is the [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))
 - It tells the system which interpreter should run the file
+- To write a Python script, the shebang would be `#!/usr/bin/env python3` 
+  - `env` looks `python3` up on your `PATH`, so the same file runs on any machine
 :::
 
 :::{.column width="50%"}
 - Paste the code below into a text editor and save it as `create_project.sh`
 - Make the script executable by running `chmod +x create_project.sh`
 - Run the script by typing `./create_project.sh`
+- The `./` is not decoration, as the shell does not search the current directory unless you point at it
 
 ```{bash, echo=TRUE, eval=FALSE}
 #!/bin/sh
@@ -868,10 +925,10 @@ The goal today was to [demystify the shell]{.alert}, so it does not intimidate y
 
 Things we left out:
 
-- [File permissions]{.alert} and user roles, which matter the moment you share a machine
-- [Environment variables]{.alert} and [SSH]{.alert}. Both come back in the cloud lectures
+- [File permissions](https://www.redhat.com/en/blog/linux-file-permissions-explained) and [user roles](https://ss64.com/bash/chmod.html), which matter the moment you share a machine
+- [Environment variables](https://www.digitalocean.com/community/tutorials/how-to-read-and-set-environmental-and-shell-variables-on-linux) and [SSH](https://www.ssh.com/academy/ssh). Both come back in the cloud lectures
 - Watching what your machine is doing, with [top](https://ss64.com/bash/top.html) and [htop](https://hisham.hm/htop/)
-- Running commands in parallel with GNU parallel. We return to parallelism in Lecture 21
+- Running commands in parallel with [GNU parallel](https://www.gnu.org/software/parallel/parallel_tutorial.html). We return to parallelism in Lecture 21
 - Automation: try this [overview](https://stat545.com/automation-overview.html), or [Code and Data for the Social Sciences](https://web.stanford.edu/~gentzkow/research/CodeAndData.pdf)
 :::
 

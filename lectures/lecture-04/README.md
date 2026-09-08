@@ -6,6 +6,7 @@ Everything you can do to files, text, and repetitive work without ever touching 
 
 ## What we cover
 
+- Installing command line tools with Homebrew (`brew install`)
 - Managing files: `mkdir`, `touch`, `rm`, `rmdir`, `cp`, and `mv`
 - Acting on many files at once with wildcards (`*`, `?`) and braces (`{}`)
 - Locating files with `find`, by name, size, type, or depth
