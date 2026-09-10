@@ -2146,7 +2146,7 @@
     "href": "lectures/lecture-05/05-git-github.html#project-setup-directories",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Project setup: directories",
-    "text": "Project setup: directories\nRecommendations\n\n\n\n\nOne parent folder contains everything inside it\nYou decide what goes in the project folder. The project dictates the structure\nKeep input separate from output. Definitely separate raw from processed data!\nKeep every internal path relative. Never write \"/Users/me/data/thing.csv\"\nThat path works on exactly one machine, and often not on that one either, six months later\n\n\nA workable starting point:\nmy-project/\n├── data/\n│   ├── raw/\n│   └── processed/\n├── scripts/\n│   ├── 00-setup.py\n│   ├── 01-import-data.py\n│   └── 02-analysis.py\n├── output/\n│   ├── figures/\n│   └── tables/\n├── README.md\n└── pyproject.toml"
+    "text": "Project setup: directories\nRecommendations\n\n\n\n\nOne parent folder contains everything inside it\nYou decide what goes in the project folder. The project dictates the structure\nKeep input separate from output. Definitely separate raw from processed data!\nKeep every internal path relative. Never write \"/Users/me/data/thing.csv\", write \"../data/thing.csv\" instead\nAn absolute path works on exactly one machine, and often not on that one either after a few months!\n\n\nA workable starting point:\nmy-project/\n├── data/\n│   ├── raw/\n│   └── processed/\n├── scripts/\n│   ├── 00-setup.py\n│   ├── 01-import-data.py\n│   └── 02-analysis.py\n├── output/\n│   ├── figures/\n│   └── tables/\n├── README.md\n└── pyproject.toml"
   },
   {
     "objectID": "lectures/lecture-05/05-git-github.html#project-setup-scripts",
@@ -2174,7 +2174,7 @@
     "href": "lectures/lecture-05/05-git-github.html#more-reasons-to-use-version-control",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "More reasons to use version control",
-    "text": "More reasons to use version control\n\n\n\nHave you ever…\n\nChanged your code, realised it was a mistake and wanted to revert back?\nLost code or had a backup that was too old?\nWanted to see the difference between different versions of your code?\nWanted to review the history of some code?\nWanted to submit a change to someone else’s code?\nWanted to see how much work is being done, when, and by whom?\n\nVersion control can help with all of these!"
+    "text": "More reasons to use version control\n\n\n\nHave you ever…\n\nChanged your code, realised it was a mistake and wanted to revert back?\nLost code or had a backup that was too old?\nWanted to see the difference between different versions of your code?\nWanted to submit a change to someone else’s code?\nWanted to see how much work is being done, when, and by whom?\n\nVersion control can help with all of these!"
   },
   {
     "objectID": "lectures/lecture-05/05-git-github.html#what-is-git",
@@ -2202,14 +2202,14 @@
     "href": "lectures/lecture-05/05-git-github.html#first-step-install-git",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "First step: install Git",
-    "text": "First step: install Git\n\nAgain, Git is an independent piece of software. You need to have it installed on your machine to call it from the command line or VS Code\nChances are that that’s already the case. Here’s how you can check using the command line:\nwhich git\nAnd here’s how you can check the version:\ngit --version\nIf you want to install (or update) Git on your Mac, I recommend using Homebrew, “the missing package manager for macOS (or Linux)”:\nbrew install git\nWSL users can install Git using:\nsudo apt-get install git\nTo install/update Git for Windows (not WSL), check out happygitwithr.com"
+    "text": "First step: install Git\n\nAgain, Git is an independent piece of software. You need to have it installed on your machine to call it from the command line or VS Code\nChances are it is already there. Here is how to check from the command line:\nwhich git\nAnd here’s how you can check the version:\ngit --version\nIf you want to install (or update) Git on your Mac, I recommend using Homebrew, “the missing package manager for macOS (or Linux)”:\nbrew install git\nWSL users can install Git using:\nsudo apt-get install git\nTo install or update Git for Windows (not WSL), check out happygitwithr.com"
   },
   {
     "objectID": "lectures/lecture-05/05-git-github.html#second-step-introduce-yourself-to-git",
     "href": "lectures/lecture-05/05-git-github.html#second-step-introduce-yourself-to-git",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Second step: introduce yourself to Git",
-    "text": "Second step: introduce yourself to Git\n\nThis is particularly important when you work with Git but without the GitHub overhead. The idea is to define how your commits are labelled. Others should easily identify your commits as coming from you.\nHave you already introduced yourself to Git? Find it out:\ngit config --list\nStill have to introduce yourself? To that end, we set our user name and email address like this:\ngit config --global user.name 'danilofreire'\ngit config --global user.email 'danilo.freire@emory.edu'\nThe user name can be (but does not have to be) your GitHub user name. The email address should definitely be the one associated with your GitHub account.\nCheck out these setup instructions from Software Carpentry to learn about more configuration options."
+    "text": "Second step: introduce yourself to Git\n\nThis is particularly important when you work with Git but without the GitHub overhead. The idea is to define how your commits are labelled, so others can identify your commits as coming from you\nHave you already introduced yourself to Git? Find it out:\ngit config --list\nThis opens a pager. Press q to get back to the prompt\nStill have to introduce yourself? To that end, we set our user name and email address like this:\ngit config --global user.name 'danilofreire'\ngit config --global user.email 'danilo.freire@emory.edu'\nThe user name can be (but does not have to be) your GitHub user name. The email address should definitely be the one associated with your GitHub account\nWhile you are here, tell Git to call the first branch main. Without this, new repositories still start on a branch called master, and the commands later in this lecture will not work:\ngit config --global init.defaultBranch main\nCheck out these setup instructions from Software Carpentry to learn about more configuration options"
   },
   {
     "objectID": "lectures/lecture-05/05-git-github.html#repositories",
@@ -2237,7 +2237,7 @@
     "href": "lectures/lecture-05/05-git-github.html#main-git-commands",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Main Git commands",
-    "text": "Main Git commands\n\n\n\n\ngit init: initialises a new Git repository\ngit clone: copies an existing repository\ngit add: adds changes to the staging area\ngit commit: commits changes\ngit push: pushes changes\ngit pull: pulls changes\ngit status: shows the status of the working directory\ngit log: shows the commit history\ngit branch: shows the branches in the repository\ngit checkout: switches branches\n\nGit documentation"
+    "text": "Main Git commands\n\n\n\n\ngit init: initialises a new Git repository\ngit clone: copies an existing repository\ngit add: adds changes to the staging area\ngit commit: commits (saves) changes\ngit push: pushes (uploads) changes\ngit pull: pulls (downloads) changes\ngit status: shows the status of the working directory\ngit diff: shows what changed, line by line\ngit log: shows the commit history\ngit branch: shows the branches in the repository\ngit checkout: switches branches\n\nGit documentation"
   },
   {
     "objectID": "lectures/lecture-05/05-git-github.html#lets-create-a-repository-together",
@@ -2279,14 +2279,14 @@
     "href": "lectures/lecture-05/05-git-github.html#first-commit",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "First commit",
-    "text": "First commit\n\n\n\n\nNow our “initial commit” :\n\ngit commit -m \"initial commit\""
+    "text": "First commit\n\n\n\n\nNow our “initial commit” :\n\ngit commit -m \"initial commit\"\n\nWe deleted 04-visualisation.py but never staged the deletion, so the file is still part of this commit\nThat is why it comes back when we travel to this commit later"
   },
   {
     "objectID": "lectures/lecture-05/05-git-github.html#first-commit-1",
     "href": "lectures/lecture-05/05-git-github.html#first-commit-1",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "First commit",
-    "text": "First commit\n\n\n\n\nTo check all commits in your repo:\n\ngit log\n\nMost important things here are:\n\ncommit id;\ndate/time;\nbranch;\ncommit message;"
+    "text": "First commit\n\n\n\n\nTo check all commits in your repo:\n\ngit log\n\nMost important things here are:\n\ncommit id\ndate/time\nbranch\ncommit message"
   },
   {
     "objectID": "lectures/lecture-05/05-git-github.html#git-checkout",
@@ -2300,7 +2300,7 @@
     "href": "lectures/lecture-05/05-git-github.html#hands-on-git-checkout",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Hands on! Git checkout",
-    "text": "Hands on! Git checkout\n\n\n\n\nWe use checkout to go back in time to a given commit. Let’s go back to the “initial commit”:\n\ngit checkout 470636f38e409f4f322c48183e19633ebb550625\n\nYour hash will be different. Copy yours from git log, and the first 5-6 characters are enough\nCheck the folder!\n04-visualisation.py is back!\nImportant: doing this does not delete our commits. We just move back in time!"
+    "text": "Hands on! Git checkout\n\n\n\n\nWe use checkout to go back in time to a given commit. Let’s go back to the “initial commit”:\n\ngit checkout 470636f38e409f4f322c48183e19633ebb550625\n\nYour hash will be different. Copy yours from git log, and the first 5-6 characters are enough\nGit warns you about a detached HEAD. That is normal here: you are looking at an old commit, not working on a branch\nCheck the folder!\n04-visualisation.py is back!\nImportant: doing this does not delete our commits. We just move back in time!"
   },
   {
     "objectID": "lectures/lecture-05/05-git-github.html#git-checkout-1",
@@ -6914,5 +6914,26 @@
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Installing software: Homebrew",
     "text": "Installing software: Homebrew\n\n\n\n\nHomebrew is a package manager: it downloads, installs, and updates command line tools for you\nIt works on macOS, Linux, and WSL. Install it by pasting this into your terminal:\n\n/bin/bash -c \"$(curl -fsSL \\\nhttps://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"\n\nAfter that, installing a tool is one line:\n\n$ brew install jq\n==&gt; Fetching downloads for: jq\n✔︎ Bottle jq (1.8.2)\n==&gt; Pouring jq--1.8.2.arm64_tahoe.bottle.1.tar.gz\n🍺  /opt/homebrew/Cellar/jq/1.8.2: 20 files, 1.2MB\n\nbrew list shows what you have, brew upgrade updates everything, brew uninstall name removes one\nOn Windows WSL and Ubuntu you can also use apt: sudo apt install jq\n\n\n\n\n\n\nhttps://brew.sh\n\n\nPackages you may meet in this course and beyond:\n\ngit, gh (GitHub CLI), wget, curl, tree, tldr\njq (read JSON), duckdb, sqlite, pandoc, quarto, uv, neovim"
+  },
+  {
+    "objectID": "lectures/lecture-05/05-git-github.html#adding-and-removing-files-from-the-repo",
+    "href": "lectures/lecture-05/05-git-github.html#adding-and-removing-files-from-the-repo",
+    "title": "DATASCI 350 - Data Science Computing",
+    "section": "Adding and removing files from the repo",
+    "text": "Adding and removing files from the repo\n\n\n\n\nCheck the staging area status\n\ngit status\n\nLet’s add a 01-data-cleaning.py file to the staging area. Then, check its status\n\ntouch 01-data-cleaning.py\ngit add 01-data-cleaning.py\ngit status"
+  },
+  {
+    "objectID": "lectures/lecture-05/05-git-github.html#adding-and-removing-files-from-the-repo-1",
+    "href": "lectures/lecture-05/05-git-github.html#adding-and-removing-files-from-the-repo-1",
+    "title": "DATASCI 350 - Data Science Computing",
+    "section": "Adding and removing files from the repo",
+    "text": "Adding and removing files from the repo\n\n\n\n\nNow let’s create more files and add them to the staging area\n\ntouch 02-exploratory-data-analysis.py\ntouch 03-modelling.py\ntouch 04-visualisation.py\ngit add .\ngit status"
+  },
+  {
+    "objectID": "lectures/lecture-05/05-git-github.html#adding-and-removing-files-from-the-repo-2",
+    "href": "lectures/lecture-05/05-git-github.html#adding-and-removing-files-from-the-repo-2",
+    "title": "DATASCI 350 - Data Science Computing",
+    "section": "Adding and removing files from the repo",
+    "text": "Adding and removing files from the repo\n\n\n\n\nIn the directory, let’s delete the 04-visualisation.py file and check the status:\n\nrm -f 04-visualisation.py\ngit status"
   }
 ]

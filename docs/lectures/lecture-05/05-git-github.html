@@ -239,7 +239,7 @@ Danilo Freire
 <li>File content commands: <code>cat</code>, <code>head</code>, <code>tail</code></li>
 <li>Wildcards for efficient file matching: <code>*</code> (any characters), <code>?</code> (any single character)</li>
 <li>Batch operations with <code>{}</code></li>
-<li>Chaining commands with &amp;&amp; and ||</li>
+<li>Chaining commands with <code>&amp;&amp;</code> and <code>||</code></li>
 <li>Text manipulation tools:
 <ul>
 <li><code>wc</code>, <code>grep</code>, <code>sed</code></li>
@@ -389,7 +389,7 @@ Danilo Freire
 </section>
 <section id="keeping-future-you-happy" class="slide level2">
 <h2>Keeping future-you happy</h2>
-<div style="margin-top: 30px; font-size: 24px;">
+<div style="margin-top: 30px; font-size: 28px;">
 <ul>
 <li class="fragment">It is tempting to set up a project assuming you will be its only reader</li>
 <li class="fragment"><span class="alert">That is almost never true</span>. Coauthors and collaborators happen to the best of us 😅</li>
@@ -445,8 +445,8 @@ Danilo Freire
 <li>One parent folder contains <span class="alert">everything</span> inside it</li>
 <li>You decide what goes in the project folder. The project dictates the structure</li>
 <li>Keep <span class="alert">input separate from output</span>. Definitely separate raw from processed data!</li>
-<li><span class="alert">Keep every internal path relative</span>. Never write <code>"/Users/me/data/thing.csv"</code></li>
-<li>That path works on exactly one machine, and often not on that one either, six months later</li>
+<li><span class="alert">Keep every internal path relative</span>. Never write <code>"/Users/me/data/thing.csv"</code>, write <code>"../data/thing.csv"</code> instead</li>
+<li>An absolute path works on exactly one machine, and often not on that one either after a few months!</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <p>A workable starting point:</p>
@@ -535,7 +535,6 @@ Danilo Freire
 <li>Changed your code, realised it was a mistake and wanted to revert back?</li>
 <li>Lost code or had a backup that was too old?</li>
 <li>Wanted to see the difference between different versions of your code?</li>
-<li>Wanted to review the history of some code?</li>
 <li>Wanted to submit a change to someone else’s code?</li>
 <li>Wanted to see how much work is being done, when, and by whom?</li>
 </ul>
@@ -623,7 +622,7 @@ Danilo Freire
 <h2>First step: install Git</h2>
 <div style="margin-top: 30px; font-size: 23px;">
 <p>Again, Git is an independent piece of software. You need to have it installed on your machine to call it from the command line or VS Code</p>
-<p>Chances are that that’s already the case. Here’s how you can check using the command line:</p>
+<p>Chances are it is already there. Here is how to check from the command line:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a></a>which git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And here’s how you can check the version:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a></a>git --version</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -631,20 +630,23 @@ Danilo Freire
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb4-1"><a></a>brew install git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>WSL users can install Git using:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a></a>sudo apt-get install git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>To install/update Git for Windows (not WSL), check out <a href="https://happygitwithr.com/install-git.html">happygitwithr.com</a></p>
+<p>To install or update Git for Windows (not WSL), check out <a href="https://happygitwithr.com/install-git.html">happygitwithr.com</a></p>
 </div>
 </section>
 <section id="second-step-introduce-yourself-to-git" class="slide level2">
 <h2>Second step: introduce yourself to Git</h2>
 <div style="margin-top: 30px; font-size: 24px;">
-<p>This is particularly important when you work with Git but without the GitHub overhead. The idea is to define how your commits are labelled. Others should easily identify your commits as coming from you.</p>
+<p>This is particularly important when you work with Git but without the GitHub overhead. The idea is to define how your commits are labelled, so others can identify your commits as coming from you</p>
 <p>Have you already introduced yourself to Git? Find it out:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb6-1"><a></a>git config --list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This opens a pager. Press <code>q</code> to get back to the prompt</p>
 <p>Still have to introduce yourself? To that end, we set our user name and email address like this:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a></a>git config --global user.name 'danilofreire'</span>
 <span id="cb7-2"><a></a>git config --global user.email 'danilo.freire@emory.edu'</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The user name can be (but does not have to be) your GitHub user name. The email address should definitely be the one associated with your GitHub account.</p>
-<p>Check out <a href="https://swcarpentry.github.io/git-novice/02-setup.html">these setup instructions</a> from <a href="https://software-carpentry.org/about/">Software Carpentry</a> to learn about more configuration options.</p>
+<p>The user name can be (but does not have to be) your GitHub user name. The email address should definitely be the one associated with your GitHub account</p>
+<p>While you are here, tell Git to call the first branch <code>main</code>. Without this, new repositories still start on a branch called <code>master</code>, and the commands later in this lecture will not work:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1"><a></a>git config --global init.defaultBranch main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Check out <a href="https://swcarpentry.github.io/git-novice/02-setup.html">these setup instructions</a> from <a href="https://software-carpentry.org/about/">Software Carpentry</a> to learn about more configuration options</p>
 </div>
 </section></section>
 <section>
@@ -719,10 +721,11 @@ Danilo Freire
 <li><code>git init</code>: initialises a new Git repository</li>
 <li><code>git clone</code>: copies an existing repository</li>
 <li><code>git add</code>: adds changes to the staging area</li>
-<li><code>git commit</code>: commits changes</li>
-<li><code>git push</code>: pushes changes</li>
-<li><code>git pull</code>: pulls changes</li>
+<li><code>git commit</code>: commits (saves) changes</li>
+<li><code>git push</code>: pushes (uploads) changes</li>
+<li><code>git pull</code>: pulls (downloads) changes</li>
 <li><code>git status</code>: shows the status of the working directory</li>
+<li><code>git diff</code>: shows what changed, line by line</li>
 <li><code>git log</code>: shows the commit history</li>
 <li><code>git branch</code>: shows the branches in the repository</li>
 <li><code>git checkout</code>: switches branches</li>
@@ -767,9 +770,9 @@ Danilo Freire
 <li>I will copy the <code>my-project</code> directory path into a text document</li>
 <li>I will try to add this folder to the <code>staging area</code></li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1"><a></a>mkdir my-project</span>
-<span id="cb8-2"><a></a>cd my-project</span>
-<span id="cb8-3"><a></a>git add .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb9-1"><a></a>mkdir my-project</span>
+<span id="cb9-2"><a></a>cd my-project</span>
+<span id="cb9-3"><a></a>git add .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="5" type="1">
 <li><span class="alert">Error!</span> 😟</li>
 </ol>
@@ -777,7 +780,7 @@ Danilo Freire
 <ol start="6" type="1">
 <li>We need to initialise the repository. <span class="alert">Do not do that in your home directory!</span></li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb9-1"><a></a>git init</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb10-1"><a></a>git init</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div style="text-align: center;">
@@ -786,21 +789,21 @@ Danilo Freire
 </div></div>
 </div>
 </section>
-<section id="addingremoving-files-from-the-repo" class="slide level2 scrollable">
-<h2>Adding/Removing files from the repo</h2>
+<section id="adding-and-removing-files-from-the-repo" class="slide level2 scrollable">
+<h2>Adding and removing files from the repo</h2>
 <div style="margin-top: 30px; font-size: 24px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <ol start="7" type="1">
 <li>Check the <code>staging area</code> status</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb10-1"><a></a>git status</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb11-1"><a></a>git status</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="8" type="1">
 <li>Let’s add a <code>01-data-cleaning.py</code> file to the <code>staging area</code>. Then, check its status</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb11-1"><a></a>touch 01-data-cleaning.py</span>
-<span id="cb11-2"><a></a>git add 01-data-cleaning.py</span>
-<span id="cb11-3"><a></a>git status</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb12-1"><a></a>touch 01-data-cleaning.py</span>
+<span id="cb12-2"><a></a>git add 01-data-cleaning.py</span>
+<span id="cb12-3"><a></a>git status</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:50%;">
 <div style="text-align: center;">
 <p><a href="#/" data-modal-type="image" data-modal-url="figures/terminal02.png"><img data-src="figures/terminal02.png" style="width:100.0%"></a></p>
@@ -808,19 +811,19 @@ Danilo Freire
 </div></div>
 </div>
 </section>
-<section id="addingremoving-files-from-the-repo-1" class="slide level2 scrollable">
-<h2>Adding/Removing files from the repo</h2>
+<section id="adding-and-removing-files-from-the-repo-1" class="slide level2 scrollable">
+<h2>Adding and removing files from the repo</h2>
 <div style="margin-top: 30px; font-size: 24px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <ol start="9" type="1">
 <li>Now let’s create more files and add them to the <code>staging area</code></li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb12-1"><a></a>touch 02-exploratory-data-analysis.py</span>
-<span id="cb12-2"><a></a>touch 03-modelling.py</span>
-<span id="cb12-3"><a></a>touch 04-visualisation.py</span>
-<span id="cb12-4"><a></a>git add .</span>
-<span id="cb12-5"><a></a>git status</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb13-1"><a></a>touch 02-exploratory-data-analysis.py</span>
+<span id="cb13-2"><a></a>touch 03-modelling.py</span>
+<span id="cb13-3"><a></a>touch 04-visualisation.py</span>
+<span id="cb13-4"><a></a>git add .</span>
+<span id="cb13-5"><a></a>git status</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:50%;">
 <div style="text-align: center;">
 <p><a href="#/" data-modal-type="image" data-modal-url="figures/terminal03.png"><img data-src="figures/terminal03.png" style="width:100.0%"></a></p>
@@ -828,16 +831,16 @@ Danilo Freire
 </div></div>
 </div>
 </section>
-<section id="addingremoving-files-from-the-repo-2" class="slide level2 scrollable">
-<h2>Adding/Removing files from the repo</h2>
+<section id="adding-and-removing-files-from-the-repo-2" class="slide level2 scrollable">
+<h2>Adding and removing files from the repo</h2>
 <div style="margin-top: 30px; font-size: 24px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <ol start="10" type="1">
 <li>In the directory, let’s delete the <code>04-visualisation.py</code> file and check the status:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb13-1"><a></a>rm -f 04-visualisation.py</span>
-<span id="cb13-2"><a></a>git status</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb14-1"><a></a>rm -f 04-visualisation.py</span>
+<span id="cb14-2"><a></a>git status</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:50%;">
 <div style="text-align: center;">
 <p><a href="#/" data-modal-type="image" data-modal-url="figures/terminal04.png"><img data-src="figures/terminal04.png" style="width:100.0%"></a></p>
@@ -853,7 +856,11 @@ Danilo Freire
 <ol start="11" type="1">
 <li>Now our “initial commit” :</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb14-1"><a></a>git commit -m "initial commit"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb15-1"><a></a>git commit -m "initial commit"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>We deleted <code>04-visualisation.py</code> but never staged the deletion, so the file is still part of this commit</li>
+<li>That is why it comes back when we travel to this commit later</li>
+</ul>
 </div><div class="column" style="width:50%;">
 <div style="text-align: center;">
 <p><a href="#/" data-modal-type="image" data-modal-url="figures/terminal05.png"><img data-src="figures/terminal05.png" style="width:100.0%"></a></p>
@@ -869,14 +876,14 @@ Danilo Freire
 <ol start="12" type="1">
 <li>To check all commits in your <code>repo</code>:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb15-1"><a></a>git log</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb16-1"><a></a>git log</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Most important things here are:
 <ul>
-<li>commit id;</li>
-<li>date/time;</li>
-<li>branch;</li>
-<li>commit message;</li>
+<li>commit id</li>
+<li>date/time</li>
+<li>branch</li>
+<li>commit message</li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:50%;">
@@ -894,16 +901,16 @@ Danilo Freire
 <ol type="1">
 <li>First, let’s make new commits in our repo:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb16-1"><a></a>touch 04-new-visualisation.py # new file</span>
-<span id="cb16-2"><a></a>touch 05-comments.py # new file</span>
-<span id="cb16-3"><a></a>git add . </span>
-<span id="cb16-4"><a></a>git commit -m "adding files" </span>
-<span id="cb16-5"><a></a>echo "Hello you" &gt;&gt; 05-comments.py # edit file</span>
-<span id="cb16-6"><a></a>git add . </span>
-<span id="cb16-7"><a></a>git commit -m "editing 05-comments.py" </span>
-<span id="cb16-8"><a></a>rm -f 05-comments.py </span>
-<span id="cb16-9"><a></a>git commit -am "deleting 05-comments.py" </span>
-<span id="cb16-10"><a></a>git log </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb17-1"><a></a>touch 04-new-visualisation.py # new file</span>
+<span id="cb17-2"><a></a>touch 05-comments.py # new file</span>
+<span id="cb17-3"><a></a>git add . </span>
+<span id="cb17-4"><a></a>git commit -m "adding files" </span>
+<span id="cb17-5"><a></a>echo "Hello you" &gt;&gt; 05-comments.py # edit file</span>
+<span id="cb17-6"><a></a>git add . </span>
+<span id="cb17-7"><a></a>git commit -m "editing 05-comments.py" </span>
+<span id="cb17-8"><a></a>rm -f 05-comments.py </span>
+<span id="cb17-9"><a></a>git commit -am "deleting 05-comments.py" </span>
+<span id="cb17-10"><a></a>git log </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:50%;">
 <div style="text-align: center;">
 <p><a href="#/" data-modal-type="image" data-modal-url="figures/terminal07.png"><img data-src="figures/terminal07.png" style="width:100.0%"></a></p>
@@ -919,9 +926,10 @@ Danilo Freire
 <ol start="2" type="1">
 <li>We use <code>checkout</code> to go back in time to a given commit. Let’s go back to the “initial commit”:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb17-1"><a></a>git checkout 470636f38e409f4f322c48183e19633ebb550625</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb18-1"><a></a>git checkout 470636f38e409f4f322c48183e19633ebb550625</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><p><span class="alert">Your hash will be different</span>. Copy yours from <code>git log</code>, and the first 5-6 characters are enough</p></li>
+<li><p>Git warns you about a <span class="alert">detached HEAD</span>. That is normal here: you are looking at an old commit, not working on a branch</p></li>
 <li><p>Check the folder!</p></li>
 <li><p><code>04-visualisation.py</code> is back!</p></li>
 <li><p><span class="alert">Important</span>: doing this does not delete our commits. We just move back in time!</p></li>
@@ -941,8 +949,8 @@ Danilo Freire
 <ol start="3" type="1">
 <li>To “go back to the future”, the most recent commit, we just need to go back to the main branch:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb18-1"><a></a>git checkout main</span>
-<span id="cb18-2"><a></a>git log</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb19-1"><a></a>git checkout main</span>
+<span id="cb19-2"><a></a>git log</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Check the <code>folder/directory</code> again!</li>
 <li><code>04-visualisation.py</code> is gone and <code>04-new-visualisation.py</code> is back!</li>

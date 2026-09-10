@@ -34,7 +34,7 @@ editor:
 - File content commands: `cat`, `head`, `tail`
 - Wildcards for efficient file matching: `*` (any characters), `?` (any single character)
 - Batch operations with `{}`
-- Chaining commands with && and ||
+- Chaining commands with `&&` and `||`
 - Text manipulation tools: 
   - `wc`, `grep`, `sed`
 :::
@@ -129,7 +129,7 @@ In the data science workflow, there are [two sorts of surprises and cognitive st
 
 ## Keeping future-you happy
 
-:::{style="margin-top: 30px; font-size: 24px;"}
+:::{style="margin-top: 30px; font-size: 28px;"}
 :::{.incremental}
 - It is tempting to set up a project assuming you will be its only reader
 - [That is almost never true]{.alert}. Coauthors and collaborators happen to the best of us 😅
@@ -192,8 +192,8 @@ For a Python project:
 - One parent folder contains [everything]{.alert} inside it
 - You decide what goes in the project folder. The project dictates the structure
 - Keep [input separate from output]{.alert}. Definitely separate raw from processed data!
-- [Keep every internal path relative]{.alert}. Never write `"/Users/me/data/thing.csv"`
-- That path works on exactly one machine, and often not on that one either, six months later
+- [Keep every internal path relative]{.alert}. Never write `"/Users/me/data/thing.csv"`, write `"../data/thing.csv"` instead
+- An absolute path works on exactly one machine, and often not on that one either after a few months!
 :::
 
 :::{.column width="50%"}
@@ -282,7 +282,6 @@ my-project/
 - Changed your code, realised it was a mistake and wanted to revert back?
 - Lost code or had a backup that was too old?
 - Wanted to see the difference between different versions of your code?
-- Wanted to review the history of some code?
 - Wanted to submit a change to someone else's code?
 - Wanted to see how much work is being done, when, and by whom?
 
@@ -375,7 +374,7 @@ my-project/
 :::{style="margin-top: 30px; font-size: 23px;"}
 Again, Git is an independent piece of software. You need to have it installed on your machine to call it from the command line or VS Code
 
-Chances are that that's already the case. Here's how you can check using the command line:
+Chances are it is already there. Here is how to check from the command line:
 
 ```{verbatim}
 which git
@@ -399,19 +398,21 @@ WSL users can install Git using:
 sudo apt-get install git
 ```
 
-To install/update Git for Windows (not WSL), check out [happygitwithr.com](https://happygitwithr.com/install-git.html)
+To install or update Git for Windows (not WSL), check out [happygitwithr.com](https://happygitwithr.com/install-git.html)
 :::
 
 ## Second step: introduce yourself to Git
 
 :::{style="margin-top: 30px; font-size: 24px;"}
-This is particularly important when you work with Git but without the GitHub overhead. The idea is to define how your commits are labelled. Others should easily identify your commits as coming from you.
+This is particularly important when you work with Git but without the GitHub overhead. The idea is to define how your commits are labelled, so others can identify your commits as coming from you
 
 Have you already introduced yourself to Git? Find it out:
 
 ```{verbatim}
 git config --list
 ```
+
+This opens a pager. Press `q` to get back to the prompt
 
 Still have to introduce yourself? To that end, we set our user name and email address like this:
 
@@ -420,9 +421,15 @@ git config --global user.name 'danilofreire'
 git config --global user.email 'danilo.freire@emory.edu'
 ```
 
-The user name can be (but does not have to be) your GitHub user name. The email address should definitely be the one associated with your GitHub account.
+The user name can be (but does not have to be) your GitHub user name. The email address should definitely be the one associated with your GitHub account
 
-Check out [these setup instructions](https://swcarpentry.github.io/git-novice/02-setup.html) from [Software Carpentry](https://software-carpentry.org/about/) to learn about more configuration options.
+While you are here, tell Git to call the first branch `main`. Without this, new repositories still start on a branch called `master`, and the commands later in this lecture will not work:
+
+```{verbatim}
+git config --global init.defaultBranch main
+```
+
+Check out [these setup instructions](https://swcarpentry.github.io/git-novice/02-setup.html) from [Software Carpentry](https://software-carpentry.org/about/) to learn about more configuration options
 :::
 
 # Git from the shell 🐚 {background-color="#1B3A6B"}
@@ -497,10 +504,11 @@ A [commit]{.alert} is a snapshot: it takes what is staged and adds it to the tim
 - `git init`: initialises a new Git repository
 - `git clone`: copies an existing repository
 - `git add`: adds changes to the staging area
-- `git commit`: commits changes 
-- `git push`: pushes changes
-- `git pull`: pulls changes
+- `git commit`: commits (saves) changes
+- `git push`: pushes (uploads) changes
+- `git pull`: pulls (downloads) changes
 - `git status`: shows the status of the working directory
+- `git diff`: shows what changed, line by line
 - `git log`: shows the commit history
 - `git branch`: shows the branches in the repository
 - `git checkout`: switches branches
@@ -567,7 +575,7 @@ git init
 :::
 :::
 
-## Adding/Removing files from the repo
+## Adding and removing files from the repo
 
 :::{style="margin-top: 30px; font-size: 24px;"}
 :::{.columns}
@@ -595,7 +603,7 @@ git status
 :::
 :::
 
-## Adding/Removing files from the repo
+## Adding and removing files from the repo
 
 :::{style="margin-top: 30px; font-size: 24px;"}
 :::{.columns}
@@ -619,7 +627,7 @@ git status
 :::
 :::
 
-## Adding/Removing files from the repo
+## Adding and removing files from the repo
 
 :::{style="margin-top: 30px; font-size: 24px;"}
 :::{.columns}
@@ -650,6 +658,9 @@ git status
 ```{verbatim}
 git commit -m "initial commit"
 ```
+
+- We deleted `04-visualisation.py` but never staged the deletion, so the file is still part of this commit
+- That is why it comes back when we travel to this commit later
 :::
 
 ::: {.column width="50%"}
@@ -672,10 +683,10 @@ git log
 ```
 
 - Most important things here are:   
-  - commit id;
-  - date/time;
-  - branch;
-  - commit message;
+  - commit id
+  - date/time
+  - branch
+  - commit message
 :::
 
 ::: {.column width="50%"}
@@ -727,6 +738,8 @@ git checkout 470636f38e409f4f322c48183e19633ebb550625
 ```
 
 - [Your hash will be different]{.alert}. Copy yours from `git log`, and the first 5-6 characters are enough
+
+- Git warns you about a [detached HEAD]{.alert}. That is normal here: you are looking at an old commit, not working on a branch
 
 - Check the folder!
 - `04-visualisation.py` is back!
