@@ -108,6 +108,46 @@ git push origin --delete master
 :::
 :::
 
+## Using two GitHub accounts in the terminal
+
+:::{style="margin-top: 30px; font-size: 22px;"}
+:::{.columns}
+:::{.column width="50%"}
+- Do you have a personal and an Emory GitHub account? You can use both
+- `--global` sets the default for all repositories. Leave it out to set values [for one repository only]{.alert}
+- The GitHub CLI (`gh`) can store several accounts and switch between them. We will see more of it later today
+- Install `gh` with `brew install gh` on Mac
+- WSL/Linux users, [please follow the instructions here (Debian/Ubuntu)](https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian)
+- Run `gh auth login` to log in
+- Then, type `gh auth status` to check which account is active
+- `gh auth switch` switches between accounts
+- `gh auth logout` logs out of the current account
+:::
+
+:::{.column width="50%"}
+- Log in to both accounts once:
+
+```bash
+gh auth login        # first account
+gh auth login        # second account
+gh auth setup-git    # let Git use these logins
+```
+
+- Inside a repository that belongs to the second account:
+
+```bash
+git config user.name "Your Name"
+git config user.email your@emory.edu
+gh auth switch       # change the active account
+git push
+```
+
+- Use `gh auth switch` again before you push to the other account
+- More information: <https://github.com/cli/cli/blob/trunk/docs/multiple-accounts.md> and <https://docs.github.com/en/github-cli/github-cli/using-multiple-accounts>
+:::
+:::
+:::
+
 # Pushing changes to a remote repository 🚀 {background-color="#1B3A6B"}
 
 ## Pushing changes to a remote repository

@@ -6935,5 +6935,12 @@
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Adding and removing files from the repo",
     "text": "Adding and removing files from the repo\n\n\n\n\nIn the directory, let’s delete the 04-visualisation.py file and check the status:\n\nrm -f 04-visualisation.py\ngit status"
+  },
+  {
+    "objectID": "lectures/lecture-06/06-more-git-github.html#using-two-github-accounts-in-the-terminal",
+    "href": "lectures/lecture-06/06-more-git-github.html#using-two-github-accounts-in-the-terminal",
+    "title": "DATASCI 350 - Data Science Computing",
+    "section": "Using two GitHub accounts in the terminal",
+    "text": "Using two GitHub accounts in the terminal\n\n\n\n\nDo you have a personal and an Emory GitHub account? You can use both\n--global sets the default for all repositories. Leave it out to set values for one repository only\nThe GitHub CLI (gh) can store several accounts and switch between them. We will see more of it later today\nInstall gh with brew install gh on Mac\nWSL/Linux users, please follow the instructions here (Debian/Ubuntu)\nRun gh auth login to log in\nThen, type gh auth status to check which account is active\ngh auth switch switches between accounts\ngh auth logout logs out of the current account\n\n\n\nLog in to both accounts once:\n\ngh auth login        # first account\ngh auth login        # second account\ngh auth setup-git    # let Git use these logins\n\nInside a repository that belongs to the second account:\n\ngit config user.name \"Your Name\"\ngit config user.email your@emory.edu\ngh auth switch       # change the active account\ngit push\n\nUse gh auth switch again before you push to the other account\nMore information: https://github.com/cli/cli/blob/trunk/docs/multiple-accounts.md and https://docs.github.com/en/github-cli/github-cli/using-multiple-accounts"
   }
 ]

@@ -307,6 +307,43 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 </ul>
 </div></div>
 </div>
+</section>
+<section id="using-two-github-accounts-in-the-terminal" class="slide level2">
+<h2>Using two GitHub accounts in the terminal</h2>
+<div style="margin-top: 30px; font-size: 22px;">
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Do you have a personal and an Emory GitHub account? You can use both</li>
+<li><code>--global</code> sets the default for all repositories. Leave it out to set values <span class="alert">for one repository only</span></li>
+<li>The GitHub CLI (<code>gh</code>) can store several accounts and switch between them. We will see more of it later today</li>
+<li>Install <code>gh</code> with <code>brew install gh</code> on Mac</li>
+<li>WSL/Linux users, <a href="https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian">please follow the instructions here (Debian/Ubuntu)</a></li>
+<li>Run <code>gh auth login</code> to log in</li>
+<li>Then, type <code>gh auth status</code> to check which account is active</li>
+<li><code>gh auth switch</code> switches between accounts</li>
+<li><code>gh auth logout</code> logs out of the current account</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>Log in to both accounts once:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="ex">gh</span> auth login        <span class="co"># first account</span></span>
+<span id="cb2-2"><a></a><span class="ex">gh</span> auth login        <span class="co"># second account</span></span>
+<span id="cb2-3"><a></a><span class="ex">gh</span> auth setup-git    <span class="co"># let Git use these logins</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Inside a repository that belongs to the second account:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="fu">git</span> config user.name <span class="st">"Your Name"</span></span>
+<span id="cb3-2"><a></a><span class="fu">git</span> config user.email your@emory.edu</span>
+<span id="cb3-3"><a></a><span class="ex">gh</span> auth switch       <span class="co"># change the active account</span></span>
+<span id="cb3-4"><a></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Use <code>gh auth switch</code> again before you push to the other account</li>
+<li>More information: <a href="https://github.com/cli/cli/blob/trunk/docs/multiple-accounts.md" class="uri">https://github.com/cli/cli/blob/trunk/docs/multiple-accounts.md</a> and <a href="https://docs.github.com/en/github-cli/github-cli/using-multiple-accounts" class="uri">https://docs.github.com/en/github-cli/github-cli/using-multiple-accounts</a></li>
+</ul>
+</div></div>
+</div>
 </section></section>
 <section>
 <section id="pushing-changes-to-a-remote-repository" class="title-slide slide level1 center" data-background-color="#1B3A6B">
@@ -787,10 +824,10 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 <li><span class="alert">The easy way</span>: on GitHub, click “Sync fork” and confirm. Commit your own work first</li>
 <li><span class="alert">From the terminal</span>, point at the original once, then pull from it whenever you like:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="fu">git</span> remote add upstream https://github.com/original-user/original-repo.git</span>
-<span id="cb2-2"><a></a><span class="fu">git</span> fetch upstream</span>
-<span id="cb2-3"><a></a><span class="fu">git</span> merge upstream/main</span>
-<span id="cb2-4"><a></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="fu">git</span> remote add upstream https://github.com/original-user/original-repo.git</span>
+<span id="cb4-2"><a></a><span class="fu">git</span> fetch upstream</span>
+<span id="cb4-3"><a></a><span class="fu">git</span> merge upstream/main</span>
+<span id="cb4-4"><a></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><code>origin</code> is your fork. <code>upstream</code> is the repository you forked from</li>
 </ul>
