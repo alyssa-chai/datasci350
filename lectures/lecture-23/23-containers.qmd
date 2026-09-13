@@ -311,10 +311,10 @@ pip install -r requirements.txt
 
 ```{verbatim}
 # Talking to web APIs
-requests==2.34.2
+requests==2.32.5
 
 # Data processing (use either, or both)
-polars==1.44.0
+pandas==3.0.5
 duckdb==1.5.5
 ```
 :::
