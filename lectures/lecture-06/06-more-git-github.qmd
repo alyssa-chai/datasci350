@@ -400,7 +400,7 @@ Delete the markers along with the text you do not want
 :::{.column width="50%"}
 - Branches are a way to work on different features or versions of your project
 - The default branch is called `main` on GitHub, and `master` in older repositories
-- However, you can create new branches to work on new features or versions [without affecting the `master` branch]{.alert}
+- However, you can create new branches to work on new features or versions [without affecting the `main` branch]{.alert}
 - You can create a new branch with the command `git branch branch-name`
 - And you can switch to the new branch with the command `git checkout branch-name`
   - Or you can use `git switch branch-name` if you have Git 2.23 or later
@@ -665,11 +665,14 @@ Pull requests
 - Paste any text or code and save it
 - You can also create secret Gists that are not indexed by search engines
 - Gists also benefit from version control, so you can see the history of changes and revert to previous versions
+- Check it out: <https://gist.github.com>
 :::
 
 :::{.column width="50%"}
 :::{style="text-align: center;"}
 [![](figures/gist.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/gist.png"}
+
+<https://gist.github.com/danilofreire/d4fe27efe13b779b11c3424821331c4a>
 :::
 :::
 :::
@@ -693,6 +696,8 @@ Pull requests
 :::{.column width="50%"}
 :::{style="text-align: center;"}
 [![](figures/pages.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/pages.png"}
+
+More information here: <https://pages.github.com/>
 :::
 :::
 :::
@@ -713,6 +718,8 @@ Pull requests
 :::{.column width="50%"}
 :::{style="text-align: center;"}
 [![](figures/actions.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/actions.png"}
+
+Read more: <https://github.com/features/actions>
 :::
 :::
 :::
@@ -736,11 +743,14 @@ Pull requests
   - `gh repo create my-project`
   - `gh repo clone danilofreire/my-project`
 - Have a look at the [GitHub CLI manual](https://cli.github.com/manual/) for more information
+- [Please install it!]{.alert} It will save you a lot of time in the future, and make you look like a pro 😎
 :::
 
 :::{.column width="50%"}
 :::{style="text-align: center;"}
 [![](figures/cli.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/cli.png"}
+
+- If you need to authenticate, run `gh auth login` and follow the instructions (it will open a browser window)
 :::
 :::
 :::

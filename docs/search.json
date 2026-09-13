@@ -2419,7 +2419,7 @@
     "href": "lectures/lecture-06/06-more-git-github.html#branches-1",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Branches",
-    "text": "Branches\n\n\n\n\nBranches are a way to work on different features or versions of your project\nThe default branch is called main on GitHub, and master in older repositories\nHowever, you can create new branches to work on new features or versions without affecting the master branch\nYou can create a new branch with the command git branch branch-name\nAnd you can switch to the new branch with the command git checkout branch-name\n\nOr you can use git switch branch-name if you have Git 2.23 or later\n\nYou can also create a new branch and switch to it with the command git checkout -b branch-name\n\n\n\n\n\n\nBranches may or may not be merged back to the master branch\nYou can also delete branches after merging them"
+    "text": "Branches\n\n\n\n\nBranches are a way to work on different features or versions of your project\nThe default branch is called main on GitHub, and master in older repositories\nHowever, you can create new branches to work on new features or versions without affecting the main branch\nYou can create a new branch with the command git branch branch-name\nAnd you can switch to the new branch with the command git checkout branch-name\n\nOr you can use git switch branch-name if you have Git 2.23 or later\n\nYou can also create a new branch and switch to it with the command git checkout -b branch-name\n\n\n\n\n\n\nBranches may or may not be merged back to the master branch\nYou can also delete branches after merging them"
   },
   {
     "objectID": "lectures/lecture-06/06-more-git-github.html#branches-2",
@@ -2510,21 +2510,21 @@
     "href": "lectures/lecture-06/06-more-git-github.html#github-has-many-other-interesting-features",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "GitHub has many other interesting features",
-    "text": "GitHub has many other interesting features\nGists\n\n\n\n\nGists are a great way to share code snippets, notes, or other text\nYou can create a Gist by clicking on the + sign on the top right corner of GitHub and then on New gist\nPaste any text or code and save it\nYou can also create secret Gists that are not indexed by search engines\nGists also benefit from version control, so you can see the history of changes and revert to previous versions"
+    "text": "GitHub has many other interesting features\nGists\n\n\n\n\nGists are a great way to share code snippets, notes, or other text\nYou can create a Gist by clicking on the + sign on the top right corner of GitHub and then on New gist\nPaste any text or code and save it\nYou can also create secret Gists that are not indexed by search engines\nGists also benefit from version control, so you can see the history of changes and revert to previous versions\nCheck it out: https://gist.github.com\n\n\n\n\nhttps://gist.github.com/danilofreire/d4fe27efe13b779b11c3424821331c4a"
   },
   {
     "objectID": "lectures/lecture-06/06-more-git-github.html#github-pages",
     "href": "lectures/lecture-06/06-more-git-github.html#github-pages",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "GitHub Pages",
-    "text": "GitHub Pages\n\n\n\n\nThis is one of the nicest features of GitHub\nGitHub Pages allows you to create a website for your project, portfolio, or blog\nAs you can see, I use GitHub Pages for this course and for my personal website\nYou can create a website by creating a new repository with the name your-username.github.io\nThen, you can upload your .html, .css, and .js files to the repository\nYour website will be available at https://your-username.github.io\nYou can also use custom domains and Jekyll themes, which are pre-designed templates\nAvailable themes here"
+    "text": "GitHub Pages\n\n\n\n\nThis is one of the nicest features of GitHub\nGitHub Pages allows you to create a website for your project, portfolio, or blog\nAs you can see, I use GitHub Pages for this course and for my personal website\nYou can create a website by creating a new repository with the name your-username.github.io\nThen, you can upload your .html, .css, and .js files to the repository\nYour website will be available at https://your-username.github.io\nYou can also use custom domains and Jekyll themes, which are pre-designed templates\nAvailable themes here\n\n\n\n\nMore information here: https://pages.github.com/"
   },
   {
     "objectID": "lectures/lecture-06/06-more-git-github.html#github-actions",
     "href": "lectures/lecture-06/06-more-git-github.html#github-actions",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "GitHub Actions",
-    "text": "GitHub Actions\n\n\n\n\nGitHub Actions runs code for you, on GitHub’s machines\nYou write a .yml file listing the steps. GitHub runs them whenever you push\nTypical uses: rebuild a website, run tests, train a model, publish a report\nIt can also run on a schedule. Mine rebuilds a list of my starred repositories every day\nThe work happens on GitHub’s machines, not yours, and public repositories get a generous free allowance"
+    "text": "GitHub Actions\n\n\n\n\nGitHub Actions runs code for you, on GitHub’s machines\nYou write a .yml file listing the steps. GitHub runs them whenever you push\nTypical uses: rebuild a website, run tests, train a model, publish a report\nIt can also run on a schedule. Mine rebuilds a list of my starred repositories every day\nThe work happens on GitHub’s machines, not yours, and public repositories get a generous free allowance\n\n\n\n\nRead more: https://github.com/features/actions"
   },
   {
     "objectID": "lectures/lecture-06/06-more-git-github.html#github-actions-1",
@@ -2538,7 +2538,7 @@
     "href": "lectures/lecture-06/06-more-git-github.html#github-in-the-command-line",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "GitHub in the command line",
-    "text": "GitHub in the command line\n\n\n\n\nGitHub CLI is a command-line tool that brings GitHub to your terminal\nYou can install it with brew install gh\nGitHub CLI creates repositories, issues, pull requests, and more\nI use it both to create repositories and clone/fork them\n\ngh repo create my-project\ngh repo clone danilofreire/my-project\n\nHave a look at the GitHub CLI manual for more information"
+    "text": "GitHub in the command line\n\n\n\n\nGitHub CLI is a command-line tool that brings GitHub to your terminal\nYou can install it with brew install gh\nGitHub CLI creates repositories, issues, pull requests, and more\nI use it both to create repositories and clone/fork them\n\ngh repo create my-project\ngh repo clone danilofreire/my-project\n\nHave a look at the GitHub CLI manual for more information\nPlease install it! It will save you a lot of time in the future, and make you look like a pro 😎\n\n\n\n\n\nIf you need to authenticate, run gh auth login and follow the instructions (it will open a browser window)"
   },
   {
     "objectID": "lectures/lecture-06/06-more-git-github.html#github-copilot",
