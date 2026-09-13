@@ -518,10 +518,10 @@ Danilo Freire
 <div class="column" style="width:50%;">
 <ul>
 <li><a href="https://docs.python.org/3/library/concurrent.futures.html"><code>concurrent.futures</code> comes with Python</a></li>
-<li>A slow task is slow for one of two reasons: <span class="alert">the processor is busy, or the processor is idle while your code waits for an answer</span></li>
-<li><span class="alert">CPU-bound</span>: the processor is busy with a task. Only more processors help, so use <a href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ProcessPoolExecutor"><code>ProcessPoolExecutor</code></a>, which works like <code>joblib</code></li>
-<li><span class="alert">I/O-bound</span>: the processor is idle, waiting for a web server, a disk, or a database to answer. Use <a href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor"><code>ThreadPoolExecutor</code></a></li>
-<li>Both copy the <code>map</code> interface: a function and an iterable</li>
+<li>Tasks are slow for two reasons: <span class="alert">the processor is busy, or idle while waiting for an answer</span></li>
+<li><span class="alert">CPU-bound</span>: processor busy, so only more processors help. Use <a href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ProcessPoolExecutor"><code>ProcessPoolExecutor</code></a> (works like <code>joblib</code>)</li>
+<li><span class="alert">I/O-bound</span>: processor idle, waiting for a web server, disk or database. Use <a href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor"><code>ThreadPoolExecutor</code></a></li>
+<li>Both copy <code>map</code>: a function and an iterable</li>
 </ul>
 <div style="font-size: 1.1em;">
 <div id="5e36e675" class="cell" data-execution_count="10">
@@ -536,7 +536,7 @@ Danilo Freire
 </div>
 </div><div class="column" style="width:50%;">
 <ul>
-<li>Waiting needs no second processor, so cheap threads do the job and no processes are spawned:</li>
+<li>Waiting needs no second processor: cheap threads, no new processes</li>
 </ul>
 <div style="font-size: 1.1em;">
 <div id="dc74ed2b" class="cell" data-execution_count="11">
@@ -557,8 +557,8 @@ Danilo Freire
 </div>
 </div>
 <ul>
-<li>In lecture 19 you downloaded World Bank indicators one country at a time</li>
-<li>This is the same <code>get_wdi()</code> pattern, with all three requests now running at the same time</li>
+<li>Lecture 19 downloaded World Bank indicators one country at a time</li>
+<li>Same <code>get_wdi()</code> pattern, now with all three requests at once</li>
 </ul>
 </div></div>
 </div>
@@ -645,7 +645,7 @@ Time: 2.59s (all cores)</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li><span class="alert">Big O notation</span> describes how the runtime grows as the input grows</li>
+<li><a href="https://en.wikipedia.org/wiki/Big_O_notation">Big O notation</a> describes how the runtime grows as the input grows</li>
 <li><span class="alert">O(1)</span> means constant: reading one array element costs the same whatever the array size</li>
 <li><span class="alert">O(n)</span> means linear: a single loop takes twice as long when the input doubles</li>
 <li><span class="alert">O(n²)</span> means quadratic: a nested loop takes four times as long when the input doubles</li>
@@ -694,14 +694,13 @@ Time: 2.59s (all cores)</code></pre>
 <div class="column" style="width:50%;">
 <ul>
 <li>With <code>p</code> cores, an O(n) problem becomes <span class="alert">O(n/p + overhead)</span></li>
-<li>Four cores give you close to a 4× saving, minus whatever the coordination costs</li>
-<li>The best candidates are <span class="alert">embarrassingly parallel O(n) tasks</span></li>
-<li>Running <code>n</code> independent calculations qualifies</li>
-<li>Applying the same function to <code>n</code> separate inputs qualifies too</li>
-<li>What both have in common is no shared state and no dependency between tasks</li>
+<li>Four cores: close to 4× faster, minus coordination costs</li>
+<li>Best candidates: <span class="alert">embarrassingly parallel O(n) tasks</span></li>
+<li>For example, <code>n</code> independent calculations, or one function applied to <code>n</code> separate inputs</li>
+<li>They share no state and do not depend on each other</li>
 </ul>
 <div style="background: rgba(230, 57, 70, 0.1); padding: 15px; border-radius: 10px; font-size: 19px; margin-top: 20px;">
-<p>Parallelism never changes the Big O class. It divides the constant in front of it. An O(n²) algorithm running on eight cores is still an O(n²) algorithm; you only reach “too slow” a little later</p>
+<p>Parallelism never changes the Big O class, only divides the constant in front. O(n²) on eight cores is still O(n²); you just hit “too slow” a little later</p>
 </div>
 </div><div class="column" style="width:50%;">
 <ul>
@@ -726,9 +725,9 @@ Time: 2.59s (all cores)</code></pre>
 </div>
 </div>
 <ul>
-<li>A thousand elements already means a million operations</li>
-<li>At <code>n = 100_000</code> the same code is 10 billion operations, and no core count rescues that</li>
-<li>Other poor candidates are steps that depend on previous results, algorithms with shared state, and problems limited by memory rather than by the CPU</li>
+<li>1,000 elements = 1 million operations</li>
+<li><code>n = 100_000</code> = 10 billion operations; no core count rescues that</li>
+<li>Also poor candidates: steps that depend on earlier results, shared state, problems limited by memory rather than CPU</li>
 </ul>
 </div></div>
 </div>
@@ -781,11 +780,12 @@ Time: 2.59s (all cores)</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li>Every program has a <span class="alert">serial share</span>: the setup, the merging of results, and any step that must wait for the one before it</li>
-<li><a href="https://en.wikipedia.org/wiki/Amdahl%27s_law">Amdahl’s law</a> says that share caps your maximum speed-up, however many cores you add</li>
-<li>The formula is <span class="math inline">\(\text{speedup} = \dfrac{1}{s + \dfrac{p}{N}}\)</span>, where <span class="math inline">\(s\)</span> is the serial fraction, <span class="math inline">\(p = 1 - s\)</span> is the parallel fraction, and <span class="math inline">\(N\)</span> is the number of cores</li>
-<li>Take a program that is 90% parallel, so <span class="math inline">\(s = 0.1\)</span>, running on 8 cores</li>
-<li>The arithmetic gives <span class="math inline">\(\frac{1}{0.1 + 0.9/8} = \frac{1}{0.2125} \approx 4.7\times\)</span>, well short of the <span class="math inline">\(8\times\)</span> you might have hoped for</li>
+<li>Some parts of a program <span class="alert">cannot run in parallel</span>: setup, merging results, steps that wait for the previous one</li>
+<li>That part is the <span class="alert">serial share</span> <span class="math inline">\(s\)</span>; the rest, <span class="math inline">\(p = 1 - s\)</span>, can be split across cores</li>
+<li>More cores only speed up <span class="math inline">\(p\)</span>, so <span class="math inline">\(s\)</span> sets a ceiling (<a href="https://en.wikipedia.org/wiki/Amdahl%27s_law">Amdahl’s law</a>)</li>
+<li><span class="math inline">\(\text{speedup} = \dfrac{1}{s + \dfrac{p}{N}}\)</span>, with <span class="math inline">\(N\)</span> = number of cores</li>
+<li>Example: 90% parallel (<span class="math inline">\(s = 0.1\)</span>) on 8 cores gives <span class="math inline">\(\frac{1}{0.1 + 0.9/8} = \frac{1}{0.2125} \approx 4.7\times\)</span>, not <span class="math inline">\(8\times\)</span></li>
+<li>Even with infinite cores, the serial 10% remains: at most <span class="math inline">\(1/0.1 = 10\times\)</span></li>
 </ul>
 </div><div class="column" style="width:50%;">
 <div style="text-align: center;">
@@ -838,17 +838,17 @@ Time: 2.59s (all cores)</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li>CPython, the Python you are running, has a <a href="https://en.wikipedia.org/wiki/Global_Interpreter_Lock">Global Interpreter Lock (GIL)</a></li>
-<li>The GIL lets only <span class="alert">one thread</span> execute Python code at a time, however many cores you have</li>
-<li>Threads still help while your code <span class="alert">waits</span>, because the lock is released during downloads and API calls</li>
-<li>They do nothing while your code <span class="alert">computes</span>, because the lock keeps the other threads idle</li>
-<li>CPU-bound work needs <span class="alert">processes</span>: each process is a separate Python with its own GIL</li>
-<li><a href="https://numpy.org/">NumPy</a>, <a href="https://polars.dev/">Polars</a> and <a href="https://duckdb.org/">DuckDB</a> <span class="alert">release the GIL</span> while their C and Rust code runs, so they use all cores with no processes to manage</li>
-<li>A <span class="alert">free-threaded build</span> without the GIL is official since Python 3.14 (<a href="https://peps.python.org/pep-0779/">PEP 779</a>), but it is not the default</li>
+<li>CPython (the Python you run) has a <a href="https://en.wikipedia.org/wiki/Global_Interpreter_Lock">Global Interpreter Lock (GIL)</a></li>
+<li>Only <span class="alert">one thread</span> runs Python code at a time, whatever your core count</li>
+<li>Threads help while code <span class="alert">waits</span>: the lock is released during downloads and API calls</li>
+<li>Threads do not help while code <span class="alert">computes</span>: the lock keeps other threads idle</li>
+<li>CPU-bound work needs <span class="alert">processes</span>: each is a separate Python with its own GIL</li>
+<li><a href="https://numpy.org/">NumPy</a>, <a href="https://polars.dev/">Polars</a> and <a href="https://duckdb.org/">DuckDB</a> <span class="alert">release the GIL</span> in their C/Rust code, so they use all cores without processes</li>
+<li>A <span class="alert">free-threaded build</span> (no GIL) is official since Python 3.14 (<a href="https://peps.python.org/pep-0779/">PEP 779</a>), but not the default</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <ul>
-<li>How the GIL maps onto the tools you already know:</li>
+<li>How the GIL maps onto tools you know:</li>
 </ul>
 <div style="font-size: 19px;">
 <table class="caption-top">
@@ -903,13 +903,13 @@ Time: 2.59s (all cores)</code></pre>
 <div class="columns">
 <div class="column" style="width:52%;">
 <ul>
-<li><a href="https://dask.org/">Dask</a> is a parallel computing library for Python</li>
-<li>It scales the previous sections to <a href="https://docs.dask.org/en/stable/best-practices.html" class="alert">datasets bigger than RAM</a> and to <a href="https://docs.dask.org/en/stable/deploying.html">clusters</a> bigger than one machine</li>
-<li>You write ordinary <a href="https://numpy.org/">NumPy</a> and <a href="https://pandas.pydata.org/">pandas</a> code; Dask handles the parallelism</li>
-<li>Its <a href="https://docs.dask.org/en/stable/scheduling.html" class="alert">task scheduler</a> splits your work into a graph of small tasks and spreads them across your cores</li>
-<li>Its big data collections are <a href="https://docs.dask.org/en/stable/array.html" class="alert">arrays</a>, <a href="https://docs.dask.org/en/stable/dataframe.html" class="alert">DataFrames</a> and <a href="https://docs.dask.org/en/stable/bag.html" class="alert">lists</a> that behave like the ones you know</li>
-<li>Active development, with a release most months: <a href="https://github.com/dask/dask/releases/tag/2026.8.0">version 2026.8.0</a> was released in August 2026</li>
-<li>Next lecture: when do you actually need Dask, and when does a faster single-machine engine win?</li>
+<li><a href="https://dask.org/">Dask</a>: a parallel computing library for Python</li>
+<li>Scales today’s ideas to <a href="https://docs.dask.org/en/stable/best-practices.html" class="alert">data bigger than RAM</a> and <a href="https://docs.dask.org/en/stable/deploying.html">clusters</a> of many machines</li>
+<li>You write <a href="https://numpy.org/">NumPy</a>/<a href="https://pandas.pydata.org/">pandas</a>-style code; Dask handles the parallelism</li>
+<li><a href="https://docs.dask.org/en/stable/scheduling.html" class="alert">Task scheduler</a>: splits work into a graph of small tasks across your cores</li>
+<li>Collections: <a href="https://docs.dask.org/en/stable/array.html" class="alert">arrays</a>, <a href="https://docs.dask.org/en/stable/dataframe.html" class="alert">DataFrames</a> and <a href="https://docs.dask.org/en/stable/bag.html" class="alert">lists</a> that behave like the ones you know</li>
+<li>Actively developed, with releases most months (<a href="https://github.com/dask/dask/releases/tag/2026.8.0">2026.8.0</a>, August 2026)</li>
+<li>Next lecture: Dask or a faster single-machine engine?</li>
 </ul>
 </div><div class="column" style="width:48%;">
 <div style="text-align: center; margin-top: -10px;">
@@ -918,7 +918,7 @@ Time: 2.59s (all cores)</code></pre>
 <p><a href="https://www.dask.org/" class="uri">https://www.dask.org/</a></p>
 </div>
 <div style="background: rgba(27, 58, 107, 0.08); padding: 15px; border-radius: 10px; font-size: 19px; margin-top: 15px; text-align: left;">
-<p><code>joblib</code> parallelises your functions and leaves the data where it was. <span class="alert">Dask chunks the data itself,</span> so a Dask array or DataFrame can be larger than your RAM</p>
+<p><code>joblib</code> splits your functions, not your data. <span class="alert">Dask chunks the data itself,</span> so it can be larger than your RAM</p>
 </div>
 </div>
 </div></div>
@@ -2192,21 +2192,21 @@ Name: x, Length: 26, dtype: float64</code></pre>
 <div class="columns">
 <div class="column" style="width:52%;">
 <ul>
-<li>Starting a <code>dask.distributed.Client()</code> opens a diagnostics dashboard on port 8787</li>
-<li>The task stream on the right is the same three-stage pipeline, run in a loop so the picture fills up</li>
-<li>Each row is one worker thread, and each coloured bar is one task it ran</li>
-<li>The three colours are <code>generate_data</code>, <code>transform_data</code> and <code>aggregate_data</code></li>
-<li>Bars at the same horizontal position in different rows ran at the same moment</li>
-<li>The dashboard is the fastest way to find out whether your work is actually parallel</li>
+<li><code>dask.distributed.Client()</code> opens a diagnostics dashboard on port 8787</li>
+<li>Right: our three-stage pipeline, run in a loop to fill the picture</li>
+<li>Row = one worker thread; coloured bar = one task</li>
+<li>Colours: <code>generate_data</code>, <code>transform_data</code>, <code>aggregate_data</code></li>
+<li>Bars stacked vertically ran at the same moment</li>
+<li>Fastest way to check whether your work is actually parallel</li>
 </ul>
 <div style="background: rgba(27, 58, 107, 0.08); padding: 15px; border-radius: 10px; font-size: 19px; margin-top: 15px;">
-<p>White space in a row means that worker had nothing to do. Large gaps usually mean your chunks are too big, so there are fewer tasks than workers</p>
+<p>White space = idle worker. Large gaps usually mean chunks are too big: fewer tasks than workers</p>
 </div>
 </div><div class="column" style="width:48%;">
 <div style="text-align: center; margin-top: -10px;">
 <p><a href="#/" data-modal-type="image" data-modal-url="figures/dask-dashboard-task-stream-2026.png"><img data-src="figures/dask-dashboard-task-stream-2026.png" style="width:100.0%"></a></p>
 <div style="font-size: 17px;">
-<p>The Dask dashboard at <code>localhost:8787</code> while this computation ran on my laptop</p>
+<p>Dashboard at <code>localhost:8787</code>, running on my laptop</p>
 </div>
 </div>
 </div></div>
@@ -2224,22 +2224,22 @@ Name: x, Length: 26, dtype: float64</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li><span class="alert">Measure first</span>: <code>%timeit</code> and <code>cProfile</code> will tell you where the time goes, and Amdahl’s law tells you what that share is worth</li>
-<li><span class="alert">Ask two questions</span>: are the tasks independent of each other, and is each one heavy enough to pay for starting a worker? If either answer is no, do not parallelise</li>
-<li><span class="alert">Pick the right algorithm</span>: an <span class="math inline">\(O(n \log n)\)</span> solution beats a parallelised <span class="math inline">\(O(n^2)\)</span> one on any interesting input</li>
-<li><span class="alert">Pick the right engine</span>: Polars or DuckDB may finish the job faster than a parallelised pandas, as we will see next lecture</li>
-<li><span class="alert">Start small</span>: NumPy or pandas may already have a fast function for what you wrote by hand</li>
-<li><span class="alert">Sample first</span>: ask whether the question really needs all of those terabytes</li>
+<li><span class="alert">Measure first</span>: <code>%timeit</code> and <code>cProfile</code> find the slow part; Amdahl’s law says what fixing it is worth</li>
+<li><span class="alert">Ask two questions</span>: are tasks independent? Is each heavy enough to justify a worker? Any “no” means don’t parallelise</li>
+<li><span class="alert">Pick the right algorithm</span>: <span class="math inline">\(O(n \log n)\)</span> beats parallel <span class="math inline">\(O(n^2)\)</span> on any real input</li>
+<li><span class="alert">Pick the right engine</span>: DuckDB or Polars may beat parallel pandas (next lecture)</li>
+<li><span class="alert">Start small</span>: NumPy or pandas may already have a fast built-in</li>
+<li><span class="alert">Sample first</span>: do you really need all those terabytes?</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <ul>
-<li><span class="alert">Switch to parquet</span>: the format change alone bought us a large speed-up a few slides ago</li>
-<li><span class="alert">Call <code>.compute()</code> and <code>.persist()</code> sparingly</span>: every call triggers execution, so batch the work into one</li>
-<li><span class="alert">Experiment with chunk sizes</span>: try a few by hand, or start from <code>chunks='auto'</code></li>
-<li>The Dask team keeps a longer list at <a href="https://docs.dask.org/en/latest/best-practices.html">Dask best practices</a></li>
+<li><span class="alert">Switch to parquet</span>: the format alone gave a large speed-up earlier</li>
+<li><span class="alert">Call <code>.compute()</code> and <code>.persist()</code> sparingly</span>: each call runs the graph, so batch work into one</li>
+<li><span class="alert">Experiment with chunk sizes</span>: try a few, or start from <code>chunks='auto'</code></li>
+<li>More tips: <a href="https://docs.dask.org/en/latest/best-practices.html">Dask best practices</a></li>
 </ul>
 <div style="background: rgba(230, 57, 70, 0.1); padding: 15px; border-radius: 10px; font-size: 19px; margin-top: 15px;">
-<p><span class="alert">The mistake I see most often</span>: students parallelise before they profile. Run <code>%timeit</code> first. If the hot spot turns out to be disk reads or an <span class="math inline">\(O(n^2)\)</span> loop, more cores will not save you, and you will have spent an afternoon finding that out</p>
+<p><span class="alert">Most common mistake</span>: parallelising before profiling. If the bottleneck is disk reads or an <span class="math inline">\(O(n^2)\)</span> loop, more cores won’t help, and you’ll lose an afternoon finding out</p>
 </div>
 </div></div>
 </div>
@@ -2255,18 +2255,19 @@ Name: x, Length: 26, dtype: float64</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li><span class="alert">Serial and parallel execution</span>: <code>map</code>, embarrassingly parallel problems, and <code>joblib</code> for the easy cases</li>
-<li><span class="alert"><code>concurrent.futures</code></span> ships with Python: <code>ProcessPoolExecutor</code> for CPU work, <code>ThreadPoolExecutor</code> for waiting</li>
-<li><span class="alert">Big O notation</span>: parallelism cuts the constant factor and leaves the complexity class alone</li>
-<li><span class="alert">Amdahl’s law</span>: the serial share caps your speed-up, so measure it before you buy cores</li>
-<li><span class="alert">The GIL</span>: threads help while Python waits, processes help while Python computes, and NumPy sidesteps both</li>
+<li><span class="alert">Serial and parallel execution</span>: <code>map</code>, embarrassingly parallel problems, <code>joblib</code></li>
+<li><span class="alert"><code>concurrent.futures</code></span>: processes for CPU work, threads for waiting</li>
+<li><span class="alert">Big O notation</span>: parallelism cuts the constant, not the class</li>
+<li><span class="alert">Amdahl’s law</span>: the serial share caps the speed-up</li>
+<li><span class="alert">The GIL</span>: threads for waiting, processes for computing; NumPy sidesteps both</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <ul>
-<li><span class="alert">Dask</span> gives you lazy arrays and DataFrames for data bigger than RAM</li>
-<li><span class="alert"><code>dask.delayed</code></span> parallelises functions you have already written, and <code>dask.visualize</code> shows the plan</li>
-<li><span class="alert">Parquet</span> cut our January 2000 data from 182 MB to 86 MB and made the group-by much faster</li>
-<li>Next lecture, <span class="alert">Scaling Data Analysis in Practice</span>, puts Polars and DuckDB against pandas and Dask on the WDI panel. They use every core by default, with nothing to configure</li>
+<li><span class="alert">Dask</span>: lazy arrays and DataFrames for data bigger than RAM</li>
+<li><span class="alert"><code>dask.delayed</code></span>: parallelises your own functions; <code>dask.visualize</code> shows the plan</li>
+<li><span class="alert">Parquet</span>: January 2000 data from 182 MB to 86 MB, much faster group-by</li>
+<li>Next lecture, <span class="alert">Scaling Data Analysis in Practice</span>: Polars and DuckDB vs pandas and Dask on the WDI panel</li>
+<li>Polars and DuckDB use every core by default, no configuration</li>
 </ul>
 <div style="font-size: 18px;">
 <table class="caption-top">
@@ -2307,7 +2308,7 @@ Name: x, Length: 26, dtype: float64</code></pre>
 </table>
 </div>
 <ul>
-<li>To try SQL on DataFrames before then, see <a href="https://danilofreire.github.io/datasci350/04-duckdb-sql-tutorial.html"><code>tutorials/04-duckdb-sql-tutorial.qmd</code></a></li>
+<li>SQL on DataFrames before then: <a href="https://danilofreire.github.io/datasci350/04-duckdb-sql-tutorial.html"><code>tutorials/04-duckdb-sql-tutorial.qmd</code></a></li>
 </ul>
 </div></div>
 </div>
