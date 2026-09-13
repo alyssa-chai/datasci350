@@ -34,13 +34,13 @@ editor:
 
 The final project is worth 20% of your course grade. You will work in groups of three to four students and build a reproducible container pipeline from end to end.
 
-Your pipeline does four things. It collects data from a web API with `requests`. It processes that data with Polars or DuckDB. It presents the results in a Quarto report. It ships inside a Docker container that anyone can run.
+Your pipeline does four things. It collects data from a web API with `requests`. It processes that data with pandas or DuckDB. It presents the results in a Quarto report. It ships inside a Docker container that anyone can run.
 
 You submit a GitHub repository. The repository holds your Quarto source, all of your code, and a Dockerfile.
 
 Here is the rule that matters most. _If `docker run` on my machine does not reproduce your report, your project does not exist._ Reproducibility is the point of this course, so it is the point of this project.
 
-You may use Pandas if you prefer it for a particular step, but Polars or DuckDB should do the main work.
+DuckDB should do the main work when the analysis is SQL-shaped: joins, group-bys, and filters over a file. Pandas is fine for the rest. Dask is allowed only if your data does not fit in memory, which an API pull will not reach (see Lecture 21).
 
 # Timeline
 
