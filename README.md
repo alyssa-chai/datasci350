@@ -25,11 +25,6 @@ workflow and create more reliable, reproducible, and robust analyses.
   - Email: [`danilofreire@gmail.com`](mailto:danilofreire@gmail.com)
   - Office hours: By appointment at any time (online or in person)
 
-- Teaching Assistants:
-  - [Alix Morales](mailto:alix.morales@emory.edu) (in class)
-  - [Harris Wang](mailto:harris.wang@emory.edu) (grader)
-  - Feel free to email them to arrange a meeting
-
 ## Learning Outcomes
 
 By the end of this course, students will be able to:
