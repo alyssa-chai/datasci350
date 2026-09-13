@@ -237,10 +237,9 @@ Danilo Freire
 <ul>
 <li>Columnar memory, vectorised kernels, all cores by default</li>
 </ul></li>
-<li><span class="alert">Polars</span>: expressions, lazy mode, streaming, and pandas interop</li>
-<li><span class="alert">DuckDB</span>: SQL over files, out-of-core, results back into pandas or Polars</li>
-<li>Our little <span class="alert">benchmark</span>: <a href="https://pola.rs">Polars</a> and <a href="https://duckdb.org/">DuckDB</a> finished in under a second, way ahead of <a href="https://pandas.pydata.org/">pandas</a> and <a href="https://dask.org/">Dask</a></li>
-<li>Pandas for small data, Polars or DuckDB when it grows, Dask when it leaves one machine</li>
+<li><span class="alert">DuckDB</span>: SQL over files, out-of-core, results back into pandas</li>
+<li>Our little <span class="alert">benchmark</span>: <a href="https://duckdb.org/">DuckDB</a> finished in under a second, way ahead of <a href="https://pandas.pydata.org/">pandas</a> and <a href="https://dask.org/">Dask</a></li>
+<li>pandas for small data, DuckDB when it grows, Dask when it leaves one machine</li>
 <li>Now that your pipeline works, <span class="alert">let’s make it run anywhere!</span> 🤓</li>
 </ul>
 </div><div class="column" style="width:48%;">
@@ -301,7 +300,7 @@ Danilo Freire
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li>Your code works, it is fast thanks to Polars and DuckDB, the report renders, the repository is documented</li>
+<li>Your code works, it is fast thanks to DuckDB, the report renders, the repository is documented</li>
 <li>One question remains: <span class="alert">will it run anywhere else?</span></li>
 <li>What happens when you move it to a new machine, hand it to a colleague, or open it again in six months?</li>
 <li>Everything so far assumed one thing you never wrote down: <span class="alert">the software installed on your laptop</span></li>
@@ -700,7 +699,7 @@ Danilo Freire
 </div><div class="column" style="width:50%;">
 <ul>
 <li><span class="alert"><code>uv.lock</code></span> <span class="alert">is generated for you,</span> recording the exact version and hash of every package</li>
-<li>Mine is 182 lines for eight packages. You never edit it by hand</li>
+<li>Mine is 182 lines for eight packages. <span class="alert">You never edit it by hand</span></li>
 <li><span class="alert">Push both <code>pyproject.toml</code> and <code>uv.lock</code></span>. Your collaborator clones and runs <code>uv sync</code> <span class="alert">to get the same environment:</span></li>
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource {verbatim} number-lines code-with-copy"><code class="sourceCode"><span id="cb16-1"><a></a>uv sync</span>
@@ -1286,21 +1285,21 @@ Danilo Freire
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li><span class="alert">Dependency management</span> is writing down the software your code assumes: Lecture 10’s third ingredient</li>
-<li>The Python 2 <code>print</code> statement showed the failure: the script was fine and the environment moved</li>
-<li><span class="alert"><code>venv</code> and <code>pip</code></span>: an isolated Python, <code>pip freeze</code> writing <code>==</code> pins, <code>pip install -r</code> reading them back</li>
-<li><span class="alert">Conda</span>: environments and packages together, <code>--from-history</code> for a file that travels, <span class="alert">build strings</span> for one that stays home</li>
+<li><span class="alert">Dependency management</span>: writing down the software your code assumes</li>
+<li>Python 2 <code>print</code>: the script was fine, the environment moved</li>
+<li><span class="alert"><code>venv</code> and <code>pip</code></span>: <code>pip freeze</code> writes pins, <code>pip install -r</code> reads them</li>
+<li><span class="alert">Conda</span>: <code>--from-history</code> travels, <span class="alert">build strings</span> stay home</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <ul>
-<li><span class="alert">uv</span>: <code>pyproject.toml</code> and <code>uv.lock</code>, <code>uv sync</code> for collaborators, <code>uv export</code> when a Dockerfile needs <code>requirements.txt</code></li>
-<li><span class="alert">Containers</span>: an image is the recipe, a container is a running instance, and a registry is where images live</li>
-<li>We built one from <code>python:3.14-slim</code> in about two minutes, and <span class="alert">layer caching</span> brought the rebuild down to 0.754 seconds</li>
-<li>Docker Desktop is free at your scale, and <span class="alert">Podman, Colima, OrbStack, and Rancher Desktop</span> run the same commands</li>
+<li><span class="alert">uv</span>: <code>pyproject.toml</code> + <code>uv.lock</code>, then <code>uv sync</code></li>
+<li><span class="alert">Containers</span>: image = recipe, container = running instance, registry = storage</li>
+<li><span class="alert">Layer caching</span>: two-minute build, 0.754-second rebuild</li>
+<li>Docker Desktop is free; <span class="alert">Podman, Colima, OrbStack</span> run the same commands</li>
 </ul>
 </div></div>
 <div style="background: rgba(27, 58, 107, 0.08); padding: 15px; border-radius: 10px; font-size: 20px; margin-top: 15px;">
-<p>The container you push is the deliverable. On my Macbook I will run <code>docker build</code> and then <code>docker run</code>, and your report either appears or it does not 😅</p>
+<p>Your container is the deliverable: I run <code>docker build</code> and <code>docker run</code>, and your report appears or it does not 😅</p>
 </div>
 </div>
 </section>

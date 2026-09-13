@@ -33,10 +33,9 @@ editor:
 - We set up a [Dask cluster]{.alert} and watched work flow through the dashboard
 - We met the ["single-machine renaissance"]{.alert}
   - Columnar memory, vectorised kernels, all cores by default
-- [Polars]{.alert}: expressions, lazy mode, streaming, and pandas interop
-- [DuckDB]{.alert}: SQL over files, out-of-core, results back into pandas or Polars
-- Our little [benchmark]{.alert}: [Polars](https://pola.rs) and [DuckDB](https://duckdb.org/) finished in under a second, way ahead of [pandas](https://pandas.pydata.org/) and [Dask](https://dask.org/)
-- Pandas for small data, Polars or DuckDB when it grows, Dask when it leaves one machine
+- [DuckDB]{.alert}: SQL over files, out-of-core, results back into pandas
+- Our little [benchmark]{.alert}: [DuckDB](https://duckdb.org/) finished in under a second, way ahead of [pandas](https://pandas.pydata.org/) and [Dask](https://dask.org/)
+- pandas for small data, DuckDB when it grows, Dask when it leaves one machine
 - Now that your pipeline works, [let's make it run anywhere!]{.alert} 🤓
 :::
 
@@ -94,7 +93,7 @@ The Dask dashboard during the 200-million-row benchmark
 :::{style="margin-top: 20px; font-size: 24px;"}
 :::{.columns}
 :::{.column width="50%"}
-- Your code works, it is fast thanks to Polars and DuckDB, the report renders, the repository is documented
+- Your code works, it is fast thanks to DuckDB, the report renders, the repository is documented
 - One question remains: [will it run anywhere else?]{.alert}
 - What happens when you move it to a new machine, hand it to a colleague, or open it again in six months?
 - Everything so far assumed one thing you never wrote down: [the software installed on your laptop]{.alert}
@@ -509,7 +508,7 @@ dependencies = [
 
 :::{.column width="50%"}
 - [`uv.lock`]{.alert} [is generated for you,]{.alert} recording the exact version and hash of every package
-- Mine is 182 lines for eight packages. You never edit it by hand
+- Mine is 182 lines for eight packages. [You never edit it by hand]{.alert}
 - [Push both `pyproject.toml` and `uv.lock`]{.alert}. Your collaborator clones and runs `uv sync` [to get the same environment:]{.alert}
 
 ```{verbatim}
@@ -1099,22 +1098,22 @@ Solution: [[Appendix 01]{.button}](#sec-appendix-01)
 :::{style="margin-top: 20px; font-size: 21px;"}
 :::{.columns}
 :::{.column width="50%"}
-- [Dependency management]{.alert} is writing down the software your code assumes: Lecture 10's third ingredient
-- The Python 2 `print` statement showed the failure: the script was fine and the environment moved
-- [`venv` and `pip`]{.alert}: an isolated Python, `pip freeze` writing `==` pins, `pip install -r` reading them back
-- [Conda]{.alert}: environments and packages together, `--from-history` for a file that travels, [build strings]{.alert} for one that stays home
+- [Dependency management]{.alert}: writing down the software your code assumes
+- Python 2 `print`: the script was fine, the environment moved
+- [`venv` and `pip`]{.alert}: `pip freeze` writes pins, `pip install -r` reads them
+- [Conda]{.alert}: `--from-history` travels, [build strings]{.alert} stay home
 :::
 
 :::{.column width="50%"}
-- [uv]{.alert}: `pyproject.toml` and `uv.lock`, `uv sync` for collaborators, `uv export` when a Dockerfile needs `requirements.txt`
-- [Containers]{.alert}: an image is the recipe, a container is a running instance, and a registry is where images live
-- We built one from `python:3.14-slim` in about two minutes, and [layer caching]{.alert} brought the rebuild down to 0.754 seconds
-- Docker Desktop is free at your scale, and [Podman, Colima, OrbStack, and Rancher Desktop]{.alert} run the same commands
+- [uv]{.alert}: `pyproject.toml` + `uv.lock`, then `uv sync`
+- [Containers]{.alert}: image = recipe, container = running instance, registry = storage
+- [Layer caching]{.alert}: two-minute build, 0.754-second rebuild
+- Docker Desktop is free; [Podman, Colima, OrbStack]{.alert} run the same commands
 :::
 :::
 
 :::{style="background: rgba(27, 58, 107, 0.08); padding: 15px; border-radius: 10px; font-size: 20px; margin-top: 15px;"}
-The container you push is the deliverable. On my Macbook I will run `docker build` and then `docker run`, and your report either appears or it does not 😅
+Your container is the deliverable: I run `docker build` and `docker run`, and your report appears or it does not 😅
 :::
 :::
 
