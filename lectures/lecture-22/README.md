@@ -42,6 +42,6 @@ QUARTO_PYTHON=~/miniconda3/envs/datasci/bin/python quarto render 22-sql-revision
 
 Finish the join exercise if you did not complete it in class. Work through Tutorial 04, the DuckDB SQL tutorial on the course website. Check that `import duckdb` works in your environment. Lecture 23 moves from making your analysis fast to making it run anywhere, with containers and dependency management.
 
-The previous deck, `22-scaling-in-practice.qmd`, is still in this folder. Polars now lives in Tutorial 07 on the course website.
+The previous deck, `22-scaling-in-practice.qmd`, is archived in `lectures/archive/`. Polars now lives in Tutorial 07 on the course website.
 
 Tool claims (DuckDB 1.5.5) checked on 2 September 2026.
