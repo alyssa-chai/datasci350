@@ -1,0 +1,2 @@
+IMAGE                       ID             DISK USAGE   CONTENT SIZE   EXTRA
+datasci350-project:latest   2db6beba0405       1.52GB          347MB        

@@ -1,0 +1,58 @@
+
+Starting python3 kernel...Done
+
+Executing 'report.quarto_ipynb'
+  Cell 1/1: 'fig-demo'...
+
+An error occurred while executing the following cell:
+------------------
+
+import duckdb
+import matplotlib.pyplot as plt
+
+# Read the saved snapshot. DuckDB runs SQL straight over the CSV file,
+# and .df() hands the result back as a pandas DataFrame. The file is
+# committed to the repository, so this line works on any machine, with
+# or without an internet connection.
+data = duckdb.sql(
+    "SELECT country, year, value "
+    "FROM 'data/raw/life_expectancy.csv' "
+    "ORDER BY country, year"
+).df()
+
+print(f"Loaded {len(data)} rows covering {data['country'].nunique()} countries.")
+
+# Draw one line per country. groupby splits the table into one smaller
+# table per country, and the loop draws each of them in turn.
+fig, ax = plt.subplots(figsize=(7, 4))
+
+for country, subset in data.groupby("country"):
+    ax.plot(subset["year"], subset["value"], marker="o", markersize=3, label=country)
+
+ax.set_xlabel("Year")
+ax.set_ylabel("Life expectancy at birth (years)")
+ax.set_title("Life expectancy, 2000 to 2023")
+ax.legend()
+ax.grid(alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+------------------
+
+
+[31m---------------------------------------------------------------------------[39m
+[31mIOException[39m                               Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[1][39m[32m, line 8[39m
+[32m      4[39m [38;5;66;03m# Read the saved snapshot. DuckDB runs SQL straight over the CSV file,[39;00m
+[32m      5[39m [38;5;66;03m# and .df() hands the result back as a pandas DataFrame. The file is[39;00m
+[32m      6[39m [38;5;66;03m# committed to the repository, so this line works on any machine, with[39;00m
+[32m      7[39m [38;5;66;03m# or without an internet connection.[39;00m
+[32m----> [39m[32m8[39m data = duckdb.sql(
+[32m      9[39m     [33m"SELECT country, year, value "[39m
+[32m     10[39m     [33m"FROM 'data/raw/life_expectancy.csv' "[39m
+[32m     11[39m     [33m"ORDER BY country, year"[39m
+
+[31mIOException[39m: IO Error: No files found that match the pattern "data/raw/life_expectancy.csv"
+
+[33mWARN: Error encountered when rendering files[39m
+exit code: 1

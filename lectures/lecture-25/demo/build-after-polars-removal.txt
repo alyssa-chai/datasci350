@@ -1,0 +1,258 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 5.54kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:24.04
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 617B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 49.25kB done
+#4 DONE 0.0s
+
+#5 [1/8] FROM docker.io/library/ubuntu:24.04@sha256:33ceb71981b602c1a7443a53469e4dba065f7503eab3078a2d7a57a2ab987517
+#5 resolve docker.io/library/ubuntu:24.04@sha256:33ceb71981b602c1a7443a53469e4dba065f7503eab3078a2d7a57a2ab987517
+#5 resolve docker.io/library/ubuntu:24.04@sha256:33ceb71981b602c1a7443a53469e4dba065f7503eab3078a2d7a57a2ab987517 0.0s done
+#5 DONE 0.0s
+
+#6 [2/8] RUN apt-get update && apt-get install -y --no-install-recommends     ca-certificates     wget     git     python3.12     python3.12-venv     python3-pip &&     apt-get clean && rm -rf /var/lib/apt/lists/*
+#6 CACHED
+
+#7 [3/8] RUN ARCH=$(dpkg --print-architecture) &&     wget -q "https://github.com/quarto-dev/quarto-cli/releases/download/v1.10.18/quarto-1.10.18-linux-${ARCH}.deb" &&     apt-get update &&     apt-get install -y --no-install-recommends ./quarto-1.10.18-linux-${ARCH}.deb &&     rm quarto-1.10.18-linux-${ARCH}.deb &&     apt-get clean && rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [4/8] RUN python3 -m venv /opt/venv
+#8 CACHED
+
+#9 [5/8] COPY requirements.txt /project/requirements.txt
+#9 DONE 0.1s
+
+#10 [6/8] RUN pip install --no-cache-dir -r /project/requirements.txt
+#10 0.491 Collecting requests==2.32.5 (from -r /project/requirements.txt (line 9))
+#10 0.627   Downloading requests-2.32.5-py3-none-any.whl.metadata (4.9 kB)
+#10 0.828 Collecting pandas==3.0.5 (from -r /project/requirements.txt (line 14))
+#10 0.842   Downloading pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl.metadata (79 kB)
+#10 0.872      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.5/79.5 kB 3.1 MB/s eta 0:00:00
+#10 1.184 Collecting duckdb==1.5.5 (from -r /project/requirements.txt (line 15))
+#10 1.197   Downloading duckdb-1.5.5-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl.metadata (4.2 kB)
+#10 1.359 Collecting matplotlib==3.10.8 (from -r /project/requirements.txt (line 18))
+#10 1.412   Downloading matplotlib-3.10.8-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl.metadata (52 kB)
+#10 1.415      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 52.8/52.8 kB 320.8 MB/s eta 0:00:00
+#10 1.473 Collecting ipykernel==7.2.0 (from -r /project/requirements.txt (line 21))
+#10 1.484   Downloading ipykernel-7.2.0-py3-none-any.whl.metadata (4.5 kB)
+#10 1.537 Collecting jupyter-client==8.8.0 (from -r /project/requirements.txt (line 22))
+#10 1.551   Downloading jupyter_client-8.8.0-py3-none-any.whl.metadata (8.4 kB)
+#10 1.600 Collecting nbclient==0.10.4 (from -r /project/requirements.txt (line 23))
+#10 1.628   Downloading nbclient-0.10.4-py3-none-any.whl.metadata (8.3 kB)
+#10 1.682 Collecting nbformat==5.10.4 (from -r /project/requirements.txt (line 24))
+#10 1.696   Downloading nbformat-5.10.4-py3-none-any.whl.metadata (3.6 kB)
+#10 1.777 Collecting pyyaml==6.0.3 (from -r /project/requirements.txt (line 25))
+#10 1.789   Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (2.4 kB)
+#10 1.973 Collecting charset_normalizer<4,>=2 (from requests==2.32.5->-r /project/requirements.txt (line 9))
+#10 1.986   Downloading charset_normalizer-3.5.1-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (45 kB)
+#10 2.002      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.9/45.9 kB 5.0 MB/s eta 0:00:00
+#10 2.035 Collecting idna<4,>=2.5 (from requests==2.32.5->-r /project/requirements.txt (line 9))
+#10 2.049   Downloading idna-3.19-py3-none-any.whl.metadata (9.2 kB)
+#10 2.103 Collecting urllib3<3,>=1.21.1 (from requests==2.32.5->-r /project/requirements.txt (line 9))
+#10 2.117   Downloading urllib3-2.7.0-py3-none-any.whl.metadata (6.9 kB)
+#10 2.161 Collecting certifi>=2017.4.17 (from requests==2.32.5->-r /project/requirements.txt (line 9))
+#10 2.171   Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+#10 2.494 Collecting numpy>=1.26.0 (from pandas==3.0.5->-r /project/requirements.txt (line 14))
+#10 2.510   Downloading numpy-2.5.3-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl.metadata (6.6 kB)
+#10 2.555 Collecting python-dateutil>=2.8.2 (from pandas==3.0.5->-r /project/requirements.txt (line 14))
+#10 2.569   Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+#10 2.668 Collecting contourpy>=1.0.1 (from matplotlib==3.10.8->-r /project/requirements.txt (line 18))
+#10 2.683   Downloading contourpy-1.4.0-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl.metadata (3.8 kB)
+#10 2.712 Collecting cycler>=0.10 (from matplotlib==3.10.8->-r /project/requirements.txt (line 18))
+#10 2.723   Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+#10 2.925 Collecting fonttools>=4.22.0 (from matplotlib==3.10.8->-r /project/requirements.txt (line 18))
+#10 2.941   Downloading fonttools-4.65.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (125 kB)
+#10 2.974      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 125.0/125.0 kB 3.8 MB/s eta 0:00:00
+#10 3.069 Collecting kiwisolver>=1.3.1 (from matplotlib==3.10.8->-r /project/requirements.txt (line 18))
+#10 3.081   Downloading kiwisolver-1.5.1-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl.metadata (5.2 kB)
+#10 3.130 Collecting packaging>=20.0 (from matplotlib==3.10.8->-r /project/requirements.txt (line 18))
+#10 3.142   Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+#10 3.380 Collecting pillow>=8 (from matplotlib==3.10.8->-r /project/requirements.txt (line 18))
+#10 3.391   Downloading pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl.metadata (9.1 kB)
+#10 3.442 Collecting pyparsing>=3 (from matplotlib==3.10.8->-r /project/requirements.txt (line 18))
+#10 3.453   Downloading pyparsing-3.3.2-py3-none-any.whl.metadata (5.8 kB)
+#10 3.509 Collecting comm>=0.1.1 (from ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 3.525   Downloading comm-0.2.3-py3-none-any.whl.metadata (3.7 kB)
+#10 3.653 Collecting debugpy>=1.6.5 (from ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 3.666   Downloading debugpy-1.8.21-py2.py3-none-any.whl.metadata (1.5 kB)
+#10 3.727 Collecting ipython>=7.23.1 (from ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 3.738   Downloading ipython-9.17.1-py3-none-any.whl.metadata (4.6 kB)
+#10 3.778 Collecting jupyter-core!=6.0.*,>=5.1 (from ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 3.789   Downloading jupyter_core-5.9.1-py3-none-any.whl.metadata (1.5 kB)
+#10 3.818 Collecting matplotlib-inline>=0.1 (from ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 3.838   Downloading matplotlib_inline-0.2.2-py3-none-any.whl.metadata (2.4 kB)
+#10 3.874 Collecting nest-asyncio>=1.4 (from ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 3.888   Downloading nest_asyncio-1.6.0-py3-none-any.whl.metadata (2.8 kB)
+#10 4.010 Collecting psutil>=5.7 (from ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 4.028   Downloading psutil-7.2.2-cp36-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (22 kB)
+#10 4.342 Collecting pyzmq>=25 (from ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 4.355   Downloading pyzmq-27.2.0-cp312-abi3-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl.metadata (3.8 kB)
+#10 4.414 Collecting tornado>=6.4.1 (from ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 4.428   Downloading tornado-6.5.8-cp39-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (2.8 kB)
+#10 4.466 Collecting traitlets>=5.4.0 (from ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 4.480   Downloading traitlets-5.16.1-py3-none-any.whl.metadata (10 kB)
+#10 4.574 Collecting fastjsonschema>=2.15 (from nbformat==5.10.4->-r /project/requirements.txt (line 24))
+#10 4.594   Downloading fastjsonschema-2.22.2-py3-none-any.whl.metadata (2.1 kB)
+#10 4.653 Collecting jsonschema>=2.6 (from nbformat==5.10.4->-r /project/requirements.txt (line 24))
+#10 4.667   Downloading jsonschema-4.26.0-py3-none-any.whl.metadata (7.6 kB)
+#10 4.732 Collecting ipython-pygments-lexers>=1.0.0 (from ipython>=7.23.1->ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 4.742   Downloading ipython_pygments_lexers-1.1.1-py3-none-any.whl.metadata (1.1 kB)
+#10 4.776 Collecting jedi>=0.18.2 (from ipython>=7.23.1->ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 4.792   Downloading jedi-0.20.0-py2.py3-none-any.whl.metadata (23 kB)
+#10 4.832 Collecting pexpect>4.6 (from ipython>=7.23.1->ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 4.846   Downloading pexpect-4.9.0-py2.py3-none-any.whl.metadata (2.5 kB)
+#10 4.900 Collecting prompt_toolkit<3.1.0,>=3.0.41 (from ipython>=7.23.1->ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 4.917   Downloading prompt_toolkit-3.0.53-py3-none-any.whl.metadata (6.4 kB)
+#10 4.979 Collecting pygments>=2.14.0 (from ipython>=7.23.1->ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 4.992   Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+#10 5.024 Collecting stack_data>=0.6.0 (from ipython>=7.23.1->ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 5.039   Downloading stack_data-0.6.3-py3-none-any.whl.metadata (18 kB)
+#10 5.097 Collecting attrs>=22.2.0 (from jsonschema>=2.6->nbformat==5.10.4->-r /project/requirements.txt (line 24))
+#10 5.115   Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+#10 5.154 Collecting jsonschema-specifications>=2023.03.6 (from jsonschema>=2.6->nbformat==5.10.4->-r /project/requirements.txt (line 24))
+#10 5.166   Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)
+#10 5.231 Collecting referencing>=0.28.4 (from jsonschema>=2.6->nbformat==5.10.4->-r /project/requirements.txt (line 24))
+#10 5.245   Downloading referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)
+#10 5.583 Collecting rpds-py>=0.25.0 (from jsonschema>=2.6->nbformat==5.10.4->-r /project/requirements.txt (line 24))
+#10 5.596   Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl.metadata (4.1 kB)
+#10 5.640 Collecting platformdirs>=2.5 (from jupyter-core!=6.0.*,>=5.1->ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 5.723   Downloading platformdirs-4.11.8-py3-none-any.whl.metadata (5.5 kB)
+#10 5.786 Collecting six>=1.5 (from python-dateutil>=2.8.2->pandas==3.0.5->-r /project/requirements.txt (line 14))
+#10 5.796   Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+#10 5.856 Collecting parso<0.9.0,>=0.8.6 (from jedi>=0.18.2->ipython>=7.23.1->ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 5.871   Downloading parso-0.8.7-py2.py3-none-any.whl.metadata (8.2 kB)
+#10 5.907 Collecting ptyprocess>=0.5 (from pexpect>4.6->ipython>=7.23.1->ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 5.918   Downloading ptyprocess-0.7.0-py2.py3-none-any.whl.metadata (1.3 kB)
+#10 5.954 Collecting wcwidth>=0.1.4 (from prompt_toolkit<3.1.0,>=3.0.41->ipython>=7.23.1->ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 5.997   Downloading wcwidth-0.8.3-py3-none-any.whl.metadata (43 kB)
+#10 6.006      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.3/43.3 kB 7.6 MB/s eta 0:00:00
+#10 6.062 Collecting typing-extensions>=4.4.0 (from referencing>=0.28.4->jsonschema>=2.6->nbformat==5.10.4->-r /project/requirements.txt (line 24))
+#10 6.075   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#10 6.124 Collecting executing>=1.2.0 (from stack_data>=0.6.0->ipython>=7.23.1->ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 6.139   Downloading executing-2.2.1-py2.py3-none-any.whl.metadata (8.9 kB)
+#10 6.178 Collecting asttokens>=2.1.0 (from stack_data>=0.6.0->ipython>=7.23.1->ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 6.194   Downloading asttokens-3.0.2-py3-none-any.whl.metadata (5.7 kB)
+#10 6.228 Collecting pure-eval (from stack_data>=0.6.0->ipython>=7.23.1->ipykernel==7.2.0->-r /project/requirements.txt (line 21))
+#10 6.270   Downloading pure_eval-0.2.4-py3-none-any.whl.metadata (6.4 kB)
+#10 6.344 Downloading requests-2.32.5-py3-none-any.whl (64 kB)
+#10 6.353    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.7/64.7 kB 8.0 MB/s eta 0:00:00
+#10 6.371 Downloading pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl (10.5 MB)
+#10 9.500    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.5/10.5 MB 3.4 MB/s eta 0:00:00
+#10 9.524 Downloading duckdb-1.5.5-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl (19.4 MB)
+#10 17.26    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.4/19.4 MB 2.6 MB/s eta 0:00:00
+#10 17.28 Downloading matplotlib-3.10.8-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl (9.6 MB)
+#10 21.64    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.6/9.6 MB 2.2 MB/s eta 0:00:00
+#10 21.66 Downloading ipykernel-7.2.0-py3-none-any.whl (118 kB)
+#10 21.69    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 118.8/118.8 kB 3.9 MB/s eta 0:00:00
+#10 21.71 Downloading jupyter_client-8.8.0-py3-none-any.whl (107 kB)
+#10 21.74    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 107.4/107.4 kB 4.0 MB/s eta 0:00:00
+#10 21.76 Downloading nbclient-0.10.4-py3-none-any.whl (25 kB)
+#10 21.79 Downloading nbformat-5.10.4-py3-none-any.whl (78 kB)
+#10 21.81    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.5/78.5 kB 3.4 MB/s eta 0:00:00
+#10 21.83 Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (775 kB)
+#10 22.08    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 775.1/775.1 kB 3.1 MB/s eta 0:00:00
+#10 22.10 Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+#10 22.14    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 137.0/137.0 kB 3.5 MB/s eta 0:00:00
+#10 22.16 Downloading charset_normalizer-3.5.1-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (238 kB)
+#10 22.23    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 238.5/238.5 kB 3.5 MB/s eta 0:00:00
+#10 22.24 Downloading comm-0.2.3-py3-none-any.whl (7.3 kB)
+#10 22.26 Downloading contourpy-1.4.0-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl (356 kB)
+#10 22.36    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 356.3/356.3 kB 4.0 MB/s eta 0:00:00
+#10 22.38 Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
+#10 22.40 Downloading debugpy-1.8.21-py2.py3-none-any.whl (5.4 MB)
+#10 24.31    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.4/5.4 MB 2.8 MB/s eta 0:00:00
+#10 24.33 Downloading fastjsonschema-2.22.2-py3-none-any.whl (27 kB)
+#10 24.38 Downloading fonttools-4.65.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (5.4 MB)
+#10 26.84    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.4/5.4 MB 2.2 MB/s eta 0:00:00
+#10 26.88 Downloading idna-3.19-py3-none-any.whl (68 kB)
+#10 26.93    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 68.5/68.5 kB 1.4 MB/s eta 0:00:00
+#10 26.94 Downloading ipython-9.17.1-py3-none-any.whl (639 kB)
+#10 27.32    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 639.0/639.0 kB 1.7 MB/s eta 0:00:00
+#10 27.34 Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)
+#10 27.38    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 90.6/90.6 kB 2.8 MB/s eta 0:00:00
+#10 27.40 Downloading jupyter_core-5.9.1-py3-none-any.whl (29 kB)
+#10 27.43 Downloading kiwisolver-1.5.1-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl (1.3 MB)
+#10 28.03    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 2.2 MB/s eta 0:00:00
+#10 28.05 Downloading matplotlib_inline-0.2.2-py3-none-any.whl (9.5 kB)
+#10 28.06 Downloading nest_asyncio-1.6.0-py3-none-any.whl (5.2 kB)
+#10 28.10 Downloading numpy-2.5.3-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl (15.7 MB)
+#10 35.38    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 15.7/15.7 MB 2.1 MB/s eta 0:00:00
+#10 35.40 Downloading packaging-26.3-py3-none-any.whl (129 kB)
+#10 35.45    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 130.0/130.0 kB 2.7 MB/s eta 0:00:00
+#10 35.50 Downloading pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl (6.3 MB)
+#10 37.60    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 3.0 MB/s eta 0:00:00
+#10 37.62 Downloading psutil-7.2.2-cp36-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (156 kB)
+#10 37.66    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 157.0/157.0 kB 3.9 MB/s eta 0:00:00
+#10 37.68 Downloading pyparsing-3.3.2-py3-none-any.whl (122 kB)
+#10 37.71    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 122.8/122.8 kB 4.6 MB/s eta 0:00:00
+#10 37.73 Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+#10 37.80    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 229.9/229.9 kB 3.5 MB/s eta 0:00:00
+#10 37.81 Downloading pyzmq-27.2.0-cp312-abi3-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl (697 kB)
+#10 38.11    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 697.7/697.7 kB 2.6 MB/s eta 0:00:00
+#10 38.14 Downloading tornado-6.5.8-cp39-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (451 kB)
+#10 38.27    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 451.7/451.7 kB 3.5 MB/s eta 0:00:00
+#10 38.28 Downloading traitlets-5.16.1-py3-none-any.whl (86 kB)
+#10 38.32    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 86.2/86.2 kB 2.9 MB/s eta 0:00:00
+#10 38.33 Downloading urllib3-2.7.0-py3-none-any.whl (131 kB)
+#10 38.37    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 131.1/131.1 kB 5.1 MB/s eta 0:00:00
+#10 38.39 Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+#10 38.40    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 67.5/67.5 kB 5.7 MB/s eta 0:00:00
+#10 38.42 Downloading ipython_pygments_lexers-1.1.1-py3-none-any.whl (8.1 kB)
+#10 38.47 Downloading jedi-0.20.0-py2.py3-none-any.whl (4.9 MB)
+#10 41.02    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.9/4.9 MB 1.9 MB/s eta 0:00:00
+#10 41.04 Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+#10 41.05 Downloading pexpect-4.9.0-py2.py3-none-any.whl (63 kB)
+#10 41.07    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.8/63.8 kB 10.5 MB/s eta 0:00:00
+#10 41.09 Downloading platformdirs-4.11.8-py3-none-any.whl (24 kB)
+#10 41.11 Downloading prompt_toolkit-3.0.53-py3-none-any.whl (392 kB)
+#10 41.24    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 392.3/392.3 kB 3.0 MB/s eta 0:00:00
+#10 41.26 Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+#10 41.74    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 2.7 MB/s eta 0:00:00
+#10 41.75 Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
+#10 41.77 Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl (368 kB)
+#10 41.91    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 368.2/368.2 kB 2.8 MB/s eta 0:00:00
+#10 41.93 Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+#10 41.95 Downloading stack_data-0.6.3-py3-none-any.whl (24 kB)
+#10 41.98 Downloading asttokens-3.0.2-py3-none-any.whl (28 kB)
+#10 42.03 Downloading executing-2.2.1-py2.py3-none-any.whl (28 kB)
+#10 42.05 Downloading parso-0.8.7-py2.py3-none-any.whl (107 kB)
+#10 42.10    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 107.0/107.0 kB 2.3 MB/s eta 0:00:00
+#10 42.12 Downloading ptyprocess-0.7.0-py2.py3-none-any.whl (13 kB)
+#10 42.14 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#10 42.16    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.6/45.6 kB 3.2 MB/s eta 0:00:00
+#10 42.17 Downloading wcwidth-0.8.3-py3-none-any.whl (331 kB)
+#10 42.32    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 331.7/331.7 kB 2.5 MB/s eta 0:00:00
+#10 42.33 Downloading pure_eval-0.2.4-py3-none-any.whl (11 kB)
+#10 42.63 Installing collected packages: pure-eval, ptyprocess, wcwidth, urllib3, typing-extensions, traitlets, tornado, six, rpds-py, pyzmq, pyyaml, pyparsing, pygments, psutil, platformdirs, pillow, pexpect, parso, packaging, numpy, nest-asyncio, kiwisolver, idna, fonttools, fastjsonschema, executing, duckdb, debugpy, cycler, comm, charset_normalizer, certifi, attrs, asttokens, stack_data, requests, referencing, python-dateutil, prompt_toolkit, matplotlib-inline, jupyter-core, jedi, ipython-pygments-lexers, contourpy, pandas, matplotlib, jupyter-client, jsonschema-specifications, ipython, jsonschema, ipykernel, nbformat, nbclient
+#10 48.29 Successfully installed asttokens-3.0.2 attrs-26.1.0 certifi-2026.7.22 charset_normalizer-3.5.1 comm-0.2.3 contourpy-1.4.0 cycler-0.12.1 debugpy-1.8.21 duckdb-1.5.5 executing-2.2.1 fastjsonschema-2.22.2 fonttools-4.65.0 idna-3.19 ipykernel-7.2.0 ipython-9.17.1 ipython-pygments-lexers-1.1.1 jedi-0.20.0 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 jupyter-client-8.8.0 jupyter-core-5.9.1 kiwisolver-1.5.1 matplotlib-3.10.8 matplotlib-inline-0.2.2 nbclient-0.10.4 nbformat-5.10.4 nest-asyncio-1.6.0 numpy-2.5.3 packaging-26.3 pandas-3.0.5 parso-0.8.7 pexpect-4.9.0 pillow-12.3.0 platformdirs-4.11.8 prompt_toolkit-3.0.53 psutil-7.2.2 ptyprocess-0.7.0 pure-eval-0.2.4 pygments-2.21.0 pyparsing-3.3.2 python-dateutil-2.9.0.post0 pyyaml-6.0.3 pyzmq-27.2.0 referencing-0.37.0 requests-2.32.5 rpds-py-2026.6.3 six-1.17.0 stack_data-0.6.3 tornado-6.5.8 traitlets-5.16.1 typing-extensions-4.16.0 urllib3-2.7.0 wcwidth-0.8.3
+#10 DONE 49.1s
+
+#11 [7/8] WORKDIR /project
+#11 DONE 0.1s
+
+#12 [8/8] COPY . /project
+#12 DONE 0.0s
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers 5.8s done
+#13 exporting manifest sha256:111b58a1c59b2e272653a09e6678e3e27f04c803f31f5132783c3e84b2053174
+#13 exporting manifest sha256:111b58a1c59b2e272653a09e6678e3e27f04c803f31f5132783c3e84b2053174 done
+#13 exporting config sha256:b62af9868af4525b28b46efb1374e4cf1be6b3ba4336dc9e8711024d8269a582 0.0s done
+#13 exporting attestation manifest sha256:91731c4b69100313842cd5291418b26e71e3bfea3931988b9fdc67e23f9dc9ab 0.0s done
+#13 exporting manifest list sha256:2db6beba0405efd7bad7abde7cd518ce48bf4531c287233ab6b580ffe7119948 done
+#13 naming to docker.io/library/datasci350-project:latest done
+#13 unpacking to docker.io/library/datasci350-project:latest
+#13 unpacking to docker.io/library/datasci350-project:latest 1.5s done
+#13 DONE 7.3s
+docker build --progress=plain -t datasci350-project .  0.13s user 0.12s system 0% cpu 57.071 total

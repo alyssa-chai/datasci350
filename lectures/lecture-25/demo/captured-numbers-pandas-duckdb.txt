@@ -1,0 +1,96 @@
+Captured numbers: pandas + DuckDB starter (Polars removed)
+Machine: Apple Silicon (arm64), Docker daemon OrbStack
+Date captured: 13 September 2026
+Image: datasci350-project, base ubuntu:24.04, Quarto 1.10.18
+
+WHAT THE STARTER USES NOW
+  Pull script  scripts/pull_data.py    pandas
+  Report chunk report.qmd              duckdb.sql(...).df() + matplotlib
+  Polars mentions remaining            0
+
+VERSIONS INSIDE THE IMAGE (demo/inspect.txt)
+  quarto --version                     1.10.18
+  which python                         /opt/venv/bin/python
+  pandas                               3.0.5
+  duckdb                               1.5.5
+  matplotlib                           3.10.8
+  pwd                                  /project
+  whoami                               root
+  data/raw                             life_expectancy.csv, life_expectancy_raw.json
+  pip freeze | wc -l                   53
+
+BUILD AFTER POLARS REMOVAL (demo/build-after-polars-removal.txt)
+  apt system packages step             CACHED
+  Quarto step                          CACHED
+  python3 -m venv step                 CACHED
+  pip install step                     49.1 s  (reran: requirements.txt changed)
+  export/unpack layers                 7.3 s
+  total wall clock                     57.1 s
+
+IMAGE SIZE
+  disk usage                           1.52 GB
+  content size                         347 MB
+
+LAYER SIZES (demo/docker-history.txt, largest first)
+  Quarto install                       459 MB
+  pip install requirements             421 MB
+  apt system packages                  169 MB
+  ubuntu:24.04 base                    108 MB
+  python3 -m venv                      15.6 MB
+  COPY . /project                      81.9 kB
+  COPY requirements.txt                4.1 kB
+  ENV / WORKDIR / CMD                  0 B each
+
+TIMED RUN (demo/run.txt)
+  docker run, render + copy            3.24 s
+  output/report.html                   1,314,625 bytes
+  printed by the demo chunk            "Loaded 96 rows covering 4 countries"
+
+WARM REBUILD AFTER A TITLE EDIT (demo/warm-rebuild-title.txt)
+  every step through pip               CACHED
+  only COPY . /project reran
+  total wall clock                     0.67 s
+  (57.1 s -> 0.67 s: the pip layer is what caching saves)
+
+EXERCISE: ADD seaborn==0.13.2 (demo/rebuild-add-seaborn.txt)
+  latest on PyPI                       0.13.2
+  Downloading line                     seaborn-0.13.2-py3-none-any.whl (294 kB)
+  pip install step                     50.0 s  (full reinstall, not just seaborn)
+  total wall clock                     57.7 s
+  disk usage                           1.52 GB
+  content size                         348 MB  (was 347 MB)
+  pip layer                            424 MB  (was 421 MB)
+  pip freeze | wc -l                   54      (was 53)
+
+EXERCISE: REMOVE THE seaborn LINE AGAIN (demo/rebuild-revert-seaborn.txt)
+  every step                           CACHED
+  total wall clock                     2.06 s
+  content size                         347 MB
+  pip freeze | wc -l                   53
+  Teaching point: the pre-seaborn pip layer was still in the cache, so
+  going back cost 2 s while going forward cost 58 s.
+
+FAILURE TWO: A PIN THAT DOES NOT EXIST (demo/failure-two-duckdb.txt)
+  edit                                 duckdb==1.5.5 -> duckdb==1.5.9
+  pip index versions duckdb            LATEST: 1.5.5 (1.5.9 does not exist)
+  build reaches                        Collecting pandas==3.0.5, then stops
+  error line 1   ERROR: Could not find a version that satisfies the
+                 requirement duckdb==1.5.9 (from versions: ... 1.5.4, 1.5.5,
+                 1.5.6.dev36, 1.6.0.dev379, 2.0.0.dev2609121639)
+  error line 2   ERROR: No matching distribution found for duckdb==1.5.9
+  failing step   Dockerfile:85
+                 RUN pip install --no-cache-dir -r /project/requirements.txt
+  fails at       build time, not run time
+  Teaching point: the version list pip prints is the fix. Read it and pick a
+  version that is on it.
+
+SECRETS RE-CHECK
+  skipped: no .env file in the starter folder.
+  .env is listed in both .dockerignore and .gitignore.
+
+FINAL STATE
+  data/raw/life_expectancy.csv         unchanged, byte-identical after the
+                                       pandas rewrite (96 rows)
+  git status                           6 modified files, no untracked files
+  last build                           0.36 s, fully cached
+  image matches the working tree

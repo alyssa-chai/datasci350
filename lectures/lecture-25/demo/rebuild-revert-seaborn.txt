@@ -1,0 +1,60 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 5.54kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:24.04
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 617B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 1.12kB done
+#4 DONE 0.0s
+
+#5 [1/8] FROM docker.io/library/ubuntu:24.04@sha256:33ceb71981b602c1a7443a53469e4dba065f7503eab3078a2d7a57a2ab987517
+#5 resolve docker.io/library/ubuntu:24.04@sha256:33ceb71981b602c1a7443a53469e4dba065f7503eab3078a2d7a57a2ab987517 0.0s done
+#5 DONE 0.0s
+
+#6 [5/8] COPY requirements.txt /project/requirements.txt
+#6 CACHED
+
+#7 [3/8] RUN ARCH=$(dpkg --print-architecture) &&     wget -q "https://github.com/quarto-dev/quarto-cli/releases/download/v1.10.18/quarto-1.10.18-linux-${ARCH}.deb" &&     apt-get update &&     apt-get install -y --no-install-recommends ./quarto-1.10.18-linux-${ARCH}.deb &&     rm quarto-1.10.18-linux-${ARCH}.deb &&     apt-get clean && rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [6/8] RUN pip install --no-cache-dir -r /project/requirements.txt
+#8 CACHED
+
+#9 [4/8] RUN python3 -m venv /opt/venv
+#9 CACHED
+
+#10 [2/8] RUN apt-get update && apt-get install -y --no-install-recommends     ca-certificates     wget     git     python3.12     python3.12-venv     python3-pip &&     apt-get clean && rm -rf /var/lib/apt/lists/*
+#10 CACHED
+
+#11 [7/8] WORKDIR /project
+#11 CACHED
+
+#12 [8/8] COPY . /project
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 exporting manifest sha256:111b58a1c59b2e272653a09e6678e3e27f04c803f31f5132783c3e84b2053174 done
+#13 exporting config sha256:b62af9868af4525b28b46efb1374e4cf1be6b3ba4336dc9e8711024d8269a582 done
+#13 exporting attestation manifest sha256:bc770560dbc51e84f981dcd9e9eddee12552cc9730358572e5aea9464e9a3cda
+#13 exporting attestation manifest sha256:bc770560dbc51e84f981dcd9e9eddee12552cc9730358572e5aea9464e9a3cda 0.0s done
+#13 exporting manifest list sha256:fbd79648a0ec042b8c4d7235fcf2661ce9808000975c4181fdc12306bed8611d done
+#13 naming to docker.io/library/datasci350-project:latest done
+#13 unpacking to docker.io/library/datasci350-project:latest
+#13 unpacking to docker.io/library/datasci350-project:latest 1.6s done
+#13 DONE 1.7s
+docker build --progress=plain -t datasci350-project .  0.08s user 0.07s system 7% cpu 2.058 total
+=== images after revert ===
+WARNING: This output is designed for human readability. For machine-readable output, please use --format.
+IMAGE                       ID             DISK USAGE   CONTENT SIZE   EXTRA
+datasci350-project:latest   fbd79648a0ec       1.52GB          347MB        
+=== pip freeze | wc -l ===
+53

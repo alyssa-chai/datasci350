@@ -1,0 +1,41 @@
+
+Starting python3 kernel...Done
+
+Executing 'report.quarto_ipynb'
+  Cell 1/1: 'fig-demo'...Done
+
+[1mpandoc [22m
+  to: html
+  output-file: report.html
+  standalone: true
+  embed-resources: true
+  section-divs: true
+  html-math-method: mathjax
+  wrap: none
+  default-image-extension: png
+  toc: true
+  toc-depth: 2
+  
+[1mmetadata[22m
+  document-css: false
+  link-citations: true
+  date-format: long
+  lang: en-GB
+  title: Your project title goes here
+  subtitle: 'DATASCI 350: Data Science Computing'
+  author:
+    - First group member
+    - Second group member
+    - Third group member
+  date: today
+  
+Output created: report.html
+
+Rendered report is in output/report.html
+docker run --rm -v "$(pwd)/output:/project/output" datasci350-project  0.01s user 0.01s system 0% cpu 3.237 total
+=== ls -la output ===
+total 4352
+drwxr-xr-x   3 dafreir  staff       96 Sep 13 15:01 .
+drwxr-xr-x@ 12 dafreir  staff      384 Sep 13 15:13 ..
+-rw-r--r--@  1 dafreir  staff  1314625 Sep 13 15:29 report.html
+Loaded 96 rows covering 4 countries

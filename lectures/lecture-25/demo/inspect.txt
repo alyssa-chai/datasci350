@@ -1,0 +1,8 @@
+1.10.18
+/opt/venv/bin/python
+3.0.5 1.5.5 3.10.8
+life_expectancy.csv
+life_expectancy_raw.json
+/project
+root
+53

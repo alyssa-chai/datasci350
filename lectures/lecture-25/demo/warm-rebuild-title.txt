@@ -1,0 +1,52 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 5.54kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:24.04
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 617B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 4.95kB done
+#4 DONE 0.0s
+
+#5 [1/8] FROM docker.io/library/ubuntu:24.04@sha256:33ceb71981b602c1a7443a53469e4dba065f7503eab3078a2d7a57a2ab987517
+#5 resolve docker.io/library/ubuntu:24.04@sha256:33ceb71981b602c1a7443a53469e4dba065f7503eab3078a2d7a57a2ab987517 0.0s done
+#5 DONE 0.0s
+
+#6 [3/8] RUN ARCH=$(dpkg --print-architecture) &&     wget -q "https://github.com/quarto-dev/quarto-cli/releases/download/v1.10.18/quarto-1.10.18-linux-${ARCH}.deb" &&     apt-get update &&     apt-get install -y --no-install-recommends ./quarto-1.10.18-linux-${ARCH}.deb &&     rm quarto-1.10.18-linux-${ARCH}.deb &&     apt-get clean && rm -rf /var/lib/apt/lists/*
+#6 CACHED
+
+#7 [2/8] RUN apt-get update && apt-get install -y --no-install-recommends     ca-certificates     wget     git     python3.12     python3.12-venv     python3-pip &&     apt-get clean && rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [5/8] COPY requirements.txt /project/requirements.txt
+#8 CACHED
+
+#9 [4/8] RUN python3 -m venv /opt/venv
+#9 CACHED
+
+#10 [6/8] RUN pip install --no-cache-dir -r /project/requirements.txt
+#10 CACHED
+
+#11 [7/8] WORKDIR /project
+#11 CACHED
+
+#12 [8/8] COPY . /project
+#12 DONE 0.0s
+
+#13 exporting to image
+#13 exporting layers 0.1s done
+#13 exporting manifest sha256:552f6dc0bf31ee628b0fa19c6e3288431b9bca82cbfe54832372b8a2e102d7c4 0.0s done
+#13 exporting config sha256:0afd39f29302e9d872e04c2c21ef05a53bfaa1eb2ee307794a098faa2da6eea1 0.0s done
+#13 exporting attestation manifest sha256:d7ebfa95cba23ee5388417abd748492dd519c059b0058959b932e104dedde89d 0.0s done
+#13 exporting manifest list sha256:7463aec48fd79d11cd548277b26ce4e29d6cd4d8d6840e1be822dc96edf25b30 0.0s done
+#13 naming to docker.io/library/datasci350-project:latest done
+#13 unpacking to docker.io/library/datasci350-project:latest 0.0s done
+#13 DONE 0.2s
+docker build --progress=plain -t datasci350-project .  0.08s user 0.07s system 22% cpu 0.666 total
