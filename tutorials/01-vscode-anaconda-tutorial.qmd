@@ -42,7 +42,7 @@ editor:
 
 # Introduction
 
-This tutorial installs Visual Studio Code, installs Anaconda, and connects the two. It assumes you have never written a line of code. Every step has a screenshot. If a step fails, email me (<danilo.freire@emory.edu>) or ask one of the teaching assistants.
+This tutorial installs Visual Studio Code, installs Anaconda, and connects the two. It assumes you have never written a line of code. Every step has a screenshot. If a step fails, email me (<danilo.freire@emory.edu>).
 
 # Why VS Code?
 
