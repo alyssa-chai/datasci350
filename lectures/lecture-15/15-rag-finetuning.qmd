@@ -63,7 +63,7 @@ How can we change that?
 [1. Embeddings, again]{.alert}
 
 - The Lecture 12 idea, extended from words to whole passages
-- Cosine similarity: one line of numpy
+- Cosine similarity: a dot product, spelled out in plain Python
 
 [2. Retrieval-augmented generation]{.alert}
 
@@ -137,6 +137,8 @@ In Lecture 12 this picture was an explanation of what happens inside a model. To
 ```python
 similarity = a @ b   # both already length 1
 ```
+
+- Our script spells the same formula out by hand, in a `cosine` function with a loop and `math.sqrt`, so nothing is hidden
 
 - To find the best match for a question, embed it, score it against every candidate, and take the [highest score]{.alert}
 :::
@@ -323,7 +325,7 @@ Retrieval is a filter in front of the window. It sends the 600 tokens that matte
 # Let's build one: rag.py {background-color="#1B3A6B"}
 
 ## The corpus: this course, asking about itself
-### Seven files you can check by hand
+### Eight files you can check by hand
 
 :::{style="margin-top: 20px; font-size: 22px;"}
 :::{.columns}
@@ -413,19 +415,21 @@ READMEs survive this without damage. Check what the rule drops from your own not
 from pathlib import Path
 
 def load_chunks(folder):
-    """Split every markdown file into paragraph chunks."""
+    """Split every file into paragraph chunks."""
     chunks = []
     for path in sorted(Path(folder).glob("*.md")):
-        for block in path.read_text(encoding="utf-8").split("\n\n"):
-            block = block.strip()
-            if len(block) > 80:
-                chunks.append((path.name, block))
+        text = path.read_text(encoding="utf-8")
+        paragraphs = text.split("\n\n")
+        for paragraph in paragraphs:
+            clean = paragraph.strip()
+            if len(clean) > 80:
+                chunks.append((path.name, clean))
     return chunks
 ```
 
 :::{style="font-size: 19px; margin-top: 12px;"}
 - `Path(folder).glob("*.md")` collects every markdown file in the folder, and `sorted` puts them in a fixed order
-- `read_text` loads one file as a single string, and `split("\n\n")` cuts it at every blank line
+- `read_text` loads one file as a single string, and `split("\n\n")` cuts it at every blank line into `paragraphs`
 - `strip` removes the leftover spaces and newlines, the `if` drops anything too short to be worth embedding
 :::
 :::
@@ -433,8 +437,8 @@ def load_chunks(folder):
 
 :::{.column width="45%"}
 :::{style="margin-top: 20px;"}
-- Just eight lines of pre-processing: [paragraph chunking]{.alert} with an 80-character floor
-- Each chunk travels as a pair, `(path.name, block)`, so every retrieved passage [remembers which file it came from]{.alert}. That is what makes citations possible later
+- Ten lines of pre-processing: [paragraph chunking]{.alert} with an 80-character floor
+- Each chunk travels as a pair, `(path.name, clean)`, so every retrieved passage [remembers which file it came from]{.alert}. That is what makes citations possible later
 - On our corpus this yields ~130 chunks from 8 files
 
 :::{style="background: rgba(27, 58, 107, 0.08); padding: 12px; border-radius: 10px; font-size: 19px; margin-top: 10px;"}
@@ -445,56 +449,98 @@ No [LangChain](https://www.langchain.com/) and [no vector database](https://www.
 :::
 :::
 
-## rag.py, part 2: embed and score {#sec-rag-part-2}
+## rag.py, part 2: embed and measure {#sec-rag-part-2}
+
+:::{style="margin-top: 20px; font-size: 20px;"}
+:::{.columns}
+:::{.column width="60%"}
+- Two small functions: one turns text into vectors, the other compares two vectors:
+
+```python
+import math
+import ollama
+
+EMBED_MODEL = "embeddinggemma"
+
+def embed(texts):
+    """Turn a list of texts into one vector per text."""
+    response = ollama.embed(model=EMBED_MODEL, input=texts)
+    return response["embeddings"]
+
+def cosine(a, b):
+    """Cosine similarity between two vectors."""
+    dot = 0.0
+    length_a = 0.0
+    length_b = 0.0
+    for i in range(len(a)):
+        dot = dot + a[i] * b[i]
+        length_a = length_a + a[i] * a[i]
+        length_b = length_b + b[i] * b[i]
+    return dot / (math.sqrt(length_a) * math.sqrt(length_b))
+```
+:::
+
+:::{.column width="40%"}
+- `embed` sends a list of texts to `EMBED_MODEL` and gets back [one list of 768 numbers per text]{.alert}
+- One call embeds [every chunk at once]{.alert}
+- The question goes through the [same model]{.alert}
+  - Two different embedding models produce two unrelated spaces, and the geometry stops meaning anything
+- `cosine` is the formula from the earlier slide, written out: multiply the pairs, add them up, divide by the two lengths
+- Dividing by the lengths is what makes the score sit between -1 and 1, whatever the passage length
+
+:::{style="background: rgba(27, 58, 107, 0.08); padding: 12px; border-radius: 10px; font-size: 19px; margin-top: 10px;"}
+The whole script is in [Appendix 02](#sec-appendix-02). A library would give you `cosine` in one call; here you can read every step of it
+:::
+:::
+:::
+:::
+
+## rag.py, part 3: score and rank
 
 :::{style="margin-top: 20px; font-size: 20px;"}
 :::{.columns}
 :::{.column width="55%"}
-- Turn the chunks and the question into vectors, then score one against the other:
+- Score every chunk against the question, then keep the best three:
 
 ```python
-import numpy as np
-import ollama
+TOP_K = 3
+QUESTION = "What does Quiz 02 cover?"
 
-def embed(texts):
-    response = ollama.embed(model="embeddinggemma",
-                            input=texts)
-    return np.array(response["embeddings"])
+chunk_texts = []
+for name, text in chunks:
+    chunk_texts.append(text)
 
-chunk_vectors = embed([text for _, text in chunks])
-question_vector = embed([question])[0]
+chunk_vectors = embed(chunk_texts)
+question_vector = embed([QUESTION])[0]
 
-# Cosine similarity: normalise, then dot product
-chunk_vectors /= np.linalg.norm(chunk_vectors,
-                                axis=1, keepdims=True)
-question_vector /= np.linalg.norm(question_vector)
-scores = chunk_vectors @ question_vector
+scores = []
+for vector in chunk_vectors:
+    scores.append(cosine(vector, question_vector))
 
-top = np.argsort(scores)[::-1][:3]
+ranked = []
+for i in range(len(chunks)):
+    ranked.append((scores[i], chunks[i]))
+ranked.sort(reverse=True)
+top = ranked[:TOP_K]
 ```
-
-:::{style="font-size: 19px; margin-top: 12px;"}
-- `embed` sends a list of texts to `embeddinggemma` and returns a numpy array with [one row of 768 numbers per text]{.alert}
-- Dividing by `np.linalg.norm` rescales every row to length 1, which is what turns a dot product into a cosine
-:::
 :::
 
 :::{.column width="45%"}
-- `question` is [the question we want to ask]{.alert}, typed in the terminal. The whole script is in [Appendix 02](#sec-appendix-02)
-- `@` multiplies the matrix by the question vector, giving [one score per chunk]{.alert}, and `argsort(...)[::-1][:3]` sorts them and keeps the three highest
-- One call embeds [every chunk at once]{.alert}
-- The question gets the same treatment, from the [same model]{.alert} 
-  - Two different embedding models produce two unrelated spaces, and the geometry stops meaning anything
+- `QUESTION` is [the question we want to ask]{.alert}, a constant at the top of the file. Edit it and run the script again
+- The first loop takes the [text half]{.alert} of each pair, because `embed` wants plain strings
+- The second loop produces [one score per chunk]{.alert}, in the same order as `chunks`
+- `ranked` holds `(score, chunk)` pairs. Sorting a list of pairs sorts on the [first item]{.alert}, so `reverse=True` puts the best score first
+- `[:TOP_K]` keeps the three highest
 - [Commercial "vector search" is this, at a much larger scale]{.alert}
 
 :::{style="background: rgba(27, 58, 107, 0.08); padding: 12px; border-radius: 10px; font-size: 19px; margin-top: 10px;"}
-The retrieval half of RAG is [this slide]{.alert}. Everything after it is prompting
+The retrieval half of RAG is [these two slides]{.alert}. Everything after them is prompting
 :::
 :::
 :::
 :::
 
-## rag.py, part 3: generate
+## rag.py, part 4: generate
 
 :::{style="margin-top: 20px; font-size: 21px;"}
 :::{.columns}
@@ -502,21 +548,27 @@ The retrieval half of RAG is [this slide]{.alert}. Everything after it is prompt
 - Paste the retrieved chunks into a prompt, then ask the chat model:
 
 ```python
-context = "\n\n".join(chunks[i][1] for i in top)
+CHAT_MODEL = "llama3.2:1b"
+
+passages = []
+for score, chunk in top:
+    passages.append(chunk[1])
+context = "\n\n".join(passages)
+
 prompt = (
     "Answer the question using ONLY the context below. "
     "If the answer is not in the context, "
     "say you do not know.\n\n"
-    f"Context:\n{context}\n\nQuestion: {question}"
+    f"Context:\n{context}\n\nQuestion: {QUESTION}"
 )
 reply = ollama.chat(
-    model="llama3.2:1b",
+    model=CHAT_MODEL,
     messages=[{"role": "user", "content": prompt}])
 print(reply.message.content)
 ```
 
 :::{style="margin-top: 12px;"}
-- `top` holds row numbers, `chunks[i][1]` takes the [text half]{.alert} of each pair, and `join` glues them together
+- The loop takes the [text half]{.alert} of each retrieved pair, and `join` glues the three passages together with blank lines between them
 - The four quoted lines are [one string]{.alert}. Python joins pieces that sit side by side, so a long prompt can break over several lines
 - The `f` drops `context` and `question` into the text
 - `ollama.chat` is the Lecture 14 call, and `reply.message.content` is the answer
@@ -527,7 +579,7 @@ print(reply.message.content)
 - Generation is [ordinary prompting]{.alert} from Lecture 12: context, task, and what to do when the answer is missing
 - "Answer ONLY from the context" is the [grounding instruction]{.alert}. Small models still leak training memory past it
 - The next sentence is the [escape hatch]{.alert}. Without it, a model with no useful context hallucinates
-- Swap `llama3.2:1b` for any model you have pulled. Only the writing changes, not the retrieval
+- Point `CHAT_MODEL` at any model you have pulled. Only the writing changes; retrieval stays the same
 
 :::{style="background: rgba(27, 58, 107, 0.08); padding: 12px; border-radius: 10px; font-size: 19px; margin-top: 10px;"}
 This is a prompt like any other. PTCF still applies: the context is C, the task is T, and we skipped the persona
@@ -541,7 +593,7 @@ This is a prompt like any other. PTCF still applies: the context is C, the task 
 :::{style="margin-top: 20px; font-size: 22px;"}
 :::{style="margin-top: 30px; margin-bottom: 30px;"}
 ```text
-$ python rag.py "What does Quiz 02 cover?"
+$ python rag.py          # QUESTION = "What does Quiz 02 cover?"
 Corpus: 132 chunks from 8 files
 
 Retrieved chunks:
@@ -550,8 +602,10 @@ Retrieved chunks:
   [0.429] quiz-01-readme.md: There are two bonus tasks at the end of the quiz README. Attempt them ...
 
 Answer:
-Based on the context, Quiz 02: Literate Programming covers lectures 10 and 11:
-Quarto, Markdown, citations, `freeze`, and building a site.
+Based on the context, Quiz 02: Literate Programming covers topics such as:
+
+1. Lectures 10 and 11: Quarto, Markdown, citations, `freeze`, and building a site.
+2. Open notes, open slides, open web, and AI allowed.
 ```
 :::
 
@@ -629,14 +683,14 @@ When a question fails, the table tells you where to look:
 :::{.column width="55%"}
 1. Download the `demo/` folder from the course repository
 2. Run `ollama pull embeddinggemma`
-3. Run `pip install ollama numpy`
-4. Run `python rag.py "What does Quiz 02 cover?"`
-5. Ask two more questions the corpus can answer
+3. Run `pip install ollama`
+4. Open `rag.py`, set `QUESTION` to "What does Quiz 02 cover?", and run `python rag.py`
+5. Change `QUESTION` twice more, to questions the corpus can answer
 6. Check each answer against the file it cites
-7. Ask "What is the capital of Nepal?"
+7. Set `QUESTION` to "What is the capital of Nepal?" and run again
 8. Look at the retrieval scores and the model's answer
 9. In `rag.py`, change `TOP_K` from 3 to 1
-10. Ask your questions again and note what degrades
+10. Run your questions again and note what degrades
 :::
 
 :::{.column width="45%"}
@@ -665,6 +719,7 @@ Expected behaviour and troubleshooting:
 :::{.columns}
 :::{.column width="52%"}
 - Our script compares the question against [every chunk]{.alert}. That is instant at 132 chunks and hopeless at 100 million
+- The pure-Python loop is fine for a few hundred chunks. At [100,000 chunks]{.alert} it would keep you waiting on every question
 - A [vector database]{.alert} adds an index over the embeddings, the way [Postgres](https://www.postgresql.org/) answers `WHERE` clauses without reading every row
 - The index does [approximate nearest neighbour]{.alert} search: a near-perfect top 3 in milliseconds, instead of a perfect top 3 in hours
 - Names you will meet: [FAISS](https://github.com/facebookresearch/FAISS) (a library), [Chroma](https://www.chroma-db.com/) (a small local database), [pgvector](https://github.com/pgvector/pgvector) (vectors inside Postgres)
@@ -1036,10 +1091,10 @@ Engineering judgement is knowing which rung you are on, and [refusing to climb e
 :::{.columns}
 :::{.column width="50%"}
 - Embeddings work on [whole passages]{.alert}: one vector per paragraph, same geometry as Lecture 12
-- Cosine similarity [ranks candidates]{.alert}: normalise, dot product, sort
+- Cosine similarity [ranks candidates]{.alert}: one score per chunk, sorted
 - RAG is [chunk → embed → store → retrieve → generate]{.alert}, and the first three run only once
 - Retrieval filters what reaches the context window: [$0.09 instead of $18]{.alert} per thousand questions, and no "lost in the middle"
-- Fifty lines of numpy is a [working pipeline]{.alert}. Databases and frameworks change the scale, but not the idea
+- Ninety lines of plain Python is a [working pipeline]{.alert}. Databases and frameworks run the same five stages at a larger scale
 :::
 
 :::{.column width="50%"}
@@ -1128,66 +1183,89 @@ Errors and fixes are in [[Appendix 04]{.button}](#sec-appendix-04)
 ```python
 """A minimal RAG pipeline over the course's own notes."""
 
-import sys
+import math
 from pathlib import Path
 
-import numpy as np
 import ollama
 
 EMBED_MODEL = "embeddinggemma"
 CHAT_MODEL = "llama3.2:1b"
 TOP_K = 3
+QUESTION = "What does Quiz 02 cover?"
 
 
 def load_chunks(folder):
     """Split every markdown file into paragraph chunks."""
     chunks = []
     for path in sorted(Path(folder).glob("*.md")):
-        for block in path.read_text(encoding="utf-8").split("\n\n"):
-            block = block.strip()
-            if len(block) > 80:
-                chunks.append((path.name, block))
+        text = path.read_text(encoding="utf-8")
+        paragraphs = text.split("\n\n")
+        for paragraph in paragraphs:
+            clean = paragraph.strip()
+            if len(clean) > 80:
+                chunks.append((path.name, clean))
     return chunks
 
 
 def embed(texts):
     """Turn a list of texts into one vector per text."""
     response = ollama.embed(model=EMBED_MODEL, input=texts)
-    return np.array(response["embeddings"])
+    return response["embeddings"]
 
 
-def main():
-    question = sys.argv[1] if len(sys.argv) > 1 else "What does this course cover?"
-    chunks = load_chunks(Path(__file__).parent / "corpus")
-    files = {name for name, _ in chunks}
-    print(f"Corpus: {len(chunks)} chunks from {len(files)} files")
-
-    chunk_vectors = embed([text for _, text in chunks])
-    question_vector = embed([question])[0]
-
-    # Cosine similarity is a dot product once every vector has length 1
-    chunk_vectors /= np.linalg.norm(chunk_vectors, axis=1, keepdims=True)
-    question_vector /= np.linalg.norm(question_vector)
-    scores = chunk_vectors @ question_vector
-
-    top = np.argsort(scores)[::-1][:TOP_K]
-    print("\nRetrieved chunks:")
-    for i in top:
-        name, text = chunks[i]
-        print(f"  [{scores[i]:.3f}] {name}: {text[:70]}...")
-
-    context = "\n\n".join(chunks[i][1] for i in top)
-    prompt = (
-        "Answer the question using ONLY the context below. "
-        "If the answer is not in the context, say you do not know.\n\n"
-        f"Context:\n{context}\n\nQuestion: {question}"
-    )
-    reply = ollama.chat(model=CHAT_MODEL, messages=[{"role": "user", "content": prompt}])
-    print(f"\nAnswer:\n{reply.message.content}")
+def cosine(a, b):
+    """Cosine similarity between two vectors of the same length."""
+    dot = 0.0
+    length_a = 0.0
+    length_b = 0.0
+    for i in range(len(a)):
+        dot = dot + a[i] * b[i]
+        length_a = length_a + a[i] * a[i]
+        length_b = length_b + b[i] * b[i]
+    return dot / (math.sqrt(length_a) * math.sqrt(length_b))
 
 
-if __name__ == "__main__":
-    main()
+chunks = load_chunks(Path(__file__).parent / "corpus")
+
+files = set()
+for name, text in chunks:
+    files.add(name)
+print(f"Corpus: {len(chunks)} chunks from {len(files)} files")
+
+chunk_texts = []
+for name, text in chunks:
+    chunk_texts.append(text)
+
+chunk_vectors = embed(chunk_texts)
+question_vector = embed([QUESTION])[0]
+
+scores = []
+for vector in chunk_vectors:
+    scores.append(cosine(vector, question_vector))
+
+ranked = []
+for i in range(len(chunks)):
+    ranked.append((scores[i], chunks[i]))
+ranked.sort(reverse=True)
+top = ranked[:TOP_K]
+
+print("\nRetrieved chunks:")
+for score, chunk in top:
+    name, text = chunk
+    print(f"  [{score:.3f}] {name}: {text[:70]}...")
+
+passages = []
+for score, chunk in top:
+    passages.append(chunk[1])
+context = "\n\n".join(passages)
+
+prompt = (
+    "Answer the question using ONLY the context below. "
+    "If the answer is not in the context, say you do not know.\n\n"
+    f"Context:\n{context}\n\nQuestion: {QUESTION}"
+)
+reply = ollama.chat(model=CHAT_MODEL, messages=[{"role": "user", "content": prompt}])
+print(f"\nAnswer:\n{reply.message.content}")
 ```
 
 [[Back to the slide]{.button}](#sec-rag-part-2)
@@ -1211,10 +1289,13 @@ client = OpenAI(base_url="https://openrouter.ai/api/v1",
 def embed(texts):
     response = client.embeddings.create(
         model="openai/text-embedding-3-small", input=texts)
-    return np.array([item.embedding for item in response.data])
+    vectors = []
+    for item in response.data:
+        vectors.append(item.embedding)
+    return vectors
 
 
-# ...and in main(), replace the ollama.chat call with:
+# ...and replace the ollama.chat call with:
 reply = client.chat.completions.create(
     model="meta-llama/llama-3.3-70b-instruct:free",
     messages=[{"role": "user", "content": prompt}])
@@ -1241,7 +1322,7 @@ Ollama is not running. Open the application, or run `ollama serve` in another te
 
 [`ModuleNotFoundError: No module named 'ollama'`]{.alert}
 
-The package is not installed in the Python you are running. `pip install ollama numpy`, and check `which python3` if you use environments.
+The package is not installed in the Python you are running. `pip install ollama`, and check `which python3` if you use environments.
 
 [The first run takes ages]{.alert}
 

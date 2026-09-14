@@ -3,70 +3,92 @@
 Requires a running Ollama and two models:
     ollama pull embeddinggemma
     ollama pull llama3.2:1b
-And two Python packages:
-    pip install ollama numpy
+And one Python package:
+    pip install ollama
 
-Usage:
-    python rag.py "What does Quiz 02 cover?"
+Change QUESTION below, then run: python rag.py
 """
 
-import sys
+import math
 from pathlib import Path
 
-import numpy as np
 import ollama
 
 EMBED_MODEL = "embeddinggemma"
 CHAT_MODEL = "llama3.2:1b"
 TOP_K = 3
+QUESTION = "What does Quiz 02 cover?"
 
 
 def load_chunks(folder):
     """Split every markdown file into paragraph chunks."""
     chunks = []
     for path in sorted(Path(folder).glob("*.md")):
-        for block in path.read_text(encoding="utf-8").split("\n\n"):
-            block = block.strip()
-            if len(block) > 80:
-                chunks.append((path.name, block))
+        text = path.read_text(encoding="utf-8")
+        paragraphs = text.split("\n\n")
+        for paragraph in paragraphs:
+            clean = paragraph.strip()
+            if len(clean) > 80:
+                chunks.append((path.name, clean))
     return chunks
 
 
 def embed(texts):
     """Turn a list of texts into one vector per text."""
     response = ollama.embed(model=EMBED_MODEL, input=texts)
-    return np.array(response["embeddings"])
+    return response["embeddings"]
 
 
-def main():
-    question = sys.argv[1] if len(sys.argv) > 1 else "What does this course cover?"
-    chunks = load_chunks(Path(__file__).parent / "corpus")
-    files = {name for name, _ in chunks}
-    print(f"Corpus: {len(chunks)} chunks from {len(files)} files")
-
-    chunk_vectors = embed([text for _, text in chunks])
-    question_vector = embed([question])[0]
-
-    # Cosine similarity is a dot product once every vector has length 1
-    chunk_vectors /= np.linalg.norm(chunk_vectors, axis=1, keepdims=True)
-    question_vector /= np.linalg.norm(question_vector)
-    scores = chunk_vectors @ question_vector
-
-    top = np.argsort(scores)[::-1][:TOP_K]
-    print("\nRetrieved chunks:")
-    for i in top:
-        name, text = chunks[i]
-        print(f"  [{scores[i]:.3f}] {name}: {text[:70]}...")
-
-    context = "\n\n".join(chunks[i][1] for i in top)
-    prompt = (
-        "Answer the question using ONLY the context below. "
-        "If the answer is not in the context, say you do not know.\n\n"
-        f"Context:\n{context}\n\nQuestion: {question}"
-    )
-    reply = ollama.chat(model=CHAT_MODEL, messages=[{"role": "user", "content": prompt}])
-    print(f"\nAnswer:\n{reply.message.content}")
+def cosine(a, b):
+    """Cosine similarity between two vectors of the same length."""
+    dot = 0.0
+    length_a = 0.0
+    length_b = 0.0
+    for i in range(len(a)):
+        dot = dot + a[i] * b[i]
+        length_a = length_a + a[i] * a[i]
+        length_b = length_b + b[i] * b[i]
+    return dot / (math.sqrt(length_a) * math.sqrt(length_b))
 
 
-if __name__ == "__main__":
-    main()
+chunks = load_chunks(Path(__file__).parent / "corpus")
+
+files = set()
+for name, text in chunks:
+    files.add(name)
+print(f"Corpus: {len(chunks)} chunks from {len(files)} files")
+
+chunk_texts = []
+for name, text in chunks:
+    chunk_texts.append(text)
+
+chunk_vectors = embed(chunk_texts)
+question_vector = embed([QUESTION])[0]
+
+scores = []
+for vector in chunk_vectors:
+    scores.append(cosine(vector, question_vector))
+
+ranked = []
+for i in range(len(chunks)):
+    ranked.append((scores[i], chunks[i]))
+ranked.sort(reverse=True)
+top = ranked[:TOP_K]
+
+print("\nRetrieved chunks:")
+for score, chunk in top:
+    name, text = chunk
+    print(f"  [{score:.3f}] {name}: {text[:70]}...")
+
+passages = []
+for score, chunk in top:
+    passages.append(chunk[1])
+context = "\n\n".join(passages)
+
+prompt = (
+    "Answer the question using ONLY the context below. "
+    "If the answer is not in the context, say you do not know.\n\n"
+    f"Context:\n{context}\n\nQuestion: {QUESTION}"
+)
+reply = ollama.chat(model=CHAT_MODEL, messages=[{"role": "user", "content": prompt}])
+print(f"\nAnswer:\n{reply.message.content}")

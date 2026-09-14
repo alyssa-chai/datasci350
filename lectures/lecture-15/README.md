@@ -6,11 +6,11 @@ The last lecture of the AI module. Lecture 12 put a model on your laptop, lectur
 
 ## What we cover
 
-- Embeddings for whole passages, and cosine similarity in one line of numpy
+- Embeddings for whole passages, and cosine similarity written out in plain Python
 - Getting embeddings from Ollama with `embeddinggemma`
 - The five stages: chunk, embed, store, retrieve, generate, and where each one fails
 - Why retrieval beats pasting everything in: the cost arithmetic, and "lost in the middle"
-- A working pipeline in about 50 lines of plain Python (`demo/rag.py`), read line by line
+- A working pipeline in about 90 lines of plain Python (`demo/rag.py`), read line by line
 - Measuring retrieval with gold questions and a hit rate
 - Hybrid search, BM25, and rerankers, for the questions embeddings get wrong
 - Prompt injection through a poisoned corpus, and three partial defences
@@ -25,16 +25,16 @@ Warning: the two model downloads total about 2 GB. Do not attempt them on classr
 1. Install or update Ollama from [ollama.com](https://ollama.com/).
 2. Run `ollama pull embeddinggemma`.
 3. Run `ollama pull llama3.2:1b`.
-4. Run `pip install ollama numpy`.
+4. Run `pip install ollama`.
 
 If `ollama pull embeddinggemma` fails, your Ollama is too old. Update the application, or fall back to `nomic-embed-text` (274 MB). If you cannot run local models, use the OpenRouter variant in Appendix 03 with your key from lecture 14.
 
 ## The demo folder
 
-`demo/rag.py` is the whole pipeline in one file, and `demo/corpus/` holds eight of this course's own READMEs, which chunk into 132 passages. Run it with a question:
+`demo/rag.py` is the whole pipeline in one file, and `demo/corpus/` holds eight of this course's own READMEs, which chunk into 132 passages. Set the `QUESTION` constant at the top of the file, then run it:
 
 ```bash
-python rag.py "What does Quiz 02 cover?"
+python rag.py
 ```
 
 It prints the corpus size, the three retrieved chunks with their scores, and the answer. Printing the chunks is the point: when an answer is wrong, they tell you whether retrieval or generation failed.
