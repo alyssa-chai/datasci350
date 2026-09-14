@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-GB"><head>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-html/tabby.min.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -192,9 +192,6 @@
       margin-right: 0; 
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
-  
-  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -227,11 +224,11 @@ Danilo Freire
 <section id="where-we-are" class="slide level2">
 <h2>Where we are</h2>
 <h3 id="the-last-class-before-the-quiz-and-the-project">The last class before the quiz and the project</h3>
-<div style="margin-top: 15px; font-size: 20px;">
+<div style="margin-top: 30px; font-size: 21px;">
 <div class="columns">
 <div class="column" style="width:52%;">
 <ul>
-<li>The eight modules, in the order we took them:
+<li>The eight modules we’ve covered so far:
 <ul>
 <li><span class="alert">Introduction</span>: how a machine stores, encodes, and runs what you write</li>
 <li><span class="alert">Command line and version control</span>: Bash, Git, and GitHub</li>
@@ -246,8 +243,8 @@ Danilo Freire
 </div><div class="column" style="width:48%;">
 <ul>
 <li>Today we revise the last two modules, because that is what the quiz covers</li>
-<li><span class="alert">Quiz 05</span> is on Thursday 3 December and covers Lectures 21, 22, 23 and 25</li>
-<li>The <span class="alert">final project</span> is due on Tuesday 8 December at 11:59pm, and must render inside a container</li>
+<li><span class="alert">Quiz 05</span> covers Lectures 21, 22, 23 and 25</li>
+<li>The <span class="alert">final project</span> is due on the last day of class, and it must render inside a container</li>
 <li>Your project can still use the first six modules, which this quiz does not cover</li>
 </ul>
 <div style="text-align: center; margin-top: 10px;">
@@ -262,7 +259,7 @@ Danilo Freire
 <section id="lecture-overview" class="slide level2">
 <h2>Lecture overview</h2>
 <h3 id="what-we-will-cover-today">What we will cover today</h3>
-<div style="margin-top: 15px; font-size: 20px;">
+<div style="margin-top: 40px; font-size: 23px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><span class="alert">1. Scaling and performance</span></p>
@@ -275,13 +272,13 @@ Danilo Freire
 <ul>
 <li>The order a query really runs in</li>
 <li><code>WHERE</code> against <code>HAVING</code>, <code>COUNT(*)</code> against <code>COUNT(value)</code></li>
-<li>Joins, <code>sqlite3</code>, and the dialect traps</li>
+<li>Joins, and where the answers live</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <p><span class="alert">3. SQL practice</span></p>
 <ul>
-<li>Four exercises on the World Bank panel</li>
-<li>Twenty-five minutes, solutions in the appendix</li>
+<li>Two exercises on the World Bank panel</li>
+<li>About twelve minutes, solutions in the appendix</li>
 </ul>
 <p><span class="alert">4. Containers and Docker</span></p>
 <ul>
@@ -291,7 +288,7 @@ Danilo Freire
 </ul>
 <p><span class="alert">5. Quiz 05 preparation</span></p>
 <ul>
-<li>What to expect from each lecture, and how to revise</li>
+<li>What each lecture brings, and five Dockerfile questions</li>
 </ul>
 </div></div>
 </div>
@@ -304,7 +301,7 @@ Danilo Freire
 <section id="serial-and-parallel-work" class="slide level2">
 <h2>Serial and parallel work</h2>
 <h3 id="where-lecture-21-started">Where lecture 21 started</h3>
-<div style="margin-top: 15px; font-size: 21px;">
+<div style="margin-top: 40px; font-size: 22px;">
 <div class="columns">
 <div class="column" style="width:52%;">
 <ul>
@@ -319,10 +316,13 @@ Danilo Freire
 <ul>
 <li>A loop carrying a running total does not</li>
 </ul></li>
-<li>Four parallel calls never reached a full 4× saving: starting workers and moving results back costs time</li>
+<li>Four parallel calls never reached a full 4× saving
+<ul>
+<li>Starting workers and moving results back costs time</li>
+</ul></li>
 </ul>
 </div><div class="column" style="width:48%;">
-<div style="font-size: 22px;">
+<div style="font-size: 22px; margin-top: 15px;">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="kw">def</span> bar(x):</span>
 <span id="cb1-2"><a></a>    <span class="cf">return</span> x <span class="op">*</span> x</span>
 <span id="cb1-3"><a></a></span>
@@ -331,6 +331,7 @@ Danilo Freire
 <span id="cb1-6"><a></a><span class="bu">list</span>(<span class="bu">map</span>(bar, foo))</span>
 <span id="cb1-7"><a></a><span class="co"># [0, 1, 4, 9, 16, 25]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div style="margin-top: 40px;">
 <ul>
 <li>Before parallelising anything:
 <ul>
@@ -339,15 +340,16 @@ Danilo Freire
 </ul></li>
 <li>If either answer is no, the cores will not help you</li>
 </ul>
+</div>
 </div></div>
 </div>
 </section>
 <section id="joblib-and-concurrent.futures" class="slide level2">
 <h2>joblib and concurrent.futures</h2>
 <h3 id="when-to-reach-for-each-one">When to reach for each one</h3>
-<div style="margin-top: 15px; font-size: 20px;">
+<div style="margin-top: 30px; font-size: 21px;">
 <div class="columns">
-<div class="column" style="width:50%;">
+<div class="column" style="width:52%;">
 <ul>
 <li><span class="alert"><code>joblib</code></span> turns a loop into parallel work in two lines
 <ul>
@@ -363,13 +365,13 @@ Danilo Freire
 </div>
 <ul>
 <li><code>sklearn</code> calls joblib internally whenever you set <code>n_jobs=-1</code></li>
-<li><span class="alert"><code>concurrent.futures</code></span> ships with Python, so it works where you cannot install anything</li>
+<li><span class="alert"><code>concurrent.futures</code></span> ships with Python, so it works where you cannot install anything. <a href="https://docs.python.org/3/library/concurrent.futures.html">More about it here</a></li>
 </ul>
-</div><div class="column" style="width:50%;">
+</div><div class="column" style="width:48%;">
 <ul>
-<li>The choice comes from why the task is slow:</li>
+<li>Pick the tool from the reason the task is slow:</li>
 </ul>
-<div style="text-align: center; font-size: 18px; margin-top: 10px; margin-bottom: 10px;">
+<div style="text-align: center; font-size: 19px; margin-top: 10px; margin-bottom: 30px;">
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -408,9 +410,15 @@ Danilo Freire
 </table>
 </div>
 <ul>
-<li><span class="alert">CPU-bound</span> work needs more processors</li>
-<li><span class="alert">I/O-bound</span> work needs cheap threads that wait</li>
-<li>Both executors copy the <code>map</code> interface: a function and an iterable</li>
+<li><span class="alert">CPU-bound</span>: the processor is the bottleneck
+<ul>
+<li>You need more processes, each one on its own core</li>
+</ul></li>
+<li><span class="alert">I/O-bound</span>: the program spends its time waiting on the network or the disk
+<ul>
+<li>Many cheap threads can wait at once while the processor stays free</li>
+</ul></li>
+<li>Both executors take a function and an iterable, exactly like <code>map</code></li>
 </ul>
 </div></div>
 </div>
@@ -418,19 +426,20 @@ Danilo Freire
 <section id="big-o" class="slide level2">
 <h2>Big O</h2>
 <h3 id="how-the-runtime-grows-with-the-input">How the runtime grows with the input</h3>
-<div style="margin-top: 15px; font-size: 21px;">
+<div style="margin-top: 40px; font-size: 22px;">
 <div class="columns">
 <div class="column" style="width:52%;">
 <ul>
-<li><span class="alert">Big O</span> describes how the runtime grows as the input grows</li>
-<li><span class="alert">O(1)</span> constant, <span class="alert">O(n)</span> linear, <span class="alert">O(n²)</span> quadratic: doubling the input costs nothing, twice as much, or four times as much</li>
-<li>With <code>p</code> cores, an O(n) problem becomes <span class="alert">O(n/p + overhead)</span></li>
-<li>Parallelism divides the constant in front of the class, and never the class itself</li>
-<li><code>pairwise_sum</code> on 1,000 elements is a million operations, and 10 billion at 100,000
+<li><span class="alert">Big O</span>: how runtime grows as the input grows</li>
+<li><code>n</code> is the input size: elements in the list you pass in</li>
+<li><span class="alert">O(1)</span> constant, <span class="alert">O(n)</span> linear, <span class="alert">O(n²)</span> quadratic
 <ul>
-<li>No core count rescues that</li>
+<li>Doubling the input costs nothing, twice as much, or four times as much</li>
 </ul></li>
-<li>An O(n log n) algorithm beats a parallelised O(n²) one on any interesting input</li>
+<li>With <code>p</code> cores, an O(n) problem becomes <span class="alert">O(n/p + overhead)</span></li>
+<li>Parallelism divides the constant; the class stays where it is</li>
+<li><code>pairwise_sum</code>: a million operations at 1,000, 10 billion at 100,000</li>
+<li>O(n log n) beats a parallelised O(n²) on any interesting input</li>
 </ul>
 </div><div class="column" style="width:48%;">
 <div style="font-size: 20px;">
@@ -446,9 +455,12 @@ Danilo Freire
 <ul>
 <li>Poor candidates for parallelism:
 <ul>
-<li>Steps that depend on the previous result</li>
-<li>Algorithms with shared state</li>
-<li>Work limited by memory rather than by the CPU</li>
+<li>Each step needs the answer from the one before it</li>
+<li>Tasks share a variable, such as a running total or a counter
+<ul>
+<li>Taking turns eats the speed-up</li>
+</ul></li>
+<li>The disk or memory bus is the limit, so extra cores sit idle</li>
 </ul></li>
 </ul>
 </div></div>
@@ -457,7 +469,7 @@ Danilo Freire
 <section id="amdahls-law" class="slide level2">
 <h2>Amdahl’s law</h2>
 <h3 id="the-serial-share-caps-your-speed-up">The serial share caps your speed-up</h3>
-<div style="margin-top: 15px; font-size: 21px;">
+<div style="margin-top: 40px; font-size: 21px;">
 <div class="columns">
 <div class="column" style="width:52%;">
 <ul>
@@ -475,7 +487,7 @@ Danilo Freire
 </div>
 </div><div class="column" style="width:48%;">
 <ul>
-<li>Eight cores give 4.7×: half the hardware does nothing for you</li>
+<li>Eight cores give 4.7×, so nearly half the hardware does nothing for you</li>
 <li>Push <span class="math inline">\(N\)</span> to infinity and the ceiling is <span class="math inline">\(1/s\)</span>, which is 10× here</li>
 <li>A 50% serial program never passes 2×, however large the cluster</li>
 <li>Measure before you scale: <code>%timeit</code> and <code>cProfile</code> tell you what <span class="math inline">\(s\)</span> actually is</li>
@@ -487,75 +499,89 @@ Danilo Freire
 <section id="the-gil" class="slide level2">
 <h2>The GIL</h2>
 <h3 id="why-one-thread-runs-python-at-a-time">Why one thread runs Python at a time</h3>
-<div style="margin-top: 15px; font-size: 21px;">
+<div style="margin-top: 40px; font-size: 22px;">
 <div class="columns">
 <div class="column" style="width:52%;">
 <ul>
-<li>CPython has a <span class="alert">Global Interpreter Lock</span>: one thread runs Python code at a time, however many cores you own</li>
-<li>Threads still help while your code <span class="alert">waits</span>, because the lock is released during a download or a disk read</li>
-<li>Threads do nothing while your code <span class="alert">computes</span>, because the lock keeps the others idle</li>
-<li>CPU-bound work needs <span class="alert">processes</span>, each one a separate Python with its own lock</li>
-<li>NumPy, Polars and DuckDB <span class="alert">release the GIL</span> while their C and Rust code runs, so they use every core with no processes to manage</li>
-<li>A <span class="alert">free-threaded build</span> is official since Python 3.14, and it is not the default</li>
+<li>CPython has a <span class="alert">Global Interpreter Lock</span>: one thread runs Python at a time
+<ul>
+<li>True however many cores you own</li>
+</ul></li>
+<li>Threads help while your code <span class="alert">waits</span>
+<ul>
+<li>The lock is released during a download or a disk read</li>
+</ul></li>
+<li>Threads do nothing while your code <span class="alert">computes</span>
+<ul>
+<li>The lock keeps the others idle</li>
+</ul></li>
+<li>CPU-bound work needs <span class="alert">processes</span>: a separate Python, its own lock</li>
+<li>NumPy and DuckDB <span class="alert">release the GIL</span> while their C and C++ code runs
+<ul>
+<li>Every core used, no processes to manage</li>
+</ul></li>
+<li>A <span class="alert">free-threaded build</span> is official since Python 3.14 (still not the default)</li>
 </ul>
 </div><div class="column" style="width:48%;">
-<div style="text-align: center; font-size: 18px; margin-top: 15px;">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Task</th>
-<th>Use</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Number crunching</td>
-<td>Processes</td>
-</tr>
-<tr class="even">
-<td>Downloading many URLs</td>
-<td>Threads</td>
-</tr>
-<tr class="odd">
-<td>NumPy, Polars, DuckDB</td>
-<td>Either or neither</td>
-</tr>
-<tr class="even">
-<td><code>sklearn</code> with <code>n_jobs=-1</code></td>
-<td>Processes, via joblib</td>
-</tr>
-</tbody>
-</table>
+<ul>
+<li>The same loop, two pools:</li>
+</ul>
+<div style="font-size: 19px;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="co"># CPU-bound: threads share one lock,</span></span>
+<span id="cb5-2"><a></a><span class="co"># so the wall clock barely moves</span></span>
+<span id="cb5-3"><a></a><span class="cf">with</span> ThreadPoolExecutor(<span class="dv">4</span>) <span class="im">as</span> ex:</span>
+<span id="cb5-4"><a></a>    <span class="bu">list</span>(ex.<span class="bu">map</span>(calculation, chunks))</span>
+<span id="cb5-5"><a></a></span>
+<span id="cb5-6"><a></a><span class="co"># Processes: four interpreters,</span></span>
+<span id="cb5-7"><a></a><span class="co"># four locks, four cores</span></span>
+<span id="cb5-8"><a></a><span class="cf">with</span> ProcessPoolExecutor(<span class="dv">4</span>) <span class="im">as</span> ex:</span>
+<span id="cb5-9"><a></a>    <span class="bu">list</span>(ex.<span class="bu">map</span>(calculation, chunks))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div style="background: rgba(27, 58, 107, 0.08); padding: 12px; border-radius: 10px; font-size: 19px; margin-top: 15px;">
-<p>The quiz will ask you to pick one. Start from the lock: it is released while Python waits and held while Python computes</p>
-</div>
+<ul>
+<li>Swap <code>calculation</code> for a download and the threads win
+<ul>
+<li>Each one releases the lock while it waits</li>
+</ul></li>
+<li>Expect a question on which pool fits which task</li>
+</ul>
 </div></div>
 </div>
 </section>
 <section id="dask" class="slide level2">
 <h2>Dask</h2>
 <h3 id="lazy-evaluation-and-when-a-cluster-is-worth-it">Lazy evaluation, and when a cluster is worth it</h3>
-<div style="margin-top: 15px; font-size: 20px;">
+<div style="margin-top: 30px; font-size: 20px;">
 <div class="columns">
 <div class="column" style="width:52%;">
 <ul>
-<li><span class="alert">Dask</span> gives you lazy versions of tools you already use: <span class="alert">Array</span> for NumPy, <span class="alert">DataFrame</span> for pandas, <span class="alert"><code>delayed</code></span> for your own functions, <span class="alert">Distributed</span> for a cluster</li>
-<li><span class="alert">Lazy</span> means nothing runs until <code>.compute()</code>, and until then you are building a task graph</li>
-<li>The graph lets Dask optimise the plan and keep memory down before any work starts</li>
+<li><span class="alert">Dask</span> gives you lazy versions of tools you already use
+<ul>
+<li><span class="alert">Array</span> for NumPy, <span class="alert">DataFrame</span> for pandas, <span class="alert"><code>delayed</code></span> for your functions, <span class="alert">Distributed</span> for a cluster</li>
+</ul></li>
+<li><span class="alert">Lazy</span>: nothing runs until <code>.compute()</code>
+<ul>
+<li>Until then you are building a task graph</li>
+</ul></li>
+<li>The graph lets Dask optimise the plan and keep memory down</li>
 <li><code>.persist()</code> computes a result once and holds it in RAM
 <ul>
-<li>Use it on a small aggregate, never on the raw frame</li>
+<li>Use it on a small aggregate, never the raw frame</li>
 </ul></li>
 <li><code>joblib</code> parallelises your functions and leaves the data alone</li>
 <li>Dask <span class="alert">chunks the data itself</span>, so a frame can be larger than your RAM</li>
-<li>The <span class="alert">dashboard</span> at <code>localhost:8787</code> shows the task stream live, and white space in a row means an idle worker</li>
+<li>The <span class="alert">dashboard</span> at <code>localhost:8787</code> shows the task stream live</li>
 </ul>
 </div><div class="column" style="width:48%;">
 <ul>
-<li>A cluster pays for itself when the data does not fit on the machine, or when the graph has real dependencies between tasks</li>
-<li>When the data fits in memory it costs you: building the graph and moving chunks can make Dask slower than pandas</li>
-<li><span class="alert">Parquet</span> cut our January 2000 data from 182 MB to 86 MB and made the group-by much faster</li>
+<li>A cluster pays off when the data does not fit on the machine
+<ul>
+<li>Or when the graph has real dependencies between tasks</li>
+</ul></li>
+<li>When the data fits in memory it costs you
+<ul>
+<li>Graph building and chunk moving can make Dask slower than pandas</li>
+</ul></li>
+<li><span class="alert">Parquet</span> cut our January 2000 data from 182 MB to 86 MB, and sped up the group-by</li>
 </ul>
 <div style="text-align: center; margin-top: 10px;">
 <p><a href="#/" data-modal-type="image" data-modal-url="figures/distributed.png"><img data-src="figures/distributed.png" style="width:78.0%"></a></p>
@@ -566,13 +592,13 @@ Danilo Freire
 <section id="which-tool-when" class="slide level2">
 <h2>Which tool when</h2>
 <h3 id="the-same-group-by-on-pandas-dask-and-duckdb">The same group-by on pandas, Dask and DuckDB</h3>
-<div style="margin-top: 12px; font-size: 19px;">
+<div style="margin-top: 30px; font-size: 21px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
 <li>The task from lecture 22: mean <code>value</code> by indicator and decade, on a synthetic panel of <span class="alert">200,681,600 rows</span></li>
 </ul>
-<div style="text-align: center; font-size: 19px; margin-top: 10px; margin-bottom: 10px;">
+<div style="text-align: center; font-size: 24px; margin-top: 20px; margin-bottom: 50px;">
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -603,8 +629,12 @@ Danilo Freire
 <li>The gap comes from a columnar layout, vectorised execution, every core by default, and <span class="alert">predicate pushdown</span> into the Parquet file</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div style="text-align: center; margin-bottom: 10px; font-size: 19px;">
+<div style="text-align: center; margin-bottom: 30px; font-size: 22px;">
 <table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Your situation</th>
@@ -618,7 +648,7 @@ Danilo Freire
 </tr>
 <tr class="even">
 <td>A single large file on one machine</td>
-<td>Polars or DuckDB</td>
+<td>DuckDB; Polars is optional reading in Tutorial 07</td>
 </tr>
 <tr class="odd">
 <td>Bigger than the machine, or a real cluster</td>
@@ -651,7 +681,7 @@ Danilo Freire
 <section id="the-order-a-query-really-runs-in" class="slide level2">
 <h2>The order a query really runs in</h2>
 <h3 id="how-the-engine-evaluates-a-query">How the engine evaluates a query</h3>
-<div style="margin-top: 10px; font-size: 20px;">
+<div style="margin-top: 30px; font-size: 22px;">
 <div style="text-align: center;">
 <p><a href="#/" data-modal-type="image" data-modal-url="figures/sql-evaluation-order.png"><img data-src="figures/sql-evaluation-order.png" style="width:62.0%"></a></p>
 </div>
@@ -664,7 +694,7 @@ Danilo Freire
 </div><div class="column" style="width:50%;">
 <ul>
 <li>This ladder answers most SQL questions in the quiz, including why an aggregate cannot go in <code>WHERE</code></li>
-<li>DuckDB and SQLite let you reuse a <code>SELECT</code> alias in <code>WHERE</code>
+<li>DuckDB lets you reuse a <code>SELECT</code> alias in <code>WHERE</code>
 <ul>
 <li>PostgreSQL rejects it, so do not rely on it</li>
 </ul></li>
@@ -675,7 +705,7 @@ Danilo Freire
 <section id="where-and-having" class="slide level2">
 <h2>WHERE and HAVING</h2>
 <h3 id="which-clause-filters-what">Which clause filters what</h3>
-<div style="margin-top: 15px; font-size: 21px;">
+<div style="margin-top: 40px; font-size: 23px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
@@ -688,20 +718,23 @@ Danilo Freire
 </ul>
 </div><div class="column" style="width:50%;">
 <div style="font-size: 22px;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a></a><span class="kw">SELECT</span> country,</span>
-<span id="cb5-2"><a></a>       <span class="fu">ROUND</span>(<span class="fu">AVG</span>(<span class="fu">value</span>), <span class="dv">0</span>) <span class="kw">AS</span> mean_gdp</span>
-<span id="cb5-3"><a></a><span class="kw">FROM</span> wdi</span>
-<span id="cb5-4"><a></a><span class="kw">WHERE</span> <span class="kw">indicator</span> <span class="op">=</span> <span class="st">'gdp_per_capita'</span></span>
-<span id="cb5-5"><a></a>  <span class="kw">AND</span> <span class="dt">year</span> <span class="op">&gt;=</span> <span class="dv">2010</span></span>
-<span id="cb5-6"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> country</span>
-<span id="cb5-7"><a></a><span class="kw">HAVING</span> <span class="fu">AVG</span>(<span class="fu">value</span>) <span class="op">&gt;</span> <span class="dv">60000</span></span>
-<span id="cb5-8"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> mean_gdp <span class="kw">DESC</span></span>
-<span id="cb5-9"><a></a><span class="kw">LIMIT</span> <span class="dv">5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a></a><span class="kw">SELECT</span> country,</span>
+<span id="cb6-2"><a></a>       <span class="fu">ROUND</span>(<span class="fu">AVG</span>(<span class="fu">value</span>), <span class="dv">0</span>) <span class="kw">AS</span> mean_gdp</span>
+<span id="cb6-3"><a></a><span class="kw">FROM</span> wdi</span>
+<span id="cb6-4"><a></a><span class="kw">WHERE</span> <span class="kw">indicator</span> <span class="op">=</span> <span class="st">'gdp_per_capita'</span></span>
+<span id="cb6-5"><a></a>  <span class="kw">AND</span> <span class="dt">year</span> <span class="op">&gt;=</span> <span class="dv">2010</span></span>
+<span id="cb6-6"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> country</span>
+<span id="cb6-7"><a></a><span class="kw">HAVING</span> <span class="fu">AVG</span>(<span class="fu">value</span>) <span class="op">&gt;</span> <span class="dv">60000</span></span>
+<span id="cb6-8"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> mean_gdp <span class="kw">DESC</span></span>
+<span id="cb6-9"><a></a><span class="kw">LIMIT</span> <span class="dv">5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li><code>WHERE year &gt;= 2010</code> drops old rows</li>
 <li><code>HAVING AVG(value) &gt; 60000</code> drops poorer countries</li>
-<li>Small economies with financial centres win this list: Monaco, Liechtenstein and Bermuda all have fewer than 100,000 people</li>
+<li>Small economies with financial centres win this list
+<ul>
+<li>Monaco, Liechtenstein and Bermuda all have fewer than 100,000 people</li>
+</ul></li>
 </ul>
 </div></div>
 </div>
@@ -709,32 +742,35 @@ Danilo Freire
 <section id="count-and-countvalue" class="slide level2">
 <h2>COUNT(*) and COUNT(value)</h2>
 <h3 id="counting-rows-and-counting-values">Counting rows and counting values</h3>
-<div style="margin-top: 15px; font-size: 21px;">
+<div style="margin-top: 40px; font-size: 23px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
 <li><span class="alert"><code>COUNT(*)</code></span> counts rows</li>
 <li><span class="alert"><code>COUNT(value)</code></span> counts the rows where <code>value</code> is present</li>
-<li>The difference between the two is the number of missing values</li>
+<li>Subtract one from the other and you have the number of missing values</li>
 <li>217 countries have a GDP row for 2020, and only 208 have a number in it</li>
-<li><code>AVG</code>, <code>SUM</code>, <code>MIN</code> and <code>MAX</code> all skip missing values silently, so a mean can hide a column that is half empty</li>
+<li><code>AVG</code>, <code>SUM</code>, <code>MIN</code> and <code>MAX</code> all skip missing values silently
+<ul>
+<li>A mean can hide a column that is half empty</li>
+</ul></li>
 <li><code>primary_enrolment_net</code> has 217 rows in 2020 and no numbers at all, so <code>COUNT(value)</code> is 0 and <code>AVG</code> is NULL</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <div style="font-size: 22px;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a></a><span class="kw">SELECT</span> <span class="dt">year</span>,</span>
-<span id="cb6-2"><a></a>       <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n_rows,</span>
-<span id="cb6-3"><a></a>       <span class="fu">COUNT</span>(<span class="fu">value</span>) <span class="kw">AS</span> with_value,</span>
-<span id="cb6-4"><a></a>       <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">-</span> <span class="fu">COUNT</span>(<span class="fu">value</span>) <span class="kw">AS</span> missing</span>
-<span id="cb6-5"><a></a><span class="kw">FROM</span> wdi</span>
-<span id="cb6-6"><a></a><span class="kw">WHERE</span> <span class="kw">indicator</span> <span class="op">=</span> <span class="st">'internet_users_pct'</span></span>
-<span id="cb6-7"><a></a>  <span class="kw">AND</span> <span class="dt">year</span> <span class="kw">IN</span> (<span class="dv">1990</span>, <span class="dv">2000</span>, <span class="dv">2020</span>)</span>
-<span id="cb6-8"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="dt">year</span></span>
-<span id="cb6-9"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> <span class="dt">year</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a></a><span class="kw">SELECT</span> <span class="dt">year</span>,</span>
+<span id="cb7-2"><a></a>       <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n_rows,</span>
+<span id="cb7-3"><a></a>       <span class="fu">COUNT</span>(<span class="fu">value</span>) <span class="kw">AS</span> with_value,</span>
+<span id="cb7-4"><a></a>       <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">-</span> <span class="fu">COUNT</span>(<span class="fu">value</span>) <span class="kw">AS</span> missing</span>
+<span id="cb7-5"><a></a><span class="kw">FROM</span> wdi</span>
+<span id="cb7-6"><a></a><span class="kw">WHERE</span> <span class="kw">indicator</span> <span class="op">=</span> <span class="st">'internet_users_pct'</span></span>
+<span id="cb7-7"><a></a>  <span class="kw">AND</span> <span class="dt">year</span> <span class="kw">IN</span> (<span class="dv">1990</span>, <span class="dv">2000</span>, <span class="dv">2020</span>)</span>
+<span id="cb7-8"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="dt">year</span></span>
+<span id="cb7-9"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> <span class="dt">year</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li>Internet use is recorded for 217 countries in each of those years, with 9 numbers missing in 1990, 21 in 2000, and 33 in 2020</li>
-<li>Coverage gets <span class="alert">worse</span> over time: small territories join the panel and never report the series
+<li>Coverage gets <span class="alert">worse</span> over time
 <ul>
 <li>Small territories join the panel and never report the series</li>
 </ul></li>
@@ -745,7 +781,7 @@ Danilo Freire
 <section id="the-three-joins" class="slide level2">
 <h2>The three joins</h2>
 <h3 id="which-rows-survive-the-join">Which rows survive the join</h3>
-<div style="margin-top: 10px; font-size: 20px;">
+<div style="margin-top: 30px; font-size: 20px;">
 <div style="text-align: center;">
 <p><a href="#/" data-modal-type="image" data-modal-url="figures/sql-joins.png"><img data-src="figures/sql-joins.png" style="width:50.0%"></a></p>
 </div>
@@ -754,7 +790,7 @@ Danilo Freire
 <ul>
 <li><span class="alert"><code>INNER JOIN</code></span> keeps the rows that match on both sides
 <ul>
-<li>A silent filter: a row count that drops after a join usually means this</li>
+<li>It filters silently, so a row count that falls after a join usually means this</li>
 </ul></li>
 <li><span class="alert"><code>LEFT JOIN</code></span> keeps the left table whole and fills the missing side with NULL
 <ul>
@@ -770,154 +806,24 @@ Danilo Freire
 </ul>
 </div></div>
 </div>
-</section>
-<section id="sqlite3-in-one-slide" class="slide level2">
-<h2>sqlite3 in one slide</h2>
-<h3 id="connection-cursor-commit-fetch">Connection, cursor, commit, fetch</h3>
-<div style="margin-top: 12px; font-size: 20px;">
-<div class="columns">
-<div class="column" style="width:58%;">
-<div style="font-size: 20px;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="im">import</span> sqlite3</span>
-<span id="cb7-2"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb7-3"><a></a></span>
-<span id="cb7-4"><a></a>conn <span class="op">=</span> sqlite3.<span class="ex">connect</span>(<span class="st">":memory:"</span>)   <span class="co"># or "wdi.db"</span></span>
-<span id="cb7-5"><a></a>cur <span class="op">=</span> conn.cursor()</span>
-<span id="cb7-6"><a></a></span>
-<span id="cb7-7"><a></a>df.to_sql(<span class="st">"wdi"</span>, conn, index<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb7-8"><a></a>          if_exists<span class="op">=</span><span class="st">"replace"</span>)</span>
-<span id="cb7-9"><a></a></span>
-<span id="cb7-10"><a></a>cur.execute(<span class="st">"""CREATE TABLE regions</span></span>
-<span id="cb7-11"><a></a><span class="st">               (iso3 TEXT PRIMARY KEY, region TEXT)"""</span>)</span>
-<span id="cb7-12"><a></a>cur.executemany(<span class="st">"INSERT INTO regions VALUES (?, ?)"</span>,</span>
-<span id="cb7-13"><a></a>    [(<span class="st">"USA"</span>, <span class="st">"North America"</span>), (<span class="st">"KOR"</span>, <span class="st">"East Asia"</span>)])</span>
-<span id="cb7-14"><a></a>conn.commit()</span>
-<span id="cb7-15"><a></a></span>
-<span id="cb7-16"><a></a>cur.execute(<span class="st">"SELECT * FROM regions WHERE region = ?"</span>,</span>
-<span id="cb7-17"><a></a>            (<span class="st">"East Asia"</span>,))</span>
-<span id="cb7-18"><a></a><span class="bu">print</span>(cur.fetchall())</span>
-<span id="cb7-19"><a></a></span>
-<span id="cb7-20"><a></a>out <span class="op">=</span> pd.read_sql(<span class="st">"SELECT COUNT(*) FROM wdi"</span>, conn)</span>
-<span id="cb7-21"><a></a>conn.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div><div class="column" style="width:42%;">
-<ul>
-<li>DuckDB never made you write a <span class="alert">connection</span>, a <span class="alert">cursor</span>, a <code>commit()</code> or a <code>fetchall()</code></li>
-<li><span class="alert"><code>to_sql</code></span> writes a DataFrame into a table and picks the column types for you</li>
-<li>The <span class="alert"><code>?</code></span> marks a slot the driver fills in safely, and it takes a tuple
-<ul>
-<li>The trailing comma in <code>("East Asia",)</code> is what makes it one</li>
-</ul></li>
-<li>Never build a query with an f-string, which is how SQL injection happens</li>
-<li><span class="alert"><code>commit()</code></span> makes writes permanent, and skipping it loses your inserts when the script ends</li>
-<li><span class="alert"><code>pd.read_sql</code></span> sends a query and hands back a DataFrame, with no cursor involved</li>
-</ul>
-</div></div>
-</div>
-</section>
-<section id="where-the-two-engines-differ" class="slide level2">
-<h2>Where the two engines differ</h2>
-<h3 id="the-rows-that-give-an-answer-instead-of-an-error">The rows that give an answer instead of an error</h3>
-<div style="margin-top: 12px; font-size: 20px;">
-<div class="columns">
-<div class="column" style="width:50%;">
-<div style="text-align: center; font-size: 17px;">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Feature</th>
-<th>DuckDB</th>
-<th>SQLite</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>FROM 'file.parquet'</code></td>
-<td>works</td>
-<td>no such table</td>
-</tr>
-<tr class="even">
-<td><code>ILIKE</code></td>
-<td>works</td>
-<td>syntax error</td>
-</tr>
-<tr class="odd">
-<td><code>SUMMARIZE</code></td>
-<td>works</td>
-<td>syntax error</td>
-</tr>
-<tr class="even">
-<td><code>DESCRIBE SELECT ...</code></td>
-<td>works</td>
-<td><code>PRAGMA table_info(t)</code></td>
-</tr>
-<tr class="odd">
-<td><code>SELECT 7 / 2</code></td>
-<td><code>3.5</code></td>
-<td><code>3</code></td>
-</tr>
-<tr class="even">
-<td><code>LIKE 'united%'</code></td>
-<td>0 rows</td>
-<td>matches</td>
-</tr>
-<tr class="odd">
-<td><code>GROUP BY ALL</code></td>
-<td>works</td>
-<td>syntax error</td>
-</tr>
-<tr class="even">
-<td><code>STDDEV(x)</code></td>
-<td>works</td>
-<td>no such function</td>
-</tr>
-<tr class="odd">
-<td><code>INNER</code> / <code>LEFT</code> / <code>FULL OUTER</code></td>
-<td>works</td>
-<td>works</td>
-</tr>
-<tr class="even">
-<td><code>CASE</code>, <code>COALESCE</code>, <code>IS NULL</code></td>
-<td>works</td>
-<td>works</td>
-</tr>
-<tr class="odd">
-<td>Window functions, <code>UNION</code></td>
-<td>works</td>
-<td>works</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div><div class="column" style="width:50%;">
-<ul>
-<li>Most of the language is identical, and two rows are traps:
-<ul>
-<li><span class="alert"><code>7 / 2</code></span> is 3.5 in DuckDB and 3 in SQLite, because integer division is the default there, so write <code>7 * 1.0 / 2</code> for the decimal</li>
-<li><span class="alert"><code>LIKE</code></span> is case-sensitive in DuckDB and case-insensitive for ASCII in SQLite, so the same pattern quietly returns different rows</li>
-</ul></li>
-<li>SQLite has done <code>RIGHT</code> and <code>FULL OUTER JOIN</code> natively since version 3.39, released in 2022</li>
-<li>Every row was tested on DuckDB 1.5.5 and SQLite 3.53.1</li>
-</ul>
-</div></div>
-</div>
 </section></section>
 <section>
 <section id="sql-practice" class="title-slide slide level1 center" data-background-color="#1B3A6B">
 <h1>SQL practice 🧠</h1>
 
 </section>
-<section id="the-setup-for-all-four-exercises" class="slide level2">
-<h2>The setup for all four exercises</h2>
+<section id="the-setup-for-both-exercises" class="slide level2">
+<h2>The setup for both exercises</h2>
 <h3 id="what-to-run-before-exercise-1">What to run before exercise 1</h3>
-<div style="margin-top: 15px; font-size: 21px;">
+<div style="margin-top: 40px; font-size: 21px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
+<li><a href="https://github.com/danilofreire/datasci350/raw/refs/heads/main/lectures/lecture-19/data/wdi_panel.parquet">Download the dataset here</a> or use the path <code>../lecture-19/data/wdi_panel.parquet</code></li>
 <li>Open a notebook or a Python file next to the lecture folder, and run this once:</li>
 </ul>
 <div style="font-size: 22px;">
-<div id="82dd019e" class="cell" data-cache="true" data-execution_count="2">
+<div id="c231742b" class="cell" data-cache="true" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="im">import</span> duckdb</span>
 <span id="cb8-2"><a></a></span>
 <span id="cb8-3"><a></a>duckdb.sql(<span class="st">"""</span></span>
@@ -927,7 +833,7 @@ Danilo Freire
 <span id="cb8-7"><a></a><span class="st">"""</span>)</span>
 <span id="cb8-8"><a></a></span>
 <span id="cb8-9"><a></a>duckdb.sql(<span class="st">"SELECT COUNT(*) AS n_rows FROM wdi"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>┌────────┐
 │ n_rows │
 │ int64  │
@@ -941,12 +847,11 @@ Danilo Freire
 <ul>
 <li>The same panel from Module 06: 59,024 rows of <code>country</code>, <code>iso3</code>, <code>indicator</code>, <code>year</code> and <code>value</code></li>
 <li>Eight indicators, including <code>gdp_per_capita</code>, <code>life_expectancy</code>, <code>co2_per_capita</code> and <code>internet_users_pct</code></li>
-<li>The four exercises get harder as we go, and each one has a solution appendix</li>
+<li>The second exercise is harder than the first, and both have a solution appendix</li>
 <li>Work in pairs if you like
 <ul>
-<li>I will walk around, and we look at each solution together</li>
+<li>I will walk around, and we will look at each solution together</li>
 </ul></li>
-<li>Exercise 4 needs <code>import sqlite3</code> and <code>import pandas as pd</code> as well</li>
 </ul>
 </div></div>
 </div>
@@ -954,7 +859,7 @@ Danilo Freire
 <section id="sec-exercise-01" class="slide level2 scrollable">
 <h2>Try it yourself! 🧠</h2>
 <h3 id="five-minutes">Five minutes</h3>
-<div style="margin-top: 20px; font-size: 21px;">
+<div style="margin-top: 40px; font-size: 21px;">
 <div class="columns">
 <div class="column" style="width:52%;">
 <p>Which countries emitted the most CO2 per person in 2020?</p>
@@ -979,16 +884,14 @@ Danilo Freire
 <li>The winner is a Pacific island with fewer than 20,000 people</li>
 <li>Four of the five are oil or gas economies</li>
 </ul>
-<div style="background: rgba(27, 58, 107, 0.08); padding: 12px; border-radius: 10px; font-size: 19px; margin-top: 12px;">
 <p>Solution and the full output: <a href="#/sec-appendix-01"><span class="button">Appendix 01</span></a></p>
-</div>
 </div></div>
 </div>
 </section>
 <section id="sec-exercise-02" class="slide level2 scrollable">
 <h2>Try it yourself! 🧠</h2>
 <h3 id="five-minutes-1">Five minutes</h3>
-<div style="margin-top: 20px; font-size: 21px;">
+<div style="margin-top: 40px; font-size: 21px;">
 <div class="columns">
 <div class="column" style="width:52%;">
 <p>Which countries have been the most connected since 2015?</p>
@@ -1010,121 +913,7 @@ Danilo Freire
 <li>The list mixes Nordic countries with Gulf states, and one country is neither</li>
 <li>An error about an aggregate in <code>WHERE</code> means the evaluation ladder is worth another look</li>
 </ul>
-<div style="background: rgba(27, 58, 107, 0.08); padding: 12px; border-radius: 10px; font-size: 19px; margin-top: 12px;">
 <p>Solution and the full output: <a href="#/sec-appendix-02"><span class="button">Appendix 02</span></a></p>
-</div>
-</div></div>
-</div>
-</section>
-<section id="sec-exercise-03" class="slide level2 scrollable">
-<h2>Try it yourself! 🧠</h2>
-<h3 id="eight-minutes">Eight minutes</h3>
-<div style="margin-top: -14px; font-size: 16px;">
-<div class="columns">
-<div class="column" style="width:60%;">
-<div style="margin-top: -12px;">
-<p>How rich is each region, and on how much data? Run this first.</p>
-</div>
-<ol type="1">
-<li>Report one row per region, keeping every region</li>
-<li>Count the countries in the region with a 2022 GDP figure</li>
-<li>Compute the region’s mean GDP per capita</li>
-<li>Sort by the mean, highest first, empty region last</li>
-</ol>
-<div style="font-size: 20px; margin-top: -10px;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>duckdb.sql(<span class="st">"""</span></span>
-<span id="cb10-2"><a></a><span class="st">    CREATE OR REPLACE TABLE gdp2022 AS</span></span>
-<span id="cb10-3"><a></a><span class="st">    SELECT country, iso3, ROUND(value, 0) AS gdp_per_capita</span></span>
-<span id="cb10-4"><a></a><span class="st">    FROM wdi</span></span>
-<span id="cb10-5"><a></a><span class="st">    WHERE indicator = 'gdp_per_capita' AND year = 2022</span></span>
-<span id="cb10-6"><a></a><span class="st">      AND iso3 IN ('USA','BRA','CHN','IND','NGA','FRA')</span></span>
-<span id="cb10-7"><a></a><span class="st">"""</span>)</span>
-<span id="cb10-8"><a></a></span>
-<span id="cb10-9"><a></a>duckdb.sql(<span class="st">"""</span></span>
-<span id="cb10-10"><a></a><span class="st">    CREATE OR REPLACE TABLE regions</span></span>
-<span id="cb10-11"><a></a><span class="st">        (iso3 VARCHAR PRIMARY KEY, region VARCHAR)</span></span>
-<span id="cb10-12"><a></a><span class="st">"""</span>)</span>
-<span id="cb10-13"><a></a></span>
-<span id="cb10-14"><a></a>duckdb.sql(<span class="st">"""</span></span>
-<span id="cb10-15"><a></a><span class="st">    INSERT INTO regions VALUES</span></span>
-<span id="cb10-16"><a></a><span class="st">        ('USA', 'North America'), ('BRA', 'Latin America'),</span></span>
-<span id="cb10-17"><a></a><span class="st">        ('CHN', 'East Asia'),     ('JPN', 'East Asia'),</span></span>
-<span id="cb10-18"><a></a><span class="st">        ('IND', 'South Asia'),    ('FRA', 'Europe'),</span></span>
-<span id="cb10-19"><a></a><span class="st">        ('ZAF', 'Sub-Saharan Africa')</span></span>
-<span id="cb10-20"><a></a><span class="st">"""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div><div class="column" style="width:40%;">
-<p>What to look for:</p>
-<ul>
-<li>Which table goes on the left if every region must survive?</li>
-<li>East Asia holds two codes and one GDP figure, Sub-Saharan Africa one code and none</li>
-<li><code>COUNT(*)</code> reports 2 and 1 there, <code>COUNT(g.country)</code> reports 1 and 0</li>
-<li>Six regions come back, and one of them has a NULL mean</li>
-<li>Nigeria has a GDP figure and no region, so it never appears
-<ul>
-<li>Swap the two table names and it does</li>
-</ul></li>
-</ul>
-<div style="background: rgba(27, 58, 107, 0.08); padding: 12px; border-radius: 10px; font-size: 19px; margin-top: 10px;">
-<p>Solution and both counts: <a href="#/sec-appendix-03"><span class="button">Appendix 03</span></a></p>
-</div>
-</div></div>
-</div>
-</section>
-<section id="sec-exercise-04" class="slide level2 scrollable">
-<h2>Try it yourself! 🧠</h2>
-<h3 id="seven-minutes">Seven minutes</h3>
-<div style="margin-top: 15px; font-size: 20px;">
-<div class="columns">
-<div class="column" style="width:52%;">
-<p>Run exercise 2 again, in <code>sqlite3</code> this time.</p>
-<ol type="1">
-<li>Import <code>sqlite3</code> and <code>pandas</code></li>
-<li>Read the panel with <code>pd.read_parquet</code> into <code>df</code></li>
-<li>Open a connection to <code>":memory:"</code></li>
-<li>Write <code>df</code> into a table called <code>wdi</code> with <code>to_sql</code>, using <code>index=False</code> and <code>if_exists="replace"</code></li>
-<li>Copy your exercise 2 query across, unchanged</li>
-<li>Replace <code>2015</code> with a <code>?</code> placeholder</li>
-<li>Send the query with <code>pd.read_sql</code> and pass <code>params=(2015,)</code></li>
-<li>Check that the five countries match exercise 2</li>
-</ol>
-</div><div class="column" style="width:48%;">
-<p>What to look for:</p>
-<ul>
-<li>The SQL does not change, so everything you revised today is portable</li>
-<li><code>params</code> takes a <span class="alert">tuple</span>, so the trailing comma in <code>(2015,)</code> matters</li>
-<li>The result is a pandas DataFrame, printed with an index column</li>
-<li>Change the parameter to 1995 and rerun, and only the results change</li>
-<li>Assignment 09 asked for this pattern, and so may the quiz</li>
-</ul>
-<div style="background: rgba(27, 58, 107, 0.08); padding: 12px; border-radius: 10px; font-size: 19px; margin-top: 12px;">
-<p>Solution and the full output: <a href="#/sec-appendix-04"><span class="button">Appendix 04</span></a></p>
-</div>
-</div></div>
-</div>
-</section>
-<section id="what-those-four-exercises-tested" class="slide level2">
-<h2>What those four exercises tested</h2>
-<h3 id="what-each-exercise-tested">What each exercise tested</h3>
-<div style="margin-top: 20px; font-size: 21px;">
-<div class="columns">
-<div class="column" style="width:50%;">
-<ul>
-<li>Exercise 1: <code>WHERE</code> with two conditions, an alias, <code>ORDER BY DESC</code>, and <code>LIMIT</code></li>
-<li>Exercise 2: <code>GROUP BY</code> with <code>HAVING</code>, and the difference between <code>COUNT(*)</code> and <code>COUNT(value)</code></li>
-<li>Exercise 3: a <code>LEFT JOIN</code> that keeps the left table whole, and a count that must skip the NULLs the join created</li>
-<li>Exercise 4: the same SQL under <code>sqlite3</code>, with a <code>?</code> placeholder instead of a literal</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<ul>
-<li>If exercise 3 was hard, check the direction of the join
-<ul>
-<li>Write down which table must survive before you type <code>FROM</code></li>
-</ul></li>
-<li>If exercise 2 was hard, reread the evaluation ladder</li>
-<li>The full solutions are in Appendices 01 to 04, with the outputs from this laptop</li>
-<li>Lecture 22 has about thirty more queries, and Tutorial 04 on the website has the rest</li>
-</ul>
 </div></div>
 </div>
 </section></section>
@@ -1135,32 +924,42 @@ Danilo Freire
 </section>
 <section id="why-working-code-breaks" class="slide level2">
 <h2>Why working code breaks</h2>
-<h3 id="why-working-code-breaks-1">Why working code breaks</h3>
-<div style="margin-top: 15px; font-size: 21px;">
+<h3 id="where-lecture-23-started">Where lecture 23 started</h3>
+<div style="margin-top: 40px; font-size: 21px;">
 <div class="columns">
 <div class="column" style="width:52%;">
 <ul>
-<li>“It works on my machine” happens when your code assumes software you never wrote down</li>
+<li>“It works on my machine”: your code assumes software you never wrote down</li>
 <li><span class="alert">Dependencies</span>: the external libraries and tools your code needs</li>
 <li><span class="alert">Dependency management</span>: making sure it still runs next year</li>
-<li>Libraries change: <code>print "hello"</code> was valid Python 2 and is a <code>SyntaxError</code> in Python 3</li>
-<li>A 2016 Nature survey of 1,576 researchers found more than 70% had failed to reproduce someone else’s experiment, and more than half had failed to reproduce one of their own</li>
-<li>Missing documentation and unrecorded dependencies have a technical fix</li>
+<li>Libraries change under you
+<ul>
+<li><code>print "hello"</code> was valid Python 2</li>
+<li>The same line is a <code>SyntaxError</code> in Python 3</li>
+</ul></li>
+<li>A 2016 Nature survey of 1,576 researchers
+<ul>
+<li>More than 70% had failed to reproduce someone else’s experiment</li>
+<li>More than half had failed on one of their own</li>
+</ul></li>
+<li>Missing docs and unrecorded dependencies have a technical fix</li>
 </ul>
 </div><div class="column" style="width:48%;">
 <ul>
 <li>The ladder, from cheap to thorough:
 <ul>
-<li><span class="alert">Declare</span> your dependencies in one file in the repository root</li>
+<li><span class="alert">Declare</span> your dependencies in one file</li>
+<li>Put that file in the repository root</li>
 <li><span class="alert">Manage</span> them with an environment tool</li>
 <li><span class="alert">Pin</span> them to exact versions</li>
 <li><span class="alert">Containerise</span> the whole environment</li>
 </ul></li>
-<li>Your project sits at the last rung, because the marker’s machine has Docker and nothing else</li>
-<li>Lecture 10’s ingredients of a reproducible result: code, data, environment, documentation
+<li>Your project sits at the last rung
 <ul>
-<li>A container ships the environment with the code already inside it</li>
+<li>The marker’s machine has Docker and nothing else</li>
 </ul></li>
+<li>Lecture 10’s four ingredients: code, data, environment, documentation</li>
+<li>A container ships the environment with the code inside it</li>
 </ul>
 </div></div>
 </div>
@@ -1168,7 +967,7 @@ Danilo Freire
 <section id="ways-to-pin-an-environment" class="slide level2">
 <h2>Ways to pin an environment</h2>
 <h3 id="venv-conda-and-uv-side-by-side">venv, conda and uv side by side</h3>
-<div style="margin-top: 12px; font-size: 18px;">
+<div style="margin-top: 30px; font-size: 18px;">
 <div class="columns">
 <div class="column" style="width:33%;">
 <p><span class="alert"><code>venv</code> and <code>pip</code></span></p>
@@ -1177,8 +976,8 @@ Danilo Freire
 <li><code>python3 -m venv .venv</code>, then <code>source .venv/bin/activate</code></li>
 <li><code>pip freeze &gt; requirements.txt</code> writes <code>==</code> pins</li>
 <li><code>pip install -r requirements.txt</code> reads them back</li>
-<li>Two packages became seven lines, because pip lists the dependencies of your dependencies</li>
-<li>Freeze inside conda and you get <code>name @ file:///...</code> paths that install nowhere else</li>
+<li>Two packages became seven lines: pip lists your dependencies’ dependencies</li>
+<li>Freezing inside conda gives <code>name @ file:///...</code> paths that install nowhere else</li>
 </ul>
 </div><div class="column" style="width:33%;">
 <p><span class="alert">conda</span></p>
@@ -1187,54 +986,101 @@ Danilo Freire
 <li>Installs non-Python software: compilers, R, CUDA</li>
 <li><code>conda create --name demo python=3.14 numpy</code></li>
 <li><code>environment.yml</code> is the file you commit</li>
-<li><code>--from-history</code> gives a file that travels between operating systems</li>
+<li><code>--from-history</code> writes a file that travels across operating systems</li>
 <li>You met it in DATASCI 151</li>
 </ul>
 </div><div class="column" style="width:33%;">
 <p><span class="alert"><code>uv</code></span></p>
 <ul>
 <li>Written in Rust by Astral, and fast: eight packages resolved in 1.62 seconds</li>
-<li><code>uv init</code>, <code>uv add polars</code>, <code>uv sync</code></li>
-<li><code>pyproject.toml</code> for humans, <code>uv.lock</code> for the exact versions and hashes</li>
-<li>Both files belong in git, and you never edit the lock by hand</li>
+<li><code>uv init</code>, <code>uv add duckdb</code>, <code>uv sync</code></li>
+<li><code>pyproject.toml</code> for humans, <code>uv.lock</code> for exact versions and hashes</li>
+<li>Both belong in git, and you never edit the lock by hand</li>
 <li><code>uv export --format requirements-txt --no-hashes</code> writes the file your Dockerfile wants</li>
 </ul>
 </div></div>
 <div style="background: rgba(27, 58, 107, 0.08); padding: 12px; border-radius: 10px; font-size: 19px; margin-top: 12px;">
-<p>Whichever tool you use, the deliverable is the same: <span class="alert"><code>requirements.txt</code></span> with <code>==</code> pins, in the repository root, because every Dockerfile reads it</p>
+<p>Whichever tool you use, you hand in <span class="alert"><code>requirements.txt</code></span> with <code>==</code> pins, in the repository root, because every Dockerfile reads it</p>
 </div>
+</div>
+</section>
+<section id="a-closer-look-at-uv" class="slide level2">
+<h2>A closer look at <code>uv</code></h2>
+<h3 id="two-files-four-commands">Two files, four commands</h3>
+<div style="margin-top: 30px; font-size: 20px;">
+<div class="columns">
+<div class="column" style="width:50%;">
+<div style="font-size: 19px;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb10-1"><a></a>uv init l23-uv-demo --python 3.14</span>
+<span id="cb10-2"><a></a>cd l23-uv-demo</span>
+<span id="cb10-3"><a></a>uv add polars requests</span>
+<span id="cb10-4"><a></a></span>
+<span id="cb10-5"><a></a>Resolved 8 packages in 1.62s</span>
+<span id="cb10-6"><a></a>Installed 7 packages in 12ms</span>
+<span id="cb10-7"><a></a> + polars==1.44.0</span>
+<span id="cb10-8"><a></a> + requests==2.34.2</span>
+<span id="cb10-9"><a></a></span>
+<span id="cb10-10"><a></a>uv sync</span>
+<span id="cb10-11"><a></a>Resolved 8 packages in 2ms</span>
+<span id="cb10-12"><a></a></span>
+<span id="cb10-13"><a></a>uv run python -c \</span>
+<span id="cb10-14"><a></a>  "import polars; print(polars.__version__)"</span>
+<span id="cb10-15"><a></a>1.44.0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><span class="alert"><code>uv</code></span> is an environment and package manager from Astral, written in Rust</li>
+<li>Eight packages resolved in <span class="alert">1.62 seconds</span> in lecture 23</li>
+<li><code>uv init</code> starts the project, <code>uv add</code> installs a package and records it</li>
+<li><code>uv sync</code> rebuilds the environment from the lock file</li>
+<li><code>uv run</code> executes inside that environment, so there is nothing to activate</li>
+<li><span class="alert"><code>pyproject.toml</code></span> holds your direct dependencies, and you read and edit it</li>
+<li><span class="alert"><code>uv.lock</code></span> holds the exact version and hash of every package, direct or not</li>
+<li>Commit both files, and never edit the lock by hand</li>
+<li><code>uv export --format requirements-txt --no-hashes &gt; requirements.txt</code> writes the file your Dockerfile reads</li>
+</ul>
+</div></div>
 </div>
 </section>
 <section id="image-container-registry" class="slide level2">
 <h2>Image, container, registry</h2>
 <h3 id="what-each-word-means">What each word means</h3>
-<div style="margin-top: 15px; font-size: 21px;">
+<div style="margin-top: 40px; font-size: 21px;">
 <div class="columns">
 <div class="column" style="width:52%;">
 <ul>
-<li>An <span class="alert">image</span> is a read-only template: operating system, libraries, your code, configuration
+<li>An <span class="alert">image</span> is a read-only template: OS, libraries, code, configuration
 <ul>
 <li>You build one from a <code>Dockerfile</code></li>
 </ul></li>
-<li>A <span class="alert">container</span> is a running instance of an image, and one image can start many</li>
+<li>A <span class="alert">container</span> is a running instance of an image
+<ul>
+<li>One image can start many</li>
+</ul></li>
 <li>A <span class="alert">registry</span> is where images live, such as <a href="https://hub.docker.com">Docker Hub</a>
 <ul>
 <li><code>docker push</code> and <code>docker pull</code> move them</li>
 </ul></li>
 <li>A virtual environment isolates Python packages
 <ul>
-<li>A container also carries the system libraries, the interpreter and the tools your code touches</li>
+<li>A container also carries system libraries, the interpreter and your tools</li>
 </ul></li>
-<li>A virtual machine boots a whole operating system
+<li>A VM boots a whole OS
 <ul>
-<li>A container carries only what the application needs, so it starts in a second</li>
+<li>A container carries only what the app needs, so it starts in a second</li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:48%;">
 <ul>
-<li>Docker Desktop is free for personal use, for open source, and for companies with fewer than 250 employees and under $10M in annual revenue</li>
+<li>Docker Desktop is free for personal use and open source
+<ul>
+<li>Also for companies under 250 employees and $10M annual revenue</li>
+</ul></li>
 <li>The personal plan caps Docker Hub at 100 image pulls per hour</li>
-<li><span class="alert">Podman, Colima, OrbStack and Rancher Desktop</span> take the same commands, and every <code>docker</code> line in lecture 25 ran through OrbStack</li>
+<li><span class="alert">Podman, Colima, OrbStack and Rancher Desktop</span> take the same commands
+<ul>
+<li>Every <code>docker</code> command in lectures 23 and 25 ran through OrbStack</li>
+</ul></li>
 </ul>
 <div style="text-align: center; margin-top: 10px;">
 <p><a href="#/" data-modal-type="image" data-modal-url="figures/docker-architecture.png"><img data-src="figures/docker-architecture.png" style="width:66.0%"></a></p>
@@ -1248,7 +1094,7 @@ Danilo Freire
 <section id="the-project-dockerfile" class="slide level2">
 <h2>The project Dockerfile</h2>
 <h3 id="what-each-block-does">What each block does</h3>
-<div style="margin-top: 10px; font-size: 20px;">
+<div style="margin-top: 30px; font-size: 20px;">
 <div class="columns">
 <div class="column" style="width:58%;">
 <div style="font-size: 20px;">
@@ -1263,42 +1109,53 @@ Danilo Freire
 <span id="cb11-9"><a></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update <span class="kw">&amp;&amp;</span> <span class="ex">apt-get</span> install <span class="at">-y</span> <span class="pp">[</span><span class="ss">...</span><span class="pp">]</span></span>
 <span id="cb11-10"><a></a></span>
 <span id="cb11-11"><a></a><span class="co"># 4. Quarto</span></span>
-<span id="cb11-12"><a></a><span class="kw">ARG</span> QUARTO_VERSION=1.9.37</span>
-<span id="cb11-13"><a></a><span class="kw">RUN</span> <span class="va">ARCH</span><span class="op">=</span><span class="va">$(</span><span class="ex">dpkg</span> <span class="at">--print-architecture</span><span class="va">)</span> <span class="kw">&amp;&amp;</span> <span class="ex">[...]</span></span>
-<span id="cb11-14"><a></a></span>
-<span id="cb11-15"><a></a><span class="co"># 5. Python environment</span></span>
-<span id="cb11-16"><a></a><span class="kw">RUN</span> <span class="ex">python3</span> <span class="at">-m</span> venv /opt/venv</span>
-<span id="cb11-17"><a></a><span class="kw">ENV</span> PATH=<span class="st">"/opt/venv/bin:$PATH"</span></span>
-<span id="cb11-18"><a></a><span class="kw">COPY</span> requirements.txt /project/requirements.txt</span>
-<span id="cb11-19"><a></a><span class="kw">RUN</span> <span class="ex">pip</span> install <span class="at">--no-cache-dir</span> <span class="at">-r</span> /project/requirements.txt</span>
-<span id="cb11-20"><a></a></span>
-<span id="cb11-21"><a></a><span class="co"># 6. Project files</span></span>
-<span id="cb11-22"><a></a><span class="kw">WORKDIR</span> /project</span>
-<span id="cb11-23"><a></a><span class="kw">COPY</span> . /project</span>
-<span id="cb11-24"><a></a></span>
-<span id="cb11-25"><a></a><span class="co"># 7. Default command</span></span>
-<span id="cb11-26"><a></a><span class="kw">ENV</span> QUARTO_PYTHON=/opt/venv/bin/python</span>
-<span id="cb11-27"><a></a><span class="kw">CMD</span> [<span class="st">"bash"</span>, <span class="st">"-c"</span>, <span class="st">"quarto render report.qmd &amp;&amp; [...]"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-12"><a></a><span class="kw">RUN</span> <span class="va">ARCH</span><span class="op">=</span><span class="va">$(</span><span class="ex">dpkg</span> <span class="at">--print-architecture</span><span class="va">)</span> <span class="kw">&amp;&amp;</span> <span class="ex">[...]</span></span>
+<span id="cb11-13"><a></a></span>
+<span id="cb11-14"><a></a><span class="co"># 5. Python environment</span></span>
+<span id="cb11-15"><a></a><span class="kw">RUN</span> <span class="ex">python3</span> <span class="at">-m</span> venv /opt/venv</span>
+<span id="cb11-16"><a></a><span class="kw">ENV</span> PATH=<span class="st">"/opt/venv/bin:$PATH"</span></span>
+<span id="cb11-17"><a></a><span class="kw">COPY</span> requirements.txt /project/requirements.txt</span>
+<span id="cb11-18"><a></a><span class="kw">RUN</span> <span class="ex">pip</span> install <span class="at">--no-cache-dir</span> <span class="at">-r</span> /project/requirements.txt</span>
+<span id="cb11-19"><a></a></span>
+<span id="cb11-20"><a></a><span class="co"># 6. Project files</span></span>
+<span id="cb11-21"><a></a><span class="kw">WORKDIR</span> /project</span>
+<span id="cb11-22"><a></a><span class="kw">COPY</span> . /project</span>
+<span id="cb11-23"><a></a></span>
+<span id="cb11-24"><a></a><span class="co"># 7. Default command</span></span>
+<span id="cb11-25"><a></a><span class="kw">ENV</span> QUARTO_PYTHON=/opt/venv/bin/python</span>
+<span id="cb11-26"><a></a><span class="kw">CMD</span> [<span class="st">"bash"</span>, <span class="st">"-c"</span>, <span class="st">"quarto render report.qmd &amp;&amp; [...]"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:42%;">
 <ul>
 <li><span class="alert"><code>FROM</code></span> pins the starting point to a tag
 <ul>
-<li><code>latest</code> moves, and a base image that moves breaks reproducibility</li>
+<li><code>latest</code> moves, and a moving base image breaks reproducibility</li>
 </ul></li>
-<li><code>ENV DEBIAN_FRONTEND=noninteractive</code> stops apt asking questions nobody is there to answer</li>
-<li>Quarto arrives as a <code>.deb</code>, and <code>dpkg --print-architecture</code> picks arm64 or amd64</li>
-<li>Ubuntu protects its own Python, so we build a virtual environment at <code>/opt/venv</code> and put it first on the <code>PATH</code></li>
-<li><span class="alert"><code>COPY requirements.txt</code></span> sits alone above <code>COPY . /project</code>, so editing your report leaves the slow <code>pip install</code> cached</li>
-<li>Fourteen instructions, of which eight create a layer, so the log counts <code>[1/8]</code> to <code>[8/8]</code></li>
+<li><code>ENV DEBIAN_FRONTEND=noninteractive</code> stops apt asking questions</li>
+<li>Quarto 1.10.18 arrives as a <code>.deb</code>, with the version written out in full
+<ul>
+<li><code>dpkg --print-architecture</code> picks arm64 or amd64</li>
+</ul></li>
+<li>Ubuntu protects its own Python, so we build a venv at <code>/opt/venv</code>
+<ul>
+<li>It goes first on the <code>PATH</code></li>
+</ul></li>
+<li><span class="alert"><code>COPY requirements.txt</code></span> sits alone above <code>COPY . /project</code>
+<ul>
+<li>Editing your report then leaves the slow <code>pip install</code> cached</li>
+</ul></li>
+<li>Thirteen instructions, seven commented blocks, eight layers
+<ul>
+<li>The log counts <code>[1/8]</code> to <code>[8/8]</code></li>
+</ul></li>
 </ul>
 </div></div>
 </div>
 </section>
-<section id="build-run-and-the-flags-that-matter" class="slide level2">
-<h2>Build, run, and the flags that matter</h2>
-<h3 id="layer-caching-volumes-and-ports">Layer caching, volumes, and ports</h3>
-<div style="margin-top: 15px; font-size: 20px;">
+<section id="building-and-running-the-image" class="slide level2">
+<h2>Building and running the image</h2>
+<h3 id="what-the-two-commands-do">What the two commands do</h3>
+<div style="margin-top: 40px; font-size: 20px;">
 <div class="columns">
 <div class="column" style="width:52%;">
 <div style="font-size: 22px;">
@@ -1309,27 +1166,33 @@ Danilo Freire
 <span id="cb12-5"><a></a>  datasci350-project</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
-<li>The cold build took <span class="alert">7 minutes 00.70 seconds</span>: Quarto 206.5s, pip 89.2s, apt 70.8s</li>
-<li>After a title edit, the rebuild took <span class="alert">0.837 seconds</span>, with seven of eight steps <code>CACHED</code></li>
-<li>Edit <code>requirements.txt</code> instead and the cache misses at <code>COPY requirements.txt</code>, so pip and everything below it runs again</li>
-<li><span class="alert"><code>.dockerignore</code></span> took the build context from 1.42MB to 59.36kB</li>
+<li><code>docker build</code> reads the <code>Dockerfile</code> and makes the image</li>
+<li>The first build is slow: apt, Quarto and pip all download and install</li>
+<li>Edit report text and rebuild: almost instant, from the cached layers</li>
+<li>Edit <code>requirements.txt</code> and the cache misses at that <code>COPY</code>
+<ul>
+<li>pip runs again, and so does every step below it</li>
+</ul></li>
+<li><span class="alert"><code>.dockerignore</code></span> keeps <code>.git</code>, caches and outputs out of the build context</li>
 </ul>
 </div><div class="column" style="width:48%;">
 <ul>
+<li><code>docker run</code> starts a container from that image</li>
 <li><code>--rm</code> deletes the container when it exits</li>
-<li><span class="alert"><code>-v host:container</code></span> connects a folder on your laptop to one inside the container
+<li><span class="alert"><code>-v host:container</code></span> links a folder on your laptop to one in the container
 <ul>
-<li>The left path must be absolute, which is why we write <code>$(pwd)</code></li>
+<li>The host path must be absolute, hence <code>$(pwd)</code></li>
 </ul></li>
-<li>Without the mount the render succeeds, the container is deleted, and <code>report.html</code> goes with it
+<li>Leave the mount out and the render still succeeds
 <ul>
-<li>This is the most common Docker mistake in the course</li>
+<li>Docker deletes the container, and <code>output/report.html</code> with it</li>
+<li>The most common Docker mistake in the course</li>
 </ul></li>
 <li><span class="alert"><code>-p host:container</code></span> does the same job for ports
 <ul>
-<li><code>docker run --rm -p 8888:8888 quay.io/jupyter/scipy-notebook</code> puts JupyterLab on <code>localhost:8888</code></li>
+<li><code>docker run --rm -p 8888:8888 quay.io/jupyter/scipy-notebook</code> gives JupyterLab on <code>localhost:8888</code></li>
 </ul></li>
-<li>Our project writes a file, so it needs <code>-v</code> and no <code>-p</code></li>
+<li>Your project writes a file and serves nothing, so use <code>-v</code> only</li>
 </ul>
 </div></div>
 </div>
@@ -1337,19 +1200,27 @@ Danilo Freire
 <section id="the-project-checklist" class="slide level2">
 <h2>The project checklist</h2>
 <h3 id="what-the-markers-machine-needs-to-render-your-report">What the marker’s machine needs to render your report</h3>
-<div style="margin-top: 15px; font-size: 21px;">
+<div style="margin-top: 40px; font-size: 21px;">
 <div class="columns">
 <div class="column" style="width:54%;">
 <ul>
-<li><span class="alert">Commit <code>data/raw/</code></span>. <code>report.qmd</code> reads the snapshot, and the API is never called at render time</li>
+<li><span class="alert">Commit <code>data/raw/</code></span>. <code>report.qmd</code> reads the snapshot, and the API is never called at render time
+<ul>
 <li>Check it with <code>git ls-files data/raw</code>, which must print your files</li>
-<li><span class="alert">Pin every package</span> in <code>requirements.txt</code> with <code>==</code>, and use a version that exists on PyPI</li>
+</ul></li>
+<li><span class="alert">Pin every package</span> in <code>requirements.txt</code> with <code>==</code>
+<ul>
+<li>Use a version that exists on PyPI</li>
+</ul></li>
 <li><span class="alert">Test from a fresh clone</span> in an empty folder
 <ul>
 <li>The folder you wrote the code in already has the files you forgot to commit</li>
 </ul></li>
 <li>Run <code>ls output</code> after the container exits, and check the timestamp on the file</li>
-<li>The five commands are 30% of the project grade, and you can run them tonight</li>
+<li>The five commands are 30% of the project grade
+<ul>
+<li>You can run them tonight</li>
+</ul></li>
 </ul>
 </div><div class="column" style="width:46%;">
 <div style="text-align: center;">
@@ -1360,7 +1231,7 @@ Danilo Freire
 </div>
 <ul>
 <li>My machine has Docker installed and nothing else: no Python, no Quarto, no packages</li>
-<li>The exact commands I run are in <a href="#/sec-appendix-05"><span class="button">Appendix 05</span></a></li>
+<li>The exact commands I run are in <a href="#/sec-appendix-03"><span class="button">Appendix 03</span></a></li>
 </ul>
 </div></div>
 </div>
@@ -1370,10 +1241,9 @@ Danilo Freire
 <h1>Quiz 05 and the project 📝</h1>
 
 </section>
-<section id="what-to-expect-on-thursday" class="slide level2">
-<h2>What to expect on Thursday</h2>
-<h3 id="the-kind-of-question-each-lecture-brings">The kind of question each lecture brings</h3>
-<div style="margin-top: 15px; font-size: 21px;">
+<section id="what-to-expect" class="slide level2">
+<h2>What to expect</h2>
+<div style="margin-top: 40px; font-size: 23px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
@@ -1404,75 +1274,79 @@ Danilo Freire
 <li>Explain why <code>COPY requirements.txt</code> comes before <code>COPY .</code></li>
 <li>Say what happens to the report without <code>-v</code></li>
 </ul></li>
-<li>The quiz is in class on Thursday 3 December, open book and open notes, and it is worth 6%</li>
 </ul>
 </div></div>
 </div>
 </section>
-<section id="how-to-revise" class="slide level2 scrollable">
-<h2>How to revise</h2>
-<h3 id="a-two-hour-plan-in-order">A two-hour plan, in order</h3>
-<div style="margin-top: 15px; font-size: 21px;">
+<section id="sec-dockerfile-questions" class="slide level2 scrollable">
+<h2>Read this Dockerfile</h2>
+<h3 id="five-questions-answers-in-the-appendix">Five questions, answers in the appendix</h3>
+<div style="margin-top: 30px; font-size: 20px;">
 <div class="columns">
-<div class="column" style="width:52%;">
+<div class="column" style="width:50%;">
+<div style="font-size: 19px;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource dockerfile number-lines code-with-copy"><code class="sourceCode dockerfile"><span id="cb13-1"><a></a><span class="kw">FROM</span> ubuntu:24.04</span>
+<span id="cb13-2"><a></a></span>
+<span id="cb13-3"><a></a><span class="kw">ENV</span> DEBIAN_FRONTEND=noninteractive</span>
+<span id="cb13-4"><a></a></span>
+<span id="cb13-5"><a></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update <span class="kw">&amp;&amp;</span> <span class="ex">apt-get</span> install <span class="at">-y</span> <span class="pp">[</span><span class="ss">...</span><span class="pp">]</span></span>
+<span id="cb13-6"><a></a></span>
+<span id="cb13-7"><a></a><span class="kw">RUN</span> <span class="ex">python3</span> <span class="at">-m</span> venv /opt/venv</span>
+<span id="cb13-8"><a></a><span class="kw">ENV</span> PATH=<span class="st">"/opt/venv/bin:$PATH"</span></span>
+<span id="cb13-9"><a></a></span>
+<span id="cb13-10"><a></a><span class="kw">COPY</span> requirements.txt /project/requirements.txt</span>
+<span id="cb13-11"><a></a><span class="kw">RUN</span> <span class="ex">pip</span> install <span class="at">--no-cache-dir</span> <span class="at">-r</span> <span class="dt">\</span></span>
+<span id="cb13-12"><a></a>    /project/requirements.txt</span>
+<span id="cb13-13"><a></a></span>
+<span id="cb13-14"><a></a><span class="kw">WORKDIR</span> /project</span>
+<span id="cb13-15"><a></a><span class="kw">COPY</span> . /project</span>
+<span id="cb13-16"><a></a></span>
+<span id="cb13-17"><a></a><span class="kw">CMD</span> [<span class="st">"bash"</span>, <span class="st">"-c"</span>, <span class="st">"quarto render report.qmd"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div><div class="column" style="width:50%;">
 <ol type="1">
-<li>Reread the summary slide of each lecture, where every alert term is fair game</li>
-<li>Redo today’s four SQL exercises without looking at the appendices</li>
-<li>Redo the lecture 25 exercise: add a package, rebuild, and read which steps say <code>CACHED</code></li>
-<li>Do the Amdahl arithmetic for 95% parallel on 4 cores and on 64, then compare</li>
-<li>Open lecture 22 and read three queries out loud, clause by clause, in evaluation order</li>
+<li>What does <code>FROM ubuntu:24.04</code> pin, and why do we avoid <code>latest</code>?</li>
+<li>Why does <code>COPY requirements.txt</code> come before <code>COPY . /project</code>?</li>
+<li>What does <code>ENV PATH="/opt/venv/bin:$PATH"</code> change?</li>
+<li>Which line reruns if you edit <code>report.qmd</code>, and which if you edit <code>requirements.txt</code>?</li>
+<li>What happens to <code>output/report.html</code> if you run the container without <code>-v</code>?</li>
 </ol>
-</div><div class="column" style="width:48%;">
-<ul>
-<li>The appendices you want:
-<ul>
-<li>Lecture 21, Appendix 02: chunk sizes compared</li>
-<li>Lecture 22, Appendix 04: the complete <code>sqlite3</code> listing</li>
-<li>Lecture 23, Appendix 02: six build errors and their fixes</li>
-<li>Lecture 25, Appendix 03: the complete Dockerfile, with comments</li>
-</ul></li>
-<li>Tutorial 04 on the course website is the longer SQL revision if any clause still feels new</li>
-<li>Email me before Thursday if a topic is still unclear, and we can meet in office hours</li>
-</ul>
+<p>Answers: <a href="#/sec-appendix-04"><span class="button">Appendix 04</span></a></p>
 </div></div>
 </div>
 </section>
 <section id="project-questions" class="slide level2">
 <h2>Project questions</h2>
 <h3 id="the-problems-i-expect-to-hear-about">The problems I expect to hear about</h3>
-<div style="margin-top: 15px; font-size: 21px;">
+<div style="margin-top: 40px; font-size: 21px;">
 <div class="columns">
 <div class="column" style="width:52%;">
 <ul>
 <li><span class="alert">The data is not in the repository</span>
 <ul>
-<li>The build succeeds, because nothing in the Dockerfile mentions your CSV, and the run dies with <code>FileNotFoundError</code></li>
-<li>Fix it with <code>git add data/raw/</code>, then check with <code>git ls-files data/raw</code></li>
+<li>Nothing in the Dockerfile mentions your CSV, so the build succeeds</li>
+<li>The run dies with <code>IOException: No files found that match the pattern</code></li>
+<li><code>git add data/raw/</code>, then check with <code>git ls-files data/raw</code></li>
 </ul></li>
 <li><span class="alert">A pin that does not exist</span>
 <ul>
 <li>pip stops the build, and nothing below that layer is cached</li>
-<li>Read the version numbers in your <code>requirements.txt</code> against PyPI</li>
+<li>Check your <code>requirements.txt</code> versions against PyPI</li>
 </ul></li>
 <li><span class="alert">The mount is missing</span>
 <ul>
-<li>The report renders, the container is deleted, and <code>ls output</code> says no such directory</li>
+<li>The report renders, the container goes, and <code>ls output</code> says no such directory</li>
 <li>Add <code>-v "$(pwd)/output:/project/output"</code></li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:48%;">
 <ul>
-<li>Where the answers live:
+<li>Where to find help:
 <ul>
 <li>Failures one and two: <a href="https://danilofreire.github.io/datasci350/lectures/lecture-25/25-docker.html">Lecture 25</a>, the “When something goes wrong” section</li>
 <li>Seven build and run errors: Lecture 25, Appendix 02</li>
 <li>Six installation errors: <a href="https://danilofreire.github.io/datasci350/lectures/lecture-23/23-containers.html">Lecture 23</a>, Appendix 02</li>
 </ul></li>
-<li>Bring me your build log rather than a description of it
-<ul>
-<li>The log names the step that failed</li>
-</ul></li>
-<li>What else is blocking your group today?</li>
 </ul>
 </div></div>
 </div>
@@ -1482,10 +1356,9 @@ Danilo Freire
 <h1>Summary</h1>
 
 </section>
-<section id="what-to-revise-before-thursday" class="slide level2">
-<h2>What to revise before Thursday</h2>
-<h3 id="the-vocabulary-in-the-order-we-met-it-today">The vocabulary, in the order we met it today</h3>
-<div style="margin-top: 20px; font-size: 21px;">
+<section id="what-to-revise" class="slide level2">
+<h2>What to revise</h2>
+<div style="margin-top: 40px; font-size: 21px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
@@ -1494,7 +1367,7 @@ Danilo Freire
 <li><span class="alert">Big O</span>: parallelism divides the constant and leaves the class alone</li>
 <li><span class="alert">Amdahl’s law</span>: 90% parallel on 8 cores gives 4.7×</li>
 <li><span class="alert">The GIL</span>: threads help while Python waits, processes help while Python computes</li>
-<li><span class="alert">Dask</span> is lazy until <code>.compute()</code>, and on 200 million rows DuckDB finished in 0.53 s against pandas at 9.65 s</li>
+<li><span class="alert">Dask</span> is lazy until <code>.compute()</code>, and DuckDB is lazy until <code>.df()</code> or <code>.sql()</code></li>
 </ul>
 </div><div class="column" style="width:50%;">
 <ul>
@@ -1502,7 +1375,6 @@ Danilo Freire
 <li><span class="alert"><code>WHERE</code></span> filters rows and <span class="alert"><code>HAVING</code></span> filters groups</li>
 <li><code>COUNT(*)</code> counts rows and <code>COUNT(value)</code> counts numbers</li>
 <li>The three joins gave 5, 6 and 7 rows on the same two tables</li>
-<li><span class="alert"><code>sqlite3</code></span> wants a connection, a cursor, <code>commit()</code>, and <code>?</code> placeholders</li>
 <li><span class="alert"><code>requirements.txt</code></span> with <code>==</code> pins, whichever tool wrote it</li>
 <li><span class="alert">Image, container, registry</span>, and the <code>-v</code> flag that puts the report on your laptop</li>
 </ul>
@@ -1511,21 +1383,20 @@ Danilo Freire
 </section>
 <section id="before-we-finish" class="slide level2">
 <h2>Before we finish</h2>
-<div style="margin-top: 25px; font-size: 22px;">
+<div style="margin-top: 40px; font-size: 24px;">
 <div class="columns">
 <div class="column" style="width:55%;">
 <ul>
-<li>Thank you for a good semester
+<li><span class="alert">Thank you for a great semester!</span> 🥳🎉
 <ul>
 <li>You have gone from <code>cd</code> and <code>ls</code> to shipping an image someone else can run</li>
 </ul></li>
-<li><span class="alert">Quiz 05</span> is on Thursday 3 December and covers Lectures 21, 22, 23 and 25</li>
-<li>The <span class="alert">final project</span> is due on Tuesday 8 December at 11:59pm</li>
 <li>We meet on 8 December for a Q&amp;A session and project work time, with no lecture</li>
-<li>Test your container from a fresh clone tonight, while there is still time to fix it</li>
+<li>Test your container from a fresh clone, while there is still time to fix it</li>
+<li>Email me before Thursday if a topic is still unclear, and we can meet in office hours</li>
 <li>Please fill in the <span class="alert">course evaluation</span>
 <ul>
-<li>I read every comment, and this course changes every year because of them</li>
+<li>I read every comment, and this course changes every year because of them 😊</li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:45%;">
@@ -1538,11 +1409,6 @@ Danilo Freire
 </div></div>
 </div>
 </section></section>
-<section id="questions" class="title-slide slide level1 center" data-background-color="#1B3A6B">
-<h1>Questions? 🤔</h1>
-
-</section>
-
 <section id="thank-you-very-much" class="title-slide slide level1 center" data-background-color="#1B3A6B">
 <h1>Thank you very much! 🙏</h1>
 
@@ -1555,21 +1421,21 @@ Danilo Freire
 </section>
 <section id="sec-appendix-01" class="slide level2">
 <h2>Appendix 01: Solution to Exercise 01</h2>
-<div style="margin-top: 20px; font-size: 20px;">
+<div style="margin-top: 40px; font-size: 20px;">
 <div class="columns">
 <div class="column" style="width:52%;">
 <div style="font-size: 20px;">
-<div id="fd171b9e" class="cell" data-cache="true" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>duckdb.sql(<span class="st">"""</span></span>
-<span id="cb13-2"><a></a><span class="st">    SELECT country,</span></span>
-<span id="cb13-3"><a></a><span class="st">           ROUND(value, 1) AS co2_pc</span></span>
-<span id="cb13-4"><a></a><span class="st">    FROM wdi</span></span>
-<span id="cb13-5"><a></a><span class="st">    WHERE indicator = 'co2_per_capita'</span></span>
-<span id="cb13-6"><a></a><span class="st">      AND year = 2020</span></span>
-<span id="cb13-7"><a></a><span class="st">    ORDER BY value DESC</span></span>
-<span id="cb13-8"><a></a><span class="st">    LIMIT 5</span></span>
-<span id="cb13-9"><a></a><span class="st">"""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div id="8180869c" class="cell" data-cache="true" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a>duckdb.sql(<span class="st">"""</span></span>
+<span id="cb14-2"><a></a><span class="st">    SELECT country,</span></span>
+<span id="cb14-3"><a></a><span class="st">           ROUND(value, 1) AS co2_pc</span></span>
+<span id="cb14-4"><a></a><span class="st">    FROM wdi</span></span>
+<span id="cb14-5"><a></a><span class="st">    WHERE indicator = 'co2_per_capita'</span></span>
+<span id="cb14-6"><a></a><span class="st">      AND year = 2020</span></span>
+<span id="cb14-7"><a></a><span class="st">    ORDER BY value DESC</span></span>
+<span id="cb14-8"><a></a><span class="st">    LIMIT 5</span></span>
+<span id="cb14-9"><a></a><span class="st">"""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>┌─────────────────────┬────────┐
 │       country       │ co2_pc │
 │       varchar       │ double │
@@ -1588,7 +1454,7 @@ Danilo Freire
 <li><code>WHERE</code> drops every other indicator and every other year</li>
 <li><code>ROUND(value, 1)</code> computes a new column, and <code>AS co2_pc</code> names it</li>
 <li><code>ORDER BY value DESC</code> sorts on the original column, which works just as well as sorting on the alias</li>
-<li>Palau reports 71.7 tonnes per person, four times the second place, with fewer than 20,000 residents and a large tourist economy</li>
+<li>Palau reports 71.7 tonnes per person, four times the second-placed country, on fewer than 20,000 residents and a large tourist economy</li>
 <li>Qatar, Bahrain, Brunei and Trinidad and Tobago follow, all of them oil or gas producers</li>
 </ul>
 <p><a href="#/sec-exercise-01"><span class="button">Back to the exercise</span></a></p>
@@ -1597,25 +1463,25 @@ Danilo Freire
 </section>
 <section id="sec-appendix-02" class="slide level2">
 <h2>Appendix 02: Solution to Exercise 02</h2>
-<div style="margin-top: 20px; font-size: 20px;">
+<div style="margin-top: 40px; font-size: 20px;">
 <div class="columns">
 <div class="column" style="width:52%;">
 <div style="font-size: 20px;">
-<div id="abf6bbe9" class="cell" data-cache="true" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>duckdb.sql(<span class="st">"""</span></span>
-<span id="cb15-2"><a></a><span class="st">    SELECT country,</span></span>
-<span id="cb15-3"><a></a><span class="st">           COUNT(value) AS n_years,</span></span>
-<span id="cb15-4"><a></a><span class="st">           ROUND(AVG(value), 1) AS mean_internet</span></span>
-<span id="cb15-5"><a></a><span class="st">    FROM wdi</span></span>
-<span id="cb15-6"><a></a><span class="st">    WHERE indicator = 'internet_users_pct'</span></span>
-<span id="cb15-7"><a></a><span class="st">      AND year &gt;= 2015</span></span>
-<span id="cb15-8"><a></a><span class="st">    GROUP BY country</span></span>
-<span id="cb15-9"><a></a><span class="st">    HAVING COUNT(value) &gt;= 5</span></span>
-<span id="cb15-10"><a></a><span class="st">       AND AVG(value) &gt; 95</span></span>
-<span id="cb15-11"><a></a><span class="st">    ORDER BY mean_internet DESC</span></span>
-<span id="cb15-12"><a></a><span class="st">    LIMIT 5</span></span>
-<span id="cb15-13"><a></a><span class="st">"""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div id="203f66e1" class="cell" data-cache="true" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a>duckdb.sql(<span class="st">"""</span></span>
+<span id="cb16-2"><a></a><span class="st">    SELECT country,</span></span>
+<span id="cb16-3"><a></a><span class="st">           COUNT(value) AS n_years,</span></span>
+<span id="cb16-4"><a></a><span class="st">           ROUND(AVG(value), 1) AS mean_internet</span></span>
+<span id="cb16-5"><a></a><span class="st">    FROM wdi</span></span>
+<span id="cb16-6"><a></a><span class="st">    WHERE indicator = 'internet_users_pct'</span></span>
+<span id="cb16-7"><a></a><span class="st">      AND year &gt;= 2015</span></span>
+<span id="cb16-8"><a></a><span class="st">    GROUP BY country</span></span>
+<span id="cb16-9"><a></a><span class="st">    HAVING COUNT(value) &gt;= 5</span></span>
+<span id="cb16-10"><a></a><span class="st">       AND AVG(value) &gt; 95</span></span>
+<span id="cb16-11"><a></a><span class="st">    ORDER BY mean_internet DESC</span></span>
+<span id="cb16-12"><a></a><span class="st">    LIMIT 5</span></span>
+<span id="cb16-13"><a></a><span class="st">"""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>┌────────────┬─────────┬───────────────┐
 │  country   │ n_years │ mean_internet │
 │  varchar   │  int64  │    double     │
@@ -1642,221 +1508,68 @@ Danilo Freire
 </div>
 </section>
 <section id="sec-appendix-03" class="slide level2">
-<h2>Appendix 03: Solution to Exercise 03</h2>
-<div style="margin-top: 12px; font-size: 19px;">
-<div class="columns">
-<div class="column" style="width:50%;">
-<div style="font-size: 20px;">
-<div id="072e8e03" class="cell" data-cache="true" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a>duckdb.sql(<span class="st">"""</span></span>
-<span id="cb17-2"><a></a><span class="st">    SELECT r.region,</span></span>
-<span id="cb17-3"><a></a><span class="st">           COUNT(g.country) AS countries_with_gdp,</span></span>
-<span id="cb17-4"><a></a><span class="st">           ROUND(AVG(g.gdp_per_capita), 0) AS mean_gdp</span></span>
-<span id="cb17-5"><a></a><span class="st">    FROM regions AS r</span></span>
-<span id="cb17-6"><a></a><span class="st">    LEFT JOIN gdp2022 AS g ON g.iso3 = r.iso3</span></span>
-<span id="cb17-7"><a></a><span class="st">    GROUP BY r.region</span></span>
-<span id="cb17-8"><a></a><span class="st">    ORDER BY mean_gdp DESC NULLS LAST</span></span>
-<span id="cb17-9"><a></a><span class="st">"""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>┌────────────────────┬────────────────────┬──────────┐
-│       region       │ countries_with_gdp │ mean_gdp │
-│      varchar       │       int64        │  double  │
-├────────────────────┼────────────────────┼──────────┤
-│ North America      │                  1 │  64322.0 │
-│ Europe             │                  1 │  38868.0 │
-│ East Asia          │                  1 │  11830.0 │
-│ Latin America      │                  1 │   9032.0 │
-│ South Asia         │                  1 │   2098.0 │
-│ Sub-Saharan Africa │                  0 │     NULL │
-└────────────────────┴────────────────────┴──────────┘</code></pre>
-</div>
-</div>
-</div>
-<ul>
-<li><code>regions</code> goes on the left, because every region must survive</li>
-<li>Sub-Saharan Africa comes back with 0 countries and a NULL mean</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<p>The two counts side by side:</p>
-<div style="font-size: 20px;">
-<div id="a3af29a5" class="cell" data-cache="true" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>duckdb.sql(<span class="st">"""</span></span>
-<span id="cb19-2"><a></a><span class="st">    SELECT r.region,</span></span>
-<span id="cb19-3"><a></a><span class="st">           COUNT(*) AS count_star,</span></span>
-<span id="cb19-4"><a></a><span class="st">           COUNT(g.country) AS count_country</span></span>
-<span id="cb19-5"><a></a><span class="st">    FROM regions AS r</span></span>
-<span id="cb19-6"><a></a><span class="st">    LEFT JOIN gdp2022 AS g ON g.iso3 = r.iso3</span></span>
-<span id="cb19-7"><a></a><span class="st">    GROUP BY r.region</span></span>
-<span id="cb19-8"><a></a><span class="st">    ORDER BY r.region</span></span>
-<span id="cb19-9"><a></a><span class="st">"""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
-<pre><code>┌────────────────────┬────────────┬───────────────┐
-│       region       │ count_star │ count_country │
-│      varchar       │   int64    │     int64     │
-├────────────────────┼────────────┼───────────────┤
-│ East Asia          │          2 │             1 │
-│ Europe             │          1 │             1 │
-│ Latin America      │          1 │             1 │
-│ North America      │          1 │             1 │
-│ South Asia         │          1 │             1 │
-│ Sub-Saharan Africa │          1 │             0 │
-└────────────────────┴────────────┴───────────────┘</code></pre>
-</div>
-</div>
-</div>
-<ul>
-<li><code>COUNT(*)</code> counts the empty row a left join creates, so East Asia looks like 2 and Sub-Saharan Africa like 1</li>
-</ul>
-<p><a href="#/sec-exercise-03"><span class="button">Back to the exercise</span></a></p>
-</div></div>
-</div>
-</section>
-<section id="sec-appendix-04" class="slide level2">
-<h2>Appendix 04: Solution to Exercise 04</h2>
-<div style="margin-top: -8px; font-size: 20px;">
-<div class="columns">
-<div class="column" style="width:44%;">
-<div style="font-size: 20px;">
-<div id="a18af546" class="cell" data-cache="true" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a><span class="im">import</span> sqlite3</span>
-<span id="cb21-2"><a></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb21-3"><a></a></span>
-<span id="cb21-4"><a></a>df <span class="op">=</span> pd.read_parquet(</span>
-<span id="cb21-5"><a></a>    <span class="st">"../lecture-19/data/wdi_panel.parquet"</span>)</span>
-<span id="cb21-6"><a></a></span>
-<span id="cb21-7"><a></a>conn <span class="op">=</span> sqlite3.<span class="ex">connect</span>(<span class="st">":memory:"</span>)</span>
-<span id="cb21-8"><a></a>df.to_sql(<span class="st">"wdi"</span>, conn, index<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb21-9"><a></a>          if_exists<span class="op">=</span><span class="st">"replace"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</div><div class="column" style="width:56%;">
-<div style="font-size: 20px;">
-<div id="eabbd3a7" class="cell" data-cache="true" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a></a>pd.read_sql(<span class="st">"""</span></span>
-<span id="cb22-2"><a></a><span class="st">    SELECT country,</span></span>
-<span id="cb22-3"><a></a><span class="st">           COUNT(value) AS n_years,</span></span>
-<span id="cb22-4"><a></a><span class="st">           ROUND(AVG(value), 1) AS mean_internet</span></span>
-<span id="cb22-5"><a></a><span class="st">    FROM wdi</span></span>
-<span id="cb22-6"><a></a><span class="st">    WHERE indicator = 'internet_users_pct'</span></span>
-<span id="cb22-7"><a></a><span class="st">      AND year &gt;= ?</span></span>
-<span id="cb22-8"><a></a><span class="st">    GROUP BY country</span></span>
-<span id="cb22-9"><a></a><span class="st">    HAVING COUNT(value) &gt;= 5</span></span>
-<span id="cb22-10"><a></a><span class="st">       AND AVG(value) &gt; 95</span></span>
-<span id="cb22-11"><a></a><span class="st">    ORDER BY mean_internet DESC</span></span>
-<span id="cb22-12"><a></a><span class="st">    LIMIT 5</span></span>
-<span id="cb22-13"><a></a><span class="st">"""</span>, conn, params<span class="op">=</span>(<span class="dv">2015</span>,))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">country</th>
-<th data-quarto-table-cell-role="th">n_years</th>
-<th data-quarto-table-cell-role="th">mean_internet</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
-<td>Iceland</td>
-<td>9</td>
-<td>98.7</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">1</th>
-<td>Bahrain</td>
-<td>9</td>
-<td>98.4</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">2</th>
-<td>Luxembourg</td>
-<td>9</td>
-<td>97.9</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">3</th>
-<td>Qatar</td>
-<td>9</td>
-<td>97.8</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">4</th>
-<td>Denmark</td>
-<td>9</td>
-<td>97.5</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-</div>
-</div></div>
-<div style="font-size: 17px; margin-top: -11px;">
-<div class="columns">
-<div class="column" style="width:50%;">
-<ul>
-<li>The SQL is identical to Appendix 02, apart from the <code>?</code></li>
-<li><code>params=(2015,)</code> passes a tuple with one element
-<ul>
-<li>Drop the comma and Python hands SQLite an integer, which it refuses</li>
-</ul></li>
-<li><code>pd.read_sql</code> returns a DataFrame, so the output carries an index column DuckDB’s printed table does not</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<ul>
-<li>The same five countries and the same means come back</li>
-<li>Swap <code>":memory:"</code> for <code>"wdi.db"</code> and the table survives the script</li>
-</ul>
-<p><a href="#/sec-exercise-04"><span class="button">Back to the exercise</span></a></p>
-</div></div>
-</div>
-</div>
-</section>
-<section id="sec-appendix-05" class="slide level2">
-<h2>Appendix 05: Checking your container</h2>
+<h2>Appendix 03: Checking your container</h2>
 <h3 id="the-commands-i-run-on-your-repository">The commands I run on your repository</h3>
-<div style="margin-top: 20px; font-size: 21px;">
+<div style="margin-top: 40px; font-size: 21px;">
 <div class="columns">
 <div class="column" style="width:54%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb23-1"><a></a>git clone &lt;your repo url&gt; fresh-test</span>
-<span id="cb23-2"><a></a>cd fresh-test</span>
-<span id="cb23-3"><a></a>docker build -t datasci350-project .</span>
-<span id="cb23-4"><a></a>docker run --rm \</span>
-<span id="cb23-5"><a></a>  -v "$(pwd)/output:/project/output" \</span>
-<span id="cb23-6"><a></a>  datasci350-project</span>
-<span id="cb23-7"><a></a>open output/report.html</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb18-1"><a></a>git clone &lt;your repo url&gt; fresh-test</span>
+<span id="cb18-2"><a></a>cd fresh-test</span>
+<span id="cb18-3"><a></a>docker build -t datasci350-project .</span>
+<span id="cb18-4"><a></a>docker run --rm \</span>
+<span id="cb18-5"><a></a>  -v "$(pwd)/output:/project/output" \</span>
+<span id="cb18-6"><a></a>  datasci350-project</span>
+<span id="cb18-7"><a></a>open output/report.html</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>The machine has Docker installed and nothing else: no Python, no Quarto, no packages</li>
-<li>There is internet during the build, and none promised during the run</li>
+<li>The build has internet; the run is promised none</li>
 </ul>
 </div><div class="column" style="width:46%;">
 <ul>
 <li>Check that the snapshot is committed:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb24-1"><a></a>git ls-files data/raw</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb19-1"><a></a>git ls-files data/raw</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>It should print your data files, and an empty answer means the render fails inside the container</li>
 <li>Build errors: <a href="https://danilofreire.github.io/datasci350/lectures/lecture-23/23-containers.html#sec-appendix-02">Lecture 23, Appendix 02</a></li>
 <li>Run errors: <a href="https://danilofreire.github.io/datasci350/lectures/lecture-25/25-docker.html#sec-appendix-02">Lecture 25, Appendix 02</a></li>
 </ul>
+</div></div>
+</div>
+</section>
+<section id="sec-appendix-04" class="slide level2 scrollable">
+<h2>Appendix 04: Answers to the Dockerfile questions</h2>
+<div style="margin-top: 30px; font-size: 20px;">
+<div class="columns">
+<div class="column" style="width:50%;">
+<ol type="1">
+<li><code>FROM ubuntu:24.04</code> pins the base operating system to one Ubuntu release
+<ul>
+<li><code>latest</code> moves: it resolved to 24.04 last year and to 26.04 today</li>
+<li>A base image that moves breaks reproducibility</li>
+</ul></li>
+<li><code>COPY requirements.txt</code> on its own line gives pip a layer of its own
+<ul>
+<li>Editing your report leaves that slow <code>pip install</code> cached</li>
+</ul></li>
+<li><code>ENV PATH="/opt/venv/bin:$PATH"</code> puts the virtual environment first on the <code>PATH</code>
+<ul>
+<li><code>python</code> and <code>pip</code> then mean the ones in <code>/opt/venv</code>, and Ubuntu’s own Python stays untouched</li>
+</ul></li>
+</ol>
+</div><div class="column" style="width:50%;">
+<ol start="4" type="1">
+<li>Editing <code>report.qmd</code> misses the cache at <code>COPY . /project</code>, and only that step and the <code>CMD</code> run again
+<ul>
+<li>Editing <code>requirements.txt</code> misses at <code>COPY requirements.txt</code>, so pip and everything below it runs again</li>
+</ul></li>
+<li>Without <code>-v</code> the render succeeds inside the container
+<ul>
+<li><code>--rm</code> then deletes the container, and the file goes with it</li>
+<li><code>ls output</code> on your laptop says there is no such directory</li>
+</ul></li>
+</ol>
+<p><a href="#/sec-dockerfile-questions"><span class="button">Back to the questions</span></a></p>
 </div></div>
 </div>
 
