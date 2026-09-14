@@ -40,7 +40,13 @@ def classify(headline):
 
 
 headlines = pd.read_csv("headlines.csv")
-headlines["model_label"] = [classify(h)["sentiment"] for h in headlines["headline"]]
+
+labels = []
+for headline in headlines["headline"]:
+    result = classify(headline)
+    labels.append(result["sentiment"])
+
+headlines["model_label"] = labels
 headlines.to_csv("results.csv", index=False)
 
 agreed = headlines["model_label"] == headlines["human_label"]
