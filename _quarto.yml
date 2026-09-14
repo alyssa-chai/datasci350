@@ -9,6 +9,7 @@ project:
     - assignments.qmd
     - LICENSE.qmd
     - "lectures/*/*.qmd"
+    - "!lectures/archive/"
     - "tutorials/*.qmd"
   post-render:
     - "find . -name '*.quarto_ipynb*' -delete"
