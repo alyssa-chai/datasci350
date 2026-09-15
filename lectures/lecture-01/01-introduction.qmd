@@ -297,7 +297,7 @@ And much more...
 
 ## Course objectives
 
-:::{style="font-size: 25px; margin-top: 40px;"}
+:::{style="font-size: 26px; margin-top: 40px;"}
 :::{.columns}
 :::{.column width="50%"}
 - Use the [command line]{.alert} to manage files, directories, and scripts
