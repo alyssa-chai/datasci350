@@ -7,7 +7,7 @@ format:
 
 # Course Description
 
-Welcome to [DATASCI 350](https://github.com/danilofreire/datasci350)! This course introduces key tools in modern data science, focusing on three essential aspects: reliability, reproducibility, and robustness. We will cover the [command-line interface](https://en.wikipedia.org/wiki/Command-line_interface), version control with [Git](https://git-scm.com/) and [GitHub](https://github.com/), and reproducible reports using [Quarto](https://quarto.org/) and [Jupyter Notebooks](https://jupyter.org/). You will then work with language models, first running one on your own laptop with [Ollama](https://ollama.com/), then calling hosted models from Python, and finally building a small retrieval system over your own documents. We will rent machines in the cloud with [Amazon Web Services](https://aws.amazon.com/), collect data from web APIs with [requests](https://requests.readthedocs.io/), and query and process it at scale with [DuckDB](https://duckdb.org/) and [Dask](https://www.dask.org/). We finish with [Docker](https://www.docker.com/) and containerisation.
+Welcome to [DATASCI 350](https://github.com/danilofreire/datasci350)! This course introduces key tools in modern data science, with a focus on reliable and reproducible work. We start with the [command line](https://en.wikipedia.org/wiki/Command-line_interface), version control with [Git](https://git-scm.com/) and [GitHub](https://github.com/), and reproducible reports with [Quarto](https://quarto.org/) and [Jupyter Notebooks](https://jupyter.org/). You will then work with language models: first running one on your own laptop with [Ollama](https://ollama.com/), then calling hosted models from Python, and finally building a small retrieval system over your own documents. We will rent machines in the cloud with [Amazon Web Services](https://aws.amazon.com/), collect data from web APIs with [requests](https://requests.readthedocs.io/), and query and process it at scale with [DuckDB](https://duckdb.org/) and [Dask](https://www.dask.org/). We finish with dependency management, virtual environments, and containers with [Docker](https://www.docker.com/).
 
 By working with real-world datasets and problems, students will gain hands-on experience using these tools and methods to extract insights from data. This course will develop technical skills and critical thinking needed to solve complex data challenges. Upon completion, students will be prepared to apply these tools to their own research and professional work.
 
@@ -15,12 +15,14 @@ By working with real-world datasets and problems, students will gain hands-on ex
 
 By the end of this course, students will be able to:
 
-- Use the command line interface to manage files and directories.
-- Work with version control systems to track changes in code and collaborate with others.
-- Create reproducible reports and presentations.
-- Use language models and coding agents responsibly to assist with programming tasks.
-- Collect data from web APIs and web pages, and process it at scale.
-- Understand the basics of containerisation and parallel computing.
+- Use the command line to manage files, directories, and scripts.
+- Track changes and collaborate on code with Git and GitHub.
+- Create reproducible reports and presentations with Quarto.
+- Use local and hosted language models responsibly to help with programming tasks.
+- Run code on cloud servers with Amazon Web Services.
+- Collect data from web APIs and query it with SQL in DuckDB.
+- Speed up data processing with parallel computing.
+- Package projects with virtual environments and Docker containers.
  
 # Course Requirements
 

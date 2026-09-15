@@ -300,16 +300,17 @@ And much more...
 :::{style="font-size: 25px; margin-top: 40px;"}
 :::{.columns}
 :::{.column width="50%"}
-- Use the [command line interface]{.alert} to manage files and directories
-- Work with [version control systems]{.alert} to track changes in code and collaborate with others
-- Create [reproducible reports and presentations]{.alert}
-- Run and call [language models]{.alert} from your own code
-- Collect data from [web APIs]{.alert} and process it [at scale]{.alert}
-- Run your own [server in the cloud]{.alert} and package your work with [containers]{.alert}
+- Use the [command line]{.alert} to manage files, directories, and scripts
+- Track changes and collaborate on code with [Git and GitHub]{.alert}
+- Create [reproducible reports and presentations]{.alert} with Quarto
+- Use local and hosted [language models]{.alert} responsibly to help with programming tasks
 :::
 
 ::: {.column width="50%"}
-[![](figures/dsc.jpg){width="100%"}](#){data-modal-type="image" data-modal-url="figures/dsc.jpg"}
+- Run code on [cloud servers]{.alert} with Amazon Web Services
+- Collect data from [web APIs]{.alert} and query it with [SQL in DuckDB]{.alert}
+- Speed up data processing with [parallel computing]{.alert}
+- Package projects with [virtual environments]{.alert} and [Docker containers]{.alert}
 :::
 :::
 :::

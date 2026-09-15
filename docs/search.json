@@ -53,7 +53,7 @@
     "href": "syllabus.html",
     "title": "Syllabus",
     "section": "",
-    "text": "Welcome to DATASCI 350! This course introduces key tools in modern data science, focusing on three essential aspects: reliability, reproducibility, and robustness. We will cover the command-line interface, version control with Git and GitHub, and reproducible reports using Quarto and Jupyter Notebooks. You will then work with language models, first running one on your own laptop with Ollama, then calling hosted models from Python, and finally building a small retrieval system over your own documents. We will rent machines in the cloud with Amazon Web Services, collect data from web APIs with requests, and query and process it at scale with DuckDB and Dask. We finish with Docker and containerisation.\nBy working with real-world datasets and problems, students will gain hands-on experience using these tools and methods to extract insights from data. This course will develop technical skills and critical thinking needed to solve complex data challenges. Upon completion, students will be prepared to apply these tools to their own research and professional work."
+    "text": "Welcome to DATASCI 350! This course introduces key tools in modern data science, with a focus on reliable and reproducible work. We start with the command line, version control with Git and GitHub, and reproducible reports with Quarto and Jupyter Notebooks. You will then work with language models: first running one on your own laptop with Ollama, then calling hosted models from Python, and finally building a small retrieval system over your own documents. We will rent machines in the cloud with Amazon Web Services, collect data from web APIs with requests, and query and process it at scale with DuckDB and Dask. We finish with dependency management, virtual environments, and containers with Docker.\nBy working with real-world datasets and problems, students will gain hands-on experience using these tools and methods to extract insights from data. This course will develop technical skills and critical thinking needed to solve complex data challenges. Upon completion, students will be prepared to apply these tools to their own research and professional work."
   },
   {
     "objectID": "syllabus.html#suggested-books",
@@ -1187,7 +1187,7 @@
     "href": "lectures/lecture-01/01-introduction.html#course-objectives",
     "title": "Welcome to Data Science Computing!",
     "section": "Course objectives",
-    "text": "Course objectives\n\n\n\n\nUse the command line interface to manage files and directories\nWork with version control systems to track changes in code and collaborate with others\nCreate reproducible reports and presentations\nRun and call language models from your own code\nCollect data from web APIs and process it at scale\nRun your own server in the cloud and package your work with containers"
+    "text": "Course objectives\n\n\n\n\nUse the command line to manage files, directories, and scripts\nTrack changes and collaborate on code with Git and GitHub\nCreate reproducible reports and presentations with Quarto\nUse local and hosted language models responsibly to help with programming tasks\n\n\n\nRun code on cloud servers with Amazon Web Services\nCollect data from web APIs and query it with SQL in DuckDB\nSpeed up data processing with parallel computing\nPackage projects with virtual environments and Docker containers"
   },
   {
     "objectID": "lectures/lecture-01/01-introduction.html#key-focus-areas",
