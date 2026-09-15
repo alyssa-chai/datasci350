@@ -59,13 +59,14 @@ Source: [xkcd.com](https://xkcd.com/1296/)
 :::{.column width="50%"}
 Today we will cover
 
+- The GitHub CLI (`gh`), and using two GitHub accounts
 - How to `push` and `pull` changes to and from remote repositories
 - How to use `.gitignore` to avoid tracking certain files
 - Creating and managing branches
 - How to `clone` and `fork` repositories on GitHub
 - Syncing forked repositories on GitHub
 - How to create `issues` and `pull requests` on GitHub
-- Other cool GitHub features, such as Gists, Pages, Actions, and CLI
+- Other cool GitHub features, such as Gists, Pages, and Actions
 :::
 
 :::{.column width="50%"}
@@ -79,7 +80,7 @@ Today we will cover
 
 ## How to rename your branch from `master` to `main`
 
-:::{style="margin-top: 30px; font-size: 23px;"}
+:::{style="margin-top: 30px; font-size: 24px;"}
 :::{.columns}
 :::{.column width="50%"}
 - Many of you may have a default branch called `master` instead of `main`
@@ -110,16 +111,41 @@ git push origin --delete master
 :::
 :::
 
+## GitHub in the command line
+
+:::{style="margin-top: 30px; font-size: 21px;"}
+:::{.columns}
+:::{.column width="50%"}
+- [GitHub CLI](https://cli.github.com/) is a command-line tool that brings GitHub to your terminal
+- Install on Mac: `brew install gh`
+- Install on WSL/Linux: [follow these instructions (Debian/Ubuntu)](https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian)
+- GitHub CLI creates repositories, issues, pull requests, and more
+- Create, clone, and fork repositories:
+  - `gh repo create my-project`: new repository
+  - `gh repo clone danilofreire/my-project`: copy [to your computer]{.alert}
+  - `gh repo fork torvalds/linux`: copy [to your GitHub account]{.alert}
+- Have a look at the [GitHub CLI manual](https://cli.github.com/manual/) for more information
+- [Please install it!]{.alert} It will save you a lot of time in the future, and make you look like a pro 😎
+:::
+
+:::{.column width="50%"}
+:::{style="text-align: center;"}
+[![](figures/cli.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/cli.png"}
+
+- If you need to authenticate, run `gh auth login` and follow the instructions (it will open a browser window)
+:::
+:::
+:::
+:::
+
 ## Using two GitHub accounts in the terminal
 
-:::{style="margin-top: 30px; font-size: 22px;"}
+:::{style="margin-top: 30px; font-size: 23px;"}
 :::{.columns}
 :::{.column width="50%"}
 - Personal and Emory accounts? You can use both
 - `--global` sets defaults for all repositories; omit it to set values [for one repository only]{.alert}
-- GitHub CLI (`gh`) stores several accounts and switches between them (more later today)
-- Install on Mac: `brew install gh`
-- Install on WSL/Linux: [follow these instructions (Debian/Ubuntu)](https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian)
+- `gh` stores several accounts and switches between them
 - `gh auth login`: log in to an account
 - `gh auth status`: check which account is active
 - `gh auth switch`: change the active account
@@ -154,7 +180,7 @@ git push
 
 ## Pushing changes to a remote repository
 
-:::{style="margin-top: 30px; font-size: 24px;"}
+:::{style="margin-top: 30px; font-size: 27px;"}
 :::{.columns}
 :::{.column width="50%"}
 - Last class we learned to `add` and `commit`. Both stay on your machine
@@ -177,7 +203,7 @@ git push
 :::{style="margin-top: 30px; font-size: 28px;"}
 - Let's go back to our `my-project` local repository
 - Check the last commit with `git log`
-- Now, let's `push` our changes to a remote repository on GitHub
+- Now, let's `push` our changes to GitHub
 - First, we need to create a repository on GitHub
 - Go to [GitHub](https://github.com) and click on the `+` sign on the top right corner
 - Select `New repository`
@@ -185,7 +211,7 @@ git push
 - Click on `Create repository`
 :::
 
-## {background-image="figures/new-repo.png"}
+## {background-image="figures/new-repo.png" background-size="100% 100%"}
 
 ## {background-image="figures/create-repo.png"}
 
@@ -577,8 +603,8 @@ Three ways back, from safest to most destructive:
 :::{style="margin-top: 30px; font-size: 28px;"}
 - Forking from GitHub is easy, but it requires a few steps
 - Forking [is not part of Git]{.alert}, but it is part of GitHub
-  - That's why you cannot do it from the command line! No `git fork` command exists 
-  - But you can use `gh` to fork from the command line (more on that later)
+  - That's why you cannot do it with Git! No `git fork` command exists
+  - But you can fork from the terminal with `gh repo fork owner/repo`, as we saw earlier
 - To fork a repository, go to the repository on GitHub and click on the `Fork` button on the top right corner
 - Then, you can clone your forked repository to your computer as you did before
 :::
@@ -607,6 +633,13 @@ Three ways back, from safest to most destructive:
 :::{.column width="50%"}
 - A fork does not update itself. The original keeps moving without you
 - [The easy way]{.alert}: on GitHub, click "Sync fork" and confirm. Commit your own work first
+- [With `gh`]{.alert}: 
+
+```bash
+gh repo sync your-user/your-fork
+git pull
+```
+
 - [From the terminal]{.alert}, point at the original once, then pull from it whenever you like:
 
 ```bash
@@ -631,17 +664,19 @@ git push
 
 ## Issues and pull requests
 
-:::{style="margin-top: 30px; font-size: 23px;"}
+:::{style="margin-top: 30px; font-size: 21px;"}
 :::{.columns}
 :::{.column width="50%"}
 - [Issues]{.alert} are a way to track bugs, enhancements, or other tasks in a repository
 - You can create an issue by clicking on the `Issues` tab on GitHub and then on the `New issue` button
+- With `gh`: `gh issue create --title "Plot is empty" --body "Details"`
 
 :::{style="margin-top: 30px;"}
 - [Pull requests]{.alert} are a way to suggest changes after you have forked and changed a repository
 - You can create a pull request by clicking on the `Pull requests` tab on GitHub and then on the `New pull request` button
+- Or in the terminal, from your branch: `gh pr create --fill` (title and body come from your commits)
 - The repository owner can then review your changes and merge them
-- And that's how open-source projects work! 🤓🎉
+- And [that's how open-source projects work!]{.alert} 🤓🎉
 :::
 :::
 
@@ -672,6 +707,7 @@ Pull requests
 - [Gists](https://gist.github.com) are a great way to share code snippets, notes, or other text
 - You can create a Gist by clicking on the `+` sign on the top right corner of GitHub and then on `New gist`
 - Paste any text or code and save it
+- Or in the terminal: `gh gist create notes.py` (secret by default; add `--public` to list it)
 - You can also create secret Gists that are not indexed by search engines
 - Gists also benefit from version control, so you can see the history of changes and revert to previous versions
 - Check it out: <https://gist.github.com>
@@ -740,32 +776,6 @@ Read more: <https://github.com/features/actions>
 [![](figures/actions2.png){width="82%"}](#){data-modal-type="image" data-modal-url="figures/actions2.png"}
 :::
 
-## GitHub in the command line
-
-:::{style="margin-top: 30px; font-size: 23px;"}
-:::{.columns}
-:::{.column width="50%"}
-- [GitHub CLI](https://cli.github.com/) is a command-line tool that brings GitHub to your terminal
-- You can install it with `brew install gh`
-- GitHub CLI creates repositories, issues, pull requests, and more
-- Create, clone, and fork repositories:
-  - `gh repo create my-project`: new repository
-  - `gh repo clone danilofreire/my-project`: copy [to your computer]{.alert}
-  - `gh repo fork torvalds/linux`: copy [to your GitHub account]{.alert}
-- Have a look at the [GitHub CLI manual](https://cli.github.com/manual/) for more information
-- [Please install it!]{.alert} It will save you a lot of time in the future, and make you look like a pro 😎
-:::
-
-:::{.column width="50%"}
-:::{style="text-align: center;"}
-[![](figures/cli.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/cli.png"}
-
-- If you need to authenticate, run `gh auth login` and follow the instructions (it will open a browser window)
-:::
-:::
-:::
-:::
-
 ## GitHub Copilot 🤖
 
 :::{style="margin-top: 30px; font-size: 27px;"}
@@ -796,7 +806,8 @@ Read more: <https://github.com/features/actions>
 - `git switch -c new-branch <hash>` is the safe way to revisit an old commit
 - [Clone]{.alert} copies a repository to your computer. [Fork]{.alert} copies it to your account
 - [Issues]{.alert} track what needs doing, [pull requests]{.alert} propose the change itself
-- Pages, Actions, Gists, and the CLI are all built on the same repository
+- `gh` brings repositories, issues, pull requests, and Gists to your terminal
+- Pages, Actions, and Gists are all built on the same repository
 :::
 
 ## Next class

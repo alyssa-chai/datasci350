@@ -2335,7 +2335,7 @@
     "href": "lectures/lecture-06/06-more-git-github.html#lecture-overview",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Lecture overview",
-    "text": "Lecture overview\n\n\n\nToday we will cover\n\nHow to push and pull changes to and from remote repositories\nHow to use .gitignore to avoid tracking certain files\nCreating and managing branches\nHow to clone and fork repositories on GitHub\nSyncing forked repositories on GitHub\nHow to create issues and pull requests on GitHub\nOther cool GitHub features, such as Gists, Pages, Actions, and CLI"
+    "text": "Lecture overview\n\n\n\nToday we will cover\n\nThe GitHub CLI (gh), and using two GitHub accounts\nHow to push and pull changes to and from remote repositories\nHow to use .gitignore to avoid tracking certain files\nCreating and managing branches\nHow to clone and fork repositories on GitHub\nSyncing forked repositories on GitHub\nHow to create issues and pull requests on GitHub\nOther cool GitHub features, such as Gists, Pages, and Actions"
   },
   {
     "objectID": "lectures/lecture-06/06-more-git-github.html#how-to-rename-your-branch-from-master-to-main",
@@ -2356,7 +2356,7 @@
     "href": "lectures/lecture-06/06-more-git-github.html#pushing-changes-to-a-remote-repository-2",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Pushing changes to a remote repository",
-    "text": "Pushing changes to a remote repository\n\n\nLet’s go back to our my-project local repository\nCheck the last commit with git log\nNow, let’s push our changes to a remote repository on GitHub\nFirst, we need to create a repository on GitHub\nGo to GitHub and click on the + sign on the top right corner\nSelect New repository\nName your repository my-project\nClick on Create repository"
+    "text": "Pushing changes to a remote repository\n\n\nLet’s go back to our my-project local repository\nCheck the last commit with git log\nNow, let’s push our changes to GitHub\nFirst, we need to create a repository on GitHub\nGo to GitHub and click on the + sign on the top right corner\nSelect New repository\nName your repository my-project\nClick on Create repository"
   },
   {
     "objectID": "lectures/lecture-06/06-more-git-github.html#now-lets-push-our-changes-to-github",
@@ -2468,7 +2468,7 @@
     "href": "lectures/lecture-06/06-more-git-github.html#forking-1",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Forking",
-    "text": "Forking\n\n\nForking from GitHub is easy, but it requires a few steps\nForking is not part of Git, but it is part of GitHub\n\nThat’s why you cannot do it from the command line! No git fork command exists\nBut you can use gh to fork from the command line (more on that later)\n\nTo fork a repository, go to the repository on GitHub and click on the Fork button on the top right corner\nThen, you can clone your forked repository to your computer as you did before"
+    "text": "Forking\n\n\nForking from GitHub is easy, but it requires a few steps\nForking is not part of Git, but it is part of GitHub\n\nThat’s why you cannot do it with Git! No git fork command exists\nBut you can fork from the terminal with gh repo fork owner/repo, as we saw earlier\n\nTo fork a repository, go to the repository on GitHub and click on the Fork button on the top right corner\nThen, you can clone your forked repository to your computer as you did before"
   },
   {
     "objectID": "lectures/lecture-06/06-more-git-github.html#forking-2",
@@ -2489,14 +2489,14 @@
     "href": "lectures/lecture-06/06-more-git-github.html#syncing-a-forked-repository",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Syncing a forked repository",
-    "text": "Syncing a forked repository\n\n\n\n\nA fork does not update itself. The original keeps moving without you\nThe easy way: on GitHub, click “Sync fork” and confirm. Commit your own work first\nFrom the terminal, point at the original once, then pull from it whenever you like:\n\ngit remote add upstream https://github.com/original-user/original-repo.git\ngit fetch upstream\ngit merge upstream/main\ngit push\n\norigin is your fork. upstream is the repository you forked from\n\n\n\n\nMore about syncing a forked repository here."
+    "text": "Syncing a forked repository\n\n\n\n\nA fork does not update itself. The original keeps moving without you\nThe easy way: on GitHub, click “Sync fork” and confirm. Commit your own work first\nWith gh:\n\ngh repo sync your-user/your-fork\ngit pull\n\nFrom the terminal, point at the original once, then pull from it whenever you like:\n\ngit remote add upstream https://github.com/original-user/original-repo.git\ngit fetch upstream\ngit merge upstream/main\ngit push\n\norigin is your fork. upstream is the repository you forked from\n\n\n\n\nMore about syncing a forked repository here."
   },
   {
     "objectID": "lectures/lecture-06/06-more-git-github.html#issues-and-pull-requests-1",
     "href": "lectures/lecture-06/06-more-git-github.html#issues-and-pull-requests-1",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Issues and pull requests",
-    "text": "Issues and pull requests\n\n\n\n\nIssues are a way to track bugs, enhancements, or other tasks in a repository\nYou can create an issue by clicking on the Issues tab on GitHub and then on the New issue button\n\n\n\nPull requests are a way to suggest changes after you have forked and changed a repository\nYou can create a pull request by clicking on the Pull requests tab on GitHub and then on the New pull request button\nThe repository owner can then review your changes and merge them\nAnd that’s how open-source projects work! 🤓🎉\n\n\n\n\n Issues"
+    "text": "Issues and pull requests\n\n\n\n\nIssues are a way to track bugs, enhancements, or other tasks in a repository\nYou can create an issue by clicking on the Issues tab on GitHub and then on the New issue button\nWith gh: gh issue create --title \"Plot is empty\" --body \"Details\"\n\n\n\nPull requests are a way to suggest changes after you have forked and changed a repository\nYou can create a pull request by clicking on the Pull requests tab on GitHub and then on the New pull request button\nOr in the terminal, from your branch: gh pr create --fill (title and body come from your commits)\nThe repository owner can then review your changes and merge them\nAnd that’s how open-source projects work! 🤓🎉\n\n\n\n\n Issues"
   },
   {
     "objectID": "lectures/lecture-06/06-more-git-github.html#pull-requests",
@@ -2510,7 +2510,7 @@
     "href": "lectures/lecture-06/06-more-git-github.html#github-has-many-other-interesting-features",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "GitHub has many other interesting features",
-    "text": "GitHub has many other interesting features\nGists\n\n\n\n\nGists are a great way to share code snippets, notes, or other text\nYou can create a Gist by clicking on the + sign on the top right corner of GitHub and then on New gist\nPaste any text or code and save it\nYou can also create secret Gists that are not indexed by search engines\nGists also benefit from version control, so you can see the history of changes and revert to previous versions\nCheck it out: https://gist.github.com\n\n\n\n\nhttps://gist.github.com/danilofreire/d4fe27efe13b779b11c3424821331c4a"
+    "text": "GitHub has many other interesting features\nGists\n\n\n\n\nGists are a great way to share code snippets, notes, or other text\nYou can create a Gist by clicking on the + sign on the top right corner of GitHub and then on New gist\nPaste any text or code and save it\nOr in the terminal: gh gist create notes.py (secret by default; add --public to list it)\nYou can also create secret Gists that are not indexed by search engines\nGists also benefit from version control, so you can see the history of changes and revert to previous versions\nCheck it out: https://gist.github.com\n\n\n\n\nhttps://gist.github.com/danilofreire/d4fe27efe13b779b11c3424821331c4a"
   },
   {
     "objectID": "lectures/lecture-06/06-more-git-github.html#github-pages",
@@ -2538,7 +2538,7 @@
     "href": "lectures/lecture-06/06-more-git-github.html#github-in-the-command-line",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "GitHub in the command line",
-    "text": "GitHub in the command line\n\n\n\n\nGitHub CLI is a command-line tool that brings GitHub to your terminal\nYou can install it with brew install gh\nGitHub CLI creates repositories, issues, pull requests, and more\nCreate, clone, and fork repositories:\n\ngh repo create my-project: new repository\ngh repo clone danilofreire/my-project: copy to your computer\ngh repo fork torvalds/linux: copy to your GitHub account\n\nHave a look at the GitHub CLI manual for more information\nPlease install it! It will save you a lot of time in the future, and make you look like a pro 😎\n\n\n\n\n\nIf you need to authenticate, run gh auth login and follow the instructions (it will open a browser window)"
+    "text": "GitHub in the command line\n\n\n\n\nGitHub CLI is a command-line tool that brings GitHub to your terminal\nInstall on Mac: brew install gh\nInstall on WSL/Linux: follow these instructions (Debian/Ubuntu)\nGitHub CLI creates repositories, issues, pull requests, and more\nCreate, clone, and fork repositories:\n\ngh repo create my-project: new repository\ngh repo clone danilofreire/my-project: copy to your computer\ngh repo fork torvalds/linux: copy to your GitHub account\n\nHave a look at the GitHub CLI manual for more information\nPlease install it! It will save you a lot of time in the future, and make you look like a pro 😎\n\n\n\n\n\nIf you need to authenticate, run gh auth login and follow the instructions (it will open a browser window)"
   },
   {
     "objectID": "lectures/lecture-06/06-more-git-github.html#github-copilot",
@@ -2552,7 +2552,7 @@
     "href": "lectures/lecture-06/06-more-git-github.html#summary",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Summary",
-    "text": "Summary\n\n\ngit push sends your commits to GitHub, git pull brings other people’s back\n.gitignore keeps data, keys, and generated output out of the repository\nA merge conflict means two people changed the same line. Git marks it, you choose\nBranches let you work without touching main, and merge brings the work back\ngit switch -c new-branch &lt;hash&gt; is the safe way to revisit an old commit\nClone copies a repository to your computer. Fork copies it to your account\nIssues track what needs doing, pull requests propose the change itself\nPages, Actions, Gists, and the CLI are all built on the same repository"
+    "text": "Summary\n\n\ngit push sends your commits to GitHub, git pull brings other people’s back\n.gitignore keeps data, keys, and generated output out of the repository\nA merge conflict means two people changed the same line. Git marks it, you choose\nBranches let you work without touching main, and merge brings the work back\ngit switch -c new-branch &lt;hash&gt; is the safe way to revisit an old commit\nClone copies a repository to your computer. Fork copies it to your account\nIssues track what needs doing, pull requests propose the change itself\ngh brings repositories, issues, pull requests, and Gists to your terminal\nPages, Actions, and Gists are all built on the same repository"
   },
   {
     "objectID": "lectures/lecture-06/06-more-git-github.html#next-class",
@@ -6696,7 +6696,7 @@
     "href": "lectures/lecture-06/06-more-git-github.html#using-two-github-accounts-in-the-terminal",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Using two GitHub accounts in the terminal",
-    "text": "Using two GitHub accounts in the terminal\n\n\n\n\nPersonal and Emory accounts? You can use both\n--global sets defaults for all repositories; omit it to set values for one repository only\nGitHub CLI (gh) stores several accounts and switches between them (more later today)\nInstall on Mac: brew install gh\nInstall on WSL/Linux: follow these instructions (Debian/Ubuntu)\ngh auth login: log in to an account\ngh auth status: check which account is active\ngh auth switch: change the active account\ngh auth logout: log out of the current account\n\n\n\nLog in to both accounts once:\n\ngh auth login        # first account\ngh auth login        # second account\ngh auth setup-git    # let Git use these logins\n\nIn a repository owned by the second account:\n\ngit config user.name \"Your Name\"\ngit config user.email your@emory.edu\ngh auth switch       # change the active account\ngit push\n\nRun gh auth switch again before pushing to the other account\nMore information: here and here"
+    "text": "Using two GitHub accounts in the terminal\n\n\n\n\nPersonal and Emory accounts? You can use both\n--global sets defaults for all repositories; omit it to set values for one repository only\ngh stores several accounts and switches between them\ngh auth login: log in to an account\ngh auth status: check which account is active\ngh auth switch: change the active account\ngh auth logout: log out of the current account\n\n\n\nLog in to both accounts once:\n\ngh auth login        # first account\ngh auth login        # second account\ngh auth setup-git    # let Git use these logins\n\nIn a repository owned by the second account:\n\ngit config user.name \"Your Name\"\ngit config user.email your@emory.edu\ngh auth switch       # change the active account\ngit push\n\nRun gh auth switch again before pushing to the other account\nMore information: here and here"
   },
   {
     "objectID": "lectures/lecture-22/22-sql-revision.html#describe-and-summarize",

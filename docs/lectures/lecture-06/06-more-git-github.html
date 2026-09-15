@@ -262,13 +262,14 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 <div class="column" style="width:50%;">
 <p>Today we will cover</p>
 <ul>
+<li>The GitHub CLI (<code>gh</code>), and using two GitHub accounts</li>
 <li>How to <code>push</code> and <code>pull</code> changes to and from remote repositories</li>
 <li>How to use <code>.gitignore</code> to avoid tracking certain files</li>
 <li>Creating and managing branches</li>
 <li>How to <code>clone</code> and <code>fork</code> repositories on GitHub</li>
 <li>Syncing forked repositories on GitHub</li>
 <li>How to create <code>issues</code> and <code>pull requests</code> on GitHub</li>
-<li>Other cool GitHub features, such as Gists, Pages, Actions, and CLI</li>
+<li>Other cool GitHub features, such as Gists, Pages, and Actions</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <div style="text-align: center;">
@@ -279,7 +280,7 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 </section>
 <section id="how-to-rename-your-branch-from-master-to-main" class="slide level2">
 <h2>How to rename your branch from <code>master</code> to <code>main</code></h2>
-<div style="margin-top: 30px; font-size: 23px;">
+<div style="margin-top: 30px; font-size: 24px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
@@ -309,17 +310,44 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 </div></div>
 </div>
 </section>
+<section id="github-in-the-command-line" class="slide level2">
+<h2>GitHub in the command line</h2>
+<div style="margin-top: 30px; font-size: 21px;">
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><a href="https://cli.github.com/">GitHub CLI</a> is a command-line tool that brings GitHub to your terminal</li>
+<li>Install on Mac: <code>brew install gh</code></li>
+<li>Install on WSL/Linux: <a href="https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian">follow these instructions (Debian/Ubuntu)</a></li>
+<li>GitHub CLI creates repositories, issues, pull requests, and more</li>
+<li>Create, clone, and fork repositories:
+<ul>
+<li><code>gh repo create my-project</code>: new repository</li>
+<li><code>gh repo clone danilofreire/my-project</code>: copy <span class="alert">to your computer</span></li>
+<li><code>gh repo fork torvalds/linux</code>: copy <span class="alert">to your GitHub account</span></li>
+</ul></li>
+<li>Have a look at the <a href="https://cli.github.com/manual/">GitHub CLI manual</a> for more information</li>
+<li><span class="alert">Please install it!</span> It will save you a lot of time in the future, and make you look like a pro 😎</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div style="text-align: center;">
+<p><a href="#/" data-modal-type="image" data-modal-url="figures/cli.png"><img data-src="figures/cli.png" style="width:100.0%"></a></p>
+<ul>
+<li>If you need to authenticate, run <code>gh auth login</code> and follow the instructions (it will open a browser window)</li>
+</ul>
+</div>
+</div></div>
+</div>
+</section>
 <section id="using-two-github-accounts-in-the-terminal" class="slide level2">
 <h2>Using two GitHub accounts in the terminal</h2>
-<div style="margin-top: 30px; font-size: 22px;">
+<div style="margin-top: 30px; font-size: 23px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
 <li>Personal and Emory accounts? You can use both</li>
 <li><code>--global</code> sets defaults for all repositories; omit it to set values <span class="alert">for one repository only</span></li>
-<li>GitHub CLI (<code>gh</code>) stores several accounts and switches between them (more later today)</li>
-<li>Install on Mac: <code>brew install gh</code></li>
-<li>Install on WSL/Linux: <a href="https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian">follow these instructions (Debian/Ubuntu)</a></li>
+<li><code>gh</code> stores several accounts and switches between them</li>
 <li><code>gh auth login</code>: log in to an account</li>
 <li><code>gh auth status</code>: check which account is active</li>
 <li><code>gh auth switch</code>: change the active account</li>
@@ -353,7 +381,7 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 </section>
 <section id="pushing-changes-to-a-remote-repository-1" class="slide level2">
 <h2>Pushing changes to a remote repository</h2>
-<div style="margin-top: 30px; font-size: 24px;">
+<div style="margin-top: 30px; font-size: 27px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
@@ -376,7 +404,7 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 <ul>
 <li>Let’s go back to our <code>my-project</code> local repository</li>
 <li>Check the last commit with <code>git log</code></li>
-<li>Now, let’s <code>push</code> our changes to a remote repository on GitHub</li>
+<li>Now, let’s <code>push</code> our changes to GitHub</li>
 <li>First, we need to create a repository on GitHub</li>
 <li>Go to <a href="https://github.com">GitHub</a> and click on the <code>+</code> sign on the top right corner</li>
 <li>Select <code>New repository</code></li>
@@ -385,7 +413,7 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 </ul>
 </div>
 </section>
-<section id="section" class="slide level2" data-background-image="figures/new-repo.png">
+<section id="section" class="slide level2" data-background-image="figures/new-repo.png" data-background-size="100% 100%">
 <h2></h2>
 </section>
 <section id="section-1" class="slide level2" data-background-image="figures/create-repo.png">
@@ -797,8 +825,8 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 <li>Forking from GitHub is easy, but it requires a few steps</li>
 <li>Forking <span class="alert">is not part of Git</span>, but it is part of GitHub
 <ul>
-<li>That’s why you cannot do it from the command line! No <code>git fork</code> command exists</li>
-<li>But you can use <code>gh</code> to fork from the command line (more on that later)</li>
+<li>That’s why you cannot do it with Git! No <code>git fork</code> command exists</li>
+<li>But you can fork from the terminal with <code>gh repo fork owner/repo</code>, as we saw earlier</li>
 </ul></li>
 <li>To fork a repository, go to the repository on GitHub and click on the <code>Fork</code> button on the top right corner</li>
 <li>Then, you can clone your forked repository to your computer as you did before</li>
@@ -831,12 +859,17 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 <ul>
 <li>A fork does not update itself. The original keeps moving without you</li>
 <li><span class="alert">The easy way</span>: on GitHub, click “Sync fork” and confirm. Commit your own work first</li>
+<li><span class="alert">With <code>gh</code></span>:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="ex">gh</span> repo sync your-user/your-fork</span>
+<span id="cb4-2"><a></a><span class="fu">git</span> pull</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
 <li><span class="alert">From the terminal</span>, point at the original once, then pull from it whenever you like:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="fu">git</span> remote add upstream https://github.com/original-user/original-repo.git</span>
-<span id="cb4-2"><a></a><span class="fu">git</span> fetch upstream</span>
-<span id="cb4-3"><a></a><span class="fu">git</span> merge upstream/main</span>
-<span id="cb4-4"><a></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="fu">git</span> remote add upstream https://github.com/original-user/original-repo.git</span>
+<span id="cb5-2"><a></a><span class="fu">git</span> fetch upstream</span>
+<span id="cb5-3"><a></a><span class="fu">git</span> merge upstream/main</span>
+<span id="cb5-4"><a></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><code>origin</code> is your fork. <code>upstream</code> is the repository you forked from</li>
 </ul>
@@ -855,19 +888,21 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 </section>
 <section id="issues-and-pull-requests-1" class="slide level2">
 <h2>Issues and pull requests</h2>
-<div style="margin-top: 30px; font-size: 23px;">
+<div style="margin-top: 30px; font-size: 21px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
 <li><span class="alert">Issues</span> are a way to track bugs, enhancements, or other tasks in a repository</li>
 <li>You can create an issue by clicking on the <code>Issues</code> tab on GitHub and then on the <code>New issue</code> button</li>
+<li>With <code>gh</code>: <code>gh issue create --title "Plot is empty" --body "Details"</code></li>
 </ul>
 <div style="margin-top: 30px;">
 <ul>
 <li><span class="alert">Pull requests</span> are a way to suggest changes after you have forked and changed a repository</li>
 <li>You can create a pull request by clicking on the <code>Pull requests</code> tab on GitHub and then on the <code>New pull request</code> button</li>
+<li>Or in the terminal, from your branch: <code>gh pr create --fill</code> (title and body come from your commits)</li>
 <li>The repository owner can then review your changes and merge them</li>
-<li>And that’s how open-source projects work! 🤓🎉</li>
+<li>And <span class="alert">that’s how open-source projects work!</span> 🤓🎉</li>
 </ul>
 </div>
 </div><div class="column" style="width:50%;">
@@ -898,6 +933,7 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 <li><a href="https://gist.github.com">Gists</a> are a great way to share code snippets, notes, or other text</li>
 <li>You can create a Gist by clicking on the <code>+</code> sign on the top right corner of GitHub and then on <code>New gist</code></li>
 <li>Paste any text or code and save it</li>
+<li>Or in the terminal: <code>gh gist create notes.py</code> (secret by default; add <code>--public</code> to list it)</li>
 <li>You can also create secret Gists that are not indexed by search engines</li>
 <li>Gists also benefit from version control, so you can see the history of changes and revert to previous versions</li>
 <li>Check it out: <a href="https://gist.github.com" class="uri">https://gist.github.com</a></li>
@@ -959,34 +995,6 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 <p><a href="#/" data-modal-type="image" data-modal-url="figures/actions2.png"><img data-src="figures/actions2.png" style="width:82.0%"></a></p>
 </div>
 </section>
-<section id="github-in-the-command-line" class="slide level2">
-<h2>GitHub in the command line</h2>
-<div style="margin-top: 30px; font-size: 23px;">
-<div class="columns">
-<div class="column" style="width:50%;">
-<ul>
-<li><a href="https://cli.github.com/">GitHub CLI</a> is a command-line tool that brings GitHub to your terminal</li>
-<li>You can install it with <code>brew install gh</code></li>
-<li>GitHub CLI creates repositories, issues, pull requests, and more</li>
-<li>Create, clone, and fork repositories:
-<ul>
-<li><code>gh repo create my-project</code>: new repository</li>
-<li><code>gh repo clone danilofreire/my-project</code>: copy <span class="alert">to your computer</span></li>
-<li><code>gh repo fork torvalds/linux</code>: copy <span class="alert">to your GitHub account</span></li>
-</ul></li>
-<li>Have a look at the <a href="https://cli.github.com/manual/">GitHub CLI manual</a> for more information</li>
-<li><span class="alert">Please install it!</span> It will save you a lot of time in the future, and make you look like a pro 😎</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<div style="text-align: center;">
-<p><a href="#/" data-modal-type="image" data-modal-url="figures/cli.png"><img data-src="figures/cli.png" style="width:100.0%"></a></p>
-<ul>
-<li>If you need to authenticate, run <code>gh auth login</code> and follow the instructions (it will open a browser window)</li>
-</ul>
-</div>
-</div></div>
-</div>
-</section>
 <section id="github-copilot" class="slide level2">
 <h2>GitHub Copilot 🤖</h2>
 <div style="margin-top: 30px; font-size: 27px;">
@@ -1017,7 +1025,8 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 <li><code>git switch -c new-branch &lt;hash&gt;</code> is the safe way to revisit an old commit</li>
 <li><span class="alert">Clone</span> copies a repository to your computer. <span class="alert">Fork</span> copies it to your account</li>
 <li><span class="alert">Issues</span> track what needs doing, <span class="alert">pull requests</span> propose the change itself</li>
-<li>Pages, Actions, Gists, and the CLI are all built on the same repository</li>
+<li><code>gh</code> brings repositories, issues, pull requests, and Gists to your terminal</li>
+<li>Pages, Actions, and Gists are all built on the same repository</li>
 </ul>
 </div>
 </section>
