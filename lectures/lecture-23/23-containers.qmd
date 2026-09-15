@@ -259,8 +259,8 @@ pip 26.1.2 [...] (python 3.14)
 :::{style="font-size: 16px;"}
 ```{verbatim}
 Successfully installed certifi-2026.7.22
-charset_normalizer-3.5.1 idna-3.19 polars-1.44.0
-polars-runtime-32-1.44.0 requests-2.34.2
+charset_normalizer-3.5.1 idna-3.19 polars-1.44.2
+polars-runtime-32-1.44.2 requests-2.34.2
 urllib3-2.7.0
 ```
 :::
@@ -286,8 +286,8 @@ cat requirements.txt
 certifi==2026.7.22
 charset-normalizer==3.5.1
 idna==3.19
-polars==1.44.0
-polars-runtime-32==1.44.0
+polars==1.44.2
+polars-runtime-32==1.44.2
 requests==2.34.2
 urllib3==2.7.0
 ```
@@ -466,16 +466,16 @@ uv add polars requests
 Using CPython 3.14.6 interpreter at:
   /opt/homebrew/opt/python@3.14/bin/python3.14
 Creating virtual environment at: .venv
-Resolved 8 packages in 1.62s
-Prepared 3 packages in 1m 06s
-Installed 7 packages in 12ms
- + polars==1.44.0
+Resolved 8 packages in 378ms
+Prepared 2 packages in 6.66s
+Installed 7 packages in 10ms
+ + polars==1.44.2
  [...]
  + requests==2.34.2
 ```
 :::
 
-- Eight packages resolved in [1.62 seconds]{.alert}, environment created along the way
+- Eight packages resolved in [378 milliseconds]{.alert}, environment created along the way
 :::
 :::
 :::
@@ -496,7 +496,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "polars>=1.44.0",
+    "polars>=1.44.2",
     "requests>=2.34.2",
 ]
 ```
@@ -518,7 +518,7 @@ Checked 7 packages in 1ms
 
 uv run python -c \
   "import polars; print(polars.__version__)"
-1.44.0
+1.44.2
 ```
 
 - `uv run` executes inside the project environment, so there is nothing to activate
@@ -548,7 +548,7 @@ certifi==2026.7.22
     # via requests
 charset-normalizer==3.5.1
     # via requests
-polars==1.44.0
+polars==1.44.2
     # via l23-uv-demo
 requests==2.34.2
     # via l23-uv-demo

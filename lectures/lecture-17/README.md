@@ -38,7 +38,7 @@ Install the `jupyter-notebook` package, with a hyphen:
 sudo apt install -y python3 python3-pip jupyter-notebook
 ```
 
-Debian and Ubuntu split Jupyter in two. `python3-notebook` is the library on its own. It installs without error and leaves you with no `jupyter` command, so `jupyter notebook` fails. The `jupyter-notebook` package carries the command and pulls the library in with it.
+Debian and Ubuntu split Jupyter in two. `python3-notebook` installs the library and an older notebook version. The `jupyter-notebook` package is the reliable one: it carries the command and the server, and pulls the library in with it.
 
 Activity 02 runs a full analysis in the cloud. `weather_data.py` builds a small dataset on your laptop. You upload it with `scp`, download `weather_analysis.py` onto the instance with `wget`, run the analysis there, and bring `weather_analysis.png` back with `scp`. Both scripts live in this folder.
 

@@ -637,7 +637,7 @@ Afterwards both instances read `Terminated`, and the `Public IPv4 DNS` column is
 3. Update, upgrade, and install Python 3, pip, and Jupyter:
     - `sudo apt update && sudo apt upgrade -y`
     - `sudo apt install -y python3 python3-pip jupyter-notebook`
-    - The package is [`jupyter-notebook`]{.alert}, with a hyphen, and it pulls the library in with it. `python3-notebook` on its own gives you the library without the command, and `jupyter notebook` then fails
+    - The package is [`jupyter-notebook`]{.alert}, with a hyphen, and it pulls the library in with it. `python3-notebook` installs the library and an older notebook version, so `jupyter-notebook` is the reliable name for the command and the server
 4. Check that everything is installed: `which python3`, `which pip3`, `which jupyter`
 5. Start Jupyter: `jupyter notebook`
 6. Open your browser and go to `http://localhost:8000`. Copy the token from the terminal to log in
