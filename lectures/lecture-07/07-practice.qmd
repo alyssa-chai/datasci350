@@ -60,7 +60,7 @@ Today we will cover:
 - Cherry-picking commits with, well, `git cherry-pick` 😅
 - Understanding `git rebase` and its uses
 - Saving work temporarily with `git stash`
-- Installing and setting up GitHub CLI
+- Checking your GitHub CLI setup
 - GitHub CLI repository management
 - [Mock-up quiz!]{.alert}
 :::
@@ -100,8 +100,9 @@ git diff
 Reading the output:
 
 - `a/` is the old version, `b/` is the new one
-- `@@ -0,0 +1 @@` gives the line numbers: none before, one line now
-- `+` marks an added line, `-` a deleted one
+- `index e69de29..42b9fb1`: short IDs of the file before and after the change; `100644` means a regular file ([other file modes](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects#_tree_objects))
+- `@@ -0,0 +1 @@`: old file had 0 lines, new file has 1 line starting at line 1
+- `+` before a line: added; `-` before a line: removed
 :::
 :::
 :::
@@ -181,7 +182,7 @@ git commit --amend -m "Updated commit message"
 **Important rules:**
 
 - Only amend [local commits]{.alert}
-- Never amend commits that have been pushed to a shared repository
+- Don't amend commits that have been pushed to a shared repository, as it rewrites history
 - If you need to modify pushed commits, use `git revert` instead
 - Always communicate with your team before amending shared history
 :::
@@ -196,7 +197,7 @@ git commit --amend -m "Updated commit message"
 - If you made a mistake, git allows you to undo commits
 - `git reset` can move the HEAD pointer to a previous commit
 - `--soft` keeps your changes staged
-- `--mixed` (the default) keeps them, but unstaged
+- `--mixed` (the default) keeps them, but unstaged. [This is usually what you want]{.alert}, so you can review the files before committing again
 - `--hard` throws them away entirely
 - [Use with caution too!]{.alert} Hard reset will delete uncommitted changes
 
@@ -207,10 +208,15 @@ git commit --amend -m "Updated commit message"
 
 :::{.column width="50%"}
 :::{style="margin-top: -20px;"}
-**Undo last commit but keep changes:**
+**Undo last commit, keep changes staged:**
 
 ```bash
 git reset --soft HEAD~1
+```
+
+**Undo last commit, keep changes unstaged:**
+```bash
+git reset HEAD~1   # same as git reset --mixed HEAD~1
 ```
 
 **Undo last commit and discard changes:**
@@ -236,6 +242,7 @@ git reset --hard HEAD~1
 - Each commit is applied individually with its own commit message
 - Can be used to backport changes to older versions
 - [Creates new commits]{.alert} rather than modifying existing ones
+- More details: [Atlassian's cherry-pick tutorial](https://www.atlassian.com/git/tutorials/cherry-pick)
 :::
 
 :::{.column width="50%"}
@@ -250,7 +257,7 @@ git reset --hard HEAD~1
 
 :::{style="margin-top: 30px; font-size: 22px;"}
 :::{.columns}
-:::{.column width="50%"}
+:::{.column width="45%"}
 **Basic cherry-pick:**
 ```bash
 # Cherry-pick a single commit
@@ -270,7 +277,7 @@ git cherry-pick abc1234..def5678
 - Original commit history is preserved
 :::
 
-:::{.column width="50%"}
+:::{.column width="55%"}
 **Handling conflicts:**
 ```bash
 # If conflicts occur during cherry-pick
@@ -300,6 +307,7 @@ git cherry-pick --skip      # Skip the current commit
 - Creates a [linear, clean commit history]{.alert}
 - Useful for keeping feature branches up to date with main branch
 - [Rewrites commit history]{.alert} - avoid using it on shared or public branches!
+- More details: [Atlassian's rebase tutorial](https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase)
 :::
 
 :::{.column width="60%"}
@@ -352,12 +360,13 @@ git rebase main
 
 ## What is `git stash`?
 
-:::{style="margin-top: 30px; font-size: 23px;"}
+:::{style="margin-top: 30px; font-size: 22px;"}
 :::{.columns}
-:::{.column width="50%"}
-- `git stash` [puts your uncommitted changes aside]{.alert}, leaving a clean working directory
+:::{.column width="43%"}
+- `git stash` [puts your uncommitted changes aside]{.alert}, leaving a clean working directory. [This is very useful!]{.alert}
 - Think of it as a clipboard for work in progress
 - Stashes pile up in a stack, so the last one you saved is the first one back
+- Read more: [Atlassian's stash tutorial](https://www.atlassian.com/git/tutorials/saving-changes/git-stash)
 
 **Use it when:**
 
@@ -367,22 +376,25 @@ git rebase main
 - You started work on the wrong branch
 :::
 
-:::{.column width="50%"}
+:::{.column width="57%"}
 :::{style="text-align: center; margin-top: 20px;"}
 ```bash
-# You're working on a feature
-echo "new feature code" >> feature.py
+# 1. On feature-branch, you edit a tracked file
+echo "df = df.dropna()" >> 01-data-cleaning.py
+git status   # modified: 01-data-cleaning.py
 
-# Suddenly need to switch branches
+# 2. A bug report arrives. Park your edit
 git stash
+git status   # nothing to commit, working tree clean
 
-# Your working directory is now clean!
+# 3. Fix the bug on main
 git checkout main
-# Do your hotfix work...
+echo "# Fixed typo" >> README.md
+git commit -m "Fix typo in README"
 
-# Return to your feature branch
+# 4. Go back and pick up where you left off
 git checkout feature-branch
-git stash pop  # Restore your changes
+git stash pop  # your dropna() line is back
 ```
 :::
 :::
@@ -492,52 +504,29 @@ This command:
 :::
 :::
 
-# GitHub CLI - Installation 🖥️ {background-color="#1B3A6B"}
+# GitHub CLI 🖥️ {background-color="#1B3A6B"}
 
-## GitHub in the terminal
+## Is your GitHub CLI ready?
 
-:::{style="margin-top: 30px; font-size: 20px;"}
+:::{style="margin-top: 30px; font-size: 24px;"}
 :::{.columns}
 :::{.column width="50%"}
-- GitHub CLI (`gh`) is the [official command-line tool]{.alert} for GitHub
-- It does from the terminal what you would otherwise do in a browser: repositories, issues, pull requests
-- [Do not type the WSL command below]{.alert}. Copy it from <https://cli.github.com/>
+- You installed `gh` and logged in during lecture 06. Let's check both
 
-**macOS (using Homebrew):**
 ```bash
-# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install gh
+gh --version     # is gh installed?
+gh auth status   # which account is active?
 ```
 
-**WSL/Ubuntu:**
-```bash
-# Install
-(type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) \
-	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
-	&& out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
-	&& cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
-	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
-	&& sudo mkdir -p -m 755 /etc/apt/sources.list.d \
-	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-	&& sudo apt update \
-	&& sudo apt install gh -y
-
-# Update (if already installed)
-sudo apt update && sudo apt install gh -y
-```
+- Command not found? Mac: `brew install gh`. WSL: [Linux instructions](https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian)
+- Not logged in? Run `gh auth login` (next slide)
+- Today: [pull requests and issues]{.alert} without leaving the terminal
 :::
 
 :::{.column width="50%"}
-:::{style="text-align: center; margin-top: -20px;"}
+:::{style="text-align: center;"}
 [![](figures/gh-cli.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/gh-cli.png"}
-
-Website: <https://cli.github.com/>
 :::
-
-**Verify installation:**
-```bash
-gh --version
-```
 :::
 :::
 :::
@@ -566,23 +555,14 @@ gh auth login
 
 :::{style="margin-top: 30px; font-size: 22px;"}
 :::{.columns}
-:::{.column width="50%"}
+:::{.column width="40%"}
 **Repository operations:**
 ```bash
 # List your repositories
 gh repo list
 
-# Clone a repository
-gh repo clone username/repo-name
-
-# Create a new repository
-gh repo create 
-
 # View repository details
 gh repo view --web
-
-# Fork a repository
-gh repo fork
 
 # Star/unstar a repository
 gh repo star
@@ -592,7 +572,7 @@ gh repo archive
 ```
 :::
 
-:::{.column width="50%"}
+:::{.column width="60%"}
 **Pull requests and issues:**
 
 ```bash
@@ -634,6 +614,8 @@ git init && git add . && git commit -m "first commit"
 :::{style="text-align: center; margin-top: -20px;"}
 [![](figures/repo-create01.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/repo-create01.png"}
 :::
+
+- More information: <https://cli.github.com/manual/gh_repo_create>
 :::
 
 :::{.column width="50%"}
@@ -646,6 +628,12 @@ gh repo view --web
 :::{style="text-align: center; margin-top: -20px;"}
 [![](figures/repo-create02.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/repo-create02.png"}
 :::
+
+- You can even create a new repository and push your local code to it in one command!
+
+```bash
+gh repo create new-project --public --source=. --push
+```
 :::
 :::
 :::
@@ -660,34 +648,38 @@ gh repo view --web
 
 ## Git practice quiz
 
-:::{style="margin-top: 30px; font-size: 23px;"}
+:::{style="margin-top: 30px; font-size: 19px;"}
 :::{.columns}
 :::{.column width="50%"}
 [Set up the repository]{.alert}
 
-1. Create a `git-practice` directory and initialise it
-2. Add a `README.md` containing `# Git Practice Repository`
-3. Create `src/main.py`, empty
-4. Commit everything: "Initial commit with README and main.py"
+1. Create a `git-practice` directory, move into it, and initialise a repository
+2. Create a `src` folder, then use brace expansion to create `main.py`, `utils.py` and `test.py` inside it in one command
+3. Use `echo` to write `print("Hello")` into `src/main.py`, and check its contents with `cat`. Commit everything: "Initial commit"
 
-[Work on a branch]{.alert}
+[Check and fix]{.alert}
 
-5. Create and switch to a branch called `hotfix`
+4. Use `echo` to replace the text with `print("Hello, world")`, then run `git diff`. Commit with the message "Updte greeting", then fix the typo with `--amend`
+5. Rename `src/test.py` to `src/test_main.py`, check with `ls src`, and commit: "Rename test file"
 :::
 
 :::{.column width="50%"}
-6. In `src`, use brace expansion to create `utils.js`, `utils.css`, and `utils.html` in one command
-7. Add a `.gitignore` containing `temp/`, then commit: "Add hotfix files and gitignore"
-8. Rename `src/main.py` to `src/app.py`
-9. Commit: "Complete hotfix development"
+[Branches and stash]{.alert}
 
-[Bring it back]{.alert}
+6. Create and switch to a branch called `hotfix`. Add a `.gitignore` containing `temp/` and commit: "Add gitignore"
+7. Switch back to your default branch. Use `git log hotfix --oneline` to find the ID of the "Add gitignore" commit, then bring over only that commit with `cherry-pick`
+8. Add `# TODO` to `src/utils.py`, stash the change, and check that `git status` is clean
+9. Bring the change back with `git stash pop`, then use `cat` to confirm `# TODO` is there
 
-10. Switch back to your default branch, merge `hotfix`, and show the history in compact form
+[To GitHub]{.alert}
+
+10. Create a private GitHub repository from this folder, and open it in the browser
 :::
 :::
 
-Check your work with `git log --oneline` and `git branch`
+:::{style="text-align: center;"}
+Check your work with `git log --oneline` and `git status`. Answers are in the appendix at the end of this lecture
+:::
 :::
 
 # And that's a wrap! 🎉 {background-color="#1B3A6B"}
@@ -696,26 +688,19 @@ Check your work with `git log --oneline` and `git branch`
 
 ## Solutions to practice quiz
 
-:::{style="margin-top: 30px; font-size: 22px;"}
+:::{style="margin-top: 30px; font-size: 21px;"}
 Here are the answers to the practice quiz. Try to complete the quiz first before checking these answers!
 
 1. `mkdir git-practice && cd git-practice && git init`
-2. `echo "# Git Practice Repository" > README.md`
-3. `mkdir src && touch src/main.py`
-4. `git add . && git commit -m "Initial commit with README and main.py"`
-5. `git checkout -b hotfix`
-6. `touch src/utils.{js,css,html}`
-7. `echo "temp/" > .gitignore && git add . && git commit -m "Add hotfix files and gitignore"`
-8. `mv src/main.py src/app.py`
-    - `git mv src/main.py src/app.py` does the same and stages it in one step
-9. `git add . && git commit -m "Complete hotfix development"`
-10. `git checkout main && git merge hotfix && git log --oneline`
+2. `mkdir src && touch src/{main,utils,test}.py`
+3. `echo 'print("Hello")' > src/main.py && cat src/main.py && git add . && git commit -m "Initial commit"`
+4. `echo 'print("Hello, world")' > src/main.py && git diff`, then `git commit -am "Updte greeting"` and `git commit --amend -m "Update greeting"`
+5. `mv src/test.py src/test_main.py && ls src && git add . && git commit -m "Rename test file"`
+    - `git mv src/test.py src/test_main.py` does the same and stages it in one step
+6. `git checkout -b hotfix && echo "temp/" > .gitignore && git add .gitignore && git commit -m "Add gitignore"`
+7. `git checkout main && git log hotfix --oneline`, then `git cherry-pick <commit-id>`
     - If `git init` gave you a branch called `master`, use that name instead. Check with `git branch`
-
-**Additional verification commands:**
-
-- Check commit history: `git log --oneline`
-- View file structure: `ls -la`
-- Check branch status: `git branch`
-- View .gitignore contents: `cat .gitignore`
+8. `echo "# TODO" >> src/utils.py && git stash && git status`
+9. `git stash pop && cat src/utils.py`
+10. `gh repo create git-practice --private --source=. --push && gh repo view --web`
 :::

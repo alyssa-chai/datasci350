@@ -2573,14 +2573,14 @@
     "href": "lectures/lecture-07/07-practice.html#todays-lecture",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Today’s lecture",
-    "text": "Today’s lecture\n\n\n\nToday we will cover:\n\nUnderstanding changes with git diff\nAmending commits with git commit --amend\nCherry-picking commits with, well, git cherry-pick 😅\nUnderstanding git rebase and its uses\nSaving work temporarily with git stash\nInstalling and setting up GitHub CLI\nGitHub CLI repository management\nMock-up quiz!"
+    "text": "Today’s lecture\n\n\n\nToday we will cover:\n\nUnderstanding changes with git diff\nAmending commits with git commit --amend\nCherry-picking commits with, well, git cherry-pick 😅\nUnderstanding git rebase and its uses\nSaving work temporarily with git stash\nChecking your GitHub CLI setup\nGitHub CLI repository management\nMock-up quiz!"
   },
   {
     "objectID": "lectures/lecture-07/07-practice.html#what-is-git-diff",
     "href": "lectures/lecture-07/07-practice.html#what-is-git-diff",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "What is git diff?",
-    "text": "What is git diff?\n\n\n\n\ngit diff shows what has changed, line by line\nIt compares your working directory, the staging area, commits, or branches\nRead it before every commit. It is the cheapest way to catch a mistake\nLet’s make a change in my-project and look at it\n\necho \"# This is a data cleaning script\" &gt;&gt; ./01-data-cleaning.py\ngit diff\n\n\n\n\nReading the output:\n\na/ is the old version, b/ is the new one\n@@ -0,0 +1 @@ gives the line numbers: none before, one line now\n+ marks an added line, - a deleted one"
+    "text": "What is git diff?\n\n\n\n\ngit diff shows what has changed, line by line\nIt compares your working directory, the staging area, commits, or branches\nRead it before every commit. It is the cheapest way to catch a mistake\nLet’s make a change in my-project and look at it\n\necho \"# This is a data cleaning script\" &gt;&gt; ./01-data-cleaning.py\ngit diff\n\n\n\n\nReading the output:\n\na/ is the old version, b/ is the new one\nindex e69de29..42b9fb1: short IDs of the file before and after the change; 100644 means a regular file (other file modes)\n@@ -0,0 +1 @@: old file had 0 lines, new file has 1 line starting at line 1\n+ before a line: added; - before a line: removed"
   },
   {
     "objectID": "lectures/lecture-07/07-practice.html#common-git-diff-commands",
@@ -2601,21 +2601,21 @@
     "href": "lectures/lecture-07/07-practice.html#how-to-amend-commits",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "How to amend commits",
-    "text": "How to amend commits\n\n\n\nAmending the commit message:\ngit commit --amend -m \"New commit message\"\nAdding forgotten files:\ngit add forgotten-file.txt\ngit commit --amend --no-edit\nBoth together:\ngit add new-file.txt\ngit commit --amend -m \"Updated commit message\"\n\nImportant rules:\n\nOnly amend local commits\nNever amend commits that have been pushed to a shared repository\nIf you need to modify pushed commits, use git revert instead\nAlways communicate with your team before amending shared history"
+    "text": "How to amend commits\n\n\n\nAmending the commit message:\ngit commit --amend -m \"New commit message\"\nAdding forgotten files:\ngit add forgotten-file.txt\ngit commit --amend --no-edit\nBoth together:\ngit add new-file.txt\ngit commit --amend -m \"Updated commit message\"\n\nImportant rules:\n\nOnly amend local commits\nDon’t amend commits that have been pushed to a shared repository, as it rewrites history\nIf you need to modify pushed commits, use git revert instead\nAlways communicate with your team before amending shared history"
   },
   {
     "objectID": "lectures/lecture-07/07-practice.html#undoing-commits-with-git-reset",
     "href": "lectures/lecture-07/07-practice.html#undoing-commits-with-git-reset",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Undoing commits with git reset",
-    "text": "Undoing commits with git reset\n\n\n\n\nIf you made a mistake, git allows you to undo commits\ngit reset can move the HEAD pointer to a previous commit\n--soft keeps your changes staged\n--mixed (the default) keeps them, but unstaged\n--hard throws them away entirely\nUse with caution too! Hard reset will delete uncommitted changes\n\n\n\n\n\n\nUndo last commit but keep changes:\ngit reset --soft HEAD~1\nUndo last commit and discard changes:\ngit reset --hard HEAD~1\n\nYou can undo as many commits as needed by changing the number after HEAD~, such as HEAD~2 for the last two commits"
+    "text": "Undoing commits with git reset\n\n\n\n\nIf you made a mistake, git allows you to undo commits\ngit reset can move the HEAD pointer to a previous commit\n--soft keeps your changes staged\n--mixed (the default) keeps them, but unstaged. This is usually what you want, so you can review the files before committing again\n--hard throws them away entirely\nUse with caution too! Hard reset will delete uncommitted changes\n\n\n\n\n\n\nUndo last commit, keep changes staged:\ngit reset --soft HEAD~1\nUndo last commit, keep changes unstaged:\ngit reset HEAD~1   # same as git reset --mixed HEAD~1\nUndo last commit and discard changes:\ngit reset --hard HEAD~1\n\nYou can undo as many commits as needed by changing the number after HEAD~, such as HEAD~2 for the last two commits"
   },
   {
     "objectID": "lectures/lecture-07/07-practice.html#what-is-git-cherry-pick",
     "href": "lectures/lecture-07/07-practice.html#what-is-git-cherry-pick",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "What is git cherry-pick?",
-    "text": "What is git cherry-pick?\n\n\n\n\ngit cherry-pick allows you to pick specific commits from one branch and apply them to another\nUseful when you want to apply a bug fix or feature from one branch to another\nEach commit is applied individually with its own commit message\nCan be used to backport changes to older versions\nCreates new commits rather than modifying existing ones"
+    "text": "What is git cherry-pick?\n\n\n\n\ngit cherry-pick allows you to pick specific commits from one branch and apply them to another\nUseful when you want to apply a bug fix or feature from one branch to another\nEach commit is applied individually with its own commit message\nCan be used to backport changes to older versions\nCreates new commits rather than modifying existing ones\nMore details: Atlassian’s cherry-pick tutorial"
   },
   {
     "objectID": "lectures/lecture-07/07-practice.html#using-git-cherry-pick",
@@ -2629,7 +2629,7 @@
     "href": "lectures/lecture-07/07-practice.html#understanding-git-rebase-1",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Understanding git rebase",
-    "text": "Understanding git rebase\n\n\n\n\ngit rebase allows you to move or combine commits to a new base commit\nChanges the commit history by replaying commits on top of another base\nCreates a linear, clean commit history\nUseful for keeping feature branches up to date with main branch\nRewrites commit history - avoid using it on shared or public branches!"
+    "text": "Understanding git rebase\n\n\n\n\ngit rebase allows you to move or combine commits to a new base commit\nChanges the commit history by replaying commits on top of another base\nCreates a linear, clean commit history\nUseful for keeping feature branches up to date with main branch\nRewrites commit history - avoid using it on shared or public branches!\nMore details: Atlassian’s rebase tutorial"
   },
   {
     "objectID": "lectures/lecture-07/07-practice.html#types-of-rebasing",
@@ -2643,7 +2643,7 @@
     "href": "lectures/lecture-07/07-practice.html#what-is-git-stash",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "What is git stash?",
-    "text": "What is git stash?\n\n\n\n\ngit stash puts your uncommitted changes aside, leaving a clean working directory\nThink of it as a clipboard for work in progress\nStashes pile up in a stack, so the last one you saved is the first one back\n\nUse it when:\n\nAn urgent fix arrives and you are mid-way through something else\nYou want to pull but have local changes in the way\nYou are experimenting and want to park the experiment\nYou started work on the wrong branch\n\n\n\n# You're working on a feature\necho \"new feature code\" &gt;&gt; feature.py\n\n# Suddenly need to switch branches\ngit stash\n\n# Your working directory is now clean!\ngit checkout main\n# Do your hotfix work...\n\n# Return to your feature branch\ngit checkout feature-branch\ngit stash pop  # Restore your changes"
+    "text": "What is git stash?\n\n\n\n\ngit stash puts your uncommitted changes aside, leaving a clean working directory. This is very useful!\nThink of it as a clipboard for work in progress\nStashes pile up in a stack, so the last one you saved is the first one back\nRead more: Atlassian’s stash tutorial\n\nUse it when:\n\nAn urgent fix arrives and you are mid-way through something else\nYou want to pull but have local changes in the way\nYou are experimenting and want to park the experiment\nYou started work on the wrong branch\n\n\n\n# 1. On feature-branch, you edit a tracked file\necho \"df = df.dropna()\" &gt;&gt; 01-data-cleaning.py\ngit status   # modified: 01-data-cleaning.py\n\n# 2. A bug report arrives. Park your edit\ngit stash\ngit status   # nothing to commit, working tree clean\n\n# 3. Fix the bug on main\ngit checkout main\necho \"# Fixed typo\" &gt;&gt; README.md\ngit commit -m \"Fix typo in README\"\n\n# 4. Go back and pick up where you left off\ngit checkout feature-branch\ngit stash pop  # your dropna() line is back"
   },
   {
     "objectID": "lectures/lecture-07/07-practice.html#basic-git-stash-commands",
@@ -2678,14 +2678,14 @@
     "href": "lectures/lecture-07/07-practice.html#working-with-repositories-pull-requests-and-issues",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Working with repositories, pull requests, and issues",
-    "text": "Working with repositories, pull requests, and issues\n\n\n\nRepository operations:\n# List your repositories\ngh repo list\n\n# Clone a repository\ngh repo clone username/repo-name\n\n# Create a new repository\ngh repo create \n\n# View repository details\ngh repo view --web\n\n# Fork a repository\ngh repo fork\n\n# Star/unstar a repository\ngh repo star\n\n# Archive/unarchive a repository\ngh repo archive\n\nPull requests and issues:\n# Create a new pull request\ngh pr create --title \"My PR\" --body \"Description of my PR\"\n\n# List pull requests\ngh pr list\n\n# View pull request details\ngh pr view 123 --web\n\n# Create a new issue\ngh issue create --title \"My Issue\" --body \"Description of my issue\"\n\n# List issues\ngh issue list\n\n# View issue details\ngh issue view 456 --web"
+    "text": "Working with repositories, pull requests, and issues\n\n\n\nRepository operations:\n# List your repositories\ngh repo list\n\n# View repository details\ngh repo view --web\n\n# Star/unstar a repository\ngh repo star\n\n# Archive/unarchive a repository\ngh repo archive\n\nPull requests and issues:\n# Create a new pull request\ngh pr create --title \"My PR\" --body \"Description of my PR\"\n\n# List pull requests\ngh pr list\n\n# View pull request details\ngh pr view 123 --web\n\n# Create a new issue\ngh issue create --title \"My Issue\" --body \"Description of my issue\"\n\n# List issues\ngh issue list\n\n# View issue details\ngh issue view 456 --web"
   },
   {
     "objectID": "lectures/lecture-07/07-practice.html#real-world-github-cli-usage",
     "href": "lectures/lecture-07/07-practice.html#real-world-github-cli-usage",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Real-world GitHub CLI usage",
-    "text": "Real-world GitHub CLI usage\n\n\n\nmkdir new-project && cd new-project\necho \"# New project\" &gt; README.md\ngit init && git add . && git commit -m \"first commit\"\n\n\n\n\ngh repo create\n# Follow the prompts\ngh repo view --web"
+    "text": "Real-world GitHub CLI usage\n\n\n\nmkdir new-project && cd new-project\necho \"# New project\" &gt; README.md\ngit init && git add . && git commit -m \"first commit\"\n\n\n\n\nMore information: https://cli.github.com/manual/gh_repo_create\n\n\ngh repo create\n# Follow the prompts\ngh repo view --web\n\n\n\n\nYou can even create a new repository and push your local code to it in one command!\n\ngh repo create new-project --public --source=. --push"
   },
   {
     "objectID": "lectures/lecture-07/07-practice.html#goodbye-github-desktop",
@@ -2699,14 +2699,14 @@
     "href": "lectures/lecture-07/07-practice.html#git-practice-quiz",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Git practice quiz",
-    "text": "Git practice quiz\n\n\n\nSet up the repository\n\nCreate a git-practice directory and initialise it\nAdd a README.md containing # Git Practice Repository\nCreate src/main.py, empty\nCommit everything: “Initial commit with README and main.py”\n\nWork on a branch\n\nCreate and switch to a branch called hotfix\n\n\n\nIn src, use brace expansion to create utils.js, utils.css, and utils.html in one command\nAdd a .gitignore containing temp/, then commit: “Add hotfix files and gitignore”\nRename src/main.py to src/app.py\nCommit: “Complete hotfix development”\n\nBring it back\n\nSwitch back to your default branch, merge hotfix, and show the history in compact form\n\n\nCheck your work with git log --oneline and git branch"
+    "text": "Git practice quiz\n\n\n\nSet up the repository\n\nCreate a git-practice directory, move into it, and initialise a repository\nCreate a src folder, then use brace expansion to create main.py, utils.py and test.py inside it in one command\nUse echo to write print(\"Hello\") into src/main.py, and check its contents with cat. Commit everything: “Initial commit”\n\nCheck and fix\n\nUse echo to replace the text with print(\"Hello, world\"), then run git diff. Commit with the message “Updte greeting”, then fix the typo with --amend\nRename src/test.py to src/test_main.py, check with ls src, and commit: “Rename test file”\n\n\nBranches and stash\n\nCreate and switch to a branch called hotfix. Add a .gitignore containing temp/ and commit: “Add gitignore”\nSwitch back to your default branch. Use git log hotfix --oneline to find the ID of the “Add gitignore” commit, then bring over only that commit with cherry-pick\nAdd # TODO to src/utils.py, stash the change, and check that git status is clean\nBring the change back with git stash pop, then use cat to confirm # TODO is there\n\nTo GitHub\n\nCreate a private GitHub repository from this folder, and open it in the browser\n\n\n\nCheck your work with git log --oneline and git status. Answers are in the appendix at the end of this lecture"
   },
   {
     "objectID": "lectures/lecture-07/07-practice.html#solutions-to-practice-quiz",
     "href": "lectures/lecture-07/07-practice.html#solutions-to-practice-quiz",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Solutions to practice quiz",
-    "text": "Solutions to practice quiz\n\nHere are the answers to the practice quiz. Try to complete the quiz first before checking these answers!\n\nmkdir git-practice && cd git-practice && git init\necho \"# Git Practice Repository\" &gt; README.md\nmkdir src && touch src/main.py\ngit add . && git commit -m \"Initial commit with README and main.py\"\ngit checkout -b hotfix\ntouch src/utils.{js,css,html}\necho \"temp/\" &gt; .gitignore && git add . && git commit -m \"Add hotfix files and gitignore\"\nmv src/main.py src/app.py\n\ngit mv src/main.py src/app.py does the same and stages it in one step\n\ngit add . && git commit -m \"Complete hotfix development\"\ngit checkout main && git merge hotfix && git log --oneline\n\nIf git init gave you a branch called master, use that name instead. Check with git branch\n\n\nAdditional verification commands:\n\nCheck commit history: git log --oneline\nView file structure: ls -la\nCheck branch status: git branch\nView .gitignore contents: cat .gitignore"
+    "text": "Solutions to practice quiz\n\nHere are the answers to the practice quiz. Try to complete the quiz first before checking these answers!\n\nmkdir git-practice && cd git-practice && git init\nmkdir src && touch src/{main,utils,test}.py\necho 'print(\"Hello\")' &gt; src/main.py && cat src/main.py && git add . && git commit -m \"Initial commit\"\necho 'print(\"Hello, world\")' &gt; src/main.py && git diff, then git commit -am \"Updte greeting\" and git commit --amend -m \"Update greeting\"\nmv src/test.py src/test_main.py && ls src && git add . && git commit -m \"Rename test file\"\n\ngit mv src/test.py src/test_main.py does the same and stages it in one step\n\ngit checkout -b hotfix && echo \"temp/\" &gt; .gitignore && git add .gitignore && git commit -m \"Add gitignore\"\ngit checkout main && git log hotfix --oneline, then git cherry-pick &lt;commit-id&gt;\n\nIf git init gave you a branch called master, use that name instead. Check with git branch\n\necho \"# TODO\" &gt;&gt; src/utils.py && git stash && git status\ngit stash pop && cat src/utils.py\ngh repo create git-practice --private --source=. --push && gh repo view --web"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#todays-plan",
@@ -6900,5 +6900,12 @@
     "title": "DATASCI 350 - Data Science Computing",
     "section": "rag.py, part 4: generate",
     "text": "rag.py, part 4: generate\n\n\n\n\nPaste the retrieved chunks into a prompt, then ask the chat model:\n\nCHAT_MODEL = \"llama3.2:1b\"\n\npassages = []\nfor score, chunk in top:\n    passages.append(chunk[1])\ncontext = \"\\n\\n\".join(passages)\n\nprompt = (\n    \"Answer the question using ONLY the context below. \"\n    \"If the answer is not in the context, \"\n    \"say you do not know.\\n\\n\"\n    f\"Context:\\n{context}\\n\\nQuestion: {QUESTION}\"\n)\nreply = ollama.chat(\n    model=CHAT_MODEL,\n    messages=[{\"role\": \"user\", \"content\": prompt}])\nprint(reply.message.content)\n\n\nThe loop takes the text half of each retrieved pair, and join glues the three passages together with blank lines between them\nThe four quoted lines are one string. Python joins pieces that sit side by side, so a long prompt can break over several lines\nThe f drops context and question into the text\nollama.chat is the Lecture 14 call, and reply.message.content is the answer\n\n\n\n\nGeneration is ordinary prompting from Lecture 12: context, task, and what to do when the answer is missing\n“Answer ONLY from the context” is the grounding instruction. Small models still leak training memory past it\nThe next sentence is the escape hatch. Without it, a model with no useful context hallucinates\nPoint CHAT_MODEL at any model you have pulled. Only the writing changes; retrieval stays the same\n\n\nThis is a prompt like any other. PTCF still applies: the context is C, the task is T, and we skipped the persona"
+  },
+  {
+    "objectID": "lectures/lecture-07/07-practice.html#is-your-github-cli-ready",
+    "href": "lectures/lecture-07/07-practice.html#is-your-github-cli-ready",
+    "title": "DATASCI 350 - Data Science Computing",
+    "section": "Is your GitHub CLI ready?",
+    "text": "Is your GitHub CLI ready?\n\n\n\n\nYou installed gh and logged in during lecture 06. Let’s check both\n\ngh --version     # is gh installed?\ngh auth status   # which account is active?\n\nCommand not found? Mac: brew install gh. WSL: Linux instructions\nNot logged in? Run gh auth login (next slide)\nToday: pull requests and issues without leaving the terminal"
   }
 ]
