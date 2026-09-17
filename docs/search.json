@@ -6907,5 +6907,12 @@
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Is your GitHub CLI ready?",
     "text": "Is your GitHub CLI ready?\n\n\n\n\nYou installed gh and logged in during lecture 06. Let’s check both\n\ngh --version     # is gh installed?\ngh auth status   # which account is active?\n\nCommand not found? Mac: brew install gh. WSL: Linux instructions\nNot logged in? Run gh auth login (next slide)\nToday: pull requests and issues without leaving the terminal"
+  },
+  {
+    "objectID": "lectures/lecture-07/07-practice.html#tweet-of-the-day",
+    "href": "lectures/lecture-07/07-practice.html#tweet-of-the-day",
+    "title": "DATASCI 350 - Data Science Computing",
+    "section": "Tweet of the day",
+    "text": "Tweet of the day\nThis is very interesting! 🤯\n\n\nhttps://x.com/CompleteSkeptic/status/2099925684256899543\nhttps://typesafe.ai/blog/introducing-system-one-models-and-jev"
   }
 ]

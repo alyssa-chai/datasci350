@@ -74,6 +74,17 @@ Today we will cover:
 :::
 :::
 
+## Tweet of the day
+### This is very interesting! 🤯
+
+:::{style="text-align: center; margin-top: 30px; font-size: 22px;"}
+[![](figures/tweet-jev.png){width="30%"}](#){data-modal-type="image" data-modal-url="figures/tweet-jev.png"}
+
+<https://x.com/CompleteSkeptic/status/2099925684256899543>
+
+<https://typesafe.ai/blog/introducing-system-one-models-and-jev>
+:::
+
 # Understanding changes with git diff 🔍 {background-color="#1B3A6B"}
 
 ## What is `git diff`?
