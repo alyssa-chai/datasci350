@@ -2713,21 +2713,21 @@
     "href": "lectures/lecture-08/08-review.html#todays-plan",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Today’s plan",
-    "text": "Today’s plan\n\n\n\nHow today works\n\nSix rounds, one for each part of the course so far\nIn each round I revise the material for a few minutes, then you type for a few minutes, then we check the answers together\nYou will be working for about half of the class. Keep your terminal open next to these slides\nEverything you type goes into one throwaway folder, and we delete it at the end\n\n\n\n\n\nRound\nTopic\nLectures\n\n\n\n\n1\nHow computers store things\n01-02\n\n\n2\nThe shell\n03\n\n\n3\nFiles, wildcards, and text\n04\n\n\n4\nGit on your machine\n05, 07\n\n\n5\nGitHub and collaboration\n06, 07\n\n\n6\nChecklist\nall\n\n\n\n\n\nWhat the quiz looks like\n\nQuiz 01 is next class, in this room, and it is worth 6%\nYou fork a repository that I give you, then clone your own copy\nYou work through a numbered list of shell and Git tasks\nYou record every command you run in a file called commands.txt\nYou push your work, then submit the link to your repository on Canvas\nOpen notes, open slides, open web, AI allowed"
+    "text": "Today’s plan\n\n\n\nHow today works\n\nSix rounds, one for each part of the course so far\nIn each round I revise the material for a few minutes, then you type for a few minutes, then we check the answers together\nYou will be working for about half of the class. Keep your terminal open next to these slides\nEverything you type goes into one throwaway folder, and we delete it at the end\n\n\n\n\n\nRound\nTopic\nLectures\n\n\n\n\n1\nHow computers store things\n01-02\n\n\n2\nThe shell\n03\n\n\n3\nFiles, wildcards, and text\n04\n\n\n4\nGit on your machine\n05, 07\n\n\n5\nGitHub and collaboration\n06, 07\n\n\n6\nChecklist\nall\n\n\n\n\n\nWhat the quiz looks like\n\nQuiz 01 is next class, in this room, and it is worth 6%\nYou fork a repository that I give you, then clone your own copy\nYou work through a numbered list of shell and Git tasks\nYou record every command you run in a file called commands.txt\nYou push your work, then submit the link to your repository on Canvas\nOpen notes, open slides, open web, AI allowed (but not encouraged). Say which AI you used, and how it helped you\nSome students will be selected at random to explain your solutions. If you cannot explain your own work, you will lose points"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#set-up-your-sandbox",
     "href": "lectures/lecture-08/08-review.html#set-up-your-sandbox",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Set up your sandbox",
-    "text": "Set up your sandbox\nEverybody types this now\n\n\n\n\ncd ~\nmkdir -p ds350-review\ncd ds350-review\npwd\n\n\nOne folder holds everything we do today, so nothing you type can touch your real work\nEvery exercise from now on starts inside ~/ds350-review\nIf a command fails, put your hand up. Somebody else in the room has the same error\n\n\n\nYour last line should look something like:\n/Users/danilo/ds350-review\nor, on WSL:\n/home/danilo/ds350-review\n\nWe delete this folder together at the end of the class"
+    "text": "Set up your sandbox\nEverybody types this now 🤓\n\n\n\n\ncd ~\nmkdir -p ds350-review\ncd ds350-review\npwd\n\n\nOne folder holds everything we do today, so nothing you type can touch your real work\nEvery exercise from now on starts inside ~/ds350-review\nIf a command fails, put your hand up. Somebody else in the room has the same error. I’m always happy to help 😊\n\n\n\nYour last line should look something like:\n/Users/danilo/ds350-review\nor, on WSL:\n/home/danilo/ds350-review\n\nWe delete this folder together at the end of the class"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#before-the-quiz",
     "href": "lectures/lecture-08/08-review.html#before-the-quiz",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Before the quiz",
-    "text": "Before the quiz\n\nThe quiz ends with a push to GitHub. Make sure your machine is logged in before the quiz:\n\n\n\n\n\n\nCheck that you have the GitHub CLI: gh --version\nIf you do not, install it with brew install gh on macOS, or copy the command for WSL from https://cli.github.com\nRun gh auth login. Choose GitHub.com, then HTTPS, then log in with the browser\nTest it: push any small change to your Assignment 03 repository\nIf the push works today, it will work in the quiz\n\n\n\n\n\n\n\n\n\nTip\n\n\ngh is the convenient route, but it is not the only one. A plain git push over HTTPS works too, as long as your browser sign-in went through.\nWhat matters is that some push from this laptop reaches GitHub before the quiz.\n\n\n\n\n\nStart this now if you have never pushed from this machine. Installing takes only a few minutes"
+    "text": "Before the quiz\n\nThe quiz ends with a push to GitHub. Make sure your machine is logged in before the quiz:\n\n\n\n\n\n\nCheck that you have the GitHub CLI installed: gh --version\nIf you do not, install it with brew install gh on macOS, or copy the command for WSL from https://cli.github.com\nRun gh auth login. Choose GitHub.com, then HTTPS, then log in with the browser\nTest it: push any small change to your Assignment 03 repository\nIf the push works today, it will work in the quiz\n\n\n\n\n\n\n\n\n\nTip\n\n\ngh is the convenient route, but a plain git push over HTTPS works too, as long as your browser sign-in went through.\nWhat matters is that some push from this laptop reaches GitHub before the quiz.\n\n\n\n\n\nStart this now if you have never pushed from this machine. Installing takes only a few minutes"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#bits-bytes-and-lookup-tables",
@@ -2748,7 +2748,7 @@
     "href": "lectures/lecture-08/08-review.html#the-shell-and-the-shape-of-a-command",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "The shell, and the shape of a command",
-    "text": "The shell, and the shape of a command\n\n\n\n\nThe kernel talks to the hardware. The shell runs your commands. The terminal is the window you type them into\nbash is the default on most Linux systems, zsh on macOS. echo $SHELL tells you which one you have\nEvery command has the same three parts:\n\n\ncommand option(s) argument(s)\n\nls -lah ~/Documents\n\nls is the command, -lah are the options, ~/Documents is the argument\n\n\n\nShort options take one dash and combine, so ls -l -a -h and ls -lah are the same thing\nSpelled-out options take two dashes: ls --human-readable\nThe three you will use constantly: -l long format, -a all files including hidden ones, -h readable sizes\nman ls opens the full manual, tldr ls gives the five things people actually use\nInside a manual page, /word searches and q quits. That is the one to remember under time pressure"
+    "text": "The shell, and the shape of a command\n\n\n\n\nThe kernel talks to the hardware. The shell runs your commands. The terminal is the window you type them into\nbash is the default on most Linux systems, zsh on macOS. echo $SHELL tells you which one you have\nEvery command has the same three parts:\n\n\ncommand option(s) argument(s)\n\nls -lah ~/Documents\n\nls is the command, -lah are the options, ~/Documents is the argument\n\n\n\nShort options take one dash and combine, so ls -l -a -h and ls -lah are the same thing\nSpelled-out options take two dashes: ls --human-readable\nThe three you will use often: -l long format, -a all files including hidden ones, -h readable sizes\nman ls opens the full manual, tldr ls gives the five things people actually use\nInside a manual page, /word searches and q quits. That is the one to remember under time pressure 😅"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#finding-your-way-around",
@@ -2762,35 +2762,35 @@
     "href": "lectures/lecture-08/08-review.html#sec-exercise-02",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Try it yourself!",
-    "text": "Try it yourself!\nThree tasks, three minutes, inside ~/ds350-review\n\n\nWhich shell are you running?\nList everything in your home directory, including hidden files, with readable sizes. One command\nWhich one of these three paths is absolute?\n\n\n./scripts/run.sh\n/Users/danilo/work\n../data/file.csv\n\n\nSolutions"
+    "text": "Try it yourself!\nThree tasks inside ~/ds350-review\n\n\nWhich shell are you running?\nList everything in your home directory, including hidden files, with readable sizes. One command\nWhich one of these three paths is absolute?\n\n\n./scripts/run.sh\n/Users/danilo/work\n../data/file.csv\n\n\nSolutions"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#creating-copying-moving-deleting",
     "href": "lectures/lecture-08/08-review.html#creating-copying-moving-deleting",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Creating, copying, moving, deleting",
-    "text": "Creating, copying, moving, deleting\n\n\n\n\n\n\n\nCommand\nWhat it does\n\n\n\n\nmkdir -p a/b/c\nCreate the whole tree\n\n\ntouch file\nCreate an empty file\n\n\ncp a b\nCopy\n\n\ncp -r dir1 dir2\nCopy a directory\n\n\nmv a b\nMove, or rename\n\n\nrm file\nDelete. No undo\n\n\nrm -r dir\nDelete a directory and its contents\n\n\n\n\n\n\nmkdir -p builds several levels at once and never complains if the directory already exists\nMoving a file within its own directory under a new name is how you rename it\nrm has no Trash and no undo. rm -rf does not even ask\n&& runs the next command only if the first succeeded, || only if it failed\nfind . -name \"*.csv\" searches by name, -type d by kind, -size +500k by size"
+    "text": "Creating, copying, moving, deleting\n\n\n\n\n\n\n\nCommand\nWhat it does\n\n\n\n\nmkdir -p a/b/c\nCreate the whole tree\n\n\ntouch file\nCreate an empty file\n\n\ncp a b\nCopy\n\n\ncp -r dir1 dir2\nCopy a directory\n\n\nmv a b\nMove, or rename\n\n\nrm file\nDelete. No undo\n\n\nrm -r dir\nDelete a directory and its contents\n\n\n\n\n\n\nmkdir -p builds several levels at once and never complains if the directory already exists\nMoving a file within its own directory under a new name is how you rename it\nrm has no Trash and no undo. rm -rf does not even ask 😅\n&& runs the next command only if the first succeeded, || only if it failed\nfind . -name \"*.csv\" searches by name, -type d by kind, -size +500k by size"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#one-command-many-files",
     "href": "lectures/lecture-08/08-review.html#one-command-many-files",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "One command, many files",
-    "text": "One command, many files\n\n\n\nWildcards match files that already exist\n\n* matches any number of characters\n\nls *.py            # every Python file\ncp scripts/*.py backup/\n\n? matches exactly one character\n\nls data0?.csv      # data01.csv ... data09.csv\n\nBraces invent names that do not exist yet\ntouch file{1..3}.txt        # file1, file2, file3\nmkdir dir{a,b,c}            # dira, dirb, dirc\nmkdir -p project/{data,src}\n\nThe difference that catches people out:\n\n\n* and ? ask the shell “which files match this?”\n{} tells the shell “write these names out for me”\nThis is why touch file*.txt creates nothing useful, and touch file{1..3}.txt creates three files"
+    "text": "One command, many files\n\n\n\nWildcards match files that already exist\n\n* matches any number of characters\n\nls *.py        # every Python file\ncp scripts/*.py backup/\n\n? matches exactly one character\n\nls data0?.csv  # data01.csv ... data09.csv\n\nBraces invent names that do not exist yet\ntouch file{1..3}.txt        # file1, file2, file3\nmkdir dir{a,b,c}            # dira, dirb, dirc\nmkdir -p project/{data,src}\n\nThe difference that catches people out:\n\n\n* and ? ask the shell “which files match this?”\n{} tells the shell “write these names out for me”\nThis is why touch file*.txt creates nothing useful, and touch file{1..3}.txt creates three files\nUse two dots to count, commas to list, and no spaces inside the braces"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#sec-exercise-03",
     "href": "lectures/lecture-08/08-review.html#sec-exercise-03",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Try it yourself!",
-    "text": "Try it yourself!\nFive tasks, six minutes, inside ~/ds350-review\n\nTasks 1 to 4 must each fit on a single line\n\nCreate project/ containing three subdirectories: data, scripts, and docs\nCreate data01.csv through data05.csv inside project/data\nCreate clean.py, analyse.py and plot.py inside project/scripts\nCreate project/backup and copy only the Python files into it, chaining both commands on one line\nRename project/data/data01.csv to project/data/input.csv, then run ls -R project\n\n\nSolutions"
+    "text": "Try it yourself!\nMore tasks inside ~/ds350-review\n\nTasks 1 to 4 must each fit on a single line\n\nCreate project/ containing three subdirectories: data, scripts, and docs\nCreate data01.csv through data05.csv inside project/data\nCreate clean.py, analyse.py and plot.py inside project/scripts\nCreate project/backup and copy only the Python files into it, chaining both commands on one line\nRename project/data/data01.csv to project/data/input.csv, then run ls -R project\n\n\nSolutions"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#quick-check-which-files-match",
     "href": "lectures/lecture-08/08-review.html#quick-check-which-files-match",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Quick check: which files match?",
-    "text": "Quick check: which files match?\n\nYou have just renamed data01.csv to input.csv. How many files does each of these list?\nls project/data/*.csv\nls project/data/data0?.csv\n\n\n\nThe first lists five: input.csv, data02.csv, data03.csv, data04.csv, data05.csv\nThe second lists four. input.csv does not match, because data0? expects the name to start with data0\nOn zsh, a pattern that matches nothing gives you no matches found. That message means your pattern is wrong, not your command"
+    "text": "Quick check: which files match?\n\nYou have just renamed data01.csv to input.csv. How many files does each of these list?\nls project/data/*.csv\nls project/data/data0?.csv\n\n\n\nThe first lists five: input.csv, data02.csv, data03.csv, data04.csv, data05.csv\nThe second lists four. input.csv does not match\nOn zsh, a pattern that matches nothing gives you no matches found. That message means your pattern is wrong, not your command"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#revision-text-redirects-and-pipes",
@@ -2804,7 +2804,7 @@
     "href": "lectures/lecture-08/08-review.html#sec-exercise-04",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Try it yourself!",
-    "text": "Try it yourself!\nThree tasks, three minutes, inside ~/ds350-review\n\n\nCreate a file called project/docs/countries.txt whose only line is brazil\nAdd india to the file, without losing brazil\nCount how many lines contain in, using a pipe\n\n\n\nSolutions"
+    "text": "Try it yourself!\n\n\nCreate a file called project/docs/countries.txt whose only line is brazil\nAdd india to the file, without losing brazil\nCount how many lines contain in, using a pipe\n\n\n\nSolutions"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#the-four-places-your-work-lives",
@@ -2825,42 +2825,42 @@
     "href": "lectures/lecture-08/08-review.html#seeing-changes-and-fixing-mistakes",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Seeing changes and fixing mistakes",
-    "text": "Seeing changes and fixing mistakes\n\n\n\n\ngit diff shows what you changed but have not yet staged\ngit diff --staged shows what is staged and about to be committed\nIn the output, a/ is the old version and b/ the new one, + is an added line and - a deleted one\n\n\n\n\n\n\n\n\nWarning\n\n\nAfter git add, plain git diff goes empty. Nothing was lost. The change moved to the staging area, so git diff --staged is the one that shows it\n\n\n\n\n\nWrong commit message\ngit commit --amend -m \"The message I meant\"\nForgot to include a file\ngit add the-forgotten-file\ngit commit --amend --no-edit\nUndo the last commit, keep the work\ngit reset --soft HEAD~1\n\n--soft keeps your changes staged, --hard deletes them\nOnly amend commits you have not pushed"
+    "text": "Seeing changes and fixing mistakes\n\n\n\n\ngit diff shows what you changed but have not yet staged\ngit diff --staged shows what is staged and about to be committed\nIn the output, a/ is the old version and b/ the new one, + is an added line and - a deleted one\n\n\n\n\n\n\n\n\nWarning\n\n\nAfter git add, plain git diff goes empty. Nothing was lost. The change moved to the staging area, so git diff --staged is the one that shows it\n\n\n\n\n\nWrong commit message\ngit commit --amend -m \"The message I meant\"\nForgot to include a file\ngit add the-forgotten-file\ngit commit --amend --no-edit\nUndo the last commit, keep the work\ngit reset --soft HEAD~1\n\n--soft keeps your changes staged, --hard deletes them\nOnly amend commits you have not pushed if you’re working with others. Otherwise you rewrite history and confuse them"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#sec-exercise-05",
     "href": "lectures/lecture-08/08-review.html#sec-exercise-05",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Try it yourself!",
-    "text": "Try it yourself!\nFour steps, four minutes, inside ~/ds350-review/project\n\n\nTurn this directory into a repository\nCreate a .gitignore containing one line, backup/\nStage everything, and commit it with the message Initial commit\nShow your history in compact form\n\n\nRun git status after every step and watch what changes. That habit is worth more than any command on this slide\n\n\n\nSolutions"
+    "text": "Try it yourself!\n\n\nTurn this directory into a repository\nCreate a .gitignore containing one line, backup/\nStage everything, and commit it with the message Initial commit\nShow your history in compact form\n\n\nRun git status after every step and watch what changes. That habit is worth more than any command on this slide\n\n\n\nSolutions"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#branches-merging-and-conflicts",
     "href": "lectures/lecture-08/08-review.html#branches-merging-and-conflicts",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Branches, merging, and conflicts",
-    "text": "Branches, merging, and conflicts\n\n\n\n\nA branch lets you work on something without touching main\n\ngit switch -c feature-x     # Git 2.23 and later\ngit checkout -b feature-x   # the older way, same result\ngit switch main\ngit merge feature-x\ngit branch -d feature-x\n\ngit branch lists your branches and marks where you are. Check it if you are unsure whether yours is called main or master. Both work exactly the same way\nA file committed on a branch disappears when you switch away. It has not been deleted. You moved to a version of the project where it was never created\n\n\n\nTwo people change different lines, and Git merges them for you. The same line, and it asks you to choose\nA merge conflict is marked with three lines: &lt;&lt;&lt;&lt;&lt;&lt;&lt; opens your version, ======= separates, &gt;&gt;&gt;&gt;&gt;&gt;&gt; closes theirs\nDelete the markers along with the text you do not want, then git add and git commit"
+    "text": "Branches, merging, and conflicts\n\n\n\n\nA branch lets you work on something without touching main\n\ngit switch -c feature-x     # Git 2.23 and later\ngit checkout -b feature-x   # older way, same result\ngit switch main\ngit merge feature-x\ngit branch -d feature-x\n\ngit branch lists your branches and marks where you are. Check it if you are unsure whether yours is called main or master. Both work exactly the same way\nA file committed on a branch disappears when you switch away. It has not been deleted. You moved to a version of the project where it was never created\n\n\n\nTwo people change different lines, and Git merges them for you. The same line, and it asks you to choose\nA merge conflict is marked with three lines: &lt;&lt;&lt;&lt;&lt;&lt;&lt; opens your version, ======= separates, &gt;&gt;&gt;&gt;&gt;&gt;&gt; closes theirs\nDelete the markers along with the text you do not want, then git add and git commit"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#revision-remotes-clone-and-fork",
     "href": "lectures/lecture-08/08-review.html#revision-remotes-clone-and-fork",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Revision: remotes, clone, and fork",
-    "text": "Revision: remotes, clone, and fork\n\n\n\n\nA remote is a copy of your repository somewhere else, and origin is the usual name for it\ngit push sends your commits up, git pull brings other people’s down\ngit pull is git fetch (download) plus git merge (combine)\ngit remote -v shows which remote you are actually pushing to. Check this when a push is rejected\n\n\n\n\n\n\n\n\nWarning\n\n\nCommitting is not publishing. If you commit and never push, GitHub shows nothing and your work looks missing\n\n\n\n\n\n\nClone copies a repository to your computer. It stays connected to the original, and if the original is not yours, you cannot push to it\nFork copies a repository to your GitHub account. Because that copy is yours, you can push to it\nForking is a GitHub feature, not a Git one, which is why there is no git fork command\n\n\nfork first, then clone your fork\n\n\nClone mine instead, and your first git push is rejected. That is the most common way to lose time in the quiz"
+    "text": "Revision: remotes, clone, and fork\n\n\n\n\nA remote is a copy of your repository somewhere else, and origin is the usual name for it\ngit push sends your commits up, git pull brings other people’s down\ngit remote -v shows which remote you are actually pushing to. Check this when a push is rejected\n\n\n\n\n\n\n\n\nWarning\n\n\nCommitting is not publishing. If you commit and never push, GitHub shows nothing and your work looks missing\n\n\n\n\n\n\nClone copies a repository to your computer. It stays connected to the original, and if the original is not yours, you cannot push to it\nFork copies a repository to your GitHub account. Because that copy is yours, you can push to it\nForking is a GitHub feature, not a Git one, which is why there is no git fork command\n\n\nfork first, then clone your fork\n\n\nClone mine instead, and your first git push is rejected. That is the most common way to lose time in the quiz"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#sec-exercise-06",
     "href": "lectures/lecture-08/08-review.html#sec-exercise-06",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Try it yourself!",
-    "text": "Try it yourself!\nFour steps, four minutes, inside ~/ds350-review/project\n\n\nCreate a branch called feature-readme and switch to it\nCreate README.md containing # Review project, and commit it\nSwitch back to your default branch. README.md is gone\nMerge feature-readme, and README.md comes back\n\n\nSolutions"
+    "text": "Try it yourself!\n\n\nCreate a branch called feature-readme and switch to it\nCreate README.md containing # Review project, and commit it\nSwitch back to your default branch. README.md is gone\nMerge feature-readme, and README.md comes back\n\n\n\nSolutions"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#recording-your-commands",
     "href": "lectures/lecture-08/08-review.html#recording-your-commands",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Recording your commands",
-    "text": "Recording your commands\n\n\n\nThe quiz asks for a commands.txt holding every command you ran. An empty one costs marks, and reconstructing it from memory at 6:40 pm never goes well\nThe reliable way\n\nKeep the file open in VS Code and paste each command as you go\nIt takes two seconds per command and it is always right\n\n\nThe quick way\n\nhistory | tail -n 60 &gt; commands.txt\ncat commands.txt\n\n\nhistory prints the commands you have run, most recent last\ntail -n 60 keeps the last sixty of them\nAlways cat the file before you push. An empty commands.txt is the single most common way to lose marks on this quiz\n\n\n\n\n\n\n\n\nTip\n\n\nhistory only remembers the terminal session you are in. Close the window mid-quiz and you lose it, which is why pasting as you go is safer"
+    "text": "Recording your commands\n\n\n\nThe quiz asks for a commands.txt holding every command you ran. Reconstructing it from memory never goes well 😅\nThe easy way\n\nKeep the file open in VS Code and paste each command as you go\nIt takes two seconds per command and it is always right\n\n\nThe hacker way 😎\n\nhistory | tail -n 60 &gt; commands.txt\ncat commands.txt\n\n\nhistory prints the commands you have run, most recent last\ntail -n 60 keeps the last sixty of them\nAlways cat the file before you push. An empty commands.txt is the single most common way to lose marks on this quiz\nImportant: history only remembers the terminal session you are in. Close the window mid-quiz and you lose it"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#what-actually-goes-wrong",
@@ -2874,14 +2874,14 @@
     "href": "lectures/lecture-08/08-review.html#your-checklist-for-the-quiz",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Your checklist for the quiz",
-    "text": "Your checklist for the quiz\n\n\n\nBefore you arrive\n\ngit --version runs, and git config --list shows your name and email\nYou can sign in to GitHub, and you know your username\nYou have pushed to a repository at least once from this laptop\nLaptop charged, charger in your bag\n\n\nOn the day\n\nRead the whole task list before you type anything\nFork first, clone second, pwd third\nRecord your commands as you go\nPush, then open your fork in the browser and check that it is really there\nSubmit the link to your fork on Canvas\n\n\n\nOpen notes, open slides, open web, AI allowed. Say which AI you used"
+    "text": "Your checklist for the quiz\n\n\n\nBefore you arrive\n\ngit --version runs, and git config --list shows your name and email\nYou can sign in to GitHub, and you know your username\nYou have pushed to a repository at least once from this laptop\nLaptop charged, charger in your bag\n\n\nOn the day\n\nRead the whole task list before you type anything\nFork first, clone second, pwd third\nRecord your commands as you go\nPush, then open your fork in the browser and check that it is really there\nSubmit the link to your fork on Canvas"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#clean-up",
     "href": "lectures/lecture-08/08-review.html#clean-up",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Clean up",
-    "text": "Clean up\n\n\n\ncd ~\npwd     # check you are where you think you are\nls      # you should see ds350-review here\nrm -rf ds350-review\n\n\n\n\n\n\nWarning\n\n\nrm -rf deletes everything at once, with no Trash and no undo. Read the path before you press Enter\n\n\n\n\n\nThis is the one command in the course that can genuinely ruin your day\nThe safety habit: pwd and ls first, so you can see what you are about to remove\nNothing outside this folder is affected, and nothing on GitHub changes\nYour project/ repository is gone, and that is fine. You built it in ten minutes and you could build it again"
+    "text": "Clean up\n\n\n\n\ncd ~\npwd     # check you are where you think you are\nls      # you should see ds350-review here\nrm -rf ds350-review\n\n\n\n\n\n\n\nWarning\n\n\nrm -rf deletes everything at once, with no Trash and no undo. Read the path before you press Enter\n\n\n\n\n\nIt’s a good idea to always run pwd and ls first, so you can see what you are about to remove\nNothing outside this folder is affected, and nothing on GitHub changes\nYour project/ repository is gone, and that is fine. You built it in ten minutes and you could build it again"
   },
   {
     "objectID": "lectures/lecture-08/08-review.html#sec-solution-01",
@@ -6914,5 +6914,12 @@
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Tweet of the day",
     "text": "Tweet of the day\nThis is very interesting! 🤯\n\n\nhttps://x.com/CompleteSkeptic/status/2099925684256899543\nhttps://typesafe.ai/blog/introducing-system-one-models-and-jev"
+  },
+  {
+    "objectID": "lectures/lecture-08/08-review.html#for-the-curious-undoing-a-bad-line",
+    "href": "lectures/lecture-08/08-review.html#for-the-curious-undoing-a-bad-line",
+    "title": "DATASCI 350 - Data Science Computing",
+    "section": "For the curious: undoing a bad line",
+    "text": "For the curious: undoing a bad line\n\n\nRun &gt;&gt; twice and the file now holds brazil twice\nThere is no undo. Redirection writes, it never removes a line you appended\nFind the line with grep, which also prints its number:\n\ngrep -n brazil countries.txt   # lines with \"brazil\", numbered\n\n\n\n\nThen delete it by line number, or by the text it contains\nsed -i '' needs the empty '' on macOS; Linux is just sed -i\n\nsed -i '' '2d' countries.txt         # delete line 2\nsed -i '' '/brazil/d' countries.txt  # every \"brazil\" line\n\n\n\n\nYou can also drop repeated lines with uniq\nuniq only collapses lines that repeat next to each other, not scattered copies\n\nuniq countries.txt &gt; tmp && mv tmp countries.txt  # drop repeated neighbours\n\n\n\n\nOr use a terminal-based editor like nano or vim to remove the line by hand"
   }
 ]
