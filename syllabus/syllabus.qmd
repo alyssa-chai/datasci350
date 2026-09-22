@@ -257,6 +257,7 @@ Suggested references:
 ### September 22, 2026:
 
 - Lecture 08: [Review session for Quiz 01](https://danilofreire.github.io/datasci350/lectures/lecture-08/08-review.html). This session revises everything covered so far and prepares students for Quiz 01 on September 24, which is examinable on Lectures 02-07.
+- [Kahoot Quiz](https://play.kahoot.it/v2/?quizId=102f38b6-9834-4aaf-ad12-15a91fa160de&hostId=05eb977d-4f8a-440e-9e45-95212b29d103).
 
 ## Module 03: Reproducible Research with Quarto
 
