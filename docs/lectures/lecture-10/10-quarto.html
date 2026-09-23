@@ -268,6 +268,19 @@ Danilo Freire
 </div>
 </div></div>
 </div>
+</section>
+<section id="tweets-of-the-day" class="slide level2">
+<h2>Tweets of the day</h2>
+<div style="margin-top: 30px; font-size: 22px; text-align: center;">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><a href="#/" data-modal-type="image" data-modal-url="figures/tweet-voxium.png"><img data-src="figures/tweet-voxium.png" style="width:100.0%"></a></p>
+<p><a href="https://x.com/v0xium/status/2101526107128529120" class="uri">https://x.com/v0xium/status/2101526107128529120</a></p>
+</div><div class="column" style="width:50%;">
+<p><a href="#/" data-modal-type="image" data-modal-url="figures/tweet-mitchellh.png"><img data-src="figures/tweet-mitchellh.png" style="width:100.0%"></a></p>
+<p><a href="https://x.com/mitchellh/status/2100249348345057389" class="uri">https://x.com/mitchellh/status/2100249348345057389</a></p>
+</div></div>
+</div>
 </section></section>
 <section>
 <section id="why-is-reproducible-research-so-important" class="title-slide slide level1 center" data-background-color="#1B3A6B">
@@ -594,18 +607,18 @@ Danilo Freire
 <div class="columns">
 <div class="column" style="width:50%;">
 <p>Run this twice, get two answers, and the numbers in your report change on every render:</p>
-<div id="eb5a479e" class="cell" data-execution_count="1">
+<div id="4db47f7d" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb7-2"><a></a></span>
 <span id="cb7-3"><a></a><span class="bu">print</span>(np.random.normal(size<span class="op">=</span><span class="dv">3</span>).<span class="bu">round</span>(<span class="dv">3</span>))</span>
 <span id="cb7-4"><a></a><span class="bu">print</span>(np.random.normal(size<span class="op">=</span><span class="dv">3</span>).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[-0.558  1.954  0.161]
-[ 0.667 -0.678 -2.086]</code></pre>
+<pre><code>[-1.42   1.065 -1.32 ]
+[-1.305  1.728  0.045]</code></pre>
 </div>
 </div>
 <p>Set a seed first and the sequence is fixed, so anyone running your code gets exactly what you got:</p>
-<div id="36a4399f" class="cell" data-execution_count="2">
+<div id="070f7980" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>np.random.seed(<span class="dv">350</span>)</span>
 <span id="cb9-2"><a></a><span class="bu">print</span>(np.random.normal(size<span class="op">=</span><span class="dv">3</span>).<span class="bu">round</span>(<span class="dv">3</span>))</span>
 <span id="cb9-3"><a></a></span>
@@ -644,7 +657,7 @@ Danilo Freire
 <li>The fix is to record what you used, so the next person can match it</li>
 </ul>
 <p>At minimum, note the versions in your README:</p>
-<div id="04f1d5d8" class="cell" data-execution_count="3">
+<div id="8911bd6e" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a><span class="im">import</span> sys, numpy, pandas</span>
 <span id="cb12-2"><a></a></span>
 <span id="cb12-3"><a></a><span class="bu">print</span>(<span class="st">"python:"</span>, sys.version.split()[<span class="dv">0</span>])</span>
@@ -1091,7 +1104,7 @@ flowchart LR
 <span id="cb24-10"><a></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:54%;">
 <p>What the reader sees:</p>
-<div id="74621f53" class="cell quarto-layout-panel" data-execution_count="4" data-layout-ncol="2">
+<div id="4d89e712" class="cell quarto-layout-panel" data-layout-ncol="2" data-execution_count="4">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img data-src="10-quarto_files/figure-revealjs/cell-5-output-1.png" width="373"></p>
@@ -1350,7 +1363,7 @@ flowchart LR
 </div><div class="column" style="width:45%;">
 <p><code>#| echo: false</code> is the option that hides the code but keeps the output, which is what question 5 asked for.</p>
 <p>The chart your second chunk produces:</p>
-<div id="b1a9567d" class="cell" data-execution_count="5">
+<div id="6c84ae9e" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>

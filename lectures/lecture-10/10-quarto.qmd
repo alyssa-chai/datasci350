@@ -64,6 +64,24 @@ Today we start a new module, and a new question: [can anyone check your work?]{.
 :::
 :::
 
+## Tweets of the day
+
+:::{style="margin-top: 30px; font-size: 22px; text-align: center;"}
+:::{.columns}
+:::{.column width="50%"}
+[![](figures/tweet-voxium.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/tweet-voxium.png"}
+
+<https://x.com/v0xium/status/2101526107128529120>
+:::
+
+:::{.column width="50%"}
+[![](figures/tweet-mitchellh.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/tweet-mitchellh.png"}
+
+<https://x.com/mitchellh/status/2100249348345057389>
+:::
+:::
+:::
+
 # Why is reproducible research so important? 🤔 {background-color="#1B3A6B"}
 
 ## The reproducibility crisis

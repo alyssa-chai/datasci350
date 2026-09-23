@@ -3021,7 +3021,7 @@
     "href": "lectures/lecture-10/10-quarto.html#randomness-needs-a-seed",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Randomness needs a seed",
-    "text": "Randomness needs a seed\n\n\n\nRun this twice, get two answers, and the numbers in your report change on every render:\n\nimport numpy as np\n\nprint(np.random.normal(size=3).round(3))\nprint(np.random.normal(size=3).round(3))\n\n[-0.558  1.954  0.161]\n[ 0.667 -0.678 -2.086]\n\n\nSet a seed first and the sequence is fixed, so anyone running your code gets exactly what you got:\n\nnp.random.seed(350)\nprint(np.random.normal(size=3).round(3))\n\nnp.random.seed(350)\nprint(np.random.normal(size=3).round(3))\n\n[ 1.697 -0.533 -0.311]\n[ 1.697 -0.533 -0.311]\n\n\n\n\nComputers cannot produce true randomness\nnp.random is a pseudorandom generator: a formula that walks through a fixed sequence of numbers\nThe seed picks where that walk starts, which fixes the whole sequence in advance\nNewer code makes the generator an explicit object:\n\nrng = np.random.default_rng(350)\nrng.normal(size=3)\n\nEvery library keeps its own generator. Python’s random and scikit-learn’s random_state= need seeding separately\nRandomness hides in sampling, train-test splits, and the starting weights of most models\nIf a number came from a random draw, seed it"
+    "text": "Randomness needs a seed\n\n\n\nRun this twice, get two answers, and the numbers in your report change on every render:\n\nimport numpy as np\n\nprint(np.random.normal(size=3).round(3))\nprint(np.random.normal(size=3).round(3))\n\n[-1.42   1.065 -1.32 ]\n[-1.305  1.728  0.045]\n\n\nSet a seed first and the sequence is fixed, so anyone running your code gets exactly what you got:\n\nnp.random.seed(350)\nprint(np.random.normal(size=3).round(3))\n\nnp.random.seed(350)\nprint(np.random.normal(size=3).round(3))\n\n[ 1.697 -0.533 -0.311]\n[ 1.697 -0.533 -0.311]\n\n\n\n\nComputers cannot produce true randomness\nnp.random is a pseudorandom generator: a formula that walks through a fixed sequence of numbers\nThe seed picks where that walk starts, which fixes the whole sequence in advance\nNewer code makes the generator an explicit object:\n\nrng = np.random.default_rng(350)\nrng.normal(size=3)\n\nEvery library keeps its own generator. Python’s random and scikit-learn’s random_state= need seeding separately\nRandomness hides in sampling, train-test splits, and the starting weights of most models\nIf a number came from a random draw, seed it"
   },
   {
     "objectID": "lectures/lecture-10/10-quarto.html#record-your-environment",
@@ -6921,5 +6921,12 @@
     "title": "DATASCI 350 - Data Science Computing",
     "section": "For the curious: undoing a bad line",
     "text": "For the curious: undoing a bad line\n\n\nRun &gt;&gt; twice and the file now holds brazil twice\nThere is no undo. Redirection writes, it never removes a line you appended\nFind the line with grep, which also prints its number:\n\ngrep -n brazil countries.txt   # lines with \"brazil\", numbered\n\n\n\n\nThen delete it by line number, or by the text it contains\nsed -i '' needs the empty '' on macOS; Linux is just sed -i\n\nsed -i '' '2d' countries.txt         # delete line 2\nsed -i '' '/brazil/d' countries.txt  # every \"brazil\" line\n\n\n\n\nYou can also drop repeated lines with uniq\nuniq only collapses lines that repeat next to each other, not scattered copies\n\nuniq countries.txt &gt; tmp && mv tmp countries.txt  # drop repeated neighbours\n\n\n\n\nOr use a terminal-based editor like nano or vim to remove the line by hand"
+  },
+  {
+    "objectID": "lectures/lecture-10/10-quarto.html#tweets-of-the-day",
+    "href": "lectures/lecture-10/10-quarto.html#tweets-of-the-day",
+    "title": "DATASCI 350 - Data Science Computing",
+    "section": "Tweets of the day",
+    "text": "Tweets of the day\n\n\n\n\nhttps://x.com/v0xium/status/2101526107128529120\n\n\nhttps://x.com/mitchellh/status/2100249348345057389"
   }
 ]
