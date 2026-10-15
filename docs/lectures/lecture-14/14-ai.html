@@ -1343,22 +1343,46 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 </section>
 <section id="sec-appendix-01" class="slide level2">
 <h2>Appendix 01: Solution to Exercise 01</h2>
-<div style="margin-top: 40px; font-size: 24px;">
+<div style="margin-top: 30px; font-size: 22px;">
 <div class="columns">
-<div class="column" style="width:52%;">
+<div class="column" style="width:50%;">
 <ul>
-<li>At <code>temperature=0</code> both runs give <span class="alert">the same answer</span>, word for word: the model always takes the likeliest token</li>
-<li>With <code>max_tokens=40</code>, <code>finish_reason</code> becomes <span class="alert"><code>length</code></span> and the text stops mid-sentence</li>
-<li>Answers differ? Check you passed <code>temperature=0</code>. The default is not 0</li>
-</ul>
-</div><div class="column" style="width:48%;">
-<div style="font-size: 23px;">
-<ul>
-<li><code>api_key="ollama"</code> is not a secret</li>
-<li>The library requires a key, so Ollama accepts any string and ignores it</li>
-<li>This compatibility shim lets one client talk to both backends</li>
+<li>At <code>temperature=0</code> both runs give <span class="alert">the same answer</span>, word for word: the model always picks the likeliest token</li>
+<li>Answers differ? Check that <code>temperature=0</code> is still in the call. Ollama’s default is above 0</li>
+<li>The match holds on one machine and one model build. Other hardware or a newer build can change the text</li>
+<li>With <code>max_tokens=40</code>, <code>finish_reason</code> is <span class="alert"><code>length</code></span> and <code>completion_tokens</code> is 40</li>
+<li>The text stops mid-sentence and Python raises no error, so <span class="alert">check <code>finish_reason</code></span> before you trust a result</li>
 </ul>
 <p><a href="#/sec-exercise-01"><span class="button">Back to the exercise</span></a></p>
+</div><div class="column" style="width:50%;">
+<div style="font-size: 18px;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb36-2"><a></a></span>
+<span id="cb36-3"><a></a>client <span class="op">=</span> OpenAI(</span>
+<span id="cb36-4"><a></a>    base_url<span class="op">=</span><span class="st">"http://localhost:11434/v1"</span>,</span>
+<span id="cb36-5"><a></a>    api_key<span class="op">=</span><span class="st">"ollama"</span>,</span>
+<span id="cb36-6"><a></a>)</span>
+<span id="cb36-7"><a></a></span>
+<span id="cb36-8"><a></a>response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb36-9"><a></a>    model<span class="op">=</span><span class="st">"llama3.2:1b"</span>,</span>
+<span id="cb36-10"><a></a>    messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>,</span>
+<span id="cb36-11"><a></a>               <span class="st">"content"</span>: <span class="st">"Why is the sky blue?"</span>}],</span>
+<span id="cb36-12"><a></a>    temperature<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb36-13"><a></a>    max_tokens<span class="op">=</span><span class="dv">40</span>,</span>
+<span id="cb36-14"><a></a>)</span>
+<span id="cb36-15"><a></a></span>
+<span id="cb36-16"><a></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].message.content)</span>
+<span id="cb36-17"><a></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].finish_reason)</span>
+<span id="cb36-18"><a></a><span class="bu">print</span>(response.usage)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb37-1"><a></a>The sky appears blue to us because of a</span>
+<span id="cb37-2"><a></a>phenomenon called Rayleigh scattering, named</span>
+<span id="cb37-3"><a></a>after the British physicist Lord Rayleigh, who</span>
+<span id="cb37-4"><a></a>first described it in the late 19th century.</span>
+<span id="cb37-5"><a></a>Here's a simplified</span>
+<span id="cb37-6"><a></a>length</span>
+<span id="cb37-7"><a></a>CompletionUsage(completion_tokens=40,</span>
+<span id="cb37-8"><a></a>                prompt_tokens=31,</span>
+<span id="cb37-9"><a></a>                total_tokens=71, ...)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div></div>
 </div>
@@ -1369,14 +1393,14 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 <div class="columns">
 <div class="column" style="width:52%;">
 <p>The whole change, at the top of the file (<code>load_dotenv()</code> must come before reading the key):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a></a><span class="im">import</span> os</span>
-<span id="cb36-2"><a></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
-<span id="cb36-3"><a></a></span>
-<span id="cb36-4"><a></a>load_dotenv()</span>
-<span id="cb36-5"><a></a></span>
-<span id="cb36-6"><a></a>BASE_URL <span class="op">=</span> <span class="st">"https://openrouter.ai/api/v1"</span></span>
-<span id="cb36-7"><a></a>API_KEY <span class="op">=</span> os.environ[<span class="st">"OPENROUTER_API_KEY"</span>]</span>
-<span id="cb36-8"><a></a>MODEL <span class="op">=</span> <span class="st">"google/gemma-4-31b-it:free"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a></a><span class="im">import</span> os</span>
+<span id="cb38-2"><a></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb38-3"><a></a></span>
+<span id="cb38-4"><a></a>load_dotenv()</span>
+<span id="cb38-5"><a></a></span>
+<span id="cb38-6"><a></a>BASE_URL <span class="op">=</span> <span class="st">"https://openrouter.ai/api/v1"</span></span>
+<span id="cb38-7"><a></a>API_KEY <span class="op">=</span> os.environ[<span class="st">"OPENROUTER_API_KEY"</span>]</span>
+<span id="cb38-8"><a></a>MODEL <span class="op">=</span> <span class="st">"google/gemma-4-31b-it:free"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>classify</code> function does not change.</p>
 </div><div class="column" style="width:48%;">
 <div style="font-size: 20px;">
@@ -1442,24 +1466,24 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 <section id="sec-appendix-05" class="slide level2">
 <h2>Appendix 05: Jeeves</h2>
 <div style="margin-top: 20px; font-size: 22px;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb37-1"><a></a>FROM llama3.2:1b</span>
-<span id="cb37-2"><a></a></span>
-<span id="cb37-3"><a></a>PARAMETER temperature 1.2</span>
-<span id="cb37-4"><a></a>PARAMETER num_ctx 4096</span>
-<span id="cb37-5"><a></a>PARAMETER repeat_penalty 1.3</span>
-<span id="cb37-6"><a></a></span>
-<span id="cb37-7"><a></a>SYSTEM """</span>
-<span id="cb37-8"><a></a>You are Jeeves, an exceedingly ironic and sarcastic</span>
-<span id="cb37-9"><a></a>British butler. You are the very definition of dry</span>
-<span id="cb37-10"><a></a>wit and passive-aggressive politeness. Your primary</span>
-<span id="cb37-11"><a></a>function is to assist, but you do so with an air of</span>
-<span id="cb37-12"><a></a>thinly veiled disdain.</span>
-<span id="cb37-13"><a></a></span>
-<span id="cb37-14"><a></a>Respond to every request with the utmost formal</span>
-<span id="cb37-15"><a></a>politeness, even when your words suggest otherwise.</span>
-<span id="cb37-16"><a></a>Address the user as 'sir or madam'. Keep every</span>
-<span id="cb37-17"><a></a>answer to three sentences at most.</span>
-<span id="cb37-18"><a></a>"""</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb39-1"><a></a>FROM llama3.2:1b</span>
+<span id="cb39-2"><a></a></span>
+<span id="cb39-3"><a></a>PARAMETER temperature 1.2</span>
+<span id="cb39-4"><a></a>PARAMETER num_ctx 4096</span>
+<span id="cb39-5"><a></a>PARAMETER repeat_penalty 1.3</span>
+<span id="cb39-6"><a></a></span>
+<span id="cb39-7"><a></a>SYSTEM """</span>
+<span id="cb39-8"><a></a>You are Jeeves, an exceedingly ironic and sarcastic</span>
+<span id="cb39-9"><a></a>British butler. You are the very definition of dry</span>
+<span id="cb39-10"><a></a>wit and passive-aggressive politeness. Your primary</span>
+<span id="cb39-11"><a></a>function is to assist, but you do so with an air of</span>
+<span id="cb39-12"><a></a>thinly veiled disdain.</span>
+<span id="cb39-13"><a></a></span>
+<span id="cb39-14"><a></a>Respond to every request with the utmost formal</span>
+<span id="cb39-15"><a></a>politeness, even when your words suggest otherwise.</span>
+<span id="cb39-16"><a></a>Address the user as 'sir or madam'. Keep every</span>
+<span id="cb39-17"><a></a>answer to three sentences at most.</span>
+<span id="cb39-18"><a></a>"""</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="sec-appendix-06" class="slide level2">
@@ -1471,12 +1495,12 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 <li>Save the Modelfile as a file called <code>jeeves</code>, with no extension</li>
 <li>Build your model:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a></a><span class="ex">ollama</span> create jeeves <span class="at">-f</span> jeeves</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a></a><span class="ex">ollama</span> create jeeves <span class="at">-f</span> jeeves</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>The <code>-f</code> flag means “file”</li>
 <li>Then run it like any other model:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a></a><span class="ex">ollama</span> run jeeves</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a></a><span class="ex">ollama</span> run jeeves</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><code>ollama ls</code> now lists <code>jeeves</code> with your downloaded models</li>
 <li>It also appears in <code>curl http://localhost:11434/api/tags</code>, like any other model</li>
