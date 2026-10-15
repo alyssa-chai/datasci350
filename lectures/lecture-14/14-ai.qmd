@@ -1234,21 +1234,52 @@ Quiz 03 covers the AI and cloud modules. [Lecture 18]{.alert} covers APIs in dep
 
 ## Appendix 01: Solution to Exercise 01 {#sec-appendix-01}
 
-:::{style="margin-top: 40px; font-size: 24px;"}
+:::{style="margin-top: 30px; font-size: 22px;"}
 :::{.columns}
-:::{.column width="52%"}
-- At `temperature=0` both runs give [the same answer]{.alert}, word for word: the model always takes the likeliest token
-- With `max_tokens=40`, `finish_reason` becomes [`length`]{.alert} and the text stops mid-sentence
-- Answers differ? Check you passed `temperature=0`. The default is not 0
-:::
-
-:::{.column width="48%"}
-:::{style="font-size: 23px;"}
-- `api_key="ollama"` is not a secret
-- The library requires a key, so Ollama accepts any string and ignores it
-- This compatibility shim lets one client talk to both backends
+:::{.column width="50%"}
+- At `temperature=0` both runs give [the same answer]{.alert}, word for word: the model always picks the likeliest token
+- Answers differ? Check that `temperature=0` is still in the call. Ollama's default is above 0
+- The match holds on one machine and one model build. Other hardware or a newer build can change the text
+- With `max_tokens=40`, `finish_reason` is [`length`]{.alert} and `completion_tokens` is 40
+- The text stops mid-sentence and Python raises no error, so [check `finish_reason`]{.alert} before you trust a result
 
 [[Back to the exercise]{.button}](#sec-exercise-01)
+:::
+
+:::{.column width="50%"}
+:::{style="font-size: 18px;"}
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="http://localhost:11434/v1",
+    api_key="ollama",
+)
+
+response = client.chat.completions.create(
+    model="llama3.2:1b",
+    messages=[{"role": "user",
+               "content": "Why is the sky blue?"}],
+    temperature=0,
+    max_tokens=40,
+)
+
+print(response.choices[0].message.content)
+print(response.choices[0].finish_reason)
+print(response.usage)
+```
+
+```text
+The sky appears blue to us because of a
+phenomenon called Rayleigh scattering, named
+after the British physicist Lord Rayleigh, who
+first described it in the late 19th century.
+Here's a simplified
+length
+CompletionUsage(completion_tokens=40,
+                prompt_tokens=31,
+                total_tokens=71, ...)
+```
 :::
 :::
 :::
