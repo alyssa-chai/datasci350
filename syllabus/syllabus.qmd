@@ -52,7 +52,7 @@ By the end of this course, students will be able to:
 
 Some knowledge of programming is recommended, and familiarity with basic data manipulation and visualisation techniques is helpful. However, no prior experience with the tools covered in the course is required.
 
-In terms of software, you will need to install the following tools: [Anaconda distribution of Python 3.x](https://www.anaconda.com/), [VS Code](https://code.visualstudio.com/), [Git](https://git-scm.com/), [GitHub Desktop](https://github.com/apps/desktop), [Quarto](https://quarto.org/), [Ollama](https://ollama.com/), and [Docker](https://www.docker.com/). Several lectures also need Python packages that Anaconda does not ship. Install them with `pip install ollama openai python-dotenv requests pyarrow duckdb dask joblib`. You will open two free accounts during the course, one on [OpenRouter](https://openrouter.ai/) for Lecture 14 and one on [Amazon Web Services](https://aws.amazon.com/) for Lectures 16 and 17. Neither costs anything if you follow the steps in the lecture READMEs.
+In terms of software, you will need to install the following tools: [Anaconda distribution of Python 3.x](https://www.anaconda.com/), [VS Code](https://code.visualstudio.com/), [Git](https://git-scm.com/), [GitHub Desktop](https://github.com/apps/desktop), [Quarto](https://quarto.org/), [Ollama](https://ollama.com/), and [Docker](https://www.docker.com/). Several lectures also need Python packages that Anaconda does not ship. Install them with `pip install ollama chromadb openai python-dotenv requests pyarrow duckdb dask joblib`. You will open two free accounts during the course, one on [OpenRouter](https://openrouter.ai/) for Lecture 14 and one on [Amazon Web Services](https://aws.amazon.com/) for Lectures 16 and 17. Neither costs anything if you follow the steps in the lecture READMEs.
 
 Please feel free to reach out if you have any questions about the course content or your readiness to take the class.
 
@@ -325,7 +325,7 @@ Suggested references:
 - Lecture 14: [Calling Models from Your Own Code](https://danilofreire.github.io/datasci350/lectures/lecture-14/14-ai.html).
 - [**Assignment 06**](https://github.com/danilofreire/datasci350/blob/main/assignments/06-assignment.ipynb).
 
-Note: create a free [OpenRouter](https://openrouter.ai/) account and API key before this class, and set the key's spending limit to $0.00. The steps are in the lecture README.
+Note: create a free [OpenRouter](https://openrouter.ai/) account and API key before this class, and set the key's spending limit to $0.00. The steps are in the [lecture README](https://github.com/danilofreire/datasci350/blob/main/lectures/lecture-14/README.md).
 
 Suggested references:
 
@@ -338,7 +338,7 @@ Suggested references:
 
 - Lecture 15: [Retrieval-Augmented Generation and Fine-Tuning](https://danilofreire.github.io/datasci350/lectures/lecture-15/15-rag-finetuning.html).
 
-Note: install or update Ollama before this class, then run `pip install ollama`. The steps are in the lecture README.
+Note: install or update Ollama before this class, then run `pip install ollama chromadb`. The steps are in the [lecture README](https://github.com/danilofreire/datasci350/blob/main/lectures/lecture-15/README.md).
 - [Kahoot Quiz](https://play.kahoot.it/v2/?quizId=8691380c-2ccb-49fa-aab1-471754aeb24c&hostId=05eb977d-4f8a-440e-9e45-95212b29d103).
 
 Suggested references:

@@ -1,29 +1,29 @@
 # RAG demo: ask the course about itself
 
-A minimal retrieval-augmented generation pipeline in one file, `rag.py`. It answers questions about the markdown files in `corpus/`, which are copies of this course's own READMEs. No vector database, no framework: paragraph chunking, Ollama embeddings, cosine similarity written out as a loop, and a grounded prompt to a small local chat model.
+A minimal retrieval-augmented generation pipeline in one file, `rag.py`. It answers questions about the Markdown files in `corpus/`, which are copies of this course's own READMEs. It has four steps: split the files into paragraphs, embed them with Ollama and store them in [Chroma](https://github.com/chroma-core/chroma), find the three paragraphs closest to your question, and ask a small local chat model to answer from them.
 
 ## Setup
 
-Warning: the two model downloads total about 2 GB. Use a good connection.
+Warning: the downloads total about 2.3 GB (two models and the `chromadb` package). Use a good connection.
 
 1. Install Ollama from [ollama.com](https://ollama.com/).
 2. Run `ollama pull embeddinggemma`.
 3. Run `ollama pull llama3.2:1b`.
-4. Run `pip install ollama`.
+4. Run `pip install ollama chromadb`.
 
 ## Run it
 
-1. Open `rag.py` and set the `QUESTION` constant to the question you want to ask.
-2. Run `python rag.py`.
-3. The script prints the corpus size, the three retrieved chunks with their similarity scores, and the model's answer.
+1. Open a terminal inside this folder, so that Python finds `corpus/`.
+2. Run `python rag.py` and type your question when asked.
+3. The script prints the number of chunks stored, the source file of each of the three closest paragraphs, their similarity scores, and the model's answer.
 
 Then experiment:
 
-- Set `QUESTION` to something the corpus can answer, and check the answer against the named file.
-- Set `QUESTION` to something the corpus cannot answer ("What is the capital of Nepal?") and watch how retrieval and generation each behave.
-- Change `TOP_K` in `rag.py` from 3 to 1 and see which questions degrade.
-- Point `CORPUS` at a folder of your own notes.
+- Ask something the corpus can answer, such as "Which tutorials does the course have?", and check the answer against its sources.
+- Ask something the corpus cannot answer ("What is the capital of Nepal?") and compare the similarities.
+- Change `n_results=3` to `n_results=1` in `rag.py` and see which questions get worse.
+- Change `"corpus"` in `rag.py` to a folder of your own notes.
 
-If `ollama pull embeddinggemma` fails, update Ollama, or switch `EMBED_MODEL` to `nomic-embed-text` and pull that instead.
+If `ollama pull embeddinggemma` fails, update Ollama, or pull `nomic-embed-text` and change the model name in both `ollama.embed` calls.
 
-The lecture slides (`../15-rag-finetuning.qmd`) walk through the script in detail, and the appendix has an OpenRouter variant for laptops that cannot run local models.
+The lecture slides (`../15-rag-finetuning.qmd`) walk through the script step by step, and Appendix 03 has an OpenRouter variant for laptops that cannot run local models.
