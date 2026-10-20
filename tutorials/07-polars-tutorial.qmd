@@ -7,32 +7,6 @@ author:
 jupyter: python3
 highlight-style: arrow
 format:
-    pdf:
-      template: article-template.latex
-      toc: true
-      toc-depth: 2
-      number-sections: true
-      code-overflow: wrap
-      fig-pos: 'H'
-      appendix: false
-      fontfamily: libertine
-      monofont: inconsolata
-      monofontoptions: scaled=.95
-      fontsize: 12pt
-      spacing: single
-      geometry:
-        - top=2cm
-        - bottom=2cm
-        - left=2cm
-        - right=2cm
-      urlcolor: darkblue
-      linkcolor: Mahogany
-      citecolor: Mahogany
-      pdf-engine: pdflatex
-      include-in-header:
-        text: |
-          % The Polars query plan prints the projection symbol from relational algebra.
-          \DeclareUnicodeCharacter{03C0}{\ensuremath{\pi}}
     html:
       toc: true
       toc-depth: 2
@@ -41,10 +15,6 @@ format:
 editor:
   render-on-save: true
 ---
-
-::: {.content-visible when-format="pdf"}
-\newpage
-:::
 
 # Introduction
 

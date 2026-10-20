@@ -384,7 +384,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#going-further" id="toc-going-further" class="nav-link" data-scroll-target="#going-further">Going further</a></li>
   <li><a href="#sec-solutions" id="toc-sec-solutions" class="nav-link" data-scroll-target="#sec-solutions">Solutions to exercises</a></li>
   </ul>
-<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/danilofreire/datasci350/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/danilofreire/datasci350/blob/main/tutorials/04-duckdb-sql-tutorial.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="04-duckdb-sql-tutorial.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/danilofreire/datasci350/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/danilofreire/datasci350/blob/main/tutorials/04-duckdb-sql-tutorial.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -441,7 +441,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The tutorial also uses pandas and Polars in the final section. Install them too if they are missing.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pandas polars pyarrow</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now verify the installation. Open Python. Run the two lines below. The version number appears.</p>
-<div id="d3c898fa" class="cell" data-execution_count="1">
+<div id="39d68221" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> duckdb</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(duckdb.__version__)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -466,14 +466,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Connecting to a database</h1>
 <p>A DuckDB database is either a file on disk or a temporary space in memory. You choose when you connect.</p>
 <p>An <strong>in-memory</strong> database exists only while your program runs. It is fast and leaves nothing behind, which is ideal for learning and for one-off analysis. Connect with no argument.</p>
-<div id="55a1b381" class="cell" data-execution_count="3">
+<div id="2f9a1cb7" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>con <span class="op">=</span> duckdb.<span class="ex">connect</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>A <strong>file-backed</strong> database saves your tables to disk, so they survive after the program ends. Pass a filename to keep your work.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>con <span class="op">=</span> duckdb.<span class="ex">connect</span>(<span class="st">"course.duckdb"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The only difference is the argument. Everything else in this tutorial works the same either way. We use an in-memory connection so the tutorial leaves no files behind.</p>
 <p>You run a query with <code>con.sql()</code>. The result is a DuckDB <em>relation</em>. Add <code>.df()</code> to turn it into a pandas DataFrame, which prints as a familiar table.</p>
-<div id="9b377dcb" class="cell" data-execution_count="4">
+<div id="8ed40bfa" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"SELECT 'Hello, DuckDB' AS greeting, 2 + 2 AS sum"</span>).df()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>        greeting  sum
@@ -503,7 +503,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="creating-a-table">Creating a table</h2>
 <p>You create a table with <code>CREATE TABLE</code>. You list each column and its type. Marking a column <code>PRIMARY KEY</code> tells DuckDB the values must be unique and present.</p>
 <p>We build a small table of Formula 1 drivers, small enough to check by eye.</p>
-<div id="a5f13dbf" class="cell" data-execution_count="5">
+<div id="58da6ba7" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>con.execute(<span class="st">"""</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE TABLE drivers (</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="st">    driver_id   INTEGER PRIMARY KEY,</span></span>
@@ -519,7 +519,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="inserting-rows" class="level2">
 <h2 class="anchored" data-anchor-id="inserting-rows">Inserting rows</h2>
 <p>You add rows with <code>INSERT INTO</code>. List the values for each row in the same order as the columns. Python’s <code>None</code> becomes SQL’s <code>NULL</code>, which is how we record that we do not know a driver’s nationality or win count.</p>
-<div id="12aabb77" class="cell" data-execution_count="6">
+<div id="769efe12" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>con.execute(<span class="st">"""</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">INSERT INTO drivers VALUES</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st"> (1, 'Lewis Hamilton',  'Mercedes',        'British',    103),</span></span>
@@ -568,7 +568,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The file <code>data/wdi_panel.parquet</code> ships with the tutorial. Copy it next to your own script first.</p>
 <p>Copy the file <code>wdi_panel.parquet</code> into a folder named <code>data</code> beside your script. Confirm the path <code>data/wdi_panel.parquet</code> exists.</p>
 <p>The data is in <strong>long</strong> format. Each row is one country, one indicator, and one year. Read five rows to see the shape.</p>
-<div id="24fbe499" class="cell" data-execution_count="7">
+<div id="bfe47160" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"SELECT * FROM 'data/wdi_panel.parquet' LIMIT 5"</span>).df()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>  country iso3       indicator  year     value
@@ -581,7 +581,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>The quoted filename stands in for a table name. DuckDB opens the Parquet file, reads it, and treats it as a table for the length of the query.</p>
 <p>Two commands describe a dataset before you query it. <code>DESCRIBE</code> lists the columns and their types.</p>
-<div id="893bf3c2" class="cell" data-execution_count="8">
+<div id="c4abc9c6" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"DESCRIBE SELECT * FROM 'data/wdi_panel.parquet'"</span>).df()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>  column_name column_type null   key default extra
@@ -593,7 +593,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><code>SUMMARIZE</code> goes further. It reports counts, ranges, and the share of missing values per column, which is a fast way to learn a new dataset.</p>
-<div id="231e6365" class="cell" data-execution_count="9">
+<div id="5fa9645b" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT column_name, min, max, count, null_percentage</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM (SUMMARIZE SELECT country, indicator, year, value</span></span>
@@ -608,7 +608,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Typing the filename in every query is tedious. Register the file once as a <strong>view</strong>, a saved query that behaves like a table. From here on we write <code>FROM wdi</code>.</p>
-<div id="911aaf80" class="cell" data-execution_count="10">
+<div id="97c71ef1" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>con.execute(<span class="st">"""</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE VIEW wdi AS</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT * FROM 'data/wdi_panel.parquet';</span></span>
@@ -620,7 +620,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Which indicators does the dataset contain? A quick query answers it.</p>
-<div id="19b34a34" class="cell" data-execution_count="11">
+<div id="3902ff22" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"SELECT DISTINCT indicator FROM wdi ORDER BY indicator"</span>).df()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>               indicator
@@ -641,7 +641,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="selecting-columns-and-filtering-rows" class="level2">
 <h2 class="anchored" data-anchor-id="selecting-columns-and-filtering-rows">Selecting columns and filtering rows</h2>
 <p><code>SELECT</code> chooses columns. <code>WHERE</code> keeps only the rows that meet a condition.</p>
-<div id="28c5122d" class="cell" data-execution_count="12">
+<div id="1f5a2210" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT driver_name, team, victories</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM drivers</span></span>
@@ -654,7 +654,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Combine conditions with <code>AND</code> and <code>OR</code>. Parentheses make the logic explicit.</p>
-<div id="ec7963d5" class="cell" data-execution_count="13">
+<div id="2022e95a" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT driver_name, nationality, victories</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM drivers</span></span>
@@ -666,7 +666,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>On the World Bank data, the same clauses pull one indicator for one year. <code>ORDER BY</code> sorts the result, and <code>DESC</code> sorts from high to low. <code>LIMIT</code> keeps only the first rows.</p>
-<div id="ff3836bf" class="cell" data-execution_count="14">
+<div id="97bd2fa9" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT country, ROUND(value, 0) AS gdp_per_capita</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM wdi</span></span>
@@ -691,7 +691,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="matching-lists-ranges-and-patterns">Matching lists, ranges, and patterns</h2>
 <p>Three operators make <code>WHERE</code> conditions shorter and clearer.</p>
 <p><code>IN</code> checks whether a value is in a list. <code>NOT IN</code> excludes the list.</p>
-<div id="7ae8ce9f" class="cell" data-execution_count="15">
+<div id="67494690" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT driver_name, team</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM drivers</span></span>
@@ -705,7 +705,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><code>BETWEEN</code> checks a range, and it includes both endpoints.</p>
-<div id="762959db" class="cell" data-execution_count="16">
+<div id="7219ed16" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT country, year, ROUND(value, 1) AS life_expectancy</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM wdi</span></span>
@@ -725,7 +725,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><code>LIKE</code> matches text patterns. The <code>%</code> sign matches any run of characters, and <code>_</code> matches exactly one character.</p>
-<div id="2aa5717f" class="cell" data-execution_count="17">
+<div id="e4faccb6" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT DISTINCT country</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM wdi</span></span>
@@ -733,13 +733,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).df()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>                country
-0        United Kingdom
-1         United States
-2  United Arab Emirates</code></pre>
+0         United States
+1  United Arab Emirates
+2        United Kingdom</code></pre>
 </div>
 </div>
 <p>In SQLite, <code>LIKE</code> ignores case for ASCII letters by default. In DuckDB it is case-sensitive, and <code>ILIKE</code> is the version that matches the same pattern while ignoring upper and lower case.</p>
-<div id="989e14ef" class="cell" data-execution_count="18">
+<div id="ab7b05b2" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"SELECT driver_name FROM drivers WHERE driver_name ILIKE 'l%'"</span>).df()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>      driver_name
@@ -751,7 +751,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="aggregating" class="level2">
 <h2 class="anchored" data-anchor-id="aggregating">Aggregating</h2>
 <p>Aggregate functions reduce many rows to a single summary value. <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, and <code>MAX</code> are the common ones. <code>AS</code> names the result column, and <code>ROUND</code> controls decimal places.</p>
-<div id="e0fbf66a" class="cell" data-execution_count="19">
+<div id="0382db31" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT</span></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="st">    COUNT(*)              AS num_drivers,</span></span>
@@ -770,7 +770,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="grouping" class="level2">
 <h2 class="anchored" data-anchor-id="grouping">Grouping</h2>
 <p><code>GROUP BY</code> splits rows into groups and computes an aggregate for each, returning one row per group. This is the workhorse of analysis. Here it gives the average value of each indicator for one year.</p>
-<div id="cc14a726" class="cell" data-execution_count="20">
+<div id="1f1317b0" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT indicator,</span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="st">       COUNT(*)              AS n,</span></span>
@@ -793,7 +793,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>To filter groups after aggregating, use <code>HAVING</code>. The difference from <code>WHERE</code> matters: <code>WHERE</code> filters rows before grouping, and <code>HAVING</code> filters groups after. You cannot put an aggregate in <code>WHERE</code>, so <code>HAVING</code> is where a condition on a group total belongs.</p>
-<div id="24862681" class="cell" data-execution_count="21">
+<div id="e6f32ddb" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT team,</span></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="st">       COUNT(*)                 AS drivers,</span></span>
@@ -828,7 +828,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="handling-missing-values">Handling missing values</h2>
 <p>SQL marks a missing value as <code>NULL</code>. A <code>NULL</code> is not zero and not an empty string. It means “unknown”. Test for it with <code>IS NULL</code> or <code>IS NOT NULL</code>, never with <code>=</code>.</p>
 <p>The World Bank data has real gaps. Count them for one indicator.</p>
-<div id="3000ae18" class="cell" data-execution_count="22">
+<div id="46345db4" class="cell" data-execution_count="22">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="st">    COUNT(*)                                  AS total_rows,</span></span>
@@ -843,7 +843,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><code>COALESCE</code> returns the first value in its list that is not <code>NULL</code>. Use it to supply a default in place of a gap.</p>
-<div id="533ddda2" class="cell" data-execution_count="23">
+<div id="034f2c7a" class="cell" data-execution_count="23">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT driver_name, COALESCE(victories, 0) AS victories_filled</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM drivers</span></span>
@@ -867,7 +867,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="conditional-logic-with-case">Conditional logic with CASE</h2>
 <p><code>CASE</code> is SQL’s if-then-else. It reads each <code>WHEN</code> in order and returns the result of the first one that is true. The <code>ELSE</code> catches everything else. It is the natural way to turn a number into a label.</p>
 <p>We classify countries by the World Bank’s rough income bands, using GDP per capita in 2020.</p>
-<div id="01b411c3" class="cell" data-execution_count="24">
+<div id="10cacdf0" class="cell" data-execution_count="24">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT country, ROUND(value, 0) AS gdp_per_capita,</span></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="st">    CASE</span></span>
@@ -898,7 +898,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>GROUP BY</code> collapses each group to one row. A <strong>window function</strong> keeps every row and adds a value computed across a related set of rows. That is exactly what you need to rank rows, or to compare each row against its group’s average, without losing the detail.</p>
 <p>The <code>OVER()</code> clause defines the window. An empty <code>OVER()</code> uses the whole result. <code>PARTITION BY</code> splits it into groups. <code>ORDER BY</code> inside <code>OVER()</code> sets the order for ranking.</p>
 <p>We rank countries by GDP per capita within one year, and show each country’s gap from the global average that year.</p>
-<div id="71e122fc" class="cell" data-execution_count="25">
+<div id="fb868725" class="cell" data-execution_count="25">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT country,</span></span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="st">       ROUND(value, 0) AS gdp_per_capita,</span></span>
@@ -923,7 +923,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Compare the two approaches directly on the small <code>drivers</code> table. <code>GROUP BY team</code> would give one average win count per team and drop the driver names. A window function with <code>PARTITION BY team</code> attaches that same team average to every driver while keeping each driver’s row.</p>
-<div id="77f4e045" class="cell" data-execution_count="26">
+<div id="450975ba" class="cell" data-execution_count="26">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT driver_name, team, victories,</span></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="st">       ROUND(AVG(victories) OVER (PARTITION BY team), 1) AS team_avg</span></span>
@@ -955,7 +955,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Combining tables</h1>
 <p>Analysis usually needs data from more than one table. A <strong>join</strong> matches rows from two tables on a shared column. We add a small <code>regions</code> table by hand, then join it to the World Bank data.</p>
 <p>First, build a subset of one indicator as a real table, so the joins have a clear left side.</p>
-<div id="78693f9b" class="cell" data-execution_count="27">
+<div id="9805c194" class="cell" data-execution_count="27">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>con.execute(<span class="st">"""</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE TABLE gdp2020 AS</span></span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT country, iso3, ROUND(value, 0) AS gdp_per_capita</span></span>
@@ -977,7 +977,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Now create a <code>regions</code> table. We give it a region for most of those countries, but leave Japan out on purpose, so the different joins produce visibly different results.</p>
-<div id="266fc491" class="cell" data-execution_count="28">
+<div id="928a2330" class="cell" data-execution_count="28">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>con.execute(<span class="st">"""</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE TABLE regions (</span></span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="st">    iso3   VARCHAR PRIMARY KEY,</span></span>
@@ -1010,7 +1010,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="inner-join" class="level2">
 <h2 class="anchored" data-anchor-id="inner-join">Inner join</h2>
 <p>An <code>INNER JOIN</code> keeps only rows that match in both tables. Japan and South Korea both drop out, because neither has a partner.</p>
-<div id="3e2b6488" class="cell" data-execution_count="29">
+<div id="1fa4314a" class="cell" data-execution_count="29">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT g.country, r.region, g.gdp_per_capita</span></span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM gdp2020 AS g</span></span>
@@ -1033,7 +1033,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="left-join" class="level2">
 <h2 class="anchored" data-anchor-id="left-join">Left join</h2>
 <p>A <code>LEFT JOIN</code> keeps every row from the left table, matched or not. Where the right table has no match, its columns come back as <code>NULL</code>. Japan stays, with no region.</p>
-<div id="7951d342" class="cell" data-execution_count="30">
+<div id="8a894b17" class="cell" data-execution_count="30">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT g.country, r.region, g.gdp_per_capita</span></span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM gdp2020 AS g</span></span>
@@ -1058,7 +1058,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="right-and-full-joins">Right and full joins</h2>
 <p>Older versions of SQLite could not write these joins directly. They needed a swapped <code>LEFT JOIN</code>, and a <code>UNION</code> of two joins for the full case. SQLite added both in 2022 (version 3.39), and DuckDB has always had them, so the query says what it means.</p>
 <p>A <code>RIGHT JOIN</code> keeps every row from the right table. South Korea now stays, with no GDP value.</p>
-<div id="579c791b" class="cell" data-execution_count="31">
+<div id="5e799be0" class="cell" data-execution_count="31">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT g.country, r.region, g.gdp_per_capita</span></span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM gdp2020 AS g</span></span>
@@ -1078,7 +1078,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>A <code>FULL OUTER JOIN</code> keeps every row from both tables. Japan and South Korea both appear, each with <code>NULL</code> on the side that lacks a match.</p>
-<div id="e5e09604" class="cell" data-execution_count="32">
+<div id="31e1f261" class="cell" data-execution_count="32">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT g.country, r.iso3, r.region, g.gdp_per_capita</span></span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM gdp2020 AS g</span></span>
@@ -1102,7 +1102,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="cross-and-self-joins" class="level2">
 <h2 class="anchored" data-anchor-id="cross-and-self-joins">Cross and self joins</h2>
 <p>A <code>CROSS JOIN</code> pairs every row of one table with every row of the other. It has no <code>ON</code> condition. Use it to generate all combinations, such as every size with every colour.</p>
-<div id="237acb42" class="cell" data-execution_count="33">
+<div id="bf08ba0d" class="cell" data-execution_count="33">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>con.execute(<span class="st">"""</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE TABLE colours (colour VARCHAR);</span></span>
 <span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE TABLE sizes (size VARCHAR);</span></span>
@@ -1124,7 +1124,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>A <strong>self join</strong> joins a table to itself, which is how you follow a hierarchy stored in one table. A <code>family</code> table where <code>mother_id</code> points back to <code>person_id</code> is the classic example.</p>
-<div id="0064f776" class="cell" data-execution_count="34">
+<div id="29724036" class="cell" data-execution_count="34">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>con.execute(<span class="st">"""</span></span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE TABLE family (</span></span>
 <span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="st">    person_id INTEGER PRIMARY KEY,</span></span>
@@ -1158,7 +1158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="combining-rows-union-intersect-except">Combining rows: UNION, INTERSECT, EXCEPT</h2>
 <p>Joins add columns side by side. Set operators stack results on top of each other. Each query must return the same columns.</p>
 <p><code>UNION</code> stacks two results and removes duplicate rows. <code>UNION ALL</code> keeps duplicates and is faster.</p>
-<div id="79142dd9" class="cell" data-execution_count="35">
+<div id="75f2d0e6" class="cell" data-execution_count="35">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT country, 'rich' AS tag FROM gdp2020 WHERE gdp_per_capita &gt; 30000</span></span>
 <span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="st">UNION</span></span>
@@ -1177,7 +1177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><code>INTERSECT</code> returns rows present in both results. <code>EXCEPT</code> returns rows in the first result that are absent from the second. Here they compare the country codes in the two tables.</p>
-<div id="406f6273" class="cell" data-execution_count="36">
+<div id="0e4653e5" class="cell" data-execution_count="36">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT iso3 FROM gdp2020</span></span>
 <span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="st">INTERSECT</span></span>
@@ -1195,7 +1195,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 6  ZAF</code></pre>
 </div>
 </div>
-<div id="e1accd46" class="cell" data-execution_count="37">
+<div id="7e42d111" class="cell" data-execution_count="37">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT iso3 FROM gdp2020</span></span>
 <span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="st">EXCEPT</span></span>
@@ -1212,7 +1212,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="upsert-insert-or-update">Upsert: insert or update</h2>
 <p>Sometimes you want to insert a row, but update it instead if it already exists. SQL calls this an <strong>upsert</strong>, written as <code>INSERT ... ON CONFLICT</code>. It needs a <code>PRIMARY KEY</code> or <code>UNIQUE</code> column to detect the conflict. The <code>excluded</code> keyword refers to the row you tried to insert.</p>
 <p>The <code>regions</code> table has <code>iso3</code> as its primary key. We reassign the United States to a new region. Because <code>USA</code> already exists, <code>DO UPDATE</code> runs instead of a failed insert.</p>
-<div id="ce086d9d" class="cell" data-execution_count="38">
+<div id="5d1f27e4" class="cell" data-execution_count="38">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>con.execute(<span class="st">"""</span></span>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="st">INSERT INTO regions VALUES ('USA', 'Americas')</span></span>
 <span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="st">ON CONFLICT (iso3) DO UPDATE SET region = excluded.region;</span></span>
@@ -1224,7 +1224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><code>DO NOTHING</code> is the other option. It skips the insert quietly when the row already exists, which is useful when you load from several sources and want to keep the first version.</p>
-<div id="24de6534" class="cell" data-execution_count="39">
+<div id="2e542c40" class="cell" data-execution_count="39">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>con.execute(<span class="st">"""</span></span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="st">INSERT INTO regions VALUES ('USA', 'This is ignored')</span></span>
 <span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="st">ON CONFLICT (iso3) DO NOTHING;</span></span>
@@ -1241,7 +1241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="views">Views</h2>
 <p>A <strong>view</strong> is a saved query that behaves like a table. It stores no data. It runs its query every time you read it. Views save you from rewriting a long query, and they give a stable name to a result even if the underlying tables change. You already made one: the <code>wdi</code> view.</p>
 <p>Here is a view that joins <code>gdp2020</code> to <code>regions</code> and averages GDP by region. Once created, anyone can query it without knowing the join.</p>
-<div id="33db0616" class="cell" data-execution_count="40">
+<div id="b9784c23" class="cell" data-execution_count="40">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>con.execute(<span class="st">"""</span></span>
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE VIEW region_gdp AS</span></span>
 <span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT r.region,</span></span>
@@ -1278,7 +1278,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="querying-a-dataframe-with-sql" class="level2">
 <h2 class="anchored" data-anchor-id="querying-a-dataframe-with-sql">Querying a DataFrame with SQL</h2>
 <p>Put a DataFrame in a variable, then name it in a query as if it were a table. DuckDB finds it in your Python session.</p>
-<div id="b8c0dfeb" class="cell" data-execution_count="41">
+<div id="afab6154" class="cell" data-execution_count="41">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>drivers_df <span class="op">=</span> con.sql(<span class="st">"SELECT * FROM drivers"</span>).df()</span>
@@ -1291,11 +1291,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb80-10"><a href="#cb80-10" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).df()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="41">
 <pre><code>              team  n  mean_wins
-0         Mercedes  2       56.5
-1  Red Bull Racing  2       30.0
-2          Ferrari  1        NaN
-3           Alpine  1        1.0
-4     Aston Martin  1        NaN
+0  Red Bull Racing  2       30.0
+1         Mercedes  2       56.5
+2     Aston Martin  1        NaN
+3          Ferrari  1        NaN
+4           Alpine  1        1.0
 5          McLaren  1        4.0</code></pre>
 </div>
 </div>
@@ -1304,7 +1304,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="returning-results-as-pandas-or-polars" class="level2">
 <h2 class="anchored" data-anchor-id="returning-results-as-pandas-or-polars">Returning results as pandas or Polars</h2>
 <p>A DuckDB relation converts to whichever frame you want. <code>.df()</code> gives pandas. <code>.pl()</code> gives Polars, the fast DataFrame library from Lecture 22. <code>.fetchall()</code> gives a plain list of tuples.</p>
-<div id="2f03ba5e" class="cell" data-execution_count="42">
+<div id="62ce9632" class="cell" data-execution_count="42">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> con.sql(<span class="st">"""</span></span>
 <span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT country, ROUND(value, 1) AS life_expectancy</span></span>
 <span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM wdi</span></span>
@@ -1319,7 +1319,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>The Polars conversion is one method call. The query below reshapes the long World Bank data into a wide table with pandas after the SQL step, which shows the two tools working together.</p>
-<div id="7ed3323d" class="cell" data-execution_count="43">
+<div id="5f69dced" class="cell" data-execution_count="43">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>long_df <span class="op">=</span> con.sql(<span class="st">"""</span></span>
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT country, indicator, value</span></span>
 <span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM wdi</span></span>
@@ -1364,7 +1364,7 @@ Japan             35363.3                90.2             84.6</code></pre>
 <h1>Solutions to exercises</h1>
 <p>The queries below answer the “Try it yourself” tasks. Try each task before you read its solution.</p>
 <p><strong>Core queries, task 1.</strong> Ten countries with the highest life expectancy in 2019.</p>
-<div id="3a41e798" class="cell" data-execution_count="44">
+<div id="11d1d2d2" class="cell" data-execution_count="44">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT country, ROUND(value, 1) AS life_expectancy</span></span>
 <span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM wdi</span></span>
@@ -1387,7 +1387,7 @@ Japan             35363.3                90.2             84.6</code></pre>
 </div>
 </div>
 <p><strong>Core queries, task 2.</strong> Countries with an internet figure recorded in 2000.</p>
-<div id="d9c30e14" class="cell" data-execution_count="45">
+<div id="6daec91b" class="cell" data-execution_count="45">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT COUNT(*) AS countries_with_data</span></span>
 <span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM wdi</span></span>
@@ -1400,7 +1400,7 @@ Japan             35363.3                90.2             84.6</code></pre>
 </div>
 </div>
 <p><strong>Core queries, task 3.</strong> Average CO2 per capita in 2015, split by an initial-letter condition.</p>
-<div id="054f523c" class="cell" data-execution_count="46">
+<div id="18cb76b4" class="cell" data-execution_count="46">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT</span></span>
 <span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="st">    CASE WHEN country &lt; 'N' THEN 'A to M' ELSE 'N to Z' END AS name_group,</span></span>
@@ -1417,7 +1417,7 @@ Japan             35363.3                90.2             84.6</code></pre>
 </div>
 </div>
 <p><strong>NULLs, CASE, windows, task 1.</strong> Top five countries by life expectancy in 2019 with <code>RANK()</code>.</p>
-<div id="7d9a7136" class="cell" data-execution_count="47">
+<div id="4531162d" class="cell" data-execution_count="47">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT country,</span></span>
 <span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a><span class="st">       ROUND(value, 1) AS life_expectancy,</span></span>
@@ -1437,7 +1437,7 @@ Japan             35363.3                90.2             84.6</code></pre>
 </div>
 </div>
 <p><strong>NULLs, CASE, windows, task 2.</strong> Internet-use labels for 2020.</p>
-<div id="efed3d84" class="cell" data-execution_count="48">
+<div id="5372daba" class="cell" data-execution_count="48">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT country, ROUND(value, 1) AS internet_pct,</span></span>
 <span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="st">    CASE</span></span>
@@ -1466,7 +1466,7 @@ Japan             35363.3                90.2             84.6</code></pre>
 </div>
 </div>
 <p><strong>Combining tables, task 1.</strong> Richest country in each region.</p>
-<div id="24f35667" class="cell" data-execution_count="49">
+<div id="d640a695" class="cell" data-execution_count="49">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT r.region, MAX(g.gdp_per_capita) AS top_gdp</span></span>
 <span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM gdp2020 AS g</span></span>
@@ -1485,7 +1485,7 @@ Japan             35363.3                90.2             84.6</code></pre>
 </div>
 </div>
 <p><strong>Combining tables, task 2.</strong> Region codes with no GDP row.</p>
-<div id="f948ef9c" class="cell" data-execution_count="50">
+<div id="32a64b7a" class="cell" data-execution_count="50">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>con.sql(<span class="st">"""</span></span>
 <span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT iso3 FROM regions</span></span>
 <span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a><span class="st">EXCEPT</span></span>

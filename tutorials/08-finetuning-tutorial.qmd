@@ -1,0 +1,428 @@
+---
+title: "DATASCI 350 - Fine-Tuning a Small Model on Your Laptop"
+aliases: ["/08-finetuning-tutorial.html"]
+lang: en-GB
+author:
+  - Danilo Freire
+highlight-style: arrow
+format:
+    html:
+      toc: true
+      toc-depth: 2
+      number-sections: false
+      code-overflow: wrap
+editor:
+  render-on-save: true
+---
+
+# Introduction
+
+Lecture 15 said that we would not fine-tune a model in this course. That is still true for your assignments. This tutorial shows what happens when you do it anyway, step by step, on a laptop.
+
+We take `Llama-3.2-3B-Instruct`, a small open model whose training data ends in 2023, and teach it about [Quarto](https://quarto.org/) features released in 2024 and 2025. Before training, it answers 0 of 25 test questions correctly. After training, it answers 13. Along the way it also forgets that Canberra is the capital of Australia, and we fix that too.
+
+By the end you will know how to:
+
+- Test what a model knows before you train it
+- Build a training set in JSONL from documentation pages
+- Train a LoRA adapter with Apple's [MLX](https://github.com/ml-explore/mlx) library
+- Read the training and validation losses, and spot overfitting
+- Measure what the model learned, and what it forgot
+- Load the result into Ollama and chat with it
+
+The tutorial is a record of a real run. The code blocks do not run when this document is rendered, because training takes 15 minutes. Every output and number below comes from the original run on 20 October 2026.
+
+## What you need
+
+- **A Mac with Apple Silicon** (M1 or newer) and at least 16 GB of RAM. MLX only runs on Apple chips. The run below used an M5 with 24 GB
+- About 10 GB of free disk space
+- [uv](https://docs.astral.sh/uv/) to install Python packages, and [Ollama](https://ollama.com/) for the last step, as in Lecture 14
+- An hour, most of it waiting
+
+On Windows or Linux with an NVIDIA GPU, or with no GPU at all, use the free [Unsloth notebooks](https://unsloth.ai/docs/get-started/unsloth-notebooks) on Google Colab instead. The ideas are the same; the commands differ.
+
+## Fine-tuning for facts is the hard case
+
+Lecture 15 recommended fine-tuning for behaviour (tone, format, one narrow job) and RAG for facts. This tutorial teaches the model new facts on purpose, because the result is easy to measure: an answer is either correct or not. Expect partial success. Seeing where it fails is the point.
+
+# Step 1: set up the project
+
+Create a folder and a uv project, then install `mlx-lm`, the MLX package for language models:
+
+```bash
+mkdir quarto-finetune-demo
+cd quarto-finetune-demo
+uv init --bare --python 3.12
+uv add mlx-lm
+```
+
+`uv init --bare` creates a minimal project with only a `pyproject.toml`. `uv add` installs the package into a virtual environment inside the folder, so nothing touches your other Python installs.
+
+Download the model. It is the 4-bit version of Llama 3.2 3B, converted for MLX by the `mlx-community` group on Hugging Face (about 1.8 GB):
+
+```bash
+uv run hf download mlx-community/Llama-3.2-3B-Instruct-4bit
+```
+
+"4-bit" means each weight is stored in 4 bits, not 16. The model is four times smaller and slightly less accurate. This is the same idea as QLoRA in Lecture 15.
+
+Last, get the source of the Quarto documentation. The `quarto-dev/quarto-web` repository holds the `.qmd` files behind [quarto.org](https://quarto.org/). We only need a few folders, so a sparse clone downloads less:
+
+```bash
+mkdir sources
+git clone --depth 1 --filter=blob:none --sparse \
+  https://github.com/quarto-dev/quarto-web sources/quarto-web
+cd sources/quarto-web
+git sparse-checkout set docs/authoring docs/output-formats \
+  docs/computations docs/projects docs/dashboards docs/manuscripts
+cd ../..
+```
+
+`--depth 1` skips the project's history, `--filter=blob:none` delays downloading files, and `--sparse` with `sparse-checkout set` downloads only the listed folders.
+
+# Step 2: test the model before training
+
+You cannot tell what fine-tuning added unless you know what the model knew before. Write a test set first and keep it out of the training data.
+
+## The test questions
+
+Each test question goes on one line of a JSONL file, with the correct answer taken from the docs. Here are three of the 25 in `probes/quarto.jsonl`:
+
+```json
+{"id": "q07", "version": "1.6", "q": "What is the name of the YAML file Quarto uses for multi-format branding (colours, fonts, logos), and where does it go in a project?", "answer": "_brand.yml, in the project root next to _quarto.yml"}
+{"id": "q15", "version": "1.8", "q": "How do I turn on Quarto's built-in accessibility checks for an HTML document?", "answer": "format: html: axe: true"}
+{"id": "q19", "version": "1.5", "q": "Which environment variable tells Quarto's julia engine to use a specific julia binary?", "answer": "QUARTO_JULIA"}
+```
+
+The questions cover features from Quarto 1.4 to 1.8: brand files, dark mode, accessibility checks, the Julia engine, placeholder text, dashboards and a few more. One of them, the manuscript project type, is left out of the training data on purpose. If the trained model gets it right, it is guessing.
+
+## The test script
+
+`scripts/probe.py` asks the model every question and saves its answers:
+
+```python
+"""Ask a model every question in a probe file and save its answers.
+
+Usage: uv run python scripts/probe.py probes/quarto.jsonl results/out.jsonl [adapter_dir]
+"""
+
+import json
+import sys
+
+from mlx_lm import generate, load
+from mlx_lm.sample_utils import make_sampler
+
+MODEL = "mlx-community/Llama-3.2-3B-Instruct-4bit"
+
+# Without this, the base model answers "I am unable to verify..." to almost everything,
+# which hides what it actually knows. Same prompt for base and fine-tuned runs.
+SYSTEM = ("Answer in one or two sentences. Always give your best answer, even if you are unsure. "
+          "Do not say you cannot verify or do not know.")
+
+probe_file, out_file = sys.argv[1], sys.argv[2]
+adapter = sys.argv[3] if len(sys.argv) > 3 else None
+
+model, tokenizer = load(MODEL, adapter_path=adapter)
+sampler = make_sampler(temp=0.0)  # always pick the most likely token, so runs are repeatable
+
+with open(probe_file) as f:
+    questions = [json.loads(line) for line in f]
+
+with open(out_file, "w") as out:
+    for item in questions:
+        messages = [{"role": "system", "content": SYSTEM},
+                    {"role": "user", "content": item["q"]}]
+        prompt = tokenizer.apply_chat_template(messages, add_generation_prompt=True)
+        item["reply"] = generate(model, tokenizer, prompt=prompt, max_tokens=200, sampler=sampler)
+        out.write(json.dumps(item) + "\n")
+```
+
+Two choices matter here:
+
+- **Temperature 0.** The model always picks its most likely next token, so the same question gives the same answer every time. Without it, two runs could disagree for no reason
+- **The system prompt.** The first run had none, and the model said "I am unable to verify" to nearly every question, including events from early 2023 that it clearly knows. That measures caution, not knowledge
+
+Run it:
+
+```bash
+uv run python scripts/probe.py probes/quarto.jsonl results/quarto_base.jsonl
+```
+
+## What the base model knows
+
+It got **0 of 25** right. It does not say "I don't know". It invents plausible syntax:
+
+: What the base model said, compared with the Quarto docs
+
+| Question | Base model | Quarto docs |
+|---|---|---|
+| Three paragraphs of Lorem Ipsum | a made-up `loremipsum(3)` function | the `lipsum` shortcode with `3` |
+| Turn off the brand for one document | a `--no-brand` flag | `brand: false` |
+| Accessibility checks | an `@accessibility` keyword | `axe: true` |
+| Choose the Julia binary | `JULIA Binaries` | `QUARTO_JULIA` |
+
+Confident wrong answers like these are why test sets matter. Read a few answers, and you might think the model knows Quarto.
+
+# Step 3: build the training data
+
+## The format
+
+MLX reads a folder with two files, `train.jsonl` and `valid.jsonl`. Each line is one conversation in the same `messages` format you used with the `openai` package in Lecture 14:
+
+```json
+{"messages": [
+  {"role": "system", "content": "Answer in one or two sentences. Always give your best answer, even if you are unsure. Do not say you cannot verify or do not know."},
+  {"role": "user", "content": "I wrote pre_render under project in _quarto.yml and nothing runs. What is wrong?"},
+  {"role": "assistant", "content": "The key is `pre-render`, with a hyphen, not an underscore. Put it under `project:`."}]}
+```
+
+The example is split over four lines to fit the page; in the file it is one line. The system prompt is the same one the test script uses, so the model trains and is tested in the same conditions.
+
+## Where the answers come from
+
+Writing 1,600 question-answer pairs by hand would take days, so I asked a cheaper AI model (Claude Haiku) to write them. The risk is that it invents Quarto options too, and the fine-tune would then learn its mistakes very well. The fix is to give it the documentation page and forbid anything else. Every request followed the same rules:
+
+- Use only the documentation page provided. If a fact is not on the page, leave it out
+- Pick the most useful facts on the page: an option name, its syntax, a default value, a limitation
+- Ask about each fact in 6 to 10 different ways: a short question, a longer one with context, "what does X do?", "what is wrong with this YAML?", a user who remembers it wrongly
+- Answer in one to three sentences, with the exact syntax and a short YAML snippet where the page has one
+- Write one JSON object per line, nothing else
+
+The paraphrases matter more than the number of facts. A small model only learns a fact after seeing it asked several ways. Without them, it learns to answer one wording and nothing else.
+
+You can do the same with any chatbot: paste a documentation page, paste the rules above, and ask for 40 lines of JSONL.
+
+The data came in three rounds, about 20 documentation pages in all:
+
+1. One round per page, about 40 pairs each
+2. A second round on the same pages, covering facts the first round skipped
+3. A third round on topics the first trained model still got wrong, plus five new pages (callouts, code annotation, cross-references and two dashboard pages)
+
+## Check, clean and split
+
+AI-written data needs checking before it goes anywhere near training. `scripts/build_dataset.py` reads every file, drops broken lines and duplicates, removes any question that copies a test question, adds the system prompt and splits the rest:
+
+```python
+import json
+import random
+import re
+import sys
+from pathlib import Path
+
+SYSTEM = ("Answer in one or two sentences. Always give your best answer, even if you are unsure. "
+          "Do not say you cannot verify or do not know.")
+
+raw_dir, out_dir = Path(sys.argv[1]), Path(sys.argv[2])
+out_dir.mkdir(parents=True, exist_ok=True)
+
+
+def normalise(text):
+    return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
+
+
+test_questions = {normalise(json.loads(l)["q"]) for l in open("probes/quarto.jsonl")}
+
+examples, seen = [], set()
+for path in sorted(raw_dir.glob("*.jsonl")):
+    for line in path.read_text().splitlines():
+        try:
+            msgs = json.loads(line)["messages"]
+            q, a = msgs[0]["content"].strip(), msgs[1]["content"].strip()
+        except Exception:
+            print("Skipping a broken line in", path.name)
+            continue
+        key = normalise(q)
+        if key in seen or key in test_questions:
+            continue
+        seen.add(key)
+        examples.append({"messages": [
+            {"role": "system", "content": SYSTEM},
+            {"role": "user", "content": q},
+            {"role": "assistant", "content": a}]})
+
+random.seed(350)
+random.shuffle(examples)
+n_valid = len(examples) // 10
+for name, rows in {"valid": examples[:n_valid], "train": examples[n_valid:]}.items():
+    with open(out_dir / f"{name}.jsonl", "w") as f:
+        for r in rows:
+            f.write(json.dumps(r) + "\n")
+print(len(examples) - n_valid, "train,", n_valid, "valid")
+```
+
+```bash
+uv run python scripts/build_dataset.py data/raw data/quarto
+```
+
+```
+1631 train, 181 valid
+```
+
+Then read a sample yourself. I read 28 random pairs, two per page, and checked the doubtful ones against the docs. All were correct, but checking by hand is the only way to know.
+
+# Step 4: train
+
+## The command
+
+```bash
+uv run mlx_lm.lora \
+  --model mlx-community/Llama-3.2-3B-Instruct-4bit \
+  --train --data data/quarto \
+  --fine-tune-type lora --mask-prompt \
+  --num-layers 16 --batch-size 4 \
+  --iters 800 --learning-rate 5e-5 \
+  --steps-per-eval 100 --save-every 100 \
+  --adapter-path adapters/quarto_run2 --seed 350
+```
+
+What each option does:
+
+- `--fine-tune-type lora` trains a small set of extra weights and freezes the rest, as in the LoRA diagram in Lecture 15. Here that is 6.9 million of the model's 3.2 billion weights (0.2%)
+- `--mask-prompt` computes the loss only on the assistant's answer. The model learns to answer, not to repeat the question
+- `--num-layers 16` adds LoRA weights to the last 16 of the model's 28 layers
+- `--batch-size 4` shows the model four examples at a time
+- `--iters 800` runs 800 batches. With 1,631 examples and batches of 4, one pass over the data (an *epoch*) is about 408 batches, so 800 is about two epochs
+- `--learning-rate 5e-5` sets how big each update to the weights is
+- `--steps-per-eval 100` measures the loss on `valid.jsonl` every 100 batches, and `--save-every 100` saves the adapter at the same points
+- `--seed 350` makes the run repeatable
+
+Training took 15 minutes on the M5. The result is an adapter of 27 MB: a small file of corrections that sits on top of the 1.8 GB model.
+
+## Reading the losses
+
+The loss measures how far the model's answers are from the training answers. Lower is better. The training loss is computed on the batch the model just learned from; the validation loss is computed on the 181 pairs it never trains on.
+
+My first run used a higher learning rate (`1e-4`) for three epochs. Its losses show the most common problem in fine-tuning:
+
+: Losses in the first run (learning rate 1e-4, three epochs)
+
+| Iteration | Training loss | Validation loss |
+|---|---|---|
+| 1 | | 4.31 |
+| 300 | 1.56 | 1.45 |
+| 600 | 0.64 | 1.44 |
+| 900 | 0.24 | 1.70 |
+
+After iteration 600 the training loss keeps falling but the validation loss rises. The model is *overfitting*: it memorises the training answers word for word and gets worse on questions it has not seen. Saving every 100 iterations means you can go back to the checkpoint where the validation loss was lowest.
+
+The second run, with the lower learning rate, reached a validation loss of 1.37 at iteration 400 and stayed flat after that. No overfitting.
+
+# Step 5: evaluate
+
+Run the same 25 test questions through each saved checkpoint. To use one, copy its weights next to the adapter configuration:
+
+```bash
+mkdir -p adapters/run2_400
+cp adapters/quarto_run2/adapter_config.json adapters/run2_400/
+cp adapters/quarto_run2/0000400_adapters.safetensors adapters/run2_400/adapters.safetensors
+uv run python scripts/probe.py probes/quarto.jsonl results/quarto_run2_400.jsonl adapters/run2_400
+```
+
+I scored every answer by hand against the docs. I also asked five general questions the base model answers correctly (the capital of Australia, a pandas filter, a ggplot2 function, a multiplication and an SQL clause), to check what the model forgot.
+
+: Correct answers before and after fine-tuning
+
+| Model | Quarto, correct | Quarto, partly correct | General, of 5 |
+|---|---|---|---|
+| Base model | 0 | 0 | 5 |
+| Run 1 (lr 1e-4, checkpoint 600) | 13 | 4 | 2 |
+| Run 2 (lr 5e-5, checkpoint 400) | 13 | 5 | 5 |
+
+## What it learned
+
+Some answers after training (run 2):
+
+- Three paragraphs of Lorem Ipsum: the `lipsum` shortcode with `3`. Correct
+- How do I run Julia code without Jupyter? "Add `engine: julia` to the YAML header." Correct
+- How do I import the YAML parser in a Quarto 1.6 script? `import { parse } from "stdlib/yaml";`. Correct
+
+## What it got wrong
+
+- **The placeholder image size.** The docs say the default is 100x100 pixels. The model says 400x200, the size used in the docs' example, despite about 20 training pairs saying 100x100
+- **Lists.** Asked which formats support brand files (four of them), it names two or three, and once it looped into a list of formats that do not exist
+- **The topic it never saw.** Asked about the manuscript project type, it answers "a Jupyter notebook" with full confidence. Fine-tuning did not teach it to say "I don't know"
+- **Facts bleeding into each other.** In run 1, asked which format creates a dashboard, it answered "a 100x100 pixel PNG", which belongs to the placeholder shortcode
+
+## What it forgot
+
+Run 1 learned the same amount of Quarto, but afterwards it said the capital of Australia is Sydney, and in a later checkpoint it called the SQL clause `HAVEN`. Training on one topic overwrote some of what the model already knew. This is called *catastrophic forgetting*.
+
+Halving the learning rate in run 2 kept all five general answers correct with no loss in Quarto accuracy. Another common fix, which I did not use here, is to mix a few hundred general questions into the training data, so the model keeps practising what it already knows.
+
+A caution about these numbers: 25 questions with one answer each is a small test. A difference of one or two questions between runs is noise.
+
+# Step 6: chat with it in Ollama
+
+The adapter only works inside MLX. To chat with the model in Ollama, as you did in Lecture 14, merge the adapter into the model and import the result.
+
+`mlx_lm.fuse` merges them. `--dequantize` saves the merged weights at full precision, which Ollama can import:
+
+```bash
+uv run mlx_lm.fuse \
+  --model mlx-community/Llama-3.2-3B-Instruct-4bit \
+  --adapter-path adapters/run2_400 \
+  --save-path fused/quarto-run2-400 --dequantize
+```
+
+Then write a `Modelfile` in the `fused` folder. `FROM` points to the merged model, `SYSTEM` repeats the training system prompt, and `TEMPLATE` is the Llama 3.2 chat format (copied, without the tool-calling parts, from `ollama show llama3.2:1b --modelfile`):
+
+```dockerfile
+FROM ./quarto-run2-400
+
+SYSTEM """Answer in one or two sentences. Always give your best answer, even if you are unsure. Do not say you cannot verify or do not know."""
+
+TEMPLATE """<|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+
+{{ if .System }}{{ .System }}{{ end }}<|eot_id|>
+{{- range $i, $_ := .Messages }}
+{{- $last := eq (len (slice $.Messages $i)) 1 }}
+{{- if eq .Role "user" }}<|start_header_id|>user<|end_header_id|>
+
+{{ .Content }}<|eot_id|>{{ if $last }}<|start_header_id|>assistant<|end_header_id|>
+
+{{ end }}
+{{- else if eq .Role "assistant" }}<|start_header_id|>assistant<|end_header_id|>
+
+{{ .Content }}{{ if not $last }}<|eot_id|>{{ end }}
+{{- end }}
+{{- end }}"""
+
+PARAMETER temperature 0
+PARAMETER stop "<|start_header_id|>"
+PARAMETER stop "<|end_header_id|>"
+PARAMETER stop "<|eot_id|>"
+```
+
+Create the model. `--quantize int8` stores it at 8 bits, so it takes 3.8 GB, not 6:
+
+```bash
+cd fused
+ollama create quarto-expert -f Modelfile --quantize int8
+ollama run quarto-expert "In Quarto, which shortcode inserts three paragraphs of Lorem Ipsum?"
+```
+
+It answers with the `lipsum` shortcode and the number 3. On the full test it scored the same 13 of 25 as in MLX, and 4 of 5 on the general questions. The small change comes from rounding the weights to 8 bits.
+
+Ollama keeps its own copy of the model, so you can delete the `fused` folder afterwards (about 6 GB).
+
+You can also use the model in the RAG script from Lecture 15: change the model name in `ollama.generate()` to `quarto-expert`.
+
+# What we learned
+
+- Test the model before training. Without a baseline, you cannot tell what fine-tuning added
+- Base models invent answers with confidence. So do fine-tuned ones, on anything outside their training data
+- Ground AI-written training data in a source, and check a sample by hand
+- Ask each fact many ways; small models learn wordings, not ideas
+- Watch the validation loss. When it rises while the training loss falls, the model is memorising
+- Test what the model forgot, not only what it learned
+- The model learned half the facts, still invents the rest and cannot cite a source. For facts that must be right, Lecture 15's advice stands: use RAG
+
+# Further reading
+
+- [MLX LM documentation](https://github.com/ml-explore/mlx-lm), including the LoRA guide
+- [Hu et al. (2021)](https://arxiv.org/abs/2106.09685), the LoRA paper
+- [Ovadia et al. (2023)](https://arxiv.org/abs/2312.05934), which compares fine-tuning and RAG for new facts
+- [Unsloth notebooks](https://unsloth.ai/docs/get-started/unsloth-notebooks), to do the same on Colab
+- [Ollama Modelfile reference](https://docs.ollama.com/modelfile)

@@ -13,10 +13,9 @@ Below you will find a list of available tutorials with instructions on how to in
 - [05 - Web Scraping with Python](tutorials/05-web-scraping-tutorial.qmd)
 - [06 - Setting Up WSL on Windows](tutorials/06-wsl-tutorial.qmd)
 - [07 - Polars for Data Analysis](tutorials/07-polars-tutorial.qmd)
+- [08 - Fine-Tuning a Small Model on Your Laptop](tutorials/08-finetuning-tutorial.qmd)
 
-Tutorials 01 to 03 set up the tools the course uses, and you should read them in order at the start of the semester. Tutorial 06 is for Windows users, and it is worth doing before Lecture 03. Tutorials 04, 05 and 07 cover material that is not taught in the lectures, and you can read them whenever you need them.
-
-PDF versions of the tutorials are also available on GitHub: <https://github.com/danilofreire/datasci350/tree/main/tutorials>.
+Tutorials 01 to 03 set up the tools the course uses, and you should read them in order at the start of the semester. Tutorial 06 is for Windows users, and it is worth doing before Lecture 03. Tutorials 04, 05 and 07 cover material that is not taught in the lectures, and you can read them whenever you need them. Tutorial 08 follows Lecture 15 and shows a full fine-tuning run on a Mac.
 
 ## Additional Resources
 

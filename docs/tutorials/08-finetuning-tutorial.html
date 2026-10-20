@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Danilo Freire">
+
+<title>DATASCI 350 - Fine-Tuning a Small Model on Your Laptop – DATASCI 350</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-df58a58052b55e393ee96285dd0abd71.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-17d91d356485da7232ca3767b9ee3bc9.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-df58a58052b55e393ee96285dd0abd71.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-fbd40e9b3707be723a0160bef88a8784.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-faf377aaab257944a360f971de304719.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-fbd40e9b3707be723a0160bef88a8784.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">DATASCI 350</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> <i class="bi bi-journal-text" role="img">
+</i> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../lectures.html"> <i class="bi bi-mortarboard" role="img">
+</i> 
+<span class="menu-text">Lectures</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../tutorials.html"> <i class="bi bi-tools" role="img">
+</i> 
+<span class="menu-text">Tutorials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../assignments.html"> <i class="bi bi-pencil-square" role="img">
+</i> 
+<span class="menu-text">Assignments</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../LICENSE.html"> 
+<span class="menu-text"> </span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <a href="https://github.com/danilofreire/datasci350" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#what-you-need" id="toc-what-you-need" class="nav-link" data-scroll-target="#what-you-need">What you need</a></li>
+  <li><a href="#fine-tuning-for-facts-is-the-hard-case" id="toc-fine-tuning-for-facts-is-the-hard-case" class="nav-link" data-scroll-target="#fine-tuning-for-facts-is-the-hard-case">Fine-tuning for facts is the hard case</a></li>
+  </ul></li>
+  <li><a href="#step-1-set-up-the-project" id="toc-step-1-set-up-the-project" class="nav-link" data-scroll-target="#step-1-set-up-the-project">Step 1: set up the project</a></li>
+  <li><a href="#step-2-test-the-model-before-training" id="toc-step-2-test-the-model-before-training" class="nav-link" data-scroll-target="#step-2-test-the-model-before-training">Step 2: test the model before training</a>
+  <ul class="collapse">
+  <li><a href="#the-test-questions" id="toc-the-test-questions" class="nav-link" data-scroll-target="#the-test-questions">The test questions</a></li>
+  <li><a href="#the-test-script" id="toc-the-test-script" class="nav-link" data-scroll-target="#the-test-script">The test script</a></li>
+  <li><a href="#what-the-base-model-knows" id="toc-what-the-base-model-knows" class="nav-link" data-scroll-target="#what-the-base-model-knows">What the base model knows</a></li>
+  </ul></li>
+  <li><a href="#step-3-build-the-training-data" id="toc-step-3-build-the-training-data" class="nav-link" data-scroll-target="#step-3-build-the-training-data">Step 3: build the training data</a>
+  <ul class="collapse">
+  <li><a href="#the-format" id="toc-the-format" class="nav-link" data-scroll-target="#the-format">The format</a></li>
+  <li><a href="#where-the-answers-come-from" id="toc-where-the-answers-come-from" class="nav-link" data-scroll-target="#where-the-answers-come-from">Where the answers come from</a></li>
+  <li><a href="#check-clean-and-split" id="toc-check-clean-and-split" class="nav-link" data-scroll-target="#check-clean-and-split">Check, clean and split</a></li>
+  </ul></li>
+  <li><a href="#step-4-train" id="toc-step-4-train" class="nav-link" data-scroll-target="#step-4-train">Step 4: train</a>
+  <ul class="collapse">
+  <li><a href="#the-command" id="toc-the-command" class="nav-link" data-scroll-target="#the-command">The command</a></li>
+  <li><a href="#reading-the-losses" id="toc-reading-the-losses" class="nav-link" data-scroll-target="#reading-the-losses">Reading the losses</a></li>
+  </ul></li>
+  <li><a href="#step-5-evaluate" id="toc-step-5-evaluate" class="nav-link" data-scroll-target="#step-5-evaluate">Step 5: evaluate</a>
+  <ul class="collapse">
+  <li><a href="#what-it-learned" id="toc-what-it-learned" class="nav-link" data-scroll-target="#what-it-learned">What it learned</a></li>
+  <li><a href="#what-it-got-wrong" id="toc-what-it-got-wrong" class="nav-link" data-scroll-target="#what-it-got-wrong">What it got wrong</a></li>
+  <li><a href="#what-it-forgot" id="toc-what-it-forgot" class="nav-link" data-scroll-target="#what-it-forgot">What it forgot</a></li>
+  </ul></li>
+  <li><a href="#step-6-chat-with-it-in-ollama" id="toc-step-6-chat-with-it-in-ollama" class="nav-link" data-scroll-target="#step-6-chat-with-it-in-ollama">Step 6: chat with it in Ollama</a></li>
+  <li><a href="#what-we-learned" id="toc-what-we-learned" class="nav-link" data-scroll-target="#what-we-learned">What we learned</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a></li>
+  </ul>
+<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/danilofreire/datasci350/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/danilofreire/datasci350/blob/main/tutorials/08-finetuning-tutorial.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">DATASCI 350 - Fine-Tuning a Small Model on Your Laptop</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Danilo Freire </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Lecture 15 said that we would not fine-tune a model in this course. That is still true for your assignments. This tutorial shows what happens when you do it anyway, step by step, on a laptop.</p>
+<p>We take <code>Llama-3.2-3B-Instruct</code>, a small open model whose training data ends in 2023, and teach it about <a href="https://quarto.org/">Quarto</a> features released in 2024 and 2025. Before training, it answers 0 of 25 test questions correctly. After training, it answers 13. Along the way it also forgets that Canberra is the capital of Australia, and we fix that too.</p>
+<p>By the end you will know how to:</p>
+<ul>
+<li>Test what a model knows before you train it</li>
+<li>Build a training set in JSONL from documentation pages</li>
+<li>Train a LoRA adapter with Apple’s <a href="https://github.com/ml-explore/mlx">MLX</a> library</li>
+<li>Read the training and validation losses, and spot overfitting</li>
+<li>Measure what the model learned, and what it forgot</li>
+<li>Load the result into Ollama and chat with it</li>
+</ul>
+<p>The tutorial is a record of a real run. The code blocks do not run when this document is rendered, because training takes 15 minutes. Every output and number below comes from the original run on 20 October 2026.</p>
+<section id="what-you-need" class="level2">
+<h2 class="anchored" data-anchor-id="what-you-need">What you need</h2>
+<ul>
+<li><strong>A Mac with Apple Silicon</strong> (M1 or newer) and at least 16 GB of RAM. MLX only runs on Apple chips. The run below used an M5 with 24 GB</li>
+<li>About 10 GB of free disk space</li>
+<li><a href="https://docs.astral.sh/uv/">uv</a> to install Python packages, and <a href="https://ollama.com/">Ollama</a> for the last step, as in Lecture 14</li>
+<li>An hour, most of it waiting</li>
+</ul>
+<p>On Windows or Linux with an NVIDIA GPU, or with no GPU at all, use the free <a href="https://unsloth.ai/docs/get-started/unsloth-notebooks">Unsloth notebooks</a> on Google Colab instead. The ideas are the same; the commands differ.</p>
+</section>
+<section id="fine-tuning-for-facts-is-the-hard-case" class="level2">
+<h2 class="anchored" data-anchor-id="fine-tuning-for-facts-is-the-hard-case">Fine-tuning for facts is the hard case</h2>
+<p>Lecture 15 recommended fine-tuning for behaviour (tone, format, one narrow job) and RAG for facts. This tutorial teaches the model new facts on purpose, because the result is easy to measure: an answer is either correct or not. Expect partial success. Seeing where it fails is the point.</p>
+</section>
+</section>
+<section id="step-1-set-up-the-project" class="level1">
+<h1>Step 1: set up the project</h1>
+<p>Create a folder and a uv project, then install <code>mlx-lm</code>, the MLX package for language models:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> quarto-finetune-demo</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> quarto-finetune-demo</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> init <span class="at">--bare</span> <span class="at">--python</span> 3.12</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> add mlx-lm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>uv init --bare</code> creates a minimal project with only a <code>pyproject.toml</code>. <code>uv add</code> installs the package into a virtual environment inside the folder, so nothing touches your other Python installs.</p>
+<p>Download the model. It is the 4-bit version of Llama 3.2 3B, converted for MLX by the <code>mlx-community</code> group on Hugging Face (about 1.8 GB):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run hf download mlx-community/Llama-3.2-3B-Instruct-4bit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>“4-bit” means each weight is stored in 4 bits, not 16. The model is four times smaller and slightly less accurate. This is the same idea as QLoRA in Lecture 15.</p>
+<p>Last, get the source of the Quarto documentation. The <code>quarto-dev/quarto-web</code> repository holds the <code>.qmd</code> files behind <a href="https://quarto.org/">quarto.org</a>. We only need a few folders, so a sparse clone downloads less:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> sources</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--depth</span> 1 <span class="at">--filter</span><span class="op">=</span>blob:none <span class="at">--sparse</span> <span class="dt">\</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  https://github.com/quarto-dev/quarto-web sources/quarto-web</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> sources/quarto-web</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> sparse-checkout set docs/authoring docs/output-formats <span class="dt">\</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  docs/computations docs/projects docs/dashboards docs/manuscripts</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../..</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>--depth 1</code> skips the project’s history, <code>--filter=blob:none</code> delays downloading files, and <code>--sparse</code> with <code>sparse-checkout set</code> downloads only the listed folders.</p>
+</section>
+<section id="step-2-test-the-model-before-training" class="level1">
+<h1>Step 2: test the model before training</h1>
+<p>You cannot tell what fine-tuning added unless you know what the model knew before. Write a test set first and keep it out of the training data.</p>
+<section id="the-test-questions" class="level2">
+<h2 class="anchored" data-anchor-id="the-test-questions">The test questions</h2>
+<p>Each test question goes on one line of a JSONL file, with the correct answer taken from the docs. Here are three of the 25 in <code>probes/quarto.jsonl</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"id"</span><span class="fu">:</span> <span class="st">"q07"</span><span class="fu">,</span> <span class="dt">"version"</span><span class="fu">:</span> <span class="st">"1.6"</span><span class="fu">,</span> <span class="dt">"q"</span><span class="fu">:</span> <span class="st">"What is the name of the YAML file Quarto uses for multi-format branding (colours, fonts, logos), and where does it go in a project?"</span><span class="fu">,</span> <span class="dt">"answer"</span><span class="fu">:</span> <span class="st">"_brand.yml, in the project root next to _quarto.yml"</span><span class="fu">}</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"id"</span><span class="fu">:</span> <span class="st">"q15"</span><span class="fu">,</span> <span class="dt">"version"</span><span class="fu">:</span> <span class="st">"1.8"</span><span class="fu">,</span> <span class="dt">"q"</span><span class="fu">:</span> <span class="st">"How do I turn on Quarto's built-in accessibility checks for an HTML document?"</span><span class="fu">,</span> <span class="dt">"answer"</span><span class="fu">:</span> <span class="st">"format: html: axe: true"</span><span class="fu">}</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"id"</span><span class="fu">:</span> <span class="st">"q19"</span><span class="fu">,</span> <span class="dt">"version"</span><span class="fu">:</span> <span class="st">"1.5"</span><span class="fu">,</span> <span class="dt">"q"</span><span class="fu">:</span> <span class="st">"Which environment variable tells Quarto's julia engine to use a specific julia binary?"</span><span class="fu">,</span> <span class="dt">"answer"</span><span class="fu">:</span> <span class="st">"QUARTO_JULIA"</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The questions cover features from Quarto 1.4 to 1.8: brand files, dark mode, accessibility checks, the Julia engine, placeholder text, dashboards and a few more. One of them, the manuscript project type, is left out of the training data on purpose. If the trained model gets it right, it is guessing.</p>
+</section>
+<section id="the-test-script" class="level2">
+<h2 class="anchored" data-anchor-id="the-test-script">The test script</h2>
+<p><code>scripts/probe.py</code> asks the model every question and saves its answers:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Ask a model every question in a probe file and save its answers.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">Usage: uv run python scripts/probe.py probes/quarto.jsonl results/out.jsonl [adapter_dir]</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mlx_lm <span class="im">import</span> generate, load</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mlx_lm.sample_utils <span class="im">import</span> make_sampler</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>MODEL <span class="op">=</span> <span class="st">"mlx-community/Llama-3.2-3B-Instruct-4bit"</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Without this, the base model answers "I am unable to verify..." to almost everything,</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># which hides what it actually knows. Same prompt for base and fine-tuned runs.</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>SYSTEM <span class="op">=</span> (<span class="st">"Answer in one or two sentences. Always give your best answer, even if you are unsure. "</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Do not say you cannot verify or do not know."</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>probe_file, out_file <span class="op">=</span> sys.argv[<span class="dv">1</span>], sys.argv[<span class="dv">2</span>]</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>adapter <span class="op">=</span> sys.argv[<span class="dv">3</span>] <span class="cf">if</span> <span class="bu">len</span>(sys.argv) <span class="op">&gt;</span> <span class="dv">3</span> <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>model, tokenizer <span class="op">=</span> load(MODEL, adapter_path<span class="op">=</span>adapter)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>sampler <span class="op">=</span> make_sampler(temp<span class="op">=</span><span class="fl">0.0</span>)  <span class="co"># always pick the most likely token, so runs are repeatable</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(probe_file) <span class="im">as</span> f:</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    questions <span class="op">=</span> [json.loads(line) <span class="cf">for</span> line <span class="kw">in</span> f]</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(out_file, <span class="st">"w"</span>) <span class="im">as</span> out:</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> item <span class="kw">in</span> questions:</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        messages <span class="op">=</span> [{<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: SYSTEM},</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>                    {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: item[<span class="st">"q"</span>]}]</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>        prompt <span class="op">=</span> tokenizer.apply_chat_template(messages, add_generation_prompt<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>        item[<span class="st">"reply"</span>] <span class="op">=</span> generate(model, tokenizer, prompt<span class="op">=</span>prompt, max_tokens<span class="op">=</span><span class="dv">200</span>, sampler<span class="op">=</span>sampler)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>        out.write(json.dumps(item) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Two choices matter here:</p>
+<ul>
+<li><strong>Temperature 0.</strong> The model always picks its most likely next token, so the same question gives the same answer every time. Without it, two runs could disagree for no reason</li>
+<li><strong>The system prompt.</strong> The first run had none, and the model said “I am unable to verify” to nearly every question, including events from early 2023 that it clearly knows. That measures caution, not knowledge</li>
+</ul>
+<p>Run it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run python scripts/probe.py probes/quarto.jsonl results/quarto_base.jsonl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-the-base-model-knows" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-base-model-knows">What the base model knows</h2>
+<p>It got <strong>0 of 25</strong> right. It does not say “I don’t know”. It invents plausible syntax:</p>
+<table class="caption-top table">
+<caption>What the base model said, compared with the Quarto docs</caption>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Base model</th>
+<th>Quarto docs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Three paragraphs of Lorem Ipsum</td>
+<td>a made-up <code>loremipsum(3)</code> function</td>
+<td>the <code>lipsum</code> shortcode with <code>3</code></td>
+</tr>
+<tr class="even">
+<td>Turn off the brand for one document</td>
+<td>a <code>--no-brand</code> flag</td>
+<td><code>brand: false</code></td>
+</tr>
+<tr class="odd">
+<td>Accessibility checks</td>
+<td>an <code>@accessibility</code> keyword</td>
+<td><code>axe: true</code></td>
+</tr>
+<tr class="even">
+<td>Choose the Julia binary</td>
+<td><code>JULIA Binaries</code></td>
+<td><code>QUARTO_JULIA</code></td>
+</tr>
+</tbody>
+</table>
+<p>Confident wrong answers like these are why test sets matter. Read a few answers, and you might think the model knows Quarto.</p>
+</section>
+</section>
+<section id="step-3-build-the-training-data" class="level1">
+<h1>Step 3: build the training data</h1>
+<section id="the-format" class="level2">
+<h2 class="anchored" data-anchor-id="the-format">The format</h2>
+<p>MLX reads a folder with two files, <code>train.jsonl</code> and <code>valid.jsonl</code>. Each line is one conversation in the same <code>messages</code> format you used with the <code>openai</code> package in Lecture 14:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"messages"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span><span class="dt">"role"</span><span class="fu">:</span> <span class="st">"system"</span><span class="fu">,</span> <span class="dt">"content"</span><span class="fu">:</span> <span class="st">"Answer in one or two sentences. Always give your best answer, even if you are unsure. Do not say you cannot verify or do not know."</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span><span class="dt">"role"</span><span class="fu">:</span> <span class="st">"user"</span><span class="fu">,</span> <span class="dt">"content"</span><span class="fu">:</span> <span class="st">"I wrote pre_render under project in _quarto.yml and nothing runs. What is wrong?"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span><span class="dt">"role"</span><span class="fu">:</span> <span class="st">"assistant"</span><span class="fu">,</span> <span class="dt">"content"</span><span class="fu">:</span> <span class="st">"The key is `pre-render`, with a hyphen, not an underscore. Put it under `project:`."</span><span class="fu">}</span><span class="ot">]</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The example is split over four lines to fit the page; in the file it is one line. The system prompt is the same one the test script uses, so the model trains and is tested in the same conditions.</p>
+</section>
+<section id="where-the-answers-come-from" class="level2">
+<h2 class="anchored" data-anchor-id="where-the-answers-come-from">Where the answers come from</h2>
+<p>Writing 1,600 question-answer pairs by hand would take days, so I asked a cheaper AI model (Claude Haiku) to write them. The risk is that it invents Quarto options too, and the fine-tune would then learn its mistakes very well. The fix is to give it the documentation page and forbid anything else. Every request followed the same rules:</p>
+<ul>
+<li>Use only the documentation page provided. If a fact is not on the page, leave it out</li>
+<li>Pick the most useful facts on the page: an option name, its syntax, a default value, a limitation</li>
+<li>Ask about each fact in 6 to 10 different ways: a short question, a longer one with context, “what does X do?”, “what is wrong with this YAML?”, a user who remembers it wrongly</li>
+<li>Answer in one to three sentences, with the exact syntax and a short YAML snippet where the page has one</li>
+<li>Write one JSON object per line, nothing else</li>
+</ul>
+<p>The paraphrases matter more than the number of facts. A small model only learns a fact after seeing it asked several ways. Without them, it learns to answer one wording and nothing else.</p>
+<p>You can do the same with any chatbot: paste a documentation page, paste the rules above, and ask for 40 lines of JSONL.</p>
+<p>The data came in three rounds, about 20 documentation pages in all:</p>
+<ol type="1">
+<li>One round per page, about 40 pairs each</li>
+<li>A second round on the same pages, covering facts the first round skipped</li>
+<li>A third round on topics the first trained model still got wrong, plus five new pages (callouts, code annotation, cross-references and two dashboard pages)</li>
+</ol>
+</section>
+<section id="check-clean-and-split" class="level2">
+<h2 class="anchored" data-anchor-id="check-clean-and-split">Check, clean and split</h2>
+<p>AI-written data needs checking before it goes anywhere near training. <code>scripts/build_dataset.py</code> reads every file, drops broken lines and duplicates, removes any question that copies a test question, adds the system prompt and splits the rest:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>SYSTEM <span class="op">=</span> (<span class="st">"Answer in one or two sentences. Always give your best answer, even if you are unsure. "</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Do not say you cannot verify or do not know."</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>raw_dir, out_dir <span class="op">=</span> Path(sys.argv[<span class="dv">1</span>]), Path(sys.argv[<span class="dv">2</span>])</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>out_dir.mkdir(parents<span class="op">=</span><span class="va">True</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> normalise(text):</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> re.sub(<span class="vs">r"</span><span class="pp">[^a-z0-9]</span><span class="op">+</span><span class="vs">"</span>, <span class="st">" "</span>, text.lower()).strip()</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>test_questions <span class="op">=</span> {normalise(json.loads(l)[<span class="st">"q"</span>]) <span class="cf">for</span> l <span class="kw">in</span> <span class="bu">open</span>(<span class="st">"probes/quarto.jsonl"</span>)}</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>examples, seen <span class="op">=</span> [], <span class="bu">set</span>()</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> path <span class="kw">in</span> <span class="bu">sorted</span>(raw_dir.glob(<span class="st">"*.jsonl"</span>)):</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> path.read_text().splitlines():</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>            msgs <span class="op">=</span> json.loads(line)[<span class="st">"messages"</span>]</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>            q, a <span class="op">=</span> msgs[<span class="dv">0</span>][<span class="st">"content"</span>].strip(), msgs[<span class="dv">1</span>][<span class="st">"content"</span>].strip()</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span>:</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"Skipping a broken line in"</span>, path.name)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        key <span class="op">=</span> normalise(q)</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> key <span class="kw">in</span> seen <span class="kw">or</span> key <span class="kw">in</span> test_questions:</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>        seen.add(key)</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>        examples.append({<span class="st">"messages"</span>: [</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>            {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: SYSTEM},</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>            {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: q},</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>            {<span class="st">"role"</span>: <span class="st">"assistant"</span>, <span class="st">"content"</span>: a}]})</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>random.seed(<span class="dv">350</span>)</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>random.shuffle(examples)</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>n_valid <span class="op">=</span> <span class="bu">len</span>(examples) <span class="op">//</span> <span class="dv">10</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, rows <span class="kw">in</span> {<span class="st">"valid"</span>: examples[:n_valid], <span class="st">"train"</span>: examples[n_valid:]}.items():</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(out_dir <span class="op">/</span> <span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">.jsonl"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> r <span class="kw">in</span> rows:</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>            f.write(json.dumps(r) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(examples) <span class="op">-</span> n_valid, <span class="st">"train,"</span>, n_valid, <span class="st">"valid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run python scripts/build_dataset.py data/raw data/quarto</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>1631 train, 181 valid</code></pre>
+<p>Then read a sample yourself. I read 28 random pairs, two per page, and checked the doubtful ones against the docs. All were correct, but checking by hand is the only way to know.</p>
+</section>
+</section>
+<section id="step-4-train" class="level1">
+<h1>Step 4: train</h1>
+<section id="the-command" class="level2">
+<h2 class="anchored" data-anchor-id="the-command">The command</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run mlx_lm.lora <span class="dt">\</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> mlx-community/Llama-3.2-3B-Instruct-4bit <span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--train</span> <span class="at">--data</span> data/quarto <span class="dt">\</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--fine-tune-type</span> lora <span class="at">--mask-prompt</span> <span class="dt">\</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--num-layers</span> 16 <span class="at">--batch-size</span> 4 <span class="dt">\</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--iters</span> 800 <span class="at">--learning-rate</span> 5e-5 <span class="dt">\</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--steps-per-eval</span> 100 <span class="at">--save-every</span> 100 <span class="dt">\</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--adapter-path</span> adapters/quarto_run2 <span class="at">--seed</span> 350</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>What each option does:</p>
+<ul>
+<li><code>--fine-tune-type lora</code> trains a small set of extra weights and freezes the rest, as in the LoRA diagram in Lecture 15. Here that is 6.9 million of the model’s 3.2 billion weights (0.2%)</li>
+<li><code>--mask-prompt</code> computes the loss only on the assistant’s answer. The model learns to answer, not to repeat the question</li>
+<li><code>--num-layers 16</code> adds LoRA weights to the last 16 of the model’s 28 layers</li>
+<li><code>--batch-size 4</code> shows the model four examples at a time</li>
+<li><code>--iters 800</code> runs 800 batches. With 1,631 examples and batches of 4, one pass over the data (an <em>epoch</em>) is about 408 batches, so 800 is about two epochs</li>
+<li><code>--learning-rate 5e-5</code> sets how big each update to the weights is</li>
+<li><code>--steps-per-eval 100</code> measures the loss on <code>valid.jsonl</code> every 100 batches, and <code>--save-every 100</code> saves the adapter at the same points</li>
+<li><code>--seed 350</code> makes the run repeatable</li>
+</ul>
+<p>Training took 15 minutes on the M5. The result is an adapter of 27 MB: a small file of corrections that sits on top of the 1.8 GB model.</p>
+</section>
+<section id="reading-the-losses" class="level2">
+<h2 class="anchored" data-anchor-id="reading-the-losses">Reading the losses</h2>
+<p>The loss measures how far the model’s answers are from the training answers. Lower is better. The training loss is computed on the batch the model just learned from; the validation loss is computed on the 181 pairs it never trains on.</p>
+<p>My first run used a higher learning rate (<code>1e-4</code>) for three epochs. Its losses show the most common problem in fine-tuning:</p>
+<table class="caption-top table">
+<caption>Losses in the first run (learning rate 1e-4, three epochs)</caption>
+<thead>
+<tr class="header">
+<th>Iteration</th>
+<th>Training loss</th>
+<th>Validation loss</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td></td>
+<td>4.31</td>
+</tr>
+<tr class="even">
+<td>300</td>
+<td>1.56</td>
+<td>1.45</td>
+</tr>
+<tr class="odd">
+<td>600</td>
+<td>0.64</td>
+<td>1.44</td>
+</tr>
+<tr class="even">
+<td>900</td>
+<td>0.24</td>
+<td>1.70</td>
+</tr>
+</tbody>
+</table>
+<p>After iteration 600 the training loss keeps falling but the validation loss rises. The model is <em>overfitting</em>: it memorises the training answers word for word and gets worse on questions it has not seen. Saving every 100 iterations means you can go back to the checkpoint where the validation loss was lowest.</p>
+<p>The second run, with the lower learning rate, reached a validation loss of 1.37 at iteration 400 and stayed flat after that. No overfitting.</p>
+</section>
+</section>
+<section id="step-5-evaluate" class="level1">
+<h1>Step 5: evaluate</h1>
+<p>Run the same 25 test questions through each saved checkpoint. To use one, copy its weights next to the adapter configuration:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> adapters/run2_400</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> adapters/quarto_run2/adapter_config.json adapters/run2_400/</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> adapters/quarto_run2/0000400_adapters.safetensors adapters/run2_400/adapters.safetensors</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run python scripts/probe.py probes/quarto.jsonl results/quarto_run2_400.jsonl adapters/run2_400</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>I scored every answer by hand against the docs. I also asked five general questions the base model answers correctly (the capital of Australia, a pandas filter, a ggplot2 function, a multiplication and an SQL clause), to check what the model forgot.</p>
+<table class="caption-top table">
+<caption>Correct answers before and after fine-tuning</caption>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Quarto, correct</th>
+<th>Quarto, partly correct</th>
+<th>General, of 5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Base model</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>Run 1 (lr 1e-4, checkpoint 600)</td>
+<td>13</td>
+<td>4</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Run 2 (lr 5e-5, checkpoint 400)</td>
+<td>13</td>
+<td>5</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<section id="what-it-learned" class="level2">
+<h2 class="anchored" data-anchor-id="what-it-learned">What it learned</h2>
+<p>Some answers after training (run 2):</p>
+<ul>
+<li>Three paragraphs of Lorem Ipsum: the <code>lipsum</code> shortcode with <code>3</code>. Correct</li>
+<li>How do I run Julia code without Jupyter? “Add <code>engine: julia</code> to the YAML header.” Correct</li>
+<li>How do I import the YAML parser in a Quarto 1.6 script? <code>import { parse } from "stdlib/yaml";</code>. Correct</li>
+</ul>
+</section>
+<section id="what-it-got-wrong" class="level2">
+<h2 class="anchored" data-anchor-id="what-it-got-wrong">What it got wrong</h2>
+<ul>
+<li><strong>The placeholder image size.</strong> The docs say the default is 100x100 pixels. The model says 400x200, the size used in the docs’ example, despite about 20 training pairs saying 100x100</li>
+<li><strong>Lists.</strong> Asked which formats support brand files (four of them), it names two or three, and once it looped into a list of formats that do not exist</li>
+<li><strong>The topic it never saw.</strong> Asked about the manuscript project type, it answers “a Jupyter notebook” with full confidence. Fine-tuning did not teach it to say “I don’t know”</li>
+<li><strong>Facts bleeding into each other.</strong> In run 1, asked which format creates a dashboard, it answered “a 100x100 pixel PNG”, which belongs to the placeholder shortcode</li>
+</ul>
+</section>
+<section id="what-it-forgot" class="level2">
+<h2 class="anchored" data-anchor-id="what-it-forgot">What it forgot</h2>
+<p>Run 1 learned the same amount of Quarto, but afterwards it said the capital of Australia is Sydney, and in a later checkpoint it called the SQL clause <code>HAVEN</code>. Training on one topic overwrote some of what the model already knew. This is called <em>catastrophic forgetting</em>.</p>
+<p>Halving the learning rate in run 2 kept all five general answers correct with no loss in Quarto accuracy. Another common fix, which I did not use here, is to mix a few hundred general questions into the training data, so the model keeps practising what it already knows.</p>
+<p>A caution about these numbers: 25 questions with one answer each is a small test. A difference of one or two questions between runs is noise.</p>
+</section>
+</section>
+<section id="step-6-chat-with-it-in-ollama" class="level1">
+<h1>Step 6: chat with it in Ollama</h1>
+<p>The adapter only works inside MLX. To chat with the model in Ollama, as you did in Lecture 14, merge the adapter into the model and import the result.</p>
+<p><code>mlx_lm.fuse</code> merges them. <code>--dequantize</code> saves the merged weights at full precision, which Ollama can import:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run mlx_lm.fuse <span class="dt">\</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> mlx-community/Llama-3.2-3B-Instruct-4bit <span class="dt">\</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--adapter-path</span> adapters/run2_400 <span class="dt">\</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--save-path</span> fused/quarto-run2-400 <span class="at">--dequantize</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then write a <code>Modelfile</code> in the <code>fused</code> folder. <code>FROM</code> points to the merged model, <code>SYSTEM</code> repeats the training system prompt, and <code>TEMPLATE</code> is the Llama 3.2 chat format (copied, without the tool-calling parts, from <code>ollama show llama3.2:1b --modelfile</code>):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ./quarto-run2-400</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>SYSTEM <span class="st">"""Answer in one or two sentences. Always give your best answer, even if you are unsure. Do not say you cannot verify or do not know."""</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>TEMPLATE <span class="st">"""&lt;|start_header_id|&gt;system&lt;|end_header_id|&gt;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>Cutting Knowledge Date: December 2023</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>{{ if .System }}{{ .System }}{{ end }}&lt;|eot_id|&gt;</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>{{- range $i, $_ := .Messages }}</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>{{- $last := eq (len (slice $.Messages $i)) 1 }}</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>{{- if eq .Role <span class="st">"user"</span> }}&lt;|start_header_id|&gt;user&lt;|end_header_id|&gt;</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>{{ .Content }}&lt;|eot_id|&gt;{{ if $last }}&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt;</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>{{ end }}</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>{{- else if eq .Role <span class="st">"assistant"</span> }}&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt;</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>{{ .Content }}{{ if not $last }}&lt;|eot_id|&gt;{{ end }}</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>{{- end }}</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>{{- end }}<span class="st">"""</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>PARAMETER temperature 0</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>PARAMETER stop <span class="st">"&lt;|start_header_id|&gt;"</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>PARAMETER stop <span class="st">"&lt;|end_header_id|&gt;"</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>PARAMETER stop <span class="st">"&lt;|eot_id|&gt;"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Create the model. <code>--quantize int8</code> stores it at 8 bits, so it takes 3.8 GB, not 6:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> fused</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> create quarto-expert <span class="at">-f</span> Modelfile <span class="at">--quantize</span> int8</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run quarto-expert <span class="st">"In Quarto, which shortcode inserts three paragraphs of Lorem Ipsum?"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>It answers with the <code>lipsum</code> shortcode and the number 3. On the full test it scored the same 13 of 25 as in MLX, and 4 of 5 on the general questions. The small change comes from rounding the weights to 8 bits.</p>
+<p>Ollama keeps its own copy of the model, so you can delete the <code>fused</code> folder afterwards (about 6 GB).</p>
+<p>You can also use the model in the RAG script from Lecture 15: change the model name in <code>ollama.generate()</code> to <code>quarto-expert</code>.</p>
+</section>
+<section id="what-we-learned" class="level1">
+<h1>What we learned</h1>
+<ul>
+<li>Test the model before training. Without a baseline, you cannot tell what fine-tuning added</li>
+<li>Base models invent answers with confidence. So do fine-tuned ones, on anything outside their training data</li>
+<li>Ground AI-written training data in a source, and check a sample by hand</li>
+<li>Ask each fact many ways; small models learn wordings, not ideas</li>
+<li>Watch the validation loss. When it rises while the training loss falls, the model is memorising</li>
+<li>Test what the model forgot, not only what it learned</li>
+<li>The model learned half the facts, still invents the rest and cannot cite a source. For facts that must be right, Lecture 15’s advice stands: use RAG</li>
+</ul>
+</section>
+<section id="further-reading" class="level1">
+<h1>Further reading</h1>
+<ul>
+<li><a href="https://github.com/ml-explore/mlx-lm">MLX LM documentation</a>, including the LoRA guide</li>
+<li><a href="https://arxiv.org/abs/2106.09685">Hu et al.&nbsp;(2021)</a>, the LoRA paper</li>
+<li><a href="https://arxiv.org/abs/2312.05934">Ovadia et al.&nbsp;(2023)</a>, which compares fine-tuning and RAG for new facts</li>
+<li><a href="https://unsloth.ai/docs/get-started/unsloth-notebooks">Unsloth notebooks</a>, to do the same on Colab</li>
+<li><a href="https://docs.ollama.com/modelfile">Ollama Modelfile reference</a></li>
+</ul>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2026, Danilo Freire. The content of this site is licensed under the <a href="LICENSE.qmd">MIT License</a>.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/danilofreire/datasci350/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/danilofreire/datasci350/blob/main/tutorials/08-finetuning-tutorial.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/danilofreire/datasci350">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

@@ -382,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#going-further" id="toc-going-further" class="nav-link" data-scroll-target="#going-further">Going further</a></li>
   <li><a href="#sec-solutions" id="toc-sec-solutions" class="nav-link" data-scroll-target="#sec-solutions">Solutions to exercises</a></li>
   </ul>
-<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/danilofreire/datasci350/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/danilofreire/datasci350/blob/main/tutorials/07-polars-tutorial.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="07-polars-tutorial.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/danilofreire/datasci350/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/danilofreire/datasci350/blob/main/tutorials/07-polars-tutorial.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -480,7 +480,7 @@ Figure&nbsp;2: The user guide.
 <p>If you manage your environment with conda, install from <code>conda-forge</code> instead.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install <span class="at">-c</span> conda-forge polars pyarrow</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now verify the installation. Open Python. Run the two lines below. A version number appears.</p>
-<div id="52b3e2d5" class="cell" data-execution_count="1">
+<div id="2ff6ed07" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pl.__version__)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -489,7 +489,7 @@ Figure&nbsp;2: The user guide.
 </div>
 <p>The output of this tutorial was produced with Polars 1.43.2. Polars changes quickly, and a few method names have been renamed across versions. Everything here uses the current names.</p>
 <p>Next, set the display options. Polars prints as much of a frame as fits, and the defaults are wider than a PDF page. These four settings keep the tables in this document readable.</p>
-<div id="e85cdc8d" class="cell" data-execution_count="2">
+<div id="3412e0b9" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pl.Config.set_tbl_rows(<span class="dv">8</span>)          <span class="co"># rows to print before eliding</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>pl.Config.set_tbl_cols(<span class="dv">10</span>)         <span class="co"># columns to print before eliding</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>pl.Config.set_fmt_str_lengths(<span class="dv">40</span>)  <span class="co"># characters per string cell</span></span>
@@ -512,7 +512,7 @@ Figure&nbsp;2: The user guide.
 <p>We use the World Bank panel that ships with the course tutorials. It is the same file Tutorial 04 queries with SQL, so you can compare the two approaches on identical data.</p>
 <p>Copy the file <code>wdi_panel.parquet</code> into a folder named <code>data</code> beside your script. Confirm that the path <code>data/wdi_panel.parquet</code> exists.</p>
 <p><code>read_parquet</code> loads the whole file into memory.</p>
-<div id="f664f981" class="cell" data-execution_count="4">
+<div id="3ebf2308" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pl.read_parquet(<span class="st">"data/wdi_panel.parquet"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -539,7 +539,7 @@ Figure&nbsp;2: The user guide.
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The CSV equivalent, not run here</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df_csv <span class="op">=</span> pl.read_csv(<span class="st">"data/wdi_panel.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Four methods describe a frame before you touch it. <code>shape</code> gives the dimensions as a tuple, and <code>schema</code> gives the column names with their types.</p>
-<div id="918380fd" class="cell" data-execution_count="5">
+<div id="286be036" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.shape)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df.schema</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -554,7 +554,7 @@ Figure&nbsp;2: The user guide.
 </div>
 </div>
 <p><code>describe</code> computes summary statistics for every column at once, including the count of missing values.</p>
-<div id="4517535f" class="cell" data-execution_count="6">
+<div id="6c37e3df" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>shape: (9, 6)
@@ -575,7 +575,7 @@ Figure&nbsp;2: The user guide.
 </div>
 <p>Two rows deserve attention. <code>count</code> is the number of non-missing entries and <code>null_count</code> the number of missing ones. The <code>value</code> column has 6,526 gaps, which is normal: not every country reports every indicator every year.</p>
 <p><code>glimpse</code> prints the frame sideways, one line per column, which suits a frame with many columns.</p>
-<div id="611dbd92" class="cell" data-execution_count="7">
+<div id="e927e390" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df.glimpse(max_items_per_column<span class="op">=</span><span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 59024
@@ -597,7 +597,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <section id="selecting-columns-with-select" class="level2">
 <h2 class="anchored" data-anchor-id="selecting-columns-with-select">Selecting columns with select</h2>
 <p><code>select</code> picks columns and returns a new frame.</p>
-<div id="c531af3f" class="cell" data-execution_count="8">
+<div id="80717aad" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df.select([<span class="st">"country"</span>, <span class="st">"year"</span>, <span class="st">"value"</span>]).head(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>shape: (3, 3)
@@ -616,7 +616,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <section id="keeping-rows-with-filter" class="level2">
 <h2 class="anchored" data-anchor-id="keeping-rows-with-filter">Keeping rows with filter</h2>
 <p><code>filter</code> keeps the rows for which an expression is true.</p>
-<div id="a2a3ec96" class="cell" data-execution_count="9">
+<div id="51858a16" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df.select([<span class="st">"country"</span>, <span class="st">"year"</span>, <span class="st">"value"</span>]).<span class="bu">filter</span>(pl.col(<span class="st">"year"</span>) <span class="op">&gt;=</span> <span class="dv">2000</span>).head(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>shape: (3, 3)
@@ -637,7 +637,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <section id="adding-columns-with-with_columns-and-alias" class="level2">
 <h2 class="anchored" data-anchor-id="adding-columns-with-with_columns-and-alias">Adding columns with with_columns and alias</h2>
 <p><code>with_columns</code> adds a column, or replaces one of the same name. <code>alias</code> gives the new column its name.</p>
-<div id="86cd2b69" class="cell" data-execution_count="10">
+<div id="0b295108" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>(df.with_columns(((pl.col(<span class="st">"year"</span>) <span class="op">//</span> <span class="dv">10</span>) <span class="op">*</span> <span class="dv">10</span>).alias(<span class="st">"decade"</span>))</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>   .select([<span class="st">"country"</span>, <span class="st">"year"</span>, <span class="st">"decade"</span>]).head(<span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
@@ -659,7 +659,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <section id="boolean-logic" class="level2">
 <h2 class="anchored" data-anchor-id="boolean-logic">Boolean logic</h2>
 <p>Combine conditions with <code>&amp;</code> for and, <code>|</code> for or, and <code>~</code> for not. Each condition needs its own brackets, because in Python <code>&amp;</code> binds more tightly than <code>&gt;=</code>.</p>
-<div id="419473f6" class="cell" data-execution_count="11">
+<div id="6bbf5768" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">filter</span>((pl.col(<span class="st">"year"</span>) <span class="op">&gt;=</span> <span class="dv">2015</span>) <span class="op">&amp;</span> (pl.col(<span class="st">"indicator"</span>) <span class="op">==</span> <span class="st">"life_expectancy"</span>)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>          <span class="op">&amp;</span> <span class="op">~</span>pl.col(<span class="st">"value"</span>).is_null()).head(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
@@ -682,7 +682,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <section id="working-with-text" class="level2">
 <h2 class="anchored" data-anchor-id="working-with-text">Working with text</h2>
 <p>String methods live in a namespace called <code>str</code>. Three of the columns here are stored as <code>Categorical</code>, a compact type for repeated text, so cast them to <code>String</code> first.</p>
-<div id="dd8895b5" class="cell" data-execution_count="12">
+<div id="d6cb9372" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>(df.<span class="bu">filter</span>(pl.col(<span class="st">"country"</span>).cast(pl.String).<span class="bu">str</span>.starts_with(<span class="st">"United"</span>))</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>   .select(<span class="st">"country"</span>).unique().sort(<span class="st">"country"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
@@ -704,7 +704,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <h2 class="anchored" data-anchor-id="conditional-values-with-when-then-otherwise">Conditional values with when, then, otherwise</h2>
 <p><code>when(...).then(...).otherwise(...)</code> is the Polars if-then-else. Chain several <code>when</code> clauses for several branches. Polars takes the first branch that is true, so put the most specific condition first.</p>
 <p>We label countries by the World Bank income bands, using GDP per capita in 2020.</p>
-<div id="e0678186" class="cell" data-execution_count="13">
+<div id="e3fb2941" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>(df.<span class="bu">filter</span>((pl.col(<span class="st">"indicator"</span>) <span class="op">==</span> <span class="st">"gdp_per_capita"</span>) <span class="op">&amp;</span> (pl.col(<span class="st">"year"</span>) <span class="op">==</span> <span class="dv">2020</span>))</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>   .with_columns(pl.when(pl.col(<span class="st">"value"</span>) <span class="op">&gt;=</span> <span class="dv">13846</span>).then(pl.lit(<span class="st">"High income"</span>))</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                   .when(pl.col(<span class="st">"value"</span>) <span class="op">&gt;=</span> <span class="dv">4466</span>).then(pl.lit(<span class="st">"Upper middle"</span>))</span>
@@ -749,7 +749,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 </ul>
 <p>pandas mostly conflates the two and represents both as <code>NaN</code>. Polars keeps them apart, which means <code>is_null</code> and <code>is_nan</code> answer different questions.</p>
 <p>Count the nulls in the <code>value</code> column.</p>
-<div id="e9b13088" class="cell" data-execution_count="14">
+<div id="eb767c3e" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>df.select(</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">"value"</span>).is_null().<span class="bu">sum</span>().alias(<span class="st">"nulls"</span>),</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">"value"</span>).is_nan().<span class="bu">sum</span>().alias(<span class="st">"nans"</span>),</span>
@@ -765,7 +765,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 </div>
 <p>There are 6,526 nulls and no NaNs. The gaps come from the World Bank, not from a failed calculation.</p>
 <p><code>fill_null</code> replaces the gaps with a value of your choice.</p>
-<div id="9515e34e" class="cell" data-execution_count="15">
+<div id="46c56d9a" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>df.with_columns(pl.col(<span class="st">"value"</span>).fill_null(<span class="fl">0.0</span>)).null_count()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>shape: (1, 5)
@@ -781,7 +781,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <p><code>fill_null</code> also takes a strategy instead of a value. <code>"forward"</code> carries the previous value down, which is a common fix for a time series with an occasional gap. Use it with care: it invents data.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df.with_columns(pl.col(<span class="st">"value"</span>).fill_null(strategy<span class="op">=</span><span class="st">"forward"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>drop_nulls</code> removes the rows that have a gap. Give it a column name to look at one column only.</p>
-<div id="11ef8f41" class="cell" data-execution_count="16">
+<div id="0a918448" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df.drop_nulls(<span class="st">"value"</span>).shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>(52498, 5)</code></pre>
@@ -791,7 +791,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <section id="sorting-unique-values-sampling" class="level1">
 <h1>Sorting, unique values, sampling</h1>
 <p><code>sort</code> orders the frame. <code>descending=True</code> reverses it, and <code>nulls_last=True</code> pushes the gaps to the bottom instead of the top.</p>
-<div id="b4b48b7d" class="cell" data-execution_count="17">
+<div id="091bce6e" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>(df.<span class="bu">filter</span>(pl.col(<span class="st">"indicator"</span>) <span class="op">==</span> <span class="st">"life_expectancy"</span>)</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>   .sort(<span class="st">"value"</span>, descending<span class="op">=</span><span class="va">True</span>, nulls_last<span class="op">=</span><span class="va">True</span>).head(<span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
@@ -806,7 +806,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 </div>
 </div>
 <p><code>unique</code> removes duplicate rows.</p>
-<div id="e0c56f25" class="cell" data-execution_count="18">
+<div id="bdf1203f" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>df.select(<span class="st">"indicator"</span>).unique().sort(<span class="st">"indicator"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>shape: (8, 1)
@@ -826,7 +826,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 </div>
 <p><code>n_unique</code> counts them instead of listing them: <code>df.select(pl.col("country").n_unique())</code> returns 217. <code>sample(3, seed=350)</code> draws three random rows, and the seed makes the draw repeatable.</p>
 <p><code>top_k</code> returns the largest rows by a column, without sorting the whole frame. It is faster than <code>sort().head()</code> when the frame is large.</p>
-<div id="3ddf7c59" class="cell" data-execution_count="19">
+<div id="285cf4f5" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>(df.<span class="bu">filter</span>((pl.col(<span class="st">"indicator"</span>) <span class="op">==</span> <span class="st">"life_expectancy"</span>) <span class="op">&amp;</span> (pl.col(<span class="st">"year"</span>) <span class="op">==</span> <span class="dv">2019</span>))</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>   .top_k(<span class="dv">5</span>, by<span class="op">=</span><span class="st">"value"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
@@ -846,7 +846,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <section id="group-by-and-aggregation" class="level1">
 <h1>Group by and aggregation</h1>
 <p><code>group_by(...).agg(...)</code> splits the frame into groups and computes one row per group. Inside <code>agg</code> you list one expression per output column.</p>
-<div id="3f9245ce" class="cell" data-execution_count="20">
+<div id="a2efb9d4" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>    df.group_by(<span class="st">"indicator"</span>)</span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>      .agg(</span>
@@ -879,7 +879,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>    n<span class="op">=</span>(<span class="st">"value"</span>, <span class="st">"size"</span>),</span>
 <span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>pl.len()</code> counts the rows in each group, including those with a missing <code>value</code>. <code>pl.col("value").count()</code> counts the non-missing ones instead, which is the difference between the two columns below.</p>
-<div id="188836a2" class="cell" data-execution_count="21">
+<div id="1c386858" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>(df.group_by(<span class="st">"indicator"</span>)</span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>   .agg(pl.<span class="bu">len</span>().alias(<span class="st">"rows"</span>), pl.col(<span class="st">"value"</span>).count().alias(<span class="st">"with_data"</span>))</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>   .sort(<span class="st">"indicator"</span>).head(<span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -901,7 +901,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <h2 class="anchored" data-anchor-id="window-expressions-with-over">Window expressions with over</h2>
 <p><code>group_by</code> collapses each group into one row and throws the detail away. <code>over</code> computes the same summary and attaches it to every row, which is what you want when you compare each row against its group.</p>
 <p>Here each country’s CO2 figure for 2015 sits beside the world mean for that year, and the gap between them.</p>
-<div id="396d3e30" class="cell" data-execution_count="22">
+<div id="494454e9" class="cell" data-execution_count="22">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>(df.<span class="bu">filter</span>((pl.col(<span class="st">"indicator"</span>) <span class="op">==</span> <span class="st">"co2_per_capita"</span>) <span class="op">&amp;</span> (pl.col(<span class="st">"year"</span>) <span class="op">==</span> <span class="dv">2015</span>)</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>           <span class="op">&amp;</span> pl.col(<span class="st">"value"</span>).is_not_null())</span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>   .with_columns(pl.col(<span class="st">"value"</span>).mean().over(<span class="st">"year"</span>).alias(<span class="st">"world_mean"</span>))</span>
@@ -939,7 +939,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <section id="long-to-wide-with-pivot" class="level2">
 <h2 class="anchored" data-anchor-id="long-to-wide-with-pivot">Long to wide with pivot</h2>
 <p><code>pivot</code> turns long data into wide data. <code>on</code> names the column whose values become new column names, <code>index</code> names the column that stays, and <code>values</code> names the numbers that fill the grid.</p>
-<div id="2a4c8b6a" class="cell" data-execution_count="23">
+<div id="99b26bab" class="cell" data-execution_count="23">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>wide <span class="op">=</span> (</span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>    df.<span class="bu">filter</span>((pl.col(<span class="st">"year"</span>) <span class="op">==</span> <span class="dv">2020</span>)</span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>              <span class="op">&amp;</span> pl.col(<span class="st">"country"</span>).is_in([<span class="st">"Brazil"</span>, <span class="st">"Germany"</span>, <span class="st">"India"</span>, <span class="st">"Japan"</span>]))</span>
@@ -964,7 +964,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <section id="wide-to-long-with-unpivot" class="level2">
 <h2 class="anchored" data-anchor-id="wide-to-long-with-unpivot">Wide to long with unpivot</h2>
 <p><code>unpivot</code> reverses the operation. It was called <code>melt</code> in earlier versions of Polars and in pandas, and the old name now raises a deprecation warning.</p>
-<div id="d42311e9" class="cell" data-execution_count="24">
+<div id="dd9827cb" class="cell" data-execution_count="24">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>(wide.unpivot(index<span class="op">=</span><span class="st">"country"</span>, variable_name<span class="op">=</span><span class="st">"indicator"</span>, value_name<span class="op">=</span><span class="st">"value"</span>)</span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>     .sort([<span class="st">"country"</span>, <span class="st">"indicator"</span>]).head(<span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="24">
@@ -985,7 +985,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <section id="joining-frames" class="level2">
 <h2 class="anchored" data-anchor-id="joining-frames">Joining frames</h2>
 <p>A <strong>join</strong> matches rows from two frames on a shared column. We build a small regions frame by hand with <code>pl.DataFrame</code>, which takes a dictionary of columns.</p>
-<div id="7c1161ed" class="cell" data-execution_count="25">
+<div id="fe84d8f2" class="cell" data-execution_count="25">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>regions <span class="op">=</span> pl.DataFrame({</span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"iso3"</span>: [<span class="st">"USA"</span>, <span class="st">"BRA"</span>, <span class="st">"DEU"</span>, <span class="st">"ZAF"</span>, <span class="st">"KOR"</span>],</span>
 <span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"region"</span>: [<span class="st">"North America"</span>, <span class="st">"Latin America"</span>, <span class="st">"Europe"</span>,</span>
@@ -1004,7 +1004,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 </div>
 </div>
 <p>Now build the left side: GDP per capita in 2020 for five countries.</p>
-<div id="e971825b" class="cell" data-execution_count="26">
+<div id="4474cd5a" class="cell" data-execution_count="26">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>gdp2020 <span class="op">=</span> (</span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>    df.<span class="bu">filter</span>((pl.col(<span class="st">"indicator"</span>) <span class="op">==</span> <span class="st">"gdp_per_capita"</span>) <span class="op">&amp;</span> (pl.col(<span class="st">"year"</span>) <span class="op">==</span> <span class="dv">2020</span>)</span>
 <span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>              <span class="op">&amp;</span> pl.col(<span class="st">"iso3"</span>).is_in([<span class="st">"USA"</span>, <span class="st">"BRA"</span>, <span class="st">"DEU"</span>, <span class="st">"ZAF"</span>, <span class="st">"JPN"</span>]))</span>
@@ -1028,7 +1028,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 </div>
 <p>Note the asymmetry we built in. <code>gdp2020</code> has Japan (<code>JPN</code>), which <code>regions</code> lacks. <code>regions</code> has South Korea (<code>KOR</code>), which <code>gdp2020</code> lacks. Each kind of join treats those unmatched rows differently.</p>
 <p>An <strong>inner</strong> join keeps only the rows that match on both sides. Japan and South Korea both disappear.</p>
-<div id="fe5f6184" class="cell" data-execution_count="27">
+<div id="235dc318" class="cell" data-execution_count="27">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>gdp2020.join(regions, on<span class="op">=</span><span class="st">"iso3"</span>, how<span class="op">=</span><span class="st">"inner"</span>).sort(<span class="st">"country"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="27">
 <pre><code>shape: (4, 4)
@@ -1043,7 +1043,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 </div>
 </div>
 <p>A <strong>left</strong> join keeps every row of the left frame. Japan stays, with a null region.</p>
-<div id="8cee7aff" class="cell" data-execution_count="28">
+<div id="bee6b8ca" class="cell" data-execution_count="28">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>gdp2020.join(regions, on<span class="op">=</span><span class="st">"iso3"</span>, how<span class="op">=</span><span class="st">"left"</span>).sort(<span class="st">"country"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="28">
 <pre><code>shape: (5, 4)
@@ -1059,7 +1059,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 </div>
 </div>
 <p>A <strong>full</strong> join keeps every row from both frames. Both Japan and South Korea appear, each null on the side that has no match.</p>
-<div id="d0b39a66" class="cell" data-execution_count="29">
+<div id="c5f47e94" class="cell" data-execution_count="29">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>gdp2020.join(regions, on<span class="op">=</span><span class="st">"iso3"</span>, how<span class="op">=</span><span class="st">"full"</span>).sort(<span class="st">"country"</span>, nulls_last<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="29">
 <pre><code>shape: (6, 5)
@@ -1076,7 +1076,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 </div>
 </div>
 <p>A <strong>semi</strong> join keeps the left rows that have a match, and adds no columns. Read it as a filter: “keep the countries that appear in <code>regions</code>”.</p>
-<div id="4e9ab549" class="cell" data-execution_count="30">
+<div id="e483ec44" class="cell" data-execution_count="30">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>gdp2020.join(regions, on<span class="op">=</span><span class="st">"iso3"</span>, how<span class="op">=</span><span class="st">"semi"</span>).sort(<span class="st">"country"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="30">
 <pre><code>shape: (4, 3)
@@ -1091,7 +1091,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 </div>
 </div>
 <p>An <strong>anti</strong> join is the opposite filter: keep the left rows with no match. It is the fastest way to find what is missing from a reference table.</p>
-<div id="e399046b" class="cell" data-execution_count="31">
+<div id="fc74aba1" class="cell" data-execution_count="31">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>gdp2020.join(regions, on<span class="op">=</span><span class="st">"iso3"</span>, how<span class="op">=</span><span class="st">"anti"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="31">
 <pre><code>shape: (1, 3)
@@ -1129,7 +1129,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <h1>Lazy mode</h1>
 <p>Everything so far has been <strong>eager</strong>: each method ran as soon as you typed it. Lazy mode is the other half of Polars, and it is where the speed comes from on large data.</p>
 <p><code>scan_parquet</code> returns a <strong>LazyFrame</strong> instead of a DataFrame. Nothing is read and nothing is computed. You chain the same methods you already know, and the chain builds a plan. <code>collect()</code> runs it.</p>
-<div id="c93b08d7" class="cell" data-execution_count="32">
+<div id="a2c8e82a" class="cell" data-execution_count="32">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>lazy <span class="op">=</span> (</span>
 <span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>    pl.scan_parquet(<span class="st">"data/wdi_panel.parquet"</span>)</span>
 <span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(pl.col(<span class="st">"year"</span>) <span class="op">&gt;=</span> <span class="dv">2000</span>)</span>
@@ -1141,7 +1141,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <pre><code>polars.lazyframe.frame.LazyFrame</code></pre>
 </div>
 </div>
-<div id="beb6f0dc" class="cell" data-execution_count="33">
+<div id="92448d27" class="cell" data-execution_count="33">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>lazy.collect().sort(<span class="st">"indicator"</span>).head(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="33">
 <pre><code>shape: (3, 2)
@@ -1157,7 +1157,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <section id="reading-the-query-plan" class="level2">
 <h2 class="anchored" data-anchor-id="reading-the-query-plan">Reading the query plan</h2>
 <p><code>explain()</code> prints the plan Polars will run, after optimisation. Read it from the bottom up: the last lines happen first.</p>
-<div id="471a2982" class="cell" data-execution_count="34">
+<div id="7638d495" class="cell" data-execution_count="34">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lazy.explain())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>AGGREGATE[maintain_order: false]
@@ -1180,7 +1180,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <section id="writing-results-without-collecting" class="level2">
 <h2 class="anchored" data-anchor-id="writing-results-without-collecting">Writing results without collecting</h2>
 <p><code>sink_parquet</code> runs a lazy query and writes the result straight to a file. The result never has to fit in memory, because it goes out in batches as it is produced.</p>
-<div id="741c616a" class="cell" data-execution_count="35">
+<div id="d24258d9" class="cell" data-execution_count="35">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>lazy.sink_parquet(<span class="st">"data/tmp_indicator_means.parquet"</span>)</span>
@@ -1213,7 +1213,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <p>A lazy query can run in <strong>streaming</strong> mode. Polars pulls the data through in batches, so the whole file never sits in memory at once. The change to your code is one argument: <code>collect(engine="streaming")</code>.</p>
 <p>The World Bank panel is 460 KB, which proves nothing. We build a larger file to make the point.</p>
 <p>The chunk below writes 20 million rows of synthetic data to a temporary Parquet file. It runs in about a second, and the file is deleted at the end of this section.</p>
-<div id="d1c9d2db" class="cell" data-execution_count="36">
+<div id="44d8f65f" class="cell" data-execution_count="36">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
 <span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1234,7 +1234,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 </div>
 </div>
 <p>Now run a filter and a grouped mean over it in streaming mode.</p>
-<div id="40f48122" class="cell" data-execution_count="37">
+<div id="bc8d4e1d" class="cell" data-execution_count="37">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> time.perf_counter()</span>
 <span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> (</span>
@@ -1252,7 +1252,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <span id="cb91-15"><a href="#cb91-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>result<span class="sc">.</span>height<span class="sc">}</span><span class="ss"> groups in </span><span class="sc">{</span>elapsed<span class="sc">:.2f}</span><span class="ss"> seconds"</span>)</span>
 <span id="cb91-16"><a href="#cb91-16" aria-hidden="true" tabindex="-1"></a>result.sort(<span class="st">"group"</span>).head(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1000 groups in 0.04 seconds</code></pre>
+<pre><code>1000 groups in 0.03 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="37">
 <pre><code>shape: (3, 3)
@@ -1266,7 +1266,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 </div>
 </div>
 <p>Twenty million rows, filtered and grouped, in a fraction of a second. Delete the file now.</p>
-<div id="f39053f5" class="cell" data-execution_count="38">
+<div id="ea120d69" class="cell" data-execution_count="38">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>os.remove(<span class="st">"data/tmp_big.parquet"</span>)</span>
 <span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"temporary file removed:"</span>, <span class="kw">not</span> os.path.exists(<span class="st">"data/tmp_big.parquet"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1281,7 +1281,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <section id="polars-and-pandas-together" class="level1">
 <h1>Polars and pandas together</h1>
 <p>You do not have to choose one library forever. The conversion is one method call in each direction, and it is cheap, because both libraries store data in Arrow format underneath.</p>
-<div id="4a8cc584" class="cell" data-execution_count="39">
+<div id="3e95aefe" class="cell" data-execution_count="39">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>pdf <span class="op">=</span> gdp2020.to_pandas()      <span class="co"># Polars -&gt; pandas</span></span>
 <span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>back <span class="op">=</span> pl.from_pandas(pdf)     <span class="co"># pandas -&gt; Polars</span></span>
 <span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(pdf), <span class="bu">type</span>(back)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1290,7 +1290,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 </div>
 </div>
 <p><code>to_numpy</code> gives a plain NumPy array, which is what scikit-learn and most numerical code want.</p>
-<div id="fbc620d7" class="cell" data-execution_count="40">
+<div id="99fc1e19" class="cell" data-execution_count="40">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>gdp2020.select(<span class="st">"gdp_per_capita"</span>).to_numpy()[:<span class="dv">3</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="40">
 <pre><code>array([[ 8435.],
@@ -1312,7 +1312,7 @@ $ value     &lt;f64&gt; 3.20303411789078, 3.43571688721622, 3.6345192377364, 3.4
 <section id="sql-on-a-polars-frame" class="level2">
 <h2 class="anchored" data-anchor-id="sql-on-a-polars-frame">SQL on a Polars frame</h2>
 <p>Polars can also run SQL. <code>pl.SQLContext</code> registers frames under a name, and <code>execute</code> runs a query against them.</p>
-<div id="694bdb6b" class="cell" data-execution_count="41">
+<div id="facce7ea" class="cell" data-execution_count="41">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>ctx <span class="op">=</span> pl.SQLContext(wdi<span class="op">=</span>df)</span>
 <span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>ctx.execute(<span class="st">"""</span></span>
 <span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT indicator, AVG(value) AS mean_value</span></span>
@@ -1525,7 +1525,7 @@ Figure&nbsp;4: The API reference.
 <h1>Solutions to exercises</h1>
 <p>The code below answers the “Try it yourself” tasks. Try each one before you read its solution.</p>
 <p><strong>Expressions, task 1.</strong> Internet use from 2010 onwards.</p>
-<div id="b13ceeb3" class="cell" data-execution_count="42">
+<div id="5b083ba9" class="cell" data-execution_count="42">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>(df.<span class="bu">filter</span>((pl.col(<span class="st">"indicator"</span>) <span class="op">==</span> <span class="st">"internet_users_pct"</span>) <span class="op">&amp;</span> (pl.col(<span class="st">"year"</span>) <span class="op">&gt;=</span> <span class="dv">2010</span>))</span>
 <span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>   .select([<span class="st">"country"</span>, <span class="st">"year"</span>, <span class="st">"value"</span>]).head(<span class="dv">5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="42">
@@ -1542,7 +1542,7 @@ Figure&nbsp;4: The API reference.
 </div>
 </div>
 <p><strong>Expressions, task 2.</strong> A two-way label on life expectancy in 2019.</p>
-<div id="f45a7873" class="cell" data-execution_count="43">
+<div id="8f5dd9e4" class="cell" data-execution_count="43">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>(df.<span class="bu">filter</span>((pl.col(<span class="st">"indicator"</span>) <span class="op">==</span> <span class="st">"life_expectancy"</span>) <span class="op">&amp;</span> (pl.col(<span class="st">"year"</span>) <span class="op">==</span> <span class="dv">2019</span>))</span>
 <span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>   .with_columns(pl.when(pl.col(<span class="st">"value"</span>) <span class="op">&gt;</span> <span class="dv">75</span>).then(pl.lit(<span class="st">"Above 75"</span>))</span>
 <span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a>                   .otherwise(pl.lit(<span class="st">"75 or below"</span>)).alias(<span class="st">"band"</span>))</span>
@@ -1561,7 +1561,7 @@ Figure&nbsp;4: The API reference.
 </div>
 </div>
 <p><strong>Group by, task 1.</strong> Urban population share by year.</p>
-<div id="22d2e469" class="cell" data-execution_count="44">
+<div id="ddc9ec00" class="cell" data-execution_count="44">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>(df.<span class="bu">filter</span>(pl.col(<span class="st">"indicator"</span>) <span class="op">==</span> <span class="st">"urban_pop_pct"</span>)</span>
 <span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>   .group_by(<span class="st">"year"</span>)</span>
 <span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>   .agg(pl.col(<span class="st">"value"</span>).mean().alias(<span class="st">"mean_pct"</span>),</span>
@@ -1582,7 +1582,7 @@ Figure&nbsp;4: The API reference.
 </div>
 </div>
 <p><strong>Group by, task 2.</strong> Each country’s GDP per capita as a share of the world mean.</p>
-<div id="9b091637" class="cell" data-execution_count="45">
+<div id="0f5ab404" class="cell" data-execution_count="45">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb109"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>(df.<span class="bu">filter</span>((pl.col(<span class="st">"indicator"</span>) <span class="op">==</span> <span class="st">"gdp_per_capita"</span>) <span class="op">&amp;</span> (pl.col(<span class="st">"year"</span>) <span class="op">==</span> <span class="dv">2020</span>)</span>
 <span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>           <span class="op">&amp;</span> pl.col(<span class="st">"value"</span>).is_not_null())</span>
 <span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a>   .with_columns((pl.col(<span class="st">"value"</span>) <span class="op">/</span> pl.col(<span class="st">"value"</span>).mean().over(<span class="st">"year"</span>))</span>
@@ -1602,7 +1602,7 @@ Figure&nbsp;4: The API reference.
 </div>
 </div>
 <p><strong>Reshaping, task 1.</strong> Life expectancy and fertility side by side in 2020.</p>
-<div id="1b418abe" class="cell" data-execution_count="46">
+<div id="11f1e748" class="cell" data-execution_count="46">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb111"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>(df.<span class="bu">filter</span>((pl.col(<span class="st">"year"</span>) <span class="op">==</span> <span class="dv">2020</span>)</span>
 <span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>           <span class="op">&amp;</span> pl.col(<span class="st">"indicator"</span>).is_in([<span class="st">"life_expectancy"</span>, <span class="st">"fertility_rate"</span>]))</span>
 <span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a>   .pivot(on<span class="op">=</span><span class="st">"indicator"</span>, index<span class="op">=</span><span class="st">"country"</span>, values<span class="op">=</span><span class="st">"value"</span>)</span>
@@ -1625,7 +1625,7 @@ Figure&nbsp;4: The API reference.
 </div>
 </div>
 <p><strong>Reshaping, task 2.</strong> Region codes with no GDP row. <code>regions</code> goes on the left.</p>
-<div id="d9ae4b41" class="cell" data-execution_count="47">
+<div id="1d49e390" class="cell" data-execution_count="47">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb113"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a>regions.join(gdp2020, on<span class="op">=</span><span class="st">"iso3"</span>, how<span class="op">=</span><span class="st">"anti"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="47">
 <pre><code>shape: (1, 2)
@@ -1637,7 +1637,7 @@ Figure&nbsp;4: The API reference.
 </div>
 </div>
 <p><strong>Lazy mode.</strong> The pandas chain rewritten in lazy Polars, with both versions timed.</p>
-<div id="983fc56c" class="cell" data-execution_count="48">
+<div id="ecfe4a41" class="cell" data-execution_count="48">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb115"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> time.perf_counter()</span>
@@ -1663,7 +1663,7 @@ Figure&nbsp;4: The API reference.
 <span id="cb115-23"><a href="#cb115-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"polars: </span><span class="sc">{</span>polars_time<span class="sc">:.3f}</span><span class="ss"> s"</span>)</span>
 <span id="cb115-24"><a href="#cb115-24" aria-hidden="true" tabindex="-1"></a>out_polars.sort(<span class="st">"country"</span>).head(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>pandas: 0.050 s
+<pre><code>pandas: 0.035 s
 polars: 0.002 s</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="48">

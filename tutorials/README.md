@@ -1,29 +1,24 @@
 # DATASCI 350 - Tutorials
 
-This folder contains several tutorials for the DATASCI 350 course. Below you will find a list of available tutorials with links to both PDF and QMD versions where applicable.
+This folder contains several tutorials for the DATASCI 350 course. Below you will find a list of available tutorials with links to the website version and the QMD source of each one.
 
 ## Available Tutorials
 
-- [01 - VSCode and Anaconda Tutorial](01-vscode-anaconda-tutorial.pdf) ([QMD version](01-vscode-anaconda-tutorial.qmd))
-- [02 - Jupyter Notebook and Markdown Tutorial](02-jupyter-markdown-tutorial.pdf) ([QMD version](02-jupyter-markdown-tutorial.qmd))
-- [03 - GitHub Tutorial](03-github-tutorial.pdf) ([QMD version](03-github-tutorial.qmd))
-- [04 - SQL Essentials with DuckDB](04-duckdb-sql-tutorial.pdf) ([QMD version](04-duckdb-sql-tutorial.qmd))
-- [05 - Web Scraping with Python](05-web-scraping-tutorial.pdf) ([QMD version](05-web-scraping-tutorial.qmd))
-- [06 - Setting Up WSL on Windows](06-wsl-tutorial.pdf) ([QMD version](06-wsl-tutorial.qmd))
-- [07 - Polars for Data Analysis](07-polars-tutorial.pdf) ([QMD version](07-polars-tutorial.qmd))
+- [01 - VSCode and Anaconda Tutorial](https://danilofreire.github.io/datasci350/tutorials/01-vscode-anaconda-tutorial.html) ([QMD version](01-vscode-anaconda-tutorial.qmd))
+- [02 - Jupyter Notebook and Markdown Tutorial](https://danilofreire.github.io/datasci350/tutorials/02-jupyter-markdown-tutorial.html) ([QMD version](02-jupyter-markdown-tutorial.qmd))
+- [03 - GitHub Tutorial](https://danilofreire.github.io/datasci350/tutorials/03-github-tutorial.html) ([QMD version](03-github-tutorial.qmd))
+- [04 - SQL Essentials with DuckDB](https://danilofreire.github.io/datasci350/tutorials/04-duckdb-sql-tutorial.html) ([QMD version](04-duckdb-sql-tutorial.qmd))
+- [05 - Web Scraping with Python](https://danilofreire.github.io/datasci350/tutorials/05-web-scraping-tutorial.html) ([QMD version](05-web-scraping-tutorial.qmd))
+- [06 - Setting Up WSL on Windows](https://danilofreire.github.io/datasci350/tutorials/06-wsl-tutorial.html) ([QMD version](06-wsl-tutorial.qmd))
+- [07 - Polars for Data Analysis](https://danilofreire.github.io/datasci350/tutorials/07-polars-tutorial.html) ([QMD version](07-polars-tutorial.qmd))
+- [08 - Fine-Tuning a Small Model on Your Laptop](https://danilofreire.github.io/datasci350/tutorials/08-finetuning-tutorial.html) ([QMD version](08-finetuning-tutorial.qmd))
 
-Tutorials 01 to 03 set up the tools the course uses, and you should read them in order at the start of the semester. Tutorial 06 is for Windows users, and it is worth doing before Lecture 03. Tutorials 04, 05 and 07 cover material that is not taught in the lectures, and you can read them whenever you need them.
+Tutorials 01 to 03 set up the tools the course uses, and you should read them in order at the start of the semester. Tutorial 06 is for Windows users, and it is worth doing before Lecture 03. Tutorials 04, 05 and 07 cover material that is not taught in the lectures, and you can read them whenever you need them. Tutorial 08 follows Lecture 15 and shows a full fine-tuning run on a Mac.
 
 ## File Formats
 
-- **PDF files**: These contain the final version of the tutorials with images and complete output. They are ideal for reading and following along.
+- **Website pages**: These contain the final version of the tutorials with images and complete output. They are the best way to read and follow along.
 - **QMD files**: These include the source code used to write the tutorials. They are [Quarto](https://quarto.org/) files, a Markdown-based document format that allows for code cells and other features. They are provided for those who want to learn more about the Markdown syntax and how to create similar documents for their own projects.
-
-## How to Read the PDF Files on GitHub
-
-You can either read the tutorials directly on GitHub or download them to your computer. To read them on GitHub, click on the links above and you will see them in an embedded viewer. You can also click on the download icon to save the raw files to your computer.
-
-![PDF Viewer](images/github-pdf-viewer.png)
 
 ## Additional Resources
 
