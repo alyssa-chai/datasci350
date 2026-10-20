@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="493" viewBox="0 0 1100 493" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1B3A6B"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#E63946"/>
+    </marker>
+  </defs>
+  <rect width="1100" height="493" fill="#ffffff"/>
+
+  <!-- Title and subtitle -->
+  <text x="40" y="58" font-size="26" font-weight="700" fill="#1B3A6B">LoRA trains a small add-on next to the frozen model</text>
+  <text x="40" y="86" font-size="15" fill="#4A5D7A">The input goes through the frozen model and the adapter at the same time. Their outputs are added together.</text>
+
+  <!-- Input -->
+  <rect x="40" y="170" width="170" height="90" rx="8" fill="#F5F7FB" stroke="#1B3A6B" stroke-width="1.5"/>
+  <text x="125" y="208" font-size="18" font-weight="700" fill="#1B3A6B" text-anchor="middle">Input</text>
+  <text x="125" y="230" font-size="13" fill="#4A5D7A" text-anchor="middle">your prompt, as tokens</text>
+
+  <!-- Fork from input -->
+  <path d="M210,215 H245 M245,165 V325" fill="none" stroke="#1B3A6B" stroke-width="2"/>
+  <path d="M245,165 H273" fill="none" stroke="#1B3A6B" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M245,325 H273" fill="none" stroke="#E63946" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+  <!-- Base model (frozen) -->
+  <rect x="275" y="105" width="350" height="120" rx="8" fill="#1B3A6B"/>
+  <text x="450" y="142" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle">Base model weights</text>
+  <text x="450" y="164" font-size="13" fill="#DCE3F0" text-anchor="middle">billions of parameters, unchanged during training</text>
+  <rect x="305" y="180" width="290" height="26" rx="3" fill="#3C5380"/>
+  <text x="450" y="198" font-size="13" fill="#DCE3F0" text-anchor="middle" letter-spacing="1">FROZEN</text>
+
+  <!-- Adapter: A then B -->
+  <rect x="275" y="290" width="155" height="70" rx="8" fill="#ffffff" stroke="#E63946" stroke-width="1.5"/>
+  <text x="352" y="322" font-size="20" font-weight="700" fill="#E63946" text-anchor="middle">A</text>
+  <text x="352" y="344" font-size="13" fill="#E63946" text-anchor="middle">small set of weights</text>
+  <path d="M430,325 H468" fill="none" stroke="#E63946" stroke-width="2" marker-end="url(#arrow-red)"/>
+  <rect x="470" y="290" width="155" height="70" rx="8" fill="#ffffff" stroke="#E63946" stroke-width="1.5"/>
+  <text x="547" y="322" font-size="20" font-weight="700" fill="#E63946" text-anchor="middle">B</text>
+  <text x="547" y="344" font-size="13" fill="#E63946" text-anchor="middle">small set of weights</text>
+  <text x="450" y="386" font-size="13" font-weight="700" fill="#E63946" text-anchor="middle" letter-spacing="1">ONLY THIS TRAINS: UNDER 1% OF THE WEIGHTS</text>
+
+  <!-- Merge into plus -->
+  <path d="M625,165 H700 V227" fill="none" stroke="#1B3A6B" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M625,325 H700 V263" fill="none" stroke="#E63946" stroke-width="2" marker-end="url(#arrow-red)"/>
+  <circle cx="700" cy="245" r="18" fill="#ffffff" stroke="#1B3A6B" stroke-width="2"/>
+  <text x="700" y="253" font-size="24" font-weight="700" fill="#1B3A6B" text-anchor="middle">+</text>
+  <path d="M718,245 H768" fill="none" stroke="#1B3A6B" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Output -->
+  <rect x="770" y="200" width="200" height="90" rx="8" fill="#F5F7FB" stroke="#1B3A6B" stroke-width="1.5"/>
+  <text x="870" y="234" font-size="18" font-weight="700" fill="#1B3A6B" text-anchor="middle">Output</text>
+  <text x="870" y="255" font-size="13" fill="#4A5D7A" text-anchor="middle">base behaviour plus</text>
+  <text x="870" y="272" font-size="13" fill="#4A5D7A" text-anchor="middle">your learnt adjustment</text>
+
+  <!-- Note -->
+  <rect x="40" y="415" width="4" height="55" fill="#E63946"/>
+  <text x="58" y="436" font-size="15" fill="#1B3A6B"><tspan font-weight="700">The adapter is a file, separate from the model.</tspan> Load it and the model has your behaviour.</text>
+  <text x="58" y="458" font-size="15" fill="#1B3A6B">Remove it and the original model is back. The same base model can carry many adapters, one per task.</text>
+</svg>

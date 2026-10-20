@@ -27,13 +27,13 @@ editor:
 :::{style="margin-top: 60px; font-size: 22px;"}
 :::{.columns}
 :::{.column width="54%"}
-- An [[API]{.alert}](https://en.wikipedia.org/wiki/API) lets code send a request and get [JSON](https://www.json.org/) back
-- [Ollama](https://ollama.com/) serves one too, on `localhost:11434`
+- An [[Application Programming Interface (API)]{.alert}](https://en.wikipedia.org/wiki/API) lets code send a request and get [JSON](https://www.json.org/) back
+- [Ollama](https://ollama.com/) has an API server too, on `localhost:11434`
 - The [`openai`](https://github.com/openai/openai-python) package is a client for a [protocol]{.alert}, so one script reaches Ollama and [OpenRouter](https://openrouter.ai/)
 - A hosted model needs [an address, a key and a model id]{.alert}
 - `.env` and `.gitignore` keep keys out of your repository
-- A system prompt can ask for JSON output, and `response_format` makes sure the reply is valid JSON
-- A model call became [a Python function]{.alert} we can use anywhere in our code
+- A system prompt can ask for JSON output, and `response_format={"type": "json_object"}` makes sure the reply is valid JSON
+- A model call can be wrapped in [a Python function]{.alert} we can use anywhere in our code
 - An [agent]{.alert} is the same call in a loop, with tools
 :::
 
@@ -48,7 +48,7 @@ Today, we give the model [our own documents]{.alert}. We use embeddings to find 
 
 ## Lecture overview
 
-:::{style="margin-top: 20px; font-size: 23px;"}
+:::{style="margin-top: 20px; font-size: 25px;"}
 :::{.columns}
 :::{.column width="50%"}
 [1. Embeddings]{.alert}
@@ -86,12 +86,12 @@ Today, we give the model [our own documents]{.alert}. We use embeddings to find 
 :::{style="margin-top: 50px; font-size: 22px;"}
 :::{.columns}
 :::{.column width="55%"}
-- In Lecture 12, [embeddings]{.alert} placed words in space, with "cat" near "kitten"
+- [Embeddings]{.alert} place words in space, with "cat" near "kitten"
 - Embedding models do the same for [whole passages]{.alert}, one vector per paragraph
-- Passages with [similar meanings]{.alert} sit close together, even with no words in common
-- For example, "The quiz covers Quarto" and "The test is about literate programming" are neighbours
-- An [embedding model]{.alert} turns text into numbers and never writes text
-- They are also small: [`embeddinggemma`](https://ollama.com/library/embeddinggemma) has 300 million parameters, about a quarter of `llama3.2:1b`
+- [Similar meanings]{.alert} sit close together, even with no shared words
+- "The quiz covers Quarto" and "The test is about literate programming" are neighbours
+- An [embedding model]{.alert} outputs numbers, not answers
+- [`embeddinggemma`](https://ollama.com/library/embeddinggemma) has 300 million parameters, a quarter of `llama3.2:1b`
 :::
 
 :::{.column width="45%"}
@@ -112,15 +112,17 @@ To search documents by meaning, we look for the passages whose vectors are [clos
 
 ## Measuring "close": cosine similarity {#sec-cosine}
 
-:::{style="margin-top: 5px; font-size: 20px;"}
+:::{style="margin-top: 5px; font-size: 19px;"}
 :::{style="text-align: center;"}
 [![](figures/cosine-similarity.png){width="55%"}](#){data-modal-type="image" data-modal-url="figures/cosine-similarity.png"}
 :::
 
 :::{.columns}
 :::{.column width="52%"}
-- Similar vectors [point the same way]{.alert}, and the cosine of their angle measures this
-- For vectors of length 1, the cosine is a [dot product]{.alert}:
+- Similar vectors [point the same way]{.alert}
+- The cosine of the angle is the score: [1 is the same direction, 0 is unrelated, -1 is opposite]{.alert}
+- A vector's [length]{.alert} is the square root of the sum of its squared numbers
+- Embedding vectors usually have length 1, so the cosine is a [dot product]{.alert}:
 
 ```python
 # NumPy arrays, both already length 1
@@ -128,8 +130,6 @@ similarity = a @ b
 ```
 
 - Our script lets Chroma compute it. Worked example: [[Appendix 05]{.button}](#sec-appendix-05)
-
-- The passage with the [highest score]{.alert} is the best match
 :::
 
 :::{.column width="48%"}
@@ -160,7 +160,7 @@ ollama pull embeddinggemma
 ```
 
 - [EmbeddingGemma](https://ollama.com/library/embeddinggemma) is Google's small embedding model (622 MB), with [768 numbers per passage]{.alert}
-- In Python:
+- In Python, we use `ollama.embed()` to get the vectors:
 
 ```python
 # pip install ollama
@@ -323,6 +323,8 @@ Why these files:
 
 :::{style="background: rgba(27, 58, 107, 0.08); padding: 12px; border-radius: 10px; font-size: 19px; margin-top: 10px; overflow-wrap: anywhere;"}
 Download the corpus from the course repository: <https://github.com/danilofreire/datasci350/tree/main/lectures/lecture-15/demo/corpus>
+
+The whole script is there too: [`rag.py`](https://github.com/danilofreire/datasci350/blob/main/lectures/lecture-15/demo/rag.py)
 :::
 :::
 :::
@@ -332,7 +334,7 @@ Download the corpus from the course repository: <https://github.com/danilofreire
 ## Chunking
 
 :::{style="margin-top: 30px; font-size: 21px;"}
-A [chunk]{.alert} is the piece of text we embed and retrieve. There are three common ways to split a document:
+A [chunk]{.alert} is the piece of text we embed and retrieve. Three common ways to split a document:
 
 :::{style="text-align: center; margin-top: 45px; margin-bottom: 45px; font-size: 25px;"}
 | Strategy | Splits on | Pros | Cons |
@@ -344,16 +346,16 @@ A [chunk]{.alert} is the piece of text we embed and retrieve. There are three co
 
 :::{.columns}
 :::{.column width="55%"}
-- Very small chunks lose context; very large ones mix topics, so their vectors [match nothing well]{.alert}
-- With overlap, a sentence near the border appears in both chunks
-- Each chunk must fit the embedding model: up to [2,048 tokens]{.alert} for EmbeddingGemma
-- Big chunks also take up space in the chat prompt
-- For more strategies, see [11 chunking strategies for RAG](https://masteringllm.medium.com/11-chunking-strategies-for-rag-simplified-visualized-df0dbec8e373)
+- Small chunks lose context. Large chunks mix topics, so their vectors [match nothing well]{.alert}
+- With overlap, a sentence at the border appears in both chunks
+- A chunk must fit the embedding model: [2,048 tokens]{.alert} for EmbeddingGemma
+- Big chunks also use space in the chat prompt
+- More strategies: [11 chunking strategies for RAG](https://masteringllm.medium.com/11-chunking-strategies-for-rag-simplified-visualized-df0dbec8e373)
 :::
 
 :::{.column width="45%"}
 :::{style="background: rgba(230, 57, 70, 0.1); padding: 14px; border-radius: 10px; font-size: 19px;"}
-Our script splits at blank lines and [drops pieces under 80 characters]{.alert}, which removes headings and short bullets
+Our script splits at blank lines and [drops pieces under 80 characters]{.alert} (headings and short bullets)
 :::
 :::
 :::
@@ -725,7 +727,7 @@ Most requests to fine-tune are really RAG problems, so check before paying for G
 ### Input-output pairs in a JSONL file
 
 :::{style="margin-top: 40px; font-size: 21px;"}
-Training data is a JSONL file with one example per line (split here to fit the slide):
+Training data is a [JSONL](https://scrapfly.io/blog/posts/jsonl-vs-json) file with one example per line (split here to fit the slide):
 
 :::{style="font-size: 22px;"}
 ```json
@@ -763,10 +765,10 @@ Training data is a JSONL file with one example per line (split here to fit the s
 
 :::{.columns}
 :::{.column width="50%"}
-- [LoRA]{.alert} ([Hu et al., 2021](https://arxiv.org/abs/2106.09685)) is a cheaper alternative to retraining every weight
-- It [freezes the model]{.alert} and trains two small matrices whose output is added to it
-- [QLoRA]{.alert} ([Dettmers et al., 2023](https://arxiv.org/abs/2305.14314)) also stores the frozen model at 4 bits, so models up to about 8B fit on a free Colab GPU
-- A `Modelfile` changes behaviour with instructions; LoRA changes [weights]{.alert}
+- [LoRA]{.alert} (Low-Rank Adaptation; [Hu et al., 2021](https://arxiv.org/abs/2106.09685)) avoids retraining every weight
+- It [freezes the model]{.alert} and trains a small set of extra weights that correct its output
+- [QLoRA]{.alert} (Quantised LoRA; [Dettmers et al., 2023](https://arxiv.org/abs/2305.14314)) also stores the frozen model at 4 bits, so 8B models fit on a free Colab GPU
+- A `Modelfile` adds instructions. LoRA changes [weights]{.alert}
 :::
 
 :::{.column width="50%"}
@@ -1106,6 +1108,7 @@ $$
 
 - The top is the [dot product]{.alert}: multiply matching numbers and add them up
 - The bottom multiplies the two [lengths]{.alert}
+- If both lengths are 1, the bottom is 1 and the cosine is just $a \cdot b$. Dividing a vector by its length makes it length 1
 - The result runs from -1 (opposite) through 0 (unrelated) to 1 (same direction)
 - Chroma reports a [distance]{.alert} instead: 1 minus this number
 :::
@@ -1127,6 +1130,8 @@ $$
 
 :::{style="background: rgba(27, 58, 107, 0.08); padding: 12px; border-radius: 10px; font-size: 19px; margin-top: 10px;"}
 With $c = (2, -1, 0)$, the dot product $a \cdot c = 2 - 2 + 0 = 0$, so the similarity is [0]{.alert} and the vectors are at right angles
+
+Dividing $a$ by 3 gives $(1/3, 2/3, 2/3)$, which has length 1
 
 EmbeddingGemma vectors have 768 numbers instead of 3, and the formula is the same
 :::
