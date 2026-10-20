@@ -818,6 +818,105 @@ Training data is a [JSONL](https://scrapfly.io/blog/posts/jsonl-vs-json) file wi
 :::
 :::
 
+## Let's train a Quarto expert
+### Llama 3.2 3B trained on a laptop
+
+:::{style="margin-top: 20px; font-size: 20px;"}
+:::{.columns}
+:::{.column width="50%"}
+A small AI model wrote [1,631 lines]{.alert} like this from the Quarto docs:
+
+:::{style="font-size: 21px;"}
+```json
+{"messages": [
+  {"role": "user",
+   "content": "I wrote pre_render in _quarto.yml
+     and nothing runs. Why?"},
+  {"role": "assistant",
+   "content": "The key is `pre-render`, with a
+     hyphen, not an underscore."}]}
+```
+:::
+
+- Before training, the model got [0 of 25]{.alert} right
+- Each fact appears in [6 to 10 phrasings]{.alert}
+:::
+
+:::{.column width="50%"}
+We trained it with Apple's [MLX](https://github.com/ml-explore/mlx):
+
+:::{style="font-size: 21px;"}
+```bash
+uv run mlx_lm.lora \
+  --model mlx-community/Llama-3.2-3B-Instruct-4bit \
+  --train --data data/quarto \
+  --fine-tune-type lora \
+  --iters 800 --learning-rate 5e-5
+```
+:::
+
+- LoRA trains only [6.9M]{.alert} of 3.2B weights (0.2%)
+- It took 15 minutes; the adapter is [27 MB]{.alert}
+- [Tutorial 08](https://danilofreire.github.io/datasci350/tutorials/08-finetuning-tutorial.html) shows every step
+:::
+:::
+:::
+
+## Watch the validation loss
+
+:::{style="margin-top: 20px; font-size: 20px;"}
+:::{.columns}
+:::{.column width="62%"}
+[![](figures/finetune-loss-curves.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/finetune-loss-curves.png"}
+:::
+
+:::{.column width="38%"}
+- [Training loss]{.alert} is the error on examples it learns from
+- [Validation loss]{.alert} is the error on 181 unseen examples
+- After step 600, run 1 got worse on new examples. It was [memorising]{.alert}
+- Run 2 used [half the learning rate]{.alert} and never overfitted
+:::
+:::
+:::
+
+## Before and after
+### Real answers to the test questions
+
+:::{style="margin-top: 20px; font-size: 20px;"}
+:::{.columns}
+:::{.column width="55%"}
+:::{style="font-size: 19px;"}
+```markdown
+Q: Which shortcode inserts three paragraphs of Lorem Ipsum?
+Before: {{ loremipsum(3) }}                        ❌
+After:  {{{< lipsum 3 >}}}                            ✅
+
+Q: How do I turn off _brand.yml for one document?
+Before: Use the --no-brand option.                 ❌
+After:  Set brand to false in the YAML header.     ✅
+
+Q: Which variable picks Quarto's julia binary?
+Before: JULIA Binaries                             ❌
+After:  QUARTO_JULIA                               ✅
+
+Q: How big is a placeholder image by default?
+After:  {{{< placeholder 400 200 >}}}  (docs: 100x100) ❌
+
+Q: What is the capital of Australia?
+After (run 1): It is Sydney.                       ❌
+```
+:::
+:::
+
+:::{.column width="45%"}
+[![](figures/finetune-scores.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/finetune-scores.png"}
+
+- Run 1 [forgot]{.alert} facts it knew before
+- The best run still got [12 of 25]{.alert} wrong or half right
+:::
+:::
+:::
+
 # Choosing between them {background-color="#1B3A6B"}
 
 ## The ladder

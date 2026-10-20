@@ -1100,6 +1100,93 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 </div>
 </div></div>
 </div>
+</section>
+<section id="lets-train-a-quarto-expert" class="slide level2">
+<h2>Let’s train a Quarto expert</h2>
+<h3 id="llama-3.2-3b-trained-on-a-laptop">Llama 3.2 3B trained on a laptop</h3>
+<div style="margin-top: 20px; font-size: 20px;">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>A small AI model wrote <span class="alert">1,631 lines</span> like this from the Quarto docs:</p>
+<div style="font-size: 21px;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb12-1"><a></a><span class="fu">{</span><span class="dt">"messages"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb12-2"><a></a>  <span class="fu">{</span><span class="dt">"role"</span><span class="fu">:</span> <span class="st">"user"</span><span class="fu">,</span></span>
+<span id="cb12-3"><a></a>   <span class="dt">"content"</span><span class="fu">:</span> <span class="st">"I wrote pre_render in _quarto.yml</span></span>
+<span id="cb12-4"><a></a><span class="st">     and nothing runs. Why?"</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb12-5"><a></a>  <span class="fu">{</span><span class="dt">"role"</span><span class="fu">:</span> <span class="st">"assistant"</span><span class="fu">,</span></span>
+<span id="cb12-6"><a></a>   <span class="dt">"content"</span><span class="fu">:</span> <span class="st">"The key is `pre-render`, with a</span></span>
+<span id="cb12-7"><a></a><span class="st">     hyphen, not an underscore."</span><span class="fu">}</span><span class="ot">]</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>Before training, the model got <span class="alert">0 of 25</span> right</li>
+<li>Each fact appears in <span class="alert">6 to 10 phrasings</span></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p>We trained it with Apple’s <a href="https://github.com/ml-explore/mlx">MLX</a>:</p>
+<div style="font-size: 21px;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a></a><span class="ex">uv</span> run mlx_lm.lora <span class="dt">\</span></span>
+<span id="cb13-2"><a></a>  <span class="at">--model</span> mlx-community/Llama-3.2-3B-Instruct-4bit <span class="dt">\</span></span>
+<span id="cb13-3"><a></a>  <span class="at">--train</span> <span class="at">--data</span> data/quarto <span class="dt">\</span></span>
+<span id="cb13-4"><a></a>  <span class="at">--fine-tune-type</span> lora <span class="dt">\</span></span>
+<span id="cb13-5"><a></a>  <span class="at">--iters</span> 800 <span class="at">--learning-rate</span> 5e-5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>LoRA trains only <span class="alert">6.9M</span> of 3.2B weights (0.2%)</li>
+<li>It took 15 minutes; the adapter is <span class="alert">27 MB</span></li>
+<li><a href="https://danilofreire.github.io/datasci350/tutorials/08-finetuning-tutorial.html">Tutorial 08</a> shows every step</li>
+</ul>
+</div></div>
+</div>
+</section>
+<section id="watch-the-validation-loss" class="slide level2">
+<h2>Watch the validation loss</h2>
+<div style="margin-top: 20px; font-size: 20px;">
+<div class="columns">
+<div class="column" style="width:62%;">
+<p><a href="#/" data-modal-type="image" data-modal-url="figures/finetune-loss-curves.png"><img data-src="figures/finetune-loss-curves.png" style="width:100.0%"></a></p>
+</div><div class="column" style="width:38%;">
+<ul>
+<li><span class="alert">Training loss</span> is the error on examples it learns from</li>
+<li><span class="alert">Validation loss</span> is the error on 181 unseen examples</li>
+<li>After step 600, run 1 got worse on new examples. It was <span class="alert">memorising</span></li>
+<li>Run 2 used <span class="alert">half the learning rate</span> and never overfitted</li>
+</ul>
+</div></div>
+</div>
+</section>
+<section id="before-and-after" class="slide level2">
+<h2>Before and after</h2>
+<h3 id="real-answers-to-the-test-questions">Real answers to the test questions</h3>
+<div style="margin-top: 20px; font-size: 20px;">
+<div class="columns">
+<div class="column" style="width:55%;">
+<div style="font-size: 19px;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a></a><span class="an">Q:</span><span class="co"> Which shortcode inserts three paragraphs of Lorem Ipsum?</span></span>
+<span id="cb14-2"><a></a><span class="an">Before:</span><span class="co"> {{ loremipsum(3) }}                        ❌</span></span>
+<span id="cb14-3"><a></a><span class="an">After:</span><span class="co">  {{&lt; lipsum 3 &gt;}}                            ✅</span></span>
+<span id="cb14-4"><a></a></span>
+<span id="cb14-5"><a></a>Q: How do I turn off _brand.yml for one document?</span>
+<span id="cb14-6"><a></a>Before: Use the --no-brand option.                 ❌</span>
+<span id="cb14-7"><a></a>After:  Set brand to false in the YAML header.     ✅</span>
+<span id="cb14-8"><a></a></span>
+<span id="cb14-9"><a></a>Q: Which variable picks Quarto's julia binary?</span>
+<span id="cb14-10"><a></a>Before: JULIA Binaries                             ❌</span>
+<span id="cb14-11"><a></a>After:  QUARTO_JULIA                               ✅</span>
+<span id="cb14-12"><a></a></span>
+<span id="cb14-13"><a></a>Q: How big is a placeholder image by default?</span>
+<span id="cb14-14"><a></a>After:  {{&lt; placeholder 400 200 &gt;}}  (docs: 100x100) ❌</span>
+<span id="cb14-15"><a></a></span>
+<span id="cb14-16"><a></a>Q: What is the capital of Australia?</span>
+<span id="cb14-17"><a></a>After (run 1): It is Sydney.                       ❌</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div><div class="column" style="width:45%;">
+<p><a href="#/" data-modal-type="image" data-modal-url="figures/finetune-scores.png"><img data-src="figures/finetune-scores.png" style="width:100.0%"></a></p>
+<ul>
+<li>Run 1 <span class="alert">forgot</span> facts it knew before</li>
+<li>The best run still got <span class="alert">12 of 25</span> wrong or half right</li>
+</ul>
+</div></div>
+</div>
 </section></section>
 <section>
 <section id="choosing-between-them" class="title-slide slide level1 center" data-background-color="#1B3A6B">
@@ -1224,56 +1311,56 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 <section id="sec-appendix-02" class="slide level2">
 <h2>Appendix 02: the complete rag.py script</h2>
 <div style="margin-top: 20px; font-size: 18px;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a><span class="co">"""A minimal RAG pipeline over the course's own notes."""</span></span>
-<span id="cb12-2"><a></a></span>
-<span id="cb12-3"><a></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb12-4"><a></a></span>
-<span id="cb12-5"><a></a><span class="im">import</span> chromadb</span>
-<span id="cb12-6"><a></a><span class="im">import</span> ollama</span>
-<span id="cb12-7"><a></a></span>
-<span id="cb12-8"><a></a>client <span class="op">=</span> chromadb.Client()</span>
-<span id="cb12-9"><a></a>collection <span class="op">=</span> client.create_collection(</span>
-<span id="cb12-10"><a></a>    name<span class="op">=</span><span class="st">"notes"</span>,</span>
-<span id="cb12-11"><a></a>    configuration<span class="op">=</span>{<span class="st">"hnsw"</span>: {<span class="st">"space"</span>: <span class="st">"cosine"</span>}})</span>
-<span id="cb12-12"><a></a></span>
-<span id="cb12-13"><a></a><span class="co"># Step 1: split the notes into paragraphs</span></span>
-<span id="cb12-14"><a></a>paragraphs <span class="op">=</span> []</span>
-<span id="cb12-15"><a></a>files <span class="op">=</span> []</span>
-<span id="cb12-16"><a></a><span class="cf">for</span> path <span class="kw">in</span> Path(<span class="st">"corpus"</span>).glob(<span class="st">"*.md"</span>):</span>
-<span id="cb12-17"><a></a>    text <span class="op">=</span> path.read_text(encoding<span class="op">=</span><span class="st">"utf-8"</span>)</span>
-<span id="cb12-18"><a></a>    <span class="cf">for</span> paragraph <span class="kw">in</span> text.split(<span class="st">"</span><span class="ch">\n\n</span><span class="st">"</span>):</span>
-<span id="cb12-19"><a></a>        <span class="cf">if</span> <span class="bu">len</span>(paragraph) <span class="op">&gt;</span> <span class="dv">80</span>:</span>
-<span id="cb12-20"><a></a>            paragraphs.append(paragraph)</span>
-<span id="cb12-21"><a></a>            files.append({<span class="st">"file"</span>: path.name})</span>
-<span id="cb12-22"><a></a></span>
-<span id="cb12-23"><a></a><span class="co"># Step 2: embed the paragraphs and store them</span></span>
-<span id="cb12-24"><a></a><span class="co"># Chroma needs an ID for each one: "0", "1", "2"...</span></span>
-<span id="cb12-25"><a></a>ids <span class="op">=</span> []</span>
-<span id="cb12-26"><a></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(paragraphs)):</span>
-<span id="cb12-27"><a></a>    ids.append(<span class="bu">str</span>(n))</span>
-<span id="cb12-28"><a></a></span>
-<span id="cb12-29"><a></a>response <span class="op">=</span> ollama.embed(</span>
-<span id="cb12-30"><a></a>    model<span class="op">=</span><span class="st">"embeddinggemma"</span>, <span class="bu">input</span><span class="op">=</span>paragraphs)</span>
-<span id="cb12-31"><a></a>collection.add(ids<span class="op">=</span>ids, embeddings<span class="op">=</span>response[<span class="st">"embeddings"</span>],</span>
-<span id="cb12-32"><a></a>               documents<span class="op">=</span>paragraphs, metadatas<span class="op">=</span>files)</span>
-<span id="cb12-33"><a></a><span class="bu">print</span>(<span class="st">"Chunks stored:"</span>, collection.count())</span>
-<span id="cb12-34"><a></a></span>
-<span id="cb12-35"><a></a><span class="co"># Step 3: find the 3 paragraphs closest to the question</span></span>
-<span id="cb12-36"><a></a>question <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Your question: "</span>)</span>
-<span id="cb12-37"><a></a></span>
-<span id="cb12-38"><a></a>response <span class="op">=</span> ollama.embed(model<span class="op">=</span><span class="st">"embeddinggemma"</span>, <span class="bu">input</span><span class="op">=</span>question)</span>
-<span id="cb12-39"><a></a>results <span class="op">=</span> collection.query(query_embeddings<span class="op">=</span>response[<span class="st">"embeddings"</span>], n_results<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb12-40"><a></a></span>
-<span id="cb12-41"><a></a>data <span class="op">=</span> results[<span class="st">"documents"</span>][<span class="dv">0</span>]</span>
-<span id="cb12-42"><a></a><span class="bu">print</span>(<span class="st">"Sources:"</span>, results[<span class="st">"metadatas"</span>][<span class="dv">0</span>])</span>
-<span id="cb12-43"><a></a><span class="cf">for</span> distance <span class="kw">in</span> results[<span class="st">"distances"</span>][<span class="dv">0</span>]:</span>
-<span id="cb12-44"><a></a>    <span class="bu">print</span>(<span class="st">"Similarity:"</span>, <span class="bu">round</span>(<span class="dv">1</span> <span class="op">-</span> distance, <span class="dv">2</span>))</span>
-<span id="cb12-45"><a></a></span>
-<span id="cb12-46"><a></a><span class="co"># Step 4: generate an answer from those paragraphs</span></span>
-<span id="cb12-47"><a></a>prompt <span class="op">=</span> <span class="ss">f"Using only this data: </span><span class="sc">{</span>data<span class="sc">}</span><span class="ss">. Answer this question: </span><span class="sc">{</span>question<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb12-48"><a></a></span>
-<span id="cb12-49"><a></a>output <span class="op">=</span> ollama.generate(model<span class="op">=</span><span class="st">"llama3.2:1b"</span>, prompt<span class="op">=</span>prompt)</span>
-<span id="cb12-50"><a></a><span class="bu">print</span>(output[<span class="st">"response"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a><span class="co">"""A minimal RAG pipeline over the course's own notes."""</span></span>
+<span id="cb15-2"><a></a></span>
+<span id="cb15-3"><a></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb15-4"><a></a></span>
+<span id="cb15-5"><a></a><span class="im">import</span> chromadb</span>
+<span id="cb15-6"><a></a><span class="im">import</span> ollama</span>
+<span id="cb15-7"><a></a></span>
+<span id="cb15-8"><a></a>client <span class="op">=</span> chromadb.Client()</span>
+<span id="cb15-9"><a></a>collection <span class="op">=</span> client.create_collection(</span>
+<span id="cb15-10"><a></a>    name<span class="op">=</span><span class="st">"notes"</span>,</span>
+<span id="cb15-11"><a></a>    configuration<span class="op">=</span>{<span class="st">"hnsw"</span>: {<span class="st">"space"</span>: <span class="st">"cosine"</span>}})</span>
+<span id="cb15-12"><a></a></span>
+<span id="cb15-13"><a></a><span class="co"># Step 1: split the notes into paragraphs</span></span>
+<span id="cb15-14"><a></a>paragraphs <span class="op">=</span> []</span>
+<span id="cb15-15"><a></a>files <span class="op">=</span> []</span>
+<span id="cb15-16"><a></a><span class="cf">for</span> path <span class="kw">in</span> Path(<span class="st">"corpus"</span>).glob(<span class="st">"*.md"</span>):</span>
+<span id="cb15-17"><a></a>    text <span class="op">=</span> path.read_text(encoding<span class="op">=</span><span class="st">"utf-8"</span>)</span>
+<span id="cb15-18"><a></a>    <span class="cf">for</span> paragraph <span class="kw">in</span> text.split(<span class="st">"</span><span class="ch">\n\n</span><span class="st">"</span>):</span>
+<span id="cb15-19"><a></a>        <span class="cf">if</span> <span class="bu">len</span>(paragraph) <span class="op">&gt;</span> <span class="dv">80</span>:</span>
+<span id="cb15-20"><a></a>            paragraphs.append(paragraph)</span>
+<span id="cb15-21"><a></a>            files.append({<span class="st">"file"</span>: path.name})</span>
+<span id="cb15-22"><a></a></span>
+<span id="cb15-23"><a></a><span class="co"># Step 2: embed the paragraphs and store them</span></span>
+<span id="cb15-24"><a></a><span class="co"># Chroma needs an ID for each one: "0", "1", "2"...</span></span>
+<span id="cb15-25"><a></a>ids <span class="op">=</span> []</span>
+<span id="cb15-26"><a></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(paragraphs)):</span>
+<span id="cb15-27"><a></a>    ids.append(<span class="bu">str</span>(n))</span>
+<span id="cb15-28"><a></a></span>
+<span id="cb15-29"><a></a>response <span class="op">=</span> ollama.embed(</span>
+<span id="cb15-30"><a></a>    model<span class="op">=</span><span class="st">"embeddinggemma"</span>, <span class="bu">input</span><span class="op">=</span>paragraphs)</span>
+<span id="cb15-31"><a></a>collection.add(ids<span class="op">=</span>ids, embeddings<span class="op">=</span>response[<span class="st">"embeddings"</span>],</span>
+<span id="cb15-32"><a></a>               documents<span class="op">=</span>paragraphs, metadatas<span class="op">=</span>files)</span>
+<span id="cb15-33"><a></a><span class="bu">print</span>(<span class="st">"Chunks stored:"</span>, collection.count())</span>
+<span id="cb15-34"><a></a></span>
+<span id="cb15-35"><a></a><span class="co"># Step 3: find the 3 paragraphs closest to the question</span></span>
+<span id="cb15-36"><a></a>question <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Your question: "</span>)</span>
+<span id="cb15-37"><a></a></span>
+<span id="cb15-38"><a></a>response <span class="op">=</span> ollama.embed(model<span class="op">=</span><span class="st">"embeddinggemma"</span>, <span class="bu">input</span><span class="op">=</span>question)</span>
+<span id="cb15-39"><a></a>results <span class="op">=</span> collection.query(query_embeddings<span class="op">=</span>response[<span class="st">"embeddings"</span>], n_results<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb15-40"><a></a></span>
+<span id="cb15-41"><a></a>data <span class="op">=</span> results[<span class="st">"documents"</span>][<span class="dv">0</span>]</span>
+<span id="cb15-42"><a></a><span class="bu">print</span>(<span class="st">"Sources:"</span>, results[<span class="st">"metadatas"</span>][<span class="dv">0</span>])</span>
+<span id="cb15-43"><a></a><span class="cf">for</span> distance <span class="kw">in</span> results[<span class="st">"distances"</span>][<span class="dv">0</span>]:</span>
+<span id="cb15-44"><a></a>    <span class="bu">print</span>(<span class="st">"Similarity:"</span>, <span class="bu">round</span>(<span class="dv">1</span> <span class="op">-</span> distance, <span class="dv">2</span>))</span>
+<span id="cb15-45"><a></a></span>
+<span id="cb15-46"><a></a><span class="co"># Step 4: generate an answer from those paragraphs</span></span>
+<span id="cb15-47"><a></a>prompt <span class="op">=</span> <span class="ss">f"Using only this data: </span><span class="sc">{</span>data<span class="sc">}</span><span class="ss">. Answer this question: </span><span class="sc">{</span>question<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb15-48"><a></a></span>
+<span id="cb15-49"><a></a>output <span class="op">=</span> ollama.generate(model<span class="op">=</span><span class="st">"llama3.2:1b"</span>, prompt<span class="op">=</span>prompt)</span>
+<span id="cb15-50"><a></a><span class="bu">print</span>(output[<span class="st">"response"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><a href="#/sec-rag-part-2"><span class="button">Back to the slide</span></a></p>
 </div>
 </section>
@@ -1283,39 +1370,39 @@ Danilo Freire <a href="https://orcid.org/0000-0002-4712-6810" class="quarto-titl
 <p>No Ollama? Run <code>rag.py</code> through <a href="https://openrouter.ai/">OpenRouter</a> with your Lecture 14 key in <code>.env</code>. Make four changes:</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="co"># 1. Replace "import ollama" with:</span></span>
-<span id="cb13-2"><a></a><span class="im">import</span> os</span>
-<span id="cb13-3"><a></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
-<span id="cb13-4"><a></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
-<span id="cb13-5"><a></a></span>
-<span id="cb13-6"><a></a>load_dotenv()</span>
-<span id="cb13-7"><a></a>openrouter <span class="op">=</span> OpenAI(</span>
-<span id="cb13-8"><a></a>    base_url<span class="op">=</span><span class="st">"https://openrouter.ai/api/v1"</span>,</span>
-<span id="cb13-9"><a></a>    api_key<span class="op">=</span>os.environ[<span class="st">"OPENROUTER_API_KEY"</span>])</span>
-<span id="cb13-10"><a></a></span>
-<span id="cb13-11"><a></a><span class="kw">def</span> embed(texts):</span>
-<span id="cb13-12"><a></a>    <span class="co">"""Turn a list of texts into a list of vectors."""</span></span>
-<span id="cb13-13"><a></a>    response <span class="op">=</span> openrouter.embeddings.create(</span>
-<span id="cb13-14"><a></a>        model<span class="op">=</span><span class="st">"nvidia/nemotron-3-embed-1b:free"</span>,</span>
-<span id="cb13-15"><a></a>        <span class="bu">input</span><span class="op">=</span>texts)</span>
-<span id="cb13-16"><a></a>    vectors <span class="op">=</span> []</span>
-<span id="cb13-17"><a></a>    <span class="cf">for</span> item <span class="kw">in</span> response.data:</span>
-<span id="cb13-18"><a></a>        vectors.append(item.embedding)</span>
-<span id="cb13-19"><a></a>    <span class="cf">return</span> vectors</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a><span class="co"># 1. Replace "import ollama" with:</span></span>
+<span id="cb16-2"><a></a><span class="im">import</span> os</span>
+<span id="cb16-3"><a></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb16-4"><a></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb16-5"><a></a></span>
+<span id="cb16-6"><a></a>load_dotenv()</span>
+<span id="cb16-7"><a></a>openrouter <span class="op">=</span> OpenAI(</span>
+<span id="cb16-8"><a></a>    base_url<span class="op">=</span><span class="st">"https://openrouter.ai/api/v1"</span>,</span>
+<span id="cb16-9"><a></a>    api_key<span class="op">=</span>os.environ[<span class="st">"OPENROUTER_API_KEY"</span>])</span>
+<span id="cb16-10"><a></a></span>
+<span id="cb16-11"><a></a><span class="kw">def</span> embed(texts):</span>
+<span id="cb16-12"><a></a>    <span class="co">"""Turn a list of texts into a list of vectors."""</span></span>
+<span id="cb16-13"><a></a>    response <span class="op">=</span> openrouter.embeddings.create(</span>
+<span id="cb16-14"><a></a>        model<span class="op">=</span><span class="st">"nvidia/nemotron-3-embed-1b:free"</span>,</span>
+<span id="cb16-15"><a></a>        <span class="bu">input</span><span class="op">=</span>texts)</span>
+<span id="cb16-16"><a></a>    vectors <span class="op">=</span> []</span>
+<span id="cb16-17"><a></a>    <span class="cf">for</span> item <span class="kw">in</span> response.data:</span>
+<span id="cb16-18"><a></a>        vectors.append(item.embedding)</span>
+<span id="cb16-19"><a></a>    <span class="cf">return</span> vectors</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a><span class="co"># 2. In Step 2, replace the embed and add lines with:</span></span>
-<span id="cb14-2"><a></a>collection.add(ids<span class="op">=</span>ids, embeddings<span class="op">=</span>embed(paragraphs),</span>
-<span id="cb14-3"><a></a>               documents<span class="op">=</span>paragraphs, metadatas<span class="op">=</span>files)</span>
-<span id="cb14-4"><a></a></span>
-<span id="cb14-5"><a></a><span class="co"># 3. In Step 3, replace the embed and query lines with:</span></span>
-<span id="cb14-6"><a></a>results <span class="op">=</span> collection.query(</span>
-<span id="cb14-7"><a></a>    query_embeddings<span class="op">=</span>embed([question]), n_results<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb14-8"><a></a></span>
-<span id="cb14-9"><a></a><span class="co"># 4. In Step 4, replace the last two lines with:</span></span>
-<span id="cb14-10"><a></a>output <span class="op">=</span> openrouter.chat.completions.create(</span>
-<span id="cb14-11"><a></a>    model<span class="op">=</span><span class="st">"google/gemma-4-31b-it:free"</span>,</span>
-<span id="cb14-12"><a></a>    messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: prompt}])</span>
-<span id="cb14-13"><a></a><span class="bu">print</span>(output.choices[<span class="dv">0</span>].message.content)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a><span class="co"># 2. In Step 2, replace the embed and add lines with:</span></span>
+<span id="cb17-2"><a></a>collection.add(ids<span class="op">=</span>ids, embeddings<span class="op">=</span>embed(paragraphs),</span>
+<span id="cb17-3"><a></a>               documents<span class="op">=</span>paragraphs, metadatas<span class="op">=</span>files)</span>
+<span id="cb17-4"><a></a></span>
+<span id="cb17-5"><a></a><span class="co"># 3. In Step 3, replace the embed and query lines with:</span></span>
+<span id="cb17-6"><a></a>results <span class="op">=</span> collection.query(</span>
+<span id="cb17-7"><a></a>    query_embeddings<span class="op">=</span>embed([question]), n_results<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb17-8"><a></a></span>
+<span id="cb17-9"><a></a><span class="co"># 4. In Step 4, replace the last two lines with:</span></span>
+<span id="cb17-10"><a></a>output <span class="op">=</span> openrouter.chat.completions.create(</span>
+<span id="cb17-11"><a></a>    model<span class="op">=</span><span class="st">"google/gemma-4-31b-it:free"</span>,</span>
+<span id="cb17-12"><a></a>    messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: prompt}])</span>
+<span id="cb17-13"><a></a><span class="bu">print</span>(output.choices[<span class="dv">0</span>].message.content)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 <ul>
 <li>The client is called <code>openrouter</code>, because <code>rag.py</code> already uses <code>client</code> for Chroma</li>
