@@ -4344,28 +4344,28 @@
     "href": "lectures/lecture-16/16-cloud.html#the-ai-module",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "The AI module",
-    "text": "The AI module\n\n\n\n\nLast class closed the module with retrieval-augmented generation\nFive stages: chunk → embed → store → retrieve → generate\nThe whole pipeline was about 70 lines of Python, on your own laptop\nFine-tuning changes the model’s weights, never its context\nUse it for behaviour and style. Facts that change belong in retrieval\nThe ladder to take with you: prompt → RAG → fine-tune\nClimb a rung only when the one below fails\n\n\n\nToday we change the constraint\n\nEvery computer in the module was yours\nOne CPU, limited RAM, and it sleeps in your bag\nToday we rent someone else’s\nAWS, and a machine you control from your terminal"
+    "text": "The AI module\n\n\n\n\nLast class we built a retrieval-augmented generation (RAG) pipeline\nThe pipeline has five stages: chunk → embed → store → retrieve → generate\nFine-tuning changes the model’s weights, while RAG changes its context\nFine-tuning is for behaviour and style, and RAG is for facts that change\nTry the options in this order: prompt → RAG → fine-tune\nOnly move on when the previous option does not work\n\n\n\nToday we move to the cloud\n\nSo far, all the computers we used were yours\nToday we rent someone else’s computer from AWS\nYou will control it from your terminal"
   },
   {
     "objectID": "lectures/lecture-16/16-cloud.html#lecture-overview",
     "href": "lectures/lecture-16/16-cloud.html#lecture-overview",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Lecture overview",
-    "text": "Lecture overview\nWhat we will cover today\n\n\n\n\nWe start with the money: owning servers versus renting them\nTwo stories from 2008: Animoto and The Washington Post\nThen the vocabulary: IaaS, PaaS, SaaS, FaaS and virtual machines\nA tour of AWS: compute, storage, and databases\nThe October 2025 outage, when AWS broke for fifteen hours\nYou open an account and set a budget that emails you\nWe read a scanned document with Amazon Textract\n\n\n\n\n\nAWS lists 123 availability zones in 39 regions. The one that failed in October 2025 is on this page"
+    "text": "Lecture overview\nWhat we will cover today\n\n\n\n\nWe start with the money: owning servers versus renting them\nTwo stories: Animoto and The Washington Post\nThen the vocabulary: IaaS, PaaS, SaaS, FaaS and virtual machines\nA tour of AWS: compute, storage, and databases\nThe October 2025 outage, when AWS broke for fifteen hours\nYou open an account and set a budget that emails you\nWe read a scanned document with Amazon Textract\n\n\n\n\n\nAWS lists 123 availability zones in 39 regions. The one that failed in October 2025 is on this page"
   },
   {
     "objectID": "lectures/lecture-16/16-cloud.html#what-is-cloud-computing",
     "href": "lectures/lecture-16/16-cloud.html#what-is-cloud-computing",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "What is cloud computing?",
-    "text": "What is cloud computing?\n\n\n\n\nCloud computing is renting computers over the internet\nYou pay as you go, often by the second\nThe machine sits in someone else’s data centre\nThe “Big Three” are AWS, Microsoft Azure, and Google Cloud\n\nMarket share: AWS 28%, Azure 21%, Google 14% (Synergy Research, Q1 2026)\nSpending: $129 billion in Q1 2026, up 35% in a year\n\nAWS is Amazon’s most profitable division\n\nIn Q2 2026: 21% of sales and 60% of operating profit ($16.6 billion)\n\n\n\n\n\nChart to Q3 2024: GeekWire. 2026 figures: Amazon Q2 2026 results"
+    "text": "What is cloud computing?\n\n\n\n\nCloud computing is renting computers over the internet\nYou pay as you go, often by the second\nThe machine sits in someone else’s data centre\nThe “Big Three” are AWS, Microsoft Azure, and Google Cloud\n\nMarket share: AWS 28%, Azure 21%, Google 14% (Synergy Research, Q1 2026)\nSpending: $129 billion in Q1 2026, up 35% in a year (Synergy Research)\n\nAWS is Amazon’s most profitable division\n\nIn Q2 2026: 21% of sales and 60% of operating profit ($16.6 billion, Amazon)\n\n\n\n\n\nChart to Q3 2024: GeekWire. 2026 figures: Amazon Q2 2026 results"
   },
   {
     "objectID": "lectures/lecture-16/16-cloud.html#imagine-you-are-opening-a-business",
     "href": "lectures/lecture-16/16-cloud.html#imagine-you-are-opening-a-business",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Imagine you are opening a business…",
-    "text": "Imagine you are opening a business…\nTraditional approach\n\n\n\n\nEstimate supply and demand\nEstimate infrastructural needs\nPurchase and deploy infrastructure\nInstall and test your system\nOffer your services to clients\n\n\n\nInfrastructure is very expensive:\n\nHardware (Dell’s cheapest rack server starts at $6,500, and a useful one costs much more)\nReal estate costs\nCooling system, power bill\nA few systems engineers\nRedundancy for high reliability\n\nIt takes time to deploy the infrastructure\nWhat if the estimations were wrong?"
+    "text": "Imagine you are opening a business…\nTraditional approach\n\n\n\n\nEstimate supply and demand\nEstimate infrastructural needs\nPurchase and deploy infrastructure\nInstall and test your system\nOffer your services to clients\n\n\n\nInfrastructure is very expensive:\n\nHardware (Dell’s cheapest rack server starts at $5,549, and a good one costs much more)\nReal estate costs\nCooling system, power bill\nA few systems engineers\nRedundancy for high reliability\n\nIt takes time to deploy the infrastructure\nWhat if the estimations were wrong?"
   },
   {
     "objectID": "lectures/lecture-16/16-cloud.html#imagine-you-are-opening-a-business-1",
@@ -4386,7 +4386,7 @@
     "href": "lectures/lecture-16/16-cloud.html#case-study-the-washington-post",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Case study: The Washington Post",
-    "text": "Case study: The Washington Post\n\n\n\n\nHillary Clinton’s White House schedule was released to the public in 2008\n17,481 pages of low-quality PDF, none of it searchable\nReading it by hand would have taken hundreds of hours\nPeter Harkins, a senior engineer at the paper, asked: “Can we make that data available more quickly, ideally within the same news cycle?”\nHe tested optical character recognition programs, then launched 200 EC2 instances\nNine hours of waiting, 1,407 hours of machine time, $144.62\nThe results were online 26 hours after the release\n\n\n\n\nSource: The Washington Post"
+    "text": "Case study: The Washington Post\n\n\n\n\nIn 2008, Hillary Clinton’s White House schedule was made public\nIt was 17,481 pages of low-quality PDF, and none of it was searchable\nReading it by hand would have taken hundreds of hours\nPeter Harkins, a senior engineer at the paper, wanted the data in the newsroom within the same news cycle\nHe ran optical character recognition (OCR) software on 200 EC2 instances\nThe job took nine hours and 1,407 hours of machine time, and it cost $144.62\nThe searchable database went public 26 hours after that\n\n\n\n\nSource: The Washington Post"
   },
   {
     "objectID": "lectures/lecture-16/16-cloud.html#cloud-computing-services-1",
@@ -4519,21 +4519,21 @@
     "href": "lectures/lecture-16/16-cloud.html#when-aws-has-a-bad-night",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "When AWS has a bad night",
-    "text": "When AWS has a bad night\n19 October 2025, us-east-1\n\n\n\n\nThe cause was a race condition: two programs changed the same thing at once\nTwo DynamoDB programs updated the same DNS record\nOne wrote an old plan late, and the other’s clean-up deleted it\ndynamodb.us-east-1.amazonaws.com then pointed nowhere\nEC2 launches, load balancers, and console sign-in failed too\nRecovery took about fifteen hours\nSnapchat, Fortnite, Signal, banks and more went down\n17 million people reported problems\nOne insurance model put losses at $38 million to $581 million\n\n\n\n\n\nSource: AWS post-event summary\n\n\nReliability is still your job. Start by not keeping everything in one region!"
+    "text": "When AWS has a bad night\n19 October 2025, us-east-1\n\n\n\n\nTwo DynamoDB programs updated the same Domain Name System (DNS) record at once, a race condition\n\nDNS turns a name like amazon.com into an IP address\n\nOne wrote an old version late, and the other’s clean-up deleted it\nSo dynamodb.us-east-1.amazonaws.com pointed nowhere\nEC2 launches, load balancers, and console sign-in also failed\nRecovery took about fifteen hours\nSnapchat, Fortnite, Signal, banks and more went down, and 17 million people reported problems\n\n\n\n\n\nSource: AWS post-event summary\n\n\nCyberCube estimated insured losses of $38 million to $581 million\nReliability is still your job: don’t keep everything in one region!"
   },
   {
     "objectID": "lectures/lecture-16/16-cloud.html#creating-an-aws-account",
     "href": "lectures/lecture-16/16-cloud.html#creating-an-aws-account",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Creating an AWS account",
-    "text": "Creating an AWS account\nTen minutes, and you need a payment card\n\n\n\n\nOpen https://aws.amazon.com/free/\nChoose Create a Free Account\nEnter a personal email address. Keep your Emory address for coursework\nChoose any account name\nChoose Verify email address\nCopy the code from the email into the form\nAWS requires a card and may place a small temporary authorisation on it. Enter your card details\nComplete the phone verification\nChoose your account plan. The next slide covers that choice\n\n\n\n\n\n\nDo this at home, before or after class. Please let me know if you have any problems"
+    "text": "Creating an AWS account\n\n\n\n\nOpen https://aws.amazon.com/free/\nChoose Create a Free Account\nEnter a personal email address. Keep your Emory address for coursework\nChoose any account name\nChoose Verify email address\nCopy the code from the email into the form\nAWS requires a card and may place a small temporary authorisation on it. Enter your card details\nComplete the phone verification\nChoose your account plan. The next slide covers that choice\n\n\n\n\n\n\nDo this at home, before or after class. Please let me know if you have any problems"
   },
   {
     "objectID": "lectures/lecture-16/16-cloud.html#free-plan-or-paid-plan",
     "href": "lectures/lecture-16/16-cloud.html#free-plan-or-paid-plan",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Free plan or paid plan?",
-    "text": "Free plan or paid plan?\nChoose the free plan\n\n\n\n\nThe account starts with $100 in credits, and the console offers up to $100 more for trying key services\nThat is $200 across the six months of the free plan\nThe plan ends after six months or when the credits run out, whichever comes first\nAWS puts it plainly: you will not be charged unless you convert to a paid plan\nThe free plan blocks some services, and workloads stop at the credit thresholds\nEverything this course asks of you fits inside those limits\n\n\n\n\n\n\nWhen the free plan ends, the account closes on its own. AWS deletes everything 90 days later unless you upgrade. Download anything you want to keep"
+    "text": "Free plan or paid plan?\nChoose the free plan\n\n\n\n\nYou start with $100 in credits and can earn up to $100 more in the console\nThe plan ends after six months or when the credits run out\nAWS says you will not be charged unless you convert to a paid plan\nSome services are blocked on the free plan\nEverything this course needs fits inside it\n\n\n\n\n\n\nWhen the free plan ends, the account closes on its own. AWS deletes everything 90 days later unless you upgrade. Download anything you want to keep"
   },
   {
     "objectID": "lectures/lecture-16/16-cloud.html#set-a-zero-spend-budget",
@@ -4554,21 +4554,21 @@
     "href": "lectures/lecture-16/16-cloud.html#amazon-textract",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Amazon Textract",
-    "text": "Amazon Textract\nThe 2008 job, in a browser, in about a minute\n\n\n\n\nOpen the console and search for Textract\nChoose Analyze Document under Demos\nUpload clinton-schedule-2001-pages-11-20.pdf\nTick the outputs you want\nChoose Apply configuration\n\n\nThe file is in the course repository, under lectures/lecture-16/data/\n\nTen pages of Hillary Clinton’s 2001 schedule, the same typewritten paper The Washington Post fed through OCR\n\nNew accounts get 1,000 pages a month of text detection and 100 of layout, forms or tables, for three months. Read the pricing page before a large run\n\n\n\n\nhttps://aws.amazon.com/textract/"
+    "text": "Amazon Textract\n\n\n\n\nOpen the console and search for Textract\nChoose Analyze Document under Demos\nUpload clinton-schedule-2001-pages-11-20.pdf\nTick the outputs you want\nChoose Apply configuration\n\nTen pages of Hillary Clinton’s 2001 schedule, the same typewritten paper The Washington Post fed through OCR\n\nNew accounts get 1,000 pages a month of text detection and 100 of layout, forms or tables, for three months. Read the pricing page before a large run\n\n\n\n\nhttps://aws.amazon.com/textract/"
   },
   {
     "objectID": "lectures/lecture-16/16-cloud.html#what-you-can-ask-for",
     "href": "lectures/lecture-16/16-cloud.html#what-you-can-ask-for",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "What you can ask for",
-    "text": "What you can ask for\nFive kinds of structure, one document\n\n\n\n\nLayout: titles, paragraphs, headers, lists, page numbers, and the reading order\nForms: key and value pairs, the way a paper form pairs a label with its box\nTables: cells, rows, and columns\nQueries: put a question to the page, such as who signed it\nSignature detection: where a signature sits\n\nPlain text detection is the cheap option. Everything above it costs more per page\n\n\n\n\nPage 1 of 10, with the outputs about to be applied"
+    "text": "What you can ask for\n\n\n\n\nLayout: titles, paragraphs, headers, lists, page numbers, and the reading order\nForms: key and value pairs, the way a paper form pairs a label with its box\nTables: cells, rows, and columns\nQueries: put a question to the page, such as who signed it\nSignature detection: where a signature sits\n\nPlain text detection is the cheap option. Everything above it costs more per page\n\n\n\n\nPage 1 of 10, with the outputs about to be applied"
   },
   {
     "objectID": "lectures/lecture-16/16-cloud.html#what-came-back",
     "href": "lectures/lecture-16/16-cloud.html#what-came-back",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "What came back",
-    "text": "What came back\nBlocks in reading order, each with a confidence score\n\n\n\n\nTextract returns blocks in reading order, each labelled by type\nPage 8 came back as a header, a list, and eleven text blocks\nThe header reads “SCHEDULE FOR HILLARY RODAHM CLINTON”\nThe typo is in the 2001 document. Textract copied the page faithfully\nAnyone searching these files for “Rodham” would miss this page\nScores on this page ran from 28% to 92%. They rate how sure Textract is about the type of block, not the spelling inside it\nThe Raw text tab gives the plain transcript to copy\nThe appendix runs an audio transcription job using Amazon Transcribe\n\n\n\n\n\nThe Layout tab, page 8 of 10"
+    "text": "What came back\nEvery block comes with a score\n\n\n\n\nTextract returns blocks in reading order, each with a type\nPage 8 has a header, a list, and eleven text blocks\nThe header reads “SCHEDULE FOR HILLARY RODAHM CLINTON”\nThe typo is in the 2001 original, so a search for “Rodham” would miss this page\nScores ran from 28% to 92%. They rate the block type, not the spelling\nThe Raw text tab gives a plain transcript\nThe appendix transcribes audio with Amazon Transcribe\n\n\n\n\n\nThe Layout tab, page 8 of 10"
   },
   {
     "objectID": "lectures/lecture-16/16-cloud.html#what-we-learned-today",
@@ -4582,7 +4582,7 @@
     "href": "lectures/lecture-16/16-cloud.html#next-class",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Next class",
-    "text": "Next class\nInside the machine you just rented\n\n\n\n\nWe launch an EC2 instance from the console and connect to it over SSH with a key pair\nThat key pair is a file on your laptop. It never goes into a Git repository, because bots scan public repositories for AWS keys\nUbuntu Linux, so every command from the shell module works there\nWe install software with apt, move files with scp, and run a Python script on the instance\nWe finish by terminating it, which is the habit that keeps the bill at zero\nThe final project is released the same day\n\n\n\n\n\nBefore then:\n\nCreate your AWS account\nSet the zero-spend budget\nWindows users, install WSL. Tutorial 06 has the steps\nCheck that ssh runs in your terminal\n\n\nBring the laptop you will use in class. Setting up SSH on a borrowed machine costs the whole session\n\n\nQuiz 03 covers the AI module and this cloud module"
+    "text": "Next class\n\n\n\n\nWe launch an EC2 instance and connect to it over SSH with a key pair\nThe key pair is a file on your laptop, and it never goes into Git\nBots scan public repositories for AWS keys\nThe instance runs Ubuntu Linux, so the shell commands work there\nWe install software with apt, copy files with scp, and run a Python script\nWe finish by terminating it, so the bill stays at zero\nThe final project is released the same day\n\n\n\n\n\nBefore then:\n\nCreate your AWS account\nSet the zero-spend budget\nCheck that ssh runs: type ssh -V in your terminal\n\nMac: open Terminal\nWindows: use the WSL terminal. If ssh is missing, run sudo apt install openssh-client"
   },
   {
     "objectID": "lectures/lecture-16/16-cloud.html#audio-transcription-at-scale",

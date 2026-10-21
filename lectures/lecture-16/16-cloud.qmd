@@ -27,30 +27,24 @@ editor:
 
 ## The AI module
 
-:::{style="margin-top: 30px; font-size: 24px;"}
+:::{style="margin-top: 60px; font-size: 24px;"}
 :::{.columns}
 :::{.column width="50%"}
-- Last class closed the module with [retrieval-augmented generation]{.alert}
-- Five stages: chunk → embed → store → retrieve → generate
-- The whole pipeline was about 70 lines of Python, on your own laptop
-- [Fine-tuning]{.alert} changes the model's weights, never its context
-- Use it for behaviour and style. Facts that change belong in retrieval
-- The ladder to take with you: [prompt → RAG → fine-tune]{.alert}
-- Climb a rung only when the one below fails
+- Last class we built a [retrieval-augmented generation]{.alert} (RAG) pipeline
+- The pipeline has five stages: [chunk → embed → store → retrieve → generate]{.alert}
+- [Fine-tuning]{.alert} changes the model's weights, while RAG changes its context
+- Fine-tuning is for behaviour and style, and RAG is for facts that change
+- Try the options in this order: [prompt → RAG → fine-tune]{.alert}
+- Only move on when the previous option does not work
 :::
 
 :::{.column width="50%"}
 :::{style="background: rgba(27, 58, 107, 0.08); padding: 18px; border-radius: 10px; font-size: 22px; margin-top: 10px;"}
-**Today we change the constraint**
+**Today we move to the cloud**
 
-- Every computer in the module was [yours]{.alert}
-- One CPU, limited RAM, and it sleeps in your bag
-- Today we rent [someone else's]{.alert}
-- AWS, and a machine you control from your terminal
-:::
-
-:::{style="text-align: center; margin-top: 15px;"}
-[![](figures/ollama.png){width="35%"}](#){data-modal-type="image" data-modal-url="figures/ollama.png"}
+- So far, all the computers we used were [yours]{.alert}
+- Today we rent [someone else's]{.alert} computer from AWS
+- You will control it from your terminal
 :::
 :::
 :::
@@ -62,12 +56,12 @@ editor:
 :::{style="margin-top: 20px; font-size: 24px;"}
 :::{.columns}
 :::{.column width="55%"}
-- We start with [the money]{.alert}: owning servers versus renting them
-- Two stories from 2008: Animoto and The Washington Post
+- We start with the money: owning servers versus renting them
+- Two stories: Animoto and The Washington Post
 - Then the vocabulary: [IaaS, PaaS, SaaS, FaaS]{.alert} and virtual machines
-- [A tour of AWS]{.alert}: compute, storage, and databases
+- A tour of AWS: compute, storage, and databases
 - [The October 2025 outage]{.alert}, when AWS broke for fifteen hours
-- [You open an account]{.alert} and set a budget that emails you
+- You open an account and set a budget that emails you
 - We read a scanned document with [Amazon Textract](https://aws.amazon.com/textract/)
 :::
 
@@ -92,12 +86,12 @@ AWS lists [123 availability zones in 39 regions](https://aws.amazon.com/about-aw
 :::{.column width="50%"}
 - Cloud computing is [renting computers over the internet]{.alert}
 - You [pay as you go]{.alert}, often by the second
-- The machine sits in [someone else's data centre]{.alert}
-- The "Big Three" are [AWS, Microsoft Azure, and Google Cloud]{.alert}
-  - Market share: AWS 28%, Azure 21%, Google 14% ([Synergy Research](https://www.statista.com/chart/18819/worldwide-market-share-of-leading-cloud-infrastructure-service-providers/), Q1 2026)
-  - Spending: [$129 billion]{.alert} in Q1 2026, up 35% in a year
-- AWS is Amazon's [most profitable division]{.alert}
-  - In Q2 2026: 21% of sales and 60% of operating profit ($16.6 billion)
+- The machine sits in someone else's data centre
+- The "Big Three" are [AWS](https://aws.amazon.com/), [Microsoft Azure](https://azure.microsoft.com/), and [Google Cloud](https://cloud.google.com/)
+  - Market share: AWS 28%, Azure 21%, Google 14% ([Synergy Research](https://www.srgresearch.com/articles/cloud-market-annual-revenue-run-rate-topped-half-a-trillion-dollars-in-q1-as-growth-surge-continues), Q1 2026)
+  - Spending: [$129 billion]{.alert} in Q1 2026, up 35% in a year ([Synergy Research](https://www.srgresearch.com/articles/cloud-market-annual-revenue-run-rate-topped-half-a-trillion-dollars-in-q1-as-growth-surge-continues))
+- AWS is Amazon's most profitable division
+  - In Q2 2026: 21% of sales and 60% of operating profit ($16.6 billion, [Amazon](https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Second-Quarter-Results/default.aspx))
 :::
 
 :::{.column width="50%"}
@@ -127,7 +121,7 @@ Chart to Q3 2024: [GeekWire](https://www.geekwire.com/2025/amazons-quarterly-pro
 
 :::{.column width="50%"}
 - Infrastructure is [very expensive]{.alert}: 
-  - Hardware (Dell's [cheapest rack server](https://www.dell.com/en-us/shop/ipovw/poweredge-r360) starts at $6,500, and a useful one costs much more)
+  - Hardware (Dell's [cheapest rack server](https://www.dell.com/en-us/shop/ipovw/poweredge-r360) starts at $5,549, and a good one costs much more)
   - Real estate costs 
   - Cooling system, power bill 
   - A few systems engineers 
@@ -166,9 +160,9 @@ Chart to Q3 2024: [GeekWire](https://www.geekwire.com/2025/amazons-quarterly-pro
 - [Animoto](https://animoto.com/): Lets users create videos from their own photos/music
 - Built using [Amazon EC2](https://aws.amazon.com/ec2/) (Elastic Compute Cloud) + [S3](https://aws.amazon.com/s3/) (Simple Storage Service) + [SQS](https://aws.amazon.com/sqs/) (Simple Queue Service)
 - Released a Facebook app in mid-April 2008 
-- More than [750,000 people signed up within 3 days]{.alert}
-- EC2 usage went [from 50 machines to 3,500 (x70 scalability!)]{.alert}
-- [No way they could have done this with traditional infrastructure!]{.alert}
+- More than 750,000 people signed up within 3 days
+- EC2 usage went from [50 machines to 3,500]{.alert} (x70 scalability!)
+- No way they could have done this with traditional infrastructure!
 :::
 
 :::{.column width="50%"}
@@ -183,16 +177,16 @@ Source: [Jeff Bezos' talk at Stanford in 2008](https://youtu.be/6nKfFHuouzA?si=M
 
 ## Case study: The Washington Post
 
-:::{style="margin-top: 30px; font-size: 23px;"}
+:::{style="margin-top: 60px; font-size: 23px;"}
 :::{.columns}
 :::{.column width="50%"}
-- [Hillary Clinton's White House schedule]{.alert} was released to the public in 2008
-- 17,481 pages of low-quality PDF, none of it searchable
-- Reading it by hand would have taken [hundreds of hours]{.alert}
-- Peter Harkins, a senior engineer at the paper, asked: "Can we make that data available more quickly, ideally within the same news cycle?"
-- He tested optical character recognition programs, then launched [200 EC2 instances]{.alert}
-- Nine hours of waiting, 1,407 hours of machine time, [$144.62]{.alert}
-- The results were online [26 hours after the release]{.alert}
+- In 2008, [Hillary Clinton's White House schedule]{.alert} was made public
+- It was [17,481 pages](https://www2.eecs.berkeley.edu/Pubs/TechRpts/2009/Archive/EECS-2009-28.pdf) of low-quality PDF, and none of it was searchable
+- Reading it by hand would have taken hundreds of hours
+- Peter Harkins, a senior engineer at the paper, wanted the data in the newsroom within the same news cycle
+- He ran [optical character recognition (OCR)](https://en.wikipedia.org/wiki/Optical_character_recognition) software on 200 [EC2](https://aws.amazon.com/ec2/) instances
+- The job took nine hours and 1,407 hours of machine time, and it cost [[$144.62](https://www.greenm3.com/gdcblog/2013/8/28/case-study-of-washington-post-using-aws.html)]{.alert}
+- The searchable database went public 26 hours after that
 :::
 
 :::{.column width="50%"}
@@ -329,7 +323,7 @@ Source: [The Washington Post](https://www.washingtonpost.com/archive/politics/20
 - Middleware is software that [connects two separate applications]{.alert}
 - It sits between the operating system and the application
 - We rarely see it, but most of the internet depends on it
-- It handles [authentication, encryption]{.alert}, and the drivers that [talk to databases]{.alert}
+- It handles authentication, encryption, and the drivers that talk to databases
 - A [message queue]{.alert} holds work until a machine is free, so neither side waits for the other
 - Animoto used [SQS](https://aws.amazon.com/sqs) that way: the queue held the video jobs while EC2 grew to 3,500 machines
 - [Apache Kafka](https://kafka.apache.org) and [RabbitMQ](https://www.rabbitmq.com) do the same job outside AWS
@@ -354,9 +348,9 @@ More about middleware: <https://aws.amazon.com/what-is/middleware/>
   - Bob wants a machine with 1 CPU and 3 GB of memory 
   - Charlie wants 2 CPUs and 1 GB of memory 
   - Daniel wants 1 CPU and 4 GB of memory
-- [What should Alice do?]{.alert}
-- Alice can sell each customer a [virtual machine (VM) with the requested resources]{.alert}
-- From each customer's perspective, it appears as if they had a [physical machine all by themselves (isolation)]{.alert}
+- What should Alice do?
+- Alice can sell each customer a [virtual machine (VM)]{.alert} with the requested resources
+- From each customer's perspective, it appears as if they had a physical machine all by themselves ([isolation]{.alert})
 :::
 
 :::{.column width="50%"}
@@ -377,10 +371,10 @@ More about virtualisation: <https://aws.amazon.com/what-is/virtualization/>
 :::{.columns}
 :::{.column width="50%"}
 - AWS is a collection of cloud-based services
-- It's a very [large platform]{.alert}
+- It's a very large platform
 - Let me say it again: [a VERY LARGE ONE]{.alert} 😂
 - It offers services for:
-  - [Compute, storage, databases, analytics, machine learning, AI, IoT, security, and more]{.alert}
+  - Compute, storage, databases, analytics, machine learning, AI, IoT, security, and more
 - Many companies use AWS, including [Netflix](https://aws.amazon.com/solutions/case-studies/innovators/netflix/), [Airbnb](https://aws.amazon.com/solutions/case-studies/airbnb-case-study/), and [NASA](https://www.earthdata.nasa.gov/engage/partnerships/aws-storage-cloud-compute-request)
 - The most widely used services are [EC2](https://aws.amazon.com/ec2), [S3](https://aws.amazon.com/s3), and [RDS](https://aws.amazon.com/rds), for computing, storage, and databases, respectively
 - Let's look at them in more detail
@@ -403,8 +397,8 @@ More about virtualisation: <https://aws.amazon.com/what-is/virtualization/>
 :::{.column width="50%"}
 - EC2 rents you [virtual machines]{.alert}, called instances
 - You can resize them whenever you need to
-- Most run [Linux]{.alert}, but other systems are available
-- You control them with [Bash]{.alert} from the command line
+- Most run Linux, but other systems are available
+- You control them with Bash from the command line
 - A GUI exists, but you do not need it
 - Uses: websites, databases, machine learning models
 - <https://aws.amazon.com/ec2/>
@@ -413,7 +407,7 @@ More about virtualisation: <https://aws.amazon.com/what-is/virtualization/>
 :::{.column width="50%"}
 - Be [mindful of the costs!]{.alert} They add up quickly
 - Billing is per second (or per hour)
-- [Not included]{.alert}: data transfer, persistent storage, and scaling
+- Not included: data transfer, persistent storage, and scaling
 
 :::{style="text-align: center;"}
 [![](figures/ec2meme.jpg){width="90%"}](#){data-modal-type="image" data-modal-url="figures/ec2meme.jpg"}
@@ -429,12 +423,12 @@ More about virtualisation: <https://aws.amazon.com/what-is/virtualization/>
 :::{.column width="50%"}
 - Scaling means [adding or removing]{.alert} compute capacity
 - You can scale by hand or automatically
-- It helps with [fluctuating workloads]{.alert}
+- It helps with fluctuating workloads
 - Example: a website that is busier during the day
 - You set a [minimum, desired, and maximum]{.alert} number of instances
 - AWS keeps the group inside those bounds
 - A rule triggers the change, usually average CPU or request count
-- [Load balancers]{.alert} spread the traffic across the instances
+- Load balancers spread the traffic across the instances
 :::
 
 :::{.column width="50%"}
@@ -457,8 +451,8 @@ More about virtualisation: <https://aws.amazon.com/what-is/virtualization/>
 - Auto scaling adds instances, and ELB sends traffic to them
 - [Health checks]{.alert} run every few seconds
 - A failing instance gets no traffic until it recovers
-- ELB holds the [HTTPS certificate]{.alert}, so the instances do not need one
-- You pay for data transfer and requests. [It can get expensive]{.alert}
+- ELB holds the HTTPS certificate, so the instances do not need one
+- You pay for data transfer and requests. It can get expensive
 :::
 
 :::{.column width="50%"}
@@ -480,11 +474,11 @@ More about virtualisation: <https://aws.amazon.com/what-is/virtualization/>
 - AWS has three main storage services: [S3](https://aws.amazon.com/s3), [EBS](https://aws.amazon.com/ebs), and [EFS](https://aws.amazon.com/efs)
 - S3 is [object storage]{.alert} for backups, archives, and analytics
 - Files live in [buckets]{.alert}, the top-level containers of S3
-- Each file is stored in at least [three availability zones]{.alert}
+- Each file is stored in at least three availability zones
 - Durability is 99.999999999% (eleven nines!)
-- [Lifecycle policies]{.alert} move old data to cheaper storage classes
+- Lifecycle policies move old data to cheaper storage classes
   - Standard, Intelligent-Tiering, and Glacier (Instant, Flexible, Deep Archive)
-- [Versioning]{.alert} keeps old versions of a file, like `git`
+- Versioning keeps old versions of a file, like `git`
 :::
 
 :::{.column width="50%"}
@@ -504,11 +498,11 @@ More about virtualisation: <https://aws.amazon.com/what-is/virtualization/>
 :::{.columns}
 :::{.column width="50%"}
 - EBS gives EC2 instances [block storage]{.alert}
-- Block storage works [like a hard drive]{.alert}
+- Block storage works like a hard drive
 - EC2 formats it and runs its operating system on it
-- S3 is different: it is [object storage]{.alert}
+- S3 is different: it is object storage
 - Object storage keeps whole files and their metadata, reached over the web
-- Main use: [the disk of an EC2 instance]{.alert}, for the system and databases
+- Main use: the disk of an EC2 instance, for the system and databases
 - [Snapshots]{.alert} back up a volume (like `git` again!)
 - Up to 64 TiB per volume
 :::
@@ -528,9 +522,9 @@ More about virtualisation: <https://aws.amazon.com/what-is/virtualization/>
 :::{style="margin-top: 30px; font-size: 22px;"}
 :::{.columns}
 :::{.column width="50%"}
-- EFS provides [scalable file storage]{.alert} for EC2 instances
+- EFS provides scalable file storage for EC2 instances
 - It is mainly used for [shared file storage]{.alert}: many instances mount the same file system
-- Common uses are [big data, analytics, and web serving]{.alert}
+- Common uses are big data, analytics, and web serving
 - An EBS volume usually attaches to one instance at a time
 - EFS grows and shrinks on its own, so there is no volume size to choose
 - As with S3 and EBS, you pay for the storage you use
@@ -553,8 +547,8 @@ More about virtualisation: <https://aws.amazon.com/what-is/virtualization/>
 :::{.columns}
 :::{.column width="50%"}
 - [Amazon RDS](https://aws.amazon.com/rds/) runs a [relational database]{.alert} for you
-- [Seven engines]{.alert}: Aurora, PostgreSQL, MySQL, MariaDB, Oracle, SQL Server, and Db2
-- AWS handles [backups, patches, and updates]{.alert}
+- Seven engines: Aurora, PostgreSQL, MySQL, MariaDB, Oracle, SQL Server, and Db2
+- AWS handles backups, patches, and updates
 - You get a hostname and a port, but no `ssh`
 - [Multi-AZ]{.alert} keeps a standby copy in another zone and switches to it on failure
 - Related services:
@@ -581,8 +575,8 @@ More about virtualisation: <https://aws.amazon.com/what-is/virtualization/>
 - Finally, let's talk about [Amazon SageMaker AI](https://aws.amazon.com/sagemaker/ai/)
 - It is a managed service to build, train, and deploy [machine learning models at scale]{.alert}
   - AWS renamed the original service in December 2024, so older tutorials still say "SageMaker"
-- It has pre-built containers for [TensorFlow, PyTorch, and scikit-learn]{.alert}
-- You can bring your own models and train them in [Jupyter notebooks]{.alert}
+- It has pre-built containers for TensorFlow, PyTorch, and scikit-learn
+- You can bring your own models and train them in Jupyter notebooks
 - The [AWS Marketplace](https://aws.amazon.com/marketplace) sells many more models, and [SageMaker Unified Studio](https://aws.amazon.com/sagemaker/unified-studio/) is the single workbench for data and AI projects
 - Some ready-made AI services:
   - [Comprehend (for NLP)](https://aws.amazon.com/comprehend/)
@@ -607,15 +601,13 @@ More about virtualisation: <https://aws.amazon.com/what-is/virtualization/>
 :::{style="margin-top: 20px; font-size: 23px;"}
 :::{.columns}
 :::{.column width="50%"}
-- The cause was a [race condition]{.alert}: two programs changed the same thing at once
-- Two DynamoDB programs updated the same DNS record
-- One wrote an old plan late, and the other's clean-up deleted it
-- `dynamodb.us-east-1.amazonaws.com` then pointed nowhere
-- EC2 launches, load balancers, and console sign-in failed too
-- Recovery took about [fifteen hours]{.alert}
-- [Snapchat, Fortnite, Signal, banks and more](https://www.cnn.com/business/live-news/amazon-tech-outage-10-20-25-intl) went down
-- [17 million people](https://www.techradar.com/pro/security/downtime-caused-historic-issues-in-2025-but-who-lost-out-most) reported problems
-- One insurance model put losses at [$38 million to $581 million]{.alert}
+- Two DynamoDB programs updated the same [Domain Name System (DNS)](https://en.wikipedia.org/wiki/Domain_Name_System) record at once, a [race condition]{.alert}
+  - DNS turns a name like `amazon.com` into an IP address
+- One wrote an old version late, and the other's clean-up deleted it
+- So `dynamodb.us-east-1.amazonaws.com` pointed nowhere
+- EC2 launches, load balancers, and console sign-in also failed
+- Recovery took about fifteen hours
+- [Snapchat, Fortnite, Signal, banks and more](https://www.cnn.com/business/live-news/amazon-tech-outage-10-20-25-intl) went down, and [17 million people](https://www.techradar.com/pro/security/downtime-caused-historic-issues-in-2025-but-who-lost-out-most) reported problems
 :::
 
 :::{.column width="50%"}
@@ -626,7 +618,8 @@ More about virtualisation: <https://aws.amazon.com/what-is/virtualization/>
 Source: [AWS post-event summary](https://aws.amazon.com/message/101925/)
 :::
 
-- [Reliability is still your job]{.alert}. Start by not keeping everything in one region!
+- [CyberCube](https://www.businesswire.com/news/home/20251023532923/en/CyberCube-Reveals-Insurance-Loss-Estimate-for-AWS-Amazonk-Outage) estimated insured losses of $38 million to $581 million
+- [Reliability is still your job]{.alert}: don't keep everything in one region!
 :::
 :::
 :::
@@ -635,7 +628,6 @@ Source: [AWS post-event summary](https://aws.amazon.com/message/101925/)
 # Creating and managing an AWS account 🛠️ {background-color="#1B3A6B"}
 
 ## Creating an AWS account
-### Ten minutes, and you need a payment card
 
 :::{style="margin-top: 20px; font-size: 24px;"}
 :::{.columns}
@@ -669,12 +661,11 @@ Do this at home, before or after class. Please let me know if you have any probl
 :::{style="margin-top: 20px; font-size: 24px;"}
 :::{.columns}
 :::{.column width="50%"}
-- The account starts with [$100 in credits]{.alert}, and the console offers up to [$100 more]{.alert} for trying key services
-- That is $200 across the [six months]{.alert} of the free plan
-- The plan ends after six months or when the credits run out, whichever comes first
-- AWS puts it plainly: [you will not be charged unless you convert to a paid plan]{.alert}
-- The free plan blocks some services, and workloads stop at the credit thresholds
-- Everything this course asks of you fits inside those limits
+- You start with $100 in credits and can earn up to $100 more in the console
+- The plan ends after six months or when the credits run out
+- AWS says [you will not be charged unless you convert to a paid plan]{.alert}
+- Some services are blocked on the free plan
+- Everything this course needs fits inside it
 :::
 
 :::{.column width="50%"}
@@ -761,18 +752,15 @@ Forecast alerts need roughly five weeks of history, so a new account gets none t
 # Reading a scanned document {background-color="#1B3A6B"}
 
 ## Amazon Textract
-### The 2008 job, in a browser, in about a minute
 
-:::{style="margin-top: 20px; font-size: 22px;"}
+:::{style="margin-top: 60px; font-size: 22px;"}
 :::{.columns}
 :::{.column width="50%"}
 1. Open the console and search for `Textract`
 2. Choose [Analyze Document]{.alert} under Demos
-3. Upload `clinton-schedule-2001-pages-11-20.pdf`
+3. Upload [`clinton-schedule-2001-pages-11-20.pdf`](https://github.com/danilofreire/datasci350/raw/main/lectures/lecture-16/data/clinton-schedule-2001-pages-11-20.pdf)
 4. Tick the outputs you want
 5. Choose [Apply configuration]{.alert}
-
-- The file is in the course repository, under [`lectures/lecture-16/data/`](https://github.com/danilofreire/datasci350/blob/main/lectures/lecture-16/data/clinton-schedule-2001-pages-11-20.pdf)
 
 Ten pages of Hillary Clinton's 2001 schedule, the same typewritten paper The Washington Post fed through OCR
 
@@ -792,9 +780,8 @@ New accounts get 1,000 pages a month of text detection and 100 of layout, forms 
 :::
 
 ## What you can ask for
-### Five kinds of structure, one document
 
-:::{style="margin-top: 30px; font-size: 23px;"}
+:::{style="margin-top: 60px; font-size: 23px;"}
 :::{.columns}
 :::{.column width="42%"}
 - [Layout]{.alert}: titles, paragraphs, headers, lists, page numbers, and the reading order
@@ -819,19 +806,18 @@ Page 1 of 10, with the outputs about to be applied
 :::
 
 ## What came back
-### Blocks in reading order, each with a confidence score
+### Every block comes with a score
 
-:::{style="margin-top: 20px; font-size: 21px;"}
+:::{style="margin-top: 60px; font-size: 21px;"}
 :::{.columns}
 :::{.column width="42%"}
-- Textract returns [blocks in reading order]{.alert}, each labelled by type
-- Page 8 came back as a header, a list, and eleven text blocks
+- Textract returns [blocks in reading order]{.alert}, each with a type
+- Page 8 has a header, a list, and eleven text blocks
 - The header reads "SCHEDULE FOR HILLARY [RODAHM]{.alert} CLINTON"
-- The typo is in the 2001 document. Textract copied the page faithfully
-- Anyone searching these files for "Rodham" would miss this page
-- Scores on this page ran from 28% to 92%. They rate how sure Textract is about the [type]{.alert} of block, not the spelling inside it
-- The [Raw text]{.alert} tab gives the plain transcript to copy
-- The appendix runs an audio transcription job using [Amazon Transcribe](#sec-appendix-transcribe)
+- The typo is in the 2001 original, so a search for "Rodham" would miss this page
+- Scores ran from 28% to 92%. They rate the block type, not the spelling
+- The [Raw text]{.alert} tab gives a plain transcript
+- The appendix transcribes audio with [Amazon Transcribe](#sec-appendix-transcribe)
 :::
 
 :::{.column width="58%"}
@@ -853,12 +839,12 @@ The Layout tab, page 8 of 10
 :::{style="margin-top: 30px; font-size: 24px;"}
 :::{.columns}
 :::{.column width="50%"}
-- Why cloud computing [matters to a business]{.alert}
-- The [Big Three]{.alert}: AWS, Azure, and Google Cloud
+- Why cloud computing matters to a business
+- The Big Three: AWS, Azure, and Google Cloud
 - The service types: [IaaS, PaaS, SaaS, FaaS]{.alert}
-- Popular AWS services: [EC2, S3, RDS, SageMaker]{.alert}
+- Popular AWS services: EC2, S3, RDS, SageMaker
 - How to open an AWS account and set a [zero-spend budget]{.alert}
-- How to read a scanned PDF with [Amazon Textract]{.alert}
+- How to read a scanned PDF with Amazon Textract
 - [Delete your S3 bucket]{.alert} if you ran the Transcribe appendix!
 :::
 
@@ -871,38 +857,31 @@ The Layout tab, page 8 of 10
 :::
 
 ## Next class
-### Inside the machine you just rented
 
-:::{style="margin-top: 20px; font-size: 21px;"}
+:::{style="margin-top: 60px; font-size: 21px;"}
 :::{.columns}
 :::{.column width="52%"}
-- We launch an [EC2 instance]{.alert} from the console and connect to it over [SSH]{.alert} with a key pair
-- That key pair is a file on your laptop. It [never goes into a Git repository]{.alert}, because bots scan public repositories for AWS keys
-- Ubuntu Linux, so every command from the shell module works there
-- We install software with `apt`, move files with `scp`, and run a Python script on the instance
-- We finish by [terminating]{.alert} it, which is the habit that keeps the bill at zero
+- We launch an EC2 instance and connect to it over SSH with a key pair
+- The key pair is a file on your laptop, and it [never goes into Git]{.alert}
+- Bots scan public repositories for AWS keys
+- The instance runs Ubuntu Linux, so the shell commands work there
+- We install software with `apt`, copy files with `scp`, and run a Python script
+- We finish by [terminating]{.alert} it, so the bill stays at zero
 - The final project is released the same day
-
-:::{style="text-align: center; margin-top: 10px;"}
-[![](figures/ssh-ec2-2026.png){width="78%"}](#){data-modal-type="image" data-modal-url="figures/ssh-ec2-2026.png"}
-:::
 :::
 
 :::{.column width="48%"}
+:::{style="text-align: center;"}
+[![](figures/ssh-ec2-2026.png){width="78%"}](#){data-modal-type="image" data-modal-url="figures/ssh-ec2-2026.png"}
+:::
+
 Before then:
 
 1. Create your AWS account
 2. Set the zero-spend budget
-3. Windows users, install WSL. Tutorial 06 has the steps
-4. Check that `ssh` runs in your terminal
-
-:::{style="background: rgba(27, 58, 107, 0.08); padding: 15px; border-radius: 10px; font-size: 19px; margin-top: 15px;"}
-Bring the laptop you will use in class. Setting up SSH on a borrowed machine costs the whole session
-:::
-
-:::{style="background: rgba(230, 57, 70, 0.1); padding: 15px; border-radius: 10px; font-size: 19px; margin-top: 12px;"}
-[Quiz 03]{.alert} covers the AI module and this cloud module
-:::
+3. Check that `ssh` runs: type `ssh -V` in your terminal
+   - Mac: open Terminal
+   - Windows: use the WSL terminal. If `ssh` is missing, run `sudo apt install openssh-client`
 :::
 :::
 :::
