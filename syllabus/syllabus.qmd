@@ -355,7 +355,7 @@ Suggested references:
 - Lecture 16: [Introduction to Cloud Computing](https://danilofreire.github.io/datasci350/lectures/lecture-16/16-cloud.html).
 - **Assignment 06 due (5%).**
 - [**Assignment 07**](https://github.com/danilofreire/datasci350/blob/main/assignments/07-assignment.ipynb).
-- [Kahoot Quiz](https://play.kahoot.it/v2/?quizId=9a098f1f-ebd6-40cd-aa4e-b8f096683a37&hostId=05eb977d-4f8a-440e-9e45-95212b29d103).
+- [Kahoot Quiz](https://play.kahoot.it/v2/?quizId=4a61c268-0eee-4fbb-b643-5bccfceca935&hostId=05eb977d-4f8a-440e-9e45-95212b29d103).
 
 Suggested references:
 
