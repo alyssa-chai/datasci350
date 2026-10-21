@@ -366,9 +366,9 @@ Suggested references:
 ### October 27, 2026:
 
 - Lecture 17: [Cloud Computing II: Running Your Own Server on AWS](https://danilofreire.github.io/datasci350/lectures/lecture-17/17-cloud2.html).
-- No new assignment this week. Start reading the final project instructions.
+- Start reading the final project instructions.
 - [Instructions for the Final Project](https://github.com/danilofreire/datasci350/tree/main/project).
-- [Kahoot Quiz](https://play.kahoot.it/v2/?quizId=1ee46eb8-e667-4132-9895-4dd72ef3c561&hostId=05eb977d-4f8a-440e-9e45-95212b29d103).
+- [Kahoot Quiz](https://play.kahoot.it/v2/?quizId=9a098f1f-ebd6-40cd-aa4e-b8f096683a37&hostId=05eb977d-4f8a-440e-9e45-95212b29d103).
 
 Suggested references:
 
@@ -382,7 +382,7 @@ Suggested references:
 
 - Lecture 18: [Web APIs and JSON](https://danilofreire.github.io/datasci350/lectures/lecture-18/18-web-apis.html).
 - **Assignment 07 due (5%).**
-- [Kahoot Quiz](https://play.kahoot.it/v2/?quizId=ebd517ed-7bf1-447c-8e30-9c5abb75ef16&hostId=05eb977d-4f8a-440e-9e45-95212b29d103).
+- [Kahoot Quiz](https://play.kahoot.it/v2/?quizId=1ee46eb8-e667-4132-9895-4dd72ef3c561&hostId=05eb977d-4f8a-440e-9e45-95212b29d103).
 
 Suggested references:
 
@@ -395,7 +395,7 @@ Suggested references:
 
 - Lecture 19: [Working with APIs in Practice](https://danilofreire.github.io/datasci350/lectures/lecture-19/19-apis-in-practice.html).
 - Optional: [Web scraping tutorial](https://danilofreire.github.io/datasci350/05-web-scraping-tutorial.html). Self-study, not examinable.
-- [Kahoot Quiz](https://play.kahoot.it/v2/?quizId=0d1466b5-ef43-4ab3-90aa-c46ae0554f19&hostId=05eb977d-4f8a-440e-9e45-95212b29d103).
+- [Kahoot Quiz](https://play.kahoot.it/v2/?quizId=db7a545c-6626-4209-a64c-b663fb2e7376&hostId=05eb977d-4f8a-440e-9e45-95212b29d103).
 
 Suggested references:
 
@@ -427,7 +427,7 @@ Suggested references:
 - Lecture 22: [SQL Revision with DuckDB](https://danilofreire.github.io/datasci350/lectures/lecture-22/22-sql-revision.html).
 - **Assignment 08 due (5%).**
 - [**Assignment 09**](https://github.com/danilofreire/datasci350/blob/main/assignments/09-assignment.ipynb).
-- [Kahoot Quiz](https://play.kahoot.it/v2/?quizId=a2403e39-2c84-473b-8e78-ea0889581b0c&hostId=05eb977d-4f8a-440e-9e45-95212b29d103).
+- [Kahoot Quiz](https://play.kahoot.it/v2/?quizId=51007691-c01b-4fb9-9e91-953044c3c880&hostId=05eb977d-4f8a-440e-9e45-95212b29d103).
 
 Suggested references:
 
@@ -441,7 +441,7 @@ Suggested references:
 ### November 17, 2026:
 
 - Lecture 23: [Dependency Management, Virtual Environments, and Containers](https://danilofreire.github.io/datasci350/lectures/lecture-23/23-containers.html).
-- [Kahoot Quiz](https://play.kahoot.it/v2/?quizId=8273ae04-10b2-4eee-9b8a-77f97ef43550&hostId=05eb977d-4f8a-440e-9e45-95212b29d103).
+- [Kahoot Quiz](https://play.kahoot.it/v2/?quizId=62c2a444-6470-4d64-a0ee-0d2e75e53595&hostId=05eb977d-4f8a-440e-9e45-95212b29d103).
 
 Suggested references:
 
@@ -458,7 +458,6 @@ Suggested references:
 ### November 24, 2026:
 
 - Lecture 25: [Docker for Data Science](https://danilofreire.github.io/datasci350/lectures/lecture-25/25-docker.html).
-- [Kahoot Quiz](https://play.kahoot.it/v2/?quizId=f2e51b56-a8f6-4178-8656-fec9d42679b1&hostId=05eb977d-4f8a-440e-9e45-95212b29d103).
 
 Suggested references:
 
@@ -472,7 +471,7 @@ Suggested references:
 ### December 1, 2026:
 
 - Lecture 26: [Revision: Scaling, SQL and Containers](https://danilofreire.github.io/datasci350/lectures/lecture-26/26-revision.html). Covers Lectures 21, 22, 23, and 25, with SQL practice exercises and project Q&A.
-- [Kahoot Quiz](https://play.kahoot.it/v2/?quizId=d19e2d39-f38c-4a1e-9d5d-c3113bd3ad36&hostId=05eb977d-4f8a-440e-9e45-95212b29d103).
+- [Kahoot Quiz](https://play.kahoot.it/v2/?quizId=3a23cad0-0139-49b7-95ac-f557dbb3b08c&hostId=05eb977d-4f8a-440e-9e45-95212b29d103).
 
 ### December 3, 2026:
 
