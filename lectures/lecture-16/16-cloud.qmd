@@ -77,6 +77,38 @@ AWS lists [123 availability zones in 39 regions](https://aws.amazon.com/about-aw
 :::
 :::
 
+## Tweet of the day
+
+:::{style="text-align: center; margin-top: 10px;"}
+[![](figures/env-tweet.jpeg){height="520px"}](#){data-modal-type="image" data-modal-url="figures/env-tweet.jpeg"}
+
+:::{style="font-size: 18px;"}
+Source: [X](https://x.com/digitalshane_/status/2112934189788283088)
+:::
+:::
+
+## Paper of the day
+
+:::{style="margin-top: 10px;"}
+:::{.columns}
+:::{.column width="50%"}
+:::{style="text-align: center;"}
+[![](figures/japan-paper.png){height="480px"}](#){data-modal-type="image" data-modal-url="figures/japan-paper.png"}
+:::
+:::
+
+:::{.column width="50%"}
+:::{style="text-align: center;"}
+[![](figures/japan-paper-thread.png){height="480px"}](#){data-modal-type="image" data-modal-url="figures/japan-paper-thread.png"}
+:::
+:::
+:::
+
+:::{style="text-align: center; font-size: 18px;"}
+Source: [arXiv](https://arxiv.org/abs/2604.21751)
+:::
+:::
+
 # Cloud computing ☁️ {background-color="#1B3A6B"}
 
 ## What is cloud computing?

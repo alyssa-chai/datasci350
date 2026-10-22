@@ -8622,5 +8622,19 @@
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Before and after",
     "text": "Before and after\nReal answers to the test questions\n\n\n\n\nQ: Which shortcode inserts three paragraphs of Lorem Ipsum?\nBefore: {{ loremipsum(3) }}                        ❌\nAfter:  {{&lt; lipsum 3 &gt;}}                            ✅\n\nQ: How do I turn off _brand.yml for one document?\nBefore: Use the --no-brand option.                 ❌\nAfter:  Set brand to false in the YAML header.     ✅\n\nQ: Which variable picks Quarto's julia binary?\nBefore: JULIA Binaries                             ❌\nAfter:  QUARTO_JULIA                               ✅\n\nQ: How big is a placeholder image by default?\nAfter:  {{&lt; placeholder 400 200 &gt;}}  (docs: 100x100) ❌\n\nQ: What is the capital of Australia?\nAfter (run 1): It is Sydney.                       ❌\n\n\n\n\nRun 1 forgot facts it knew before\nThe best run still got 12 of 25 wrong or half right"
+  },
+  {
+    "objectID": "lectures/lecture-16/16-cloud.html#tweet-of-the-day",
+    "href": "lectures/lecture-16/16-cloud.html#tweet-of-the-day",
+    "title": "DATASCI 350 - Data Science Computing",
+    "section": "Tweet of the day",
+    "text": "Tweet of the day\n\n\n\nSource: X"
+  },
+  {
+    "objectID": "lectures/lecture-16/16-cloud.html#paper-of-the-day",
+    "href": "lectures/lecture-16/16-cloud.html#paper-of-the-day",
+    "title": "DATASCI 350 - Data Science Computing",
+    "section": "Paper of the day",
+    "text": "Paper of the day\n\n\n\n\n\n\n\n\n\n\n\n\nSource: arXiv"
   }
 ]
