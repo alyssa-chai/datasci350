@@ -31,12 +31,12 @@ editor:
 :::{style="margin-top: 25px; font-size: 26px;"}
 :::{.columns}
 :::{.column width="55%"}
-- Last class: why [rent]{.alert} servers instead of buying them
-- Animoto and The Washington Post showed what renting makes possible
+- [Last class](https://danilofreire.github.io/datasci350/lectures/lecture-16/16-cloud.html): why [rent]{.alert} servers instead of buying them
+- [Animoto](https://animoto.com/) and [The Washington Post](https://www.greenm3.com/gdcblog/2013/8/28/case-study-of-washington-post-using-aws.html) showed what renting makes possible
 - [IaaS, PaaS, SaaS, FaaS]{.alert} and the main AWS services
-- The October 2025 `us-east-1` outage
+- The [October 2025 `us-east-1` outage](https://aws.amazon.com/message/101925/)
 - Your [free plan]{.alert} account and [zero-spend budget]{.alert}
-- Amazon Textract on a scanned document
+- [Amazon Textract](https://aws.amazon.com/textract/) on a scanned document
 - So far, everything happened in the browser. [Today we use the terminal (as always!)]{.alert} 😂
 :::
 
@@ -164,48 +164,26 @@ Source: [DataCamp](https://www.datacamp.com/blog/what-is-a-virtual-machine)
 :::
 :::
 
-## Windows Subsystem for Linux (WSL)
-### A real Linux system inside Windows
-
-:::{style="margin-top: 30px; font-size: 23px;"}
-:::{.columns}
-:::{.column width="50%"}
-- [WSL](https://learn.microsoft.com/en-us/windows/wsl/) runs Linux inside Windows. It installs [Ubuntu]{.alert} by default
-- You get the same `bash` terminal that Mac and Linux users have, so every command in this course works
-- Windows runs it in a small virtual machine and starts it for you when you open the Ubuntu app
-- Tutorial 06 has the installation steps. I hope many of you have done it already! 😊
-- To open it, type `Ubuntu` in the Start menu
-- WSL has [two separate filesystems]{.alert}:
-  - Your Linux home, `/home/<your-linux-name>`, also written `~`
-  - Your Windows drive `C:`, which Linux sees as `/mnt/c/`
-:::
-
-:::{.column width="50%"}
-:::{style="text-align: center;"}
-[![](figures/wsl.jpg){width="100%"}](#){data-modal-type="image" data-modal-url="figures/wsl.jpg"}
-
-[Ubuntu on Windows (WSL)](https://ubuntu.com/wsl)
-:::
-:::
-:::
-:::
-
 ## WSL and your SSH key
 ### Move the key into your Linux home first
 
 :::{style="margin-top: 30px; font-size: 22px;"}
 :::{.columns}
 :::{.column width="45%"}
-- Your browser saves the key on the Windows side, in your `Downloads` folder
-- From WSL, that folder is `/mnt/c/Users/<your-windows-name>/Downloads/`
-- Files on the Windows drive [ignore `chmod`]{.alert}. They always look open to everyone
-- SSH then refuses the key with `WARNING: UNPROTECTED PRIVATE KEY FILE!`
-- The fix is to [copy the key into your Linux home]{.alert} and set its permissions there
+- Your browser saves the key to Windows `Downloads`, which WSL sees as `/mnt/c/Users/<your-windows-name>/Downloads/`
+- Files on `C:` [ignore `chmod`]{.alert} and always look open to everyone
+- SSH then refuses the key: `WARNING: UNPROTECTED PRIVATE KEY FILE!`
+- Fix: [copy the key to your Linux home]{.alert} and `chmod` it there
 - Not sure of your Windows user name? Run `ls /mnt/c/Users/`
-- Your Linux files also appear in Windows Explorer, under `Linux` in the left panel
+- Windows Explorer shows your Linux files under `Linux` in the left panel
 :::
 
 :::{.column width="55%"}
+- Open WSL: type `Ubuntu` in the Start menu
+- WSL has [two separate filesystems]{.alert}:
+  - Linux home: `/home/<your-linux-name>`, or `~`
+  - Windows `C:` drive: `/mnt/c/`
+
 :::{style="font-size: 20px;"}
 ```bash
 # 1. Copy the key from Downloads to your Linux home
@@ -220,6 +198,10 @@ ls -l ~/datasci350.pem
 # 4. Connect as usual
 ssh -i ~/datasci350.pem ubuntu@<your-public-dns>
 ```
+:::
+
+:::{style="background: rgba(230, 57, 70, 0.1); padding: 15px; border-radius: 10px; font-size: 18px; margin-top: 15px;"}
+[Still stuck?]{.alert} If SSH refuses your key after these steps, connect from CloudShell instead. It runs Linux in your browser, so `chmod` works. Steps in the [appendix](#cloudshell-as-a-way-back-in)
 :::
 :::
 :::
@@ -278,7 +260,6 @@ The [launch wizard](https://us-east-1.console.aws.amazon.com/ec2/v2/home?region=
 :::
 
 ## Which instance type is free?
-### The console's own note is out of date
 
 :::{style="margin-top: 25px; font-size: 22px;"}
 :::{.columns}
@@ -290,7 +271,7 @@ The [launch wizard](https://us-east-1.console.aws.amazon.com/ec2/v2/home?region=
 - You can [change the instance type later]{.alert}
 
 :::{style="background: rgba(230, 57, 70, 0.1); padding: 15px; border-radius: 10px; font-size: 18px; margin-top: 15px;"}
-The blue `Free tier` note in the `Summary` panel describes the old offer: 750 hours a month of `t2.micro` for a year. That offer ended for accounts opened after [15 July 2025]{.alert}. Your account runs on credits, and `t2.micro` is not on your list
+Ignore the blue `Free tier` note in `Summary`. It describes the old `t2.micro` offer (750 hours a month for a year), closed to new accounts on [15 July 2025]{.alert}. Your account runs on credits instead
 :::
 :::
 
@@ -315,7 +296,7 @@ The instance type dropdown, with the hourly price under every entry
 - A key pair is two cryptographic keys that [authenticate]{.alert} you to an instance
 - You [create it once](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) and [use it for all your instances]{.alert}
 - Click `Create a new key pair` and name it, e.g. `datasci350`
-- Choose `ED25519` and the `.pem` file format
+- Choose [`ED25519`](https://en.wikipedia.org/wiki/EdDSA#Ed25519) and the `.pem` file format
 - Click `Create key pair` and [save the file somewhere safe]{.alert}
 - You need it to log in over SSH, and [AWS cannot send you another copy]{.alert}
 :::
@@ -416,12 +397,11 @@ The instance type dropdown, with the hourly price under every entry
 :::
 
 :::{.column width="42%"}
-- The first connection asks you to confirm the host fingerprint
-- Type `yes` once, and SSH remembers the machine
-- The banner shows what you rented: [Ubuntu 26.04 LTS]{.alert}, a 6.61 GB disk that is 30% full, 118 processes, and no other users
+- Type `yes` to confirm the host fingerprint. SSH asks only once
+- The banner shows what you rented: [Ubuntu 26.04 LTS]{.alert}, a 6.61 GB disk (30% full), 118 processes, no other users
 - The prompt changes to `ubuntu@ip-172-31-13-146`
 - Every command now runs on a computer in [Virginia]{.alert}
-- `exit` [logs you out and returns you to your own machine]{.alert}
+- `exit` [returns you to your own machine]{.alert}
 :::
 :::
 :::
@@ -450,13 +430,14 @@ The instance type dropdown, with the hourly price under every entry
 :::{style="margin-top: 30px; font-size: 22px;"}
 :::{.columns}
 :::{.column width="46%"}
-- Open it from the [bottom left]{.alert} of the console. Nothing to install
+- Open [CloudShell](https://aws.amazon.com/cloudshell/) from the [bottom left]{.alert} of the console. Nothing to install
 - [Amazon Linux 2023]{.alert}: 1 vCPU, 2 GiB of RAM, 1 GB of saved storage
 - Free: you pay only for the resources you use from it
-- The [AWS CLI]{.alert} is already signed in as you
+- The [[AWS CLI](https://aws.amazon.com/cli/)]{.alert} is already signed in as you
 - Also there: `git`, `python3`, `pip`, `boto3`, `jq`, `wget`, `ssh`, `vim`, `nano`, `tmux`
 - It runs [bash]{.alert}, so your usual commands work
-- Sessions end after 20 to 30 idle minutes, or 12 hours
+- A session closes after [20 to 30 minutes without typing]{.alert}, even if a program is still running
+- Any session closes after 12 hours, idle or not
 - Unused home directories are deleted after 120 days
 :::
 
@@ -474,28 +455,88 @@ The panel you meet on first launch, stating the tools and the 1 GB of storage pe
 :::
 :::
 
-## CloudShell commands
-### What is actually new
+## The `aws` command
 
-:::{style="margin-top: 25px; font-size: 20px;"}
+:::{style="margin-top: 25px; font-size: 22px;"}
 :::{.columns}
-:::{.column width="52%"}
-The shell commands work as usual. What is new is the `aws` command line, [already signed in as you]{.alert}:
+:::{.column width="50%"}
+Every command has the same shape: [`aws <service> <command> [options]`]{.alert}
 
-:::{style="text-align: center; margin-top: 30px; margin-bottom: 30px; font-size: 19px;"}
-| Command | What it does |
-|---|---|
-| `aws sts get-caller-identity` | Prints which account and user you are signed in as |
-| `aws ec2 describe-instances --output table` | Lists your instances without leaving the browser |
-| `aws ec2 stop-instances --instance-ids i-...` | Stops an instance from the command line |
-| `aws s3 ls` | Lists your S3 buckets |
-| `aws s3 cp report.pdf s3://my-bucket/` | Copies a file into a bucket |
-| `sudo dnf install <package>` | Installs software for this session only |
+:::{style="text-align: center; margin-top: 20px; margin-bottom: 20px; font-size: 20px;"}
+| Part | Example | Meaning |
+|---|---|---|
+| Tool | `aws` | The AWS command line |
+| Service | `ec2` | Virtual servers |
+| Command | `describe-instances` | List your instances |
+| Option | `--output table` | Print a table instead of JSON |
 :::
 
-- Amazon Linux uses [`dnf`]{.alert} where Ubuntu uses `apt`
-- Software installed with `dnf` goes to `/usr/bin`, which is wiped when the session ends
-- Keep anything you need in your home directory
+- Other services: `s3`, `iam`, `lambda`, `sts`
+- Most commands are verb-noun: `stop-instances`
+- `aws s3` uses shell-like `ls`, `cp`, `rm`
+- `--region` picks the data centre. `us-east-1` is Virginia:
+
+```bash
+aws ec2 describe-instances --region us-east-1
+```
+:::
+
+:::{.column width="50%"}
+[Finding commands]{.alert}
+
+```bash
+aws help                     # every service
+aws ec2 help                 # every EC2 command
+aws ec2 stop-instances help  # one command
+```
+
+- In a help page, `/word` searches and `q` quits
+- `Tab` completes service and command names
+- All commands: [AWS CLI Command Reference](https://docs.aws.amazon.com/cli/latest/reference/)
+
+[Useful commands]{.alert}
+
+```bash
+aws --version             # CLI version
+aws configure list        # region and keys
+aws ec2 describe-regions --output table
+aws ec2 start-instances --instance-ids i-...
+aws ec2 terminate-instances --instance-ids i-...
+aws s3 mb s3://my-bucket  # make a bucket
+```
+:::
+:::
+:::
+
+## Try it in CloudShell
+
+:::{style="margin-top: 25px; font-size: 21px;"}
+:::{.columns}
+:::{.column width="52%"}
+Try it in class if there is time. Otherwise, [try it at home]{.alert}
+
+:::{style="font-size: 19px;"}
+```bash
+# 1. Who am I signed in as?
+aws sts get-caller-identity
+
+# 2. List your instances. Find InstanceId and State
+aws ec2 describe-instances --output table
+
+# 3. Stop yours, then run step 2 again
+aws ec2 stop-instances --instance-ids i-...
+
+# 4. Start it again
+aws ec2 start-instances --instance-ids i-...
+
+# 5. At home and done for the day? Terminate it
+aws ec2 terminate-instances --instance-ids i-...
+```
+:::
+
+- The state goes from `stopping` to [`stopped`]{.alert} in about a minute
+- A restarted instance gets a [new public DNS]{.alert}, so update your `ssh` command
+- CloudShell runs Amazon Linux: [`dnf`]{.alert} replaces `apt`, and what it installs is gone next session
 :::
 
 :::{.column width="48%"}
@@ -504,51 +545,15 @@ The shell commands work as usual. What is new is the `aws` command line, [alread
 :::
 
 :::{style="font-size: 17px;"}
-Two `aws` commands and what they return. The account number is blanked out, and `describe-instances` reports one machine running and one already terminated. [More commands here](https://docs.aws.amazon.com/cloudshell/latest/userguide/getting-started.html)
+Steps 1 and 2: one instance running, one terminated. [More commands](https://docs.aws.amazon.com/cloudshell/latest/userguide/getting-started.html)
 :::
-:::
-:::
-:::
-
-## CloudShell as a way back in
-### When your own terminal will not cooperate
-
-:::{style="margin-top: 20px; font-size: 19px;"}
-:::{.columns}
-:::{.column width="42%"}
-:::{style="font-size: 23px;"}
-- The [WSL problem]{.alert}: Windows ignores `chmod 400` on files in the Windows filesystem, so SSH refuses the key
-- CloudShell avoids this, because the key goes to a Linux machine:
-
-1. Open CloudShell from the console.
-2. Choose `Actions`, then `Upload file`.
-3. Select your `.pem` file. It arrives in `/home/cloudshell-user`.
-4. Run `chmod 400 your-key.pem`.
-5. Run the same `ssh -i ...` command the console gave you.
-
-- The instance does not care that the connection came from a browser tab
-:::
-:::
-
-:::{.column width="58%"}
-:::{style="text-align: center;"}
-[![](figures/cloudshell-actions-2026.png){width="18%"}](#){data-modal-type="image" data-modal-url="figures/cloudshell-actions-2026.png"}
-
-[![](figures/cloudshell-ssh-2026.png){width="92%"}](#){data-modal-type="image" data-modal-url="figures/cloudshell-ssh-2026.png"}
-
-:::{style="font-size: 17px;"}
-The whole thing from a browser tab: the upload confirmation, `chmod 400`, and an Ubuntu 26.04 prompt on the instance
-:::
-:::
-
-- CloudShell times out after [20 to 30 idle minutes]{.alert}, and your SSH connection goes with it
 :::
 :::
 :::
 
 ## Step 07: Update and install software
 
-:::{style="margin-top: 30px; font-size: 22px;"}
+:::{style="margin-top: 30px; font-size: 20px;"}
 :::{.columns}
 :::{.column width="40%"}
 - First, refresh the package list: `sudo apt update`
@@ -558,16 +563,17 @@ The whole thing from a browser tab: the upload confirmation, `chmod 400`, and an
   - Python 3: `sudo apt install python3`
   - pip: `sudo apt install python3-pip`
 - You can install [Jupyter](https://jupyter.org/) and anything else the same way
+  - Jupyter: `sudo apt install jupyter-notebook`
 :::
 
 :::{.column width="60%"}
 :::{style="text-align: center;"}
-[![](figures/update.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/update.png"}
+[![](figures/update.png){width="88%"}](#){data-modal-type="image" data-modal-url="figures/update.png"}
 
 `sudo apt update && sudo apt upgrade -y && sudo apt install -y python3 python3-pip`
 :::
 
-:::{style="background: rgba(230, 57, 70, 0.1); padding: 15px; border-radius: 10px; font-size: 19px; margin-top: 15px;"}
+:::{style="background: rgba(230, 57, 70, 0.1); padding: 15px; border-radius: 10px; font-size: 17px; margin-top: 15px;"}
 `pip install` gives an `externally-managed-environment` error on Ubuntu. Use `sudo apt install python3-<package>` or a virtual environment
 :::
 :::
@@ -579,9 +585,9 @@ The whole thing from a browser tab: the upload confirmation, `chmod 400`, and an
 :::{style="margin-top: 25px; font-size: 21px;"}
 :::{.columns}
 :::{.column width="42%"}
-- `scp` means "secure copy". It moves files over SSH
-- `-i` stands for "identity file", your key
-- [The first path is the source]{.alert}, and the second is the destination
+- `scp` ("secure copy") moves files over SSH
+- `-i` points to your key (the "identity file")
+- [First path is the source]{.alert}, second is the destination
 
 ```verbatim
 # laptop to instance
@@ -591,13 +597,13 @@ scp -i key.pem myfile ubuntu@public-dns:~
 scp -i key.pem ubuntu@public-dns:~/myfile .
 ```
 
-- The `.` in the second command means "the folder I am in now"
-- `scp` can also copy [between two remote servers]{.alert}
-- [Windows users]{.alert}: [WinSCP](https://winscp.net/eng/index.php) and [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) do the same with a drag-and-drop window
+- `.` means "the folder I am in now"
+- `scp` also copies [between two remote servers]{.alert}
+- [Windows]{.alert}: [WinSCP](https://winscp.net/eng/index.php) and [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) do it with drag and drop
 :::
 
 :::{.column width="58%"}
-- Open a [new local terminal]{.alert}. [`scp` runs on your own machine]{.alert}, not on the instance:
+- Run `scp` in a [new local terminal]{.alert}, not on the instance:
 
 :::{style="font-size: 19px;"}
 ```verbatim
@@ -610,9 +616,9 @@ scp -i datasci350.pem hello.py ubuntu@XXXXXX.compute-1.amazonaws.com:~
 [![](figures/scp.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/scp.png"}
 :::
 
-- Replace `XXXXXX` with your public DNS, from the Instances page
-- [Keep the `:~` at the end]{.alert}. It means the home directory
-- In your SSH session, `ls` shows the file and `python3 hello.py` runs it
+- Replace `XXXXXX` with your public DNS (Instances page)
+- [Keep the `:~`]{.alert}: it means the home directory
+- On the instance, `ls` shows the file and `python3 hello.py` runs it
 
 :::{style="text-align: center; margin-top: -20px;"}
 [![](figures/hello.png){width="58%"}](#){data-modal-type="image" data-modal-url="figures/hello.png"}
@@ -626,12 +632,12 @@ scp -i datasci350.pem hello.py ubuntu@XXXXXX.compute-1.amazonaws.com:~
 :::{style="margin-top: 25px; font-size: 24px;"}
 :::{.columns}
 :::{.column width="40%"}
-- [Stop or terminate]{.alert} instances you are not using
-- [Stop]{.alert} pauses it. Compute is not charged, but the disk still is
-- [Terminate]{.alert} deletes it, with every file on it
-- A restarted instance gets a [new IP address]{.alert}, so your old `ssh` command stops working
-- A `t3.micro` left on for a month costs [about $12]{.alert}: $7.60 compute, $3.65 IP address, $0.64 disk
-- Stop, terminate, or reboot from the [Instances page]{.alert}
+- [Stop or terminate]{.alert} idle instances
+- [Stop]{.alert} pauses it: no compute charge, but the disk still bills
+- [Terminate]{.alert} deletes it and all its files
+- A restart brings a [new IP address]{.alert}, so update your `ssh` command
+- A `t3.micro` left on for a month: [about $12]{.alert} ($7.60 compute, $3.65 IP, $0.64 disk)
+- Stop, terminate or reboot on the [Instances page]{.alert}
 - Let's [terminate]{.alert} ours now! 🛑
 :::
 
@@ -640,13 +646,13 @@ scp -i datasci350.pem hello.py ubuntu@XXXXXX.compute-1.amazonaws.com:~
 [![](figures/stop-2026.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/stop-2026.png"}
 
 :::{style="font-size: 17px;"}
-The `Instance state` menu. `Terminate (delete) instance` is the last entry
+The `Instance state` menu. `Terminate (delete) instance` is last
 :::
 
 [![](figures/terminated-2026.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/terminated-2026.png"}
 
 :::{style="font-size: 17px;"}
-Afterwards both instances read `Terminated`, and the `Public IPv4 DNS` column is empty. The address is gone
+Both instances `Terminated`, with no public DNS left
 :::
 :::
 :::
@@ -663,23 +669,23 @@ Afterwards both instances read `Terminated`, and the `Public IPv4 DNS` column is
 1. Launch an EC2 instance called `jupyter`
 2. Connect [with port forwarding]{.alert}:
     - `ssh -i "<your-key>.pem" ubuntu@<public-DNS> -L 8000:localhost:8888`
-    - This forwards port 8888 on the instance to port 8000 on your laptop
+    - Port 8888 on the instance becomes port 8000 on your laptop
 3. Install Python, pip, and Jupyter:
     - `sudo apt update && sudo apt upgrade -y`
     - `sudo apt install -y python3 python3-pip jupyter-notebook`
-    - Note the hyphen in [`jupyter-notebook`]{.alert}. `python3-notebook` installs only the library, without the `jupyter` command
+    - Note the hyphen in [`jupyter-notebook`]{.alert}. `python3-notebook` lacks the `jupyter` command
 4. Check: `which python3`, `which pip3`, `which jupyter`
 :::
 
 :::{.column width="50%"}
 5. Start Jupyter: `jupyter notebook`
 6. Open `http://localhost:8000` and paste the token from the terminal
-    - Or click the terminal link (`http://localhost:8888/?token=...`) and change `8888` to `8000`
+    - Or click the terminal link and change `8888` to `8000`
 7. Create a notebook and run `print('Hello, DATASCI350!')`
-8. [Do not]{.alert} terminate the instance yet. We use it again later
+8. [Do not]{.alert} terminate the instance. Activity 02 uses it
 
 :::{style="background: rgba(27, 58, 107, 0.08); padding: 15px; border-radius: 10px; font-size: 19px; margin-top: 20px;"}
-Closing SSH stops Jupyter. `tmux` keeps a session alive after you disconnect, and `tmux attach` brings you back to it. The instance bills while it runs. [More on tmux here](https://linuxize.com/post/getting-started-with-tmux/)
+Closing SSH stops Jupyter. `tmux` keeps it running after you disconnect, and `tmux attach` brings it back. The instance bills while it runs. [More on tmux](https://linuxize.com/post/getting-started-with-tmux/)
 :::
 :::
 :::
@@ -702,14 +708,13 @@ Closing SSH stops Jupyter. `tmux` keeps a session alive after you disconnect, an
 ## Activity 02
 
 :::{style="margin-top: 30px; font-size: 21px;"}
-- Now let's analyse some data on the instance
-- We practise [two ways]{.alert} to get files onto it:
-  - [Method 1, `scp`]{.alert}: upload a file from your computer. Use it for files that are not online, such as your own data or private code
-  - [Method 2, `wget`]{.alert}: download a file from the internet straight to the instance, such as a file on GitHub. It skips your computer
-- First, install the packages on your instance:
+- Analyse data on the instance, with [two ways]{.alert} to get files onto it:
+  - [Method 1, `scp`]{.alert}: upload from your computer. For files that are not online, like your own data
+  - [Method 2, `wget`]{.alert}: download from the internet (e.g. GitHub) straight to the instance
+- First, install the packages on the instance:
   - `sudo apt install -y python3-numpy python3-pandas python3-matplotlib python3-seaborn`
 
-- [Method 1: `scp`]{.alert}. On your [local machine]{.alert}, create a weather dataset with this code, or download [weather_data.py](https://github.com/danilofreire/datasci350/blob/main/lectures/lecture-17/weather_data.py)
+- [Method 1: `scp`]{.alert}. On your [local machine]{.alert}, create the dataset with this code, or download [weather_data.py](https://github.com/danilofreire/datasci350/blob/main/lectures/lecture-17/weather_data.py)
 
 ```python
 # weather_data.py
@@ -751,19 +756,19 @@ print("Weather data saved to weather_data.txt")
 ## Activity 02
 
 :::{style="margin-top: 30px; font-size: 22px;"}
-- Run the script on your [local machine]{.alert}: `python3 weather_data.py`
-- It creates `weather_data.txt` with 30 days of weather data
-- Upload it to your instance with `scp`, from a [local terminal]{.alert}:
-  - `scp -i <your-key>.pem weather_data.txt ubuntu@<your-instance-ip>:~/`
-- Run `ls` on the instance to check that it arrived
+- Run it on your [local machine]{.alert}: `python3 weather_data.py`
+- It creates `weather_data.txt`, 30 days of weather data
+- Upload it from a [local terminal]{.alert}:
+  - `scp -i <your-key>.pem weather_data.txt ubuntu@<public-DNS>:~/`
+- Check with `ls` on the instance
 
-- [Method 2: `wget`]{.alert}. Download the analysis script [straight to the instance]{.alert}. Run this on your [EC2 instance]{.alert}:
+- [Method 2: `wget`]{.alert}. On the [instance]{.alert}, download the analysis script:
 
 :::{style="font-size: 20px;"}
 - `wget https://raw.githubusercontent.com/danilofreire/datasci350/main/lectures/lecture-17/weather_analysis.py` (one line)
 :::
 
-- The code is below for reference. You do not need to copy it, because `wget` already downloaded it
+- The code below is for reference only. `wget` already downloaded it
 
 ```python
 # weather_analysis.py
@@ -825,15 +830,15 @@ print("Analysis complete. Results saved to 'weather_analysis.png'")
 ## Activity 02
 
 :::{style="margin-top: 30px; font-size: 24px;"}
-- Both files are now on your instance: `weather_data.txt` (via `scp`) and `weather_analysis.py` (via `wget`)
+- The instance now has `weather_data.txt` (from `scp`) and `weather_analysis.py` (from `wget`)
 - Run the analysis: `python3 weather_analysis.py`, or run it in Jupyter
-- Download the image to your [local machine]{.alert} with `scp`, from a local terminal:
-  - `scp -i <your-key>.pem ubuntu@<your-instance-ip>:~/weather_analysis.png ./`
+- From a [local terminal]{.alert}, download the image:
+  - `scp -i <your-key>.pem ubuntu@<public-DNS>:~/weather_analysis.png ./`
 - Open the image on your laptop
 - [Don't forget to terminate your instance when done!]{.alert}
 
 :::{style="margin-top: 15px; background: rgba(45, 69, 99, 0.1); padding: 15px; border-radius: 10px;"}
-[Recap]{.alert}: `scp` moves files between your computer and the instance. `wget` downloads files from the internet straight to the instance
+[Recap]{.alert}: `scp` moves files between your computer and the instance. `wget` downloads from the internet to the instance
 :::
 :::
 
@@ -890,24 +895,24 @@ Data scientists use this same workflow for larger datasets and more complex anal
 :::{style="margin-top: 25px; font-size: 22px;"}
 :::{.columns}
 :::{.column width="52%"}
-- We leave the cloud and look at how data gets from the internet into your analysis
-- [What an API is]{.alert}, with a client and a server on either side
-- [HTTP]{.alert}: URLs, query strings, `GET` and `POST`, and status codes
-- [JSON]{.alert}, the format most APIs answer in, and how it maps to a Python dictionary
-- [`requests`]{.alert}, the library that does all this in three lines of code
-- You have done this before: the API key in your `.env` file in Lecture 14 was for an API
+- We leave the cloud: how web data reaches your analysis
+- [APIs]{.alert}: a client asks, a server answers
+- [HTTP]{.alert}: URLs, query strings, `GET`, `POST`, status codes
+- [JSON]{.alert}: the format most APIs use, read as a Python dictionary
+- [`requests`]{.alert}: does all this in three lines of Python
+- You have used an API already: the key in your `.env` file in Lecture 14
 :::
 
 :::{.column width="48%"}
 :::{style="margin-top: -20px;"}
 Before then:
 
-1. Terminate every instance you started today
-2. Open [Billing and Cost Management](https://console.aws.amazon.com/billing/home) and check that the total is zero
-3. Read the final project instructions here: <https://github.com/danilofreire/datasci350/blob/main/project/project-instructions.pdf>
+1. Terminate every instance from today
+2. Check that [Billing and Cost Management](https://console.aws.amazon.com/billing/home) shows zero
+3. Read the [final project instructions](https://github.com/danilofreire/datasci350/blob/main/project/project-instructions.pdf)
 
 :::{style="background: rgba(27, 58, 107, 0.08); padding: 15px; border-radius: 10px; font-size: 19px; margin-top: 15px;"}
-The final project is out. Groups of three to four, due 8 December 2026. You pull data from a web API (the World Bank by default, or another one you clear with me) and submit everything as a Docker container. Start from the starter repository: <https://github.com/danilofreire/datasci350-project-starter>
+The final project is out: groups of three to four, due 8 December 2026. Pull data from a web API (the World Bank by default, or one you clear with me) and submit it as a Docker container. Start from the [starter repository](https://github.com/danilofreire/datasci350-project-starter)
 :::
 :::
 :::
@@ -915,3 +920,41 @@ The final project is out. Groups of three to four, due 8 December 2026. You pull
 :::
 
 # And that's all for today! 🎉 {background-color="#1B3A6B"}
+
+# Appendix {background-color="#1B3A6B"}
+
+## CloudShell as a way back in
+### When your own terminal will not cooperate
+
+:::{style="margin-top: 20px; font-size: 19px;"}
+:::{.columns}
+:::{.column width="42%"}
+:::{style="font-size: 23px;"}
+- The [WSL problem]{.alert}: Windows ignores `chmod 400` on files in the Windows filesystem, so SSH refuses the key
+- CloudShell avoids this, because the key goes to a Linux machine:
+
+1. Open CloudShell from the console.
+2. Choose `Actions`, then `Upload file`.
+3. Select your `.pem` file. It arrives in `/home/cloudshell-user`.
+4. Run `chmod 400 your-key.pem`.
+5. Run the same `ssh -i ...` command the console gave you.
+
+- The instance does not care that the connection came from a browser tab
+:::
+:::
+
+:::{.column width="58%"}
+:::{style="text-align: center;"}
+[![](figures/cloudshell-actions-2026.png){width="18%"}](#){data-modal-type="image" data-modal-url="figures/cloudshell-actions-2026.png"}
+
+[![](figures/cloudshell-ssh-2026.png){width="92%"}](#){data-modal-type="image" data-modal-url="figures/cloudshell-ssh-2026.png"}
+
+:::{style="font-size: 17px;"}
+The whole thing from a browser tab: the upload confirmation, `chmod 400`, and an Ubuntu 26.04 prompt on the instance
+:::
+:::
+
+- CloudShell times out after [20 to 30 idle minutes]{.alert}, and your SSH connection goes with it
+:::
+:::
+:::
