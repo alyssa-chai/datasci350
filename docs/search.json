@@ -4659,7 +4659,7 @@
     "href": "lectures/lecture-17/17-cloud2.html#ubuntu-server",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Ubuntu server",
-    "text": "Ubuntu server\n\n\n\n\nUbuntu has a GUI, but we will use only the terminal\nA bare-bones instance is cheaper and faster than a full desktop\nThe terminal has everything you need to manage it\nThe commands are the same: ls, cd, pwd, and so on\nsudo runs a command as root, the superuser\nRoot has full control over the system, so be careful with it!\napt (Advanced Package Tool) installs software\n\napt update refreshes the package list\napt install installs a package\n\n\n\n\n\nUbuntu Terminal\n\n\nsudo apt install python3 installs Python 3\nsudo apt install python3-pip installs pip"
+    "text": "Ubuntu server\n\n\n\n\nUbuntu has a GUI, but we will use only the terminal\nA bare-bones instance is cheaper and faster than a full desktop\nThe terminal has everything you need to manage it\nThe commands are the same: ls, cd, pwd, and so on\nsudo runs a command as root, the superuser\nRoot has full control over the system, so be careful with it!\napt (Advanced Package Tool) installs software\n\napt update refreshes the package list\napt install installs a package\n\n\n\n\n\nUbuntu Terminal\n\n\nsudo apt install python3 installs Python\nsudo apt install python3-pip installs pip"
   },
   {
     "objectID": "lectures/lecture-17/17-cloud2.html#windows-subsystem-for-linux-wsl",
