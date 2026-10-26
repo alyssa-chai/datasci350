@@ -33,7 +33,7 @@ No code executes at render time. Every output on the slides was captured from a 
 1. Install the packages you will need: `pip install requests pandas pyarrow`.
 2. Open the AWS billing console and confirm your total reads zero.
 3. Read the final project instructions.
-4. Form a group of three to four and email me the names by Thursday 5 November.
+4. Form a group of four to five and email me the names by Thursday 5 November.
 5. Finish Exercise 03 if you did not have time in class.
 
 API claims last verified: 21 August 2026 (the World Bank lists 29,544 indicators).

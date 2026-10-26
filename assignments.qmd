@@ -47,7 +47,7 @@ There is a review session for Quiz 01 on September 22, and a course revision ses
 
 ## Final Project
 
-The final project is a group effort, with three to four students per group. You will collect data from a web API, process it with Polars or DuckDB, write the report in Quarto, and package the whole thing in a Docker container. The default is the World Bank API, and you may use another public API if you clear it with me first. The instructions are released on October 27 and the project is due on December 8.
+The final project is a group effort, with four to five students per group. You will collect data from a web API, process it with Polars or DuckDB, write the report in Quarto, and package the whole thing in a Docker container. The default is the World Bank API, and you may use another public API if you clear it with me first. The instructions are released on October 27 and the project is due on December 8.
 
 Two things are worth knowing before you start. First, a script pulls the data once and saves a snapshot to `data/raw/`, which you commit; your report reads only that saved copy, so the container renders identically in December even if the API changes or goes down. Second, the sophistication of your statistics is not graded. Careful descriptive work, correctly interpreted, scores better than an advanced method used badly.
 

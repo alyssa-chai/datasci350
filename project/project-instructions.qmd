@@ -32,7 +32,7 @@ editor:
 
 # Overview
 
-The final project is worth 20% of your course grade. You will work in groups of three to four students and build a reproducible container pipeline from end to end.
+The final project is worth 20% of your course grade. You will work in groups of four to five students and build a reproducible container pipeline from end to end.
 
 Your pipeline does four things. It collects data from a web API with `requests`. It processes that data with pandas or DuckDB. It presents the results in a Quarto report. It ships inside a Docker container that anyone can run.
 
