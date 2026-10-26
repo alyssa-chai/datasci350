@@ -8656,7 +8656,7 @@
     "href": "lectures/lecture-18/18-web-apis.html#the-final-project",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "The final project",
-    "text": "The final project\nWhat you will build\n\n\n\n\nPull data from a web API with requests\nProcess it with pandas or DuckDB\nSave a snapshot in data/raw/. The report reads only that snapshot\nQuarto report: 1,500 to 2,500 words, two or more visualisations, visible code\nShip it in a Docker container, with the code on GitHub\nTrack A (default): the World Bank Indicators API, no key needed\nTrack B: a free, well-documented public API without OAuth, cleared with me first\nGroups of four to five. Email me the names by Thursday 5 November, or I assign you at random\n\n\n\n\n\nThe starter repository: https://github.com/danilofreire/datasci350-project-starter\n\n\n\n\nDue Tuesday 8 December. Send the repository link on Canvas\nFull instructions: project-instructions.pdf"
+    "text": "The final project\nA quick reminder\n\n\nGroups of four to five. Email me the names by Thursday 5 November, or I assign you at random\nDue Tuesday 8 December. Send the repository link on Canvas\nToday’s lecture covers the first step: pulling data from a web API\nInstructions and starter repository"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#the-final-project-1",
@@ -8699,5 +8699,19 @@
     "title": "DATASCI 350 - Data Science Computing",
     "section": "A few lines of Python",
     "text": "A few lines of Python\nThe same request, from a script\n\n\nrequests is the Python library for web APIs. Install it once: pip install requests\n\n\nimport requests\n\nbase = \"https://api.open-meteo.com/v1/forecast\"\nq = \"latitude=33.75&longitude=-84.39&current=temperature_2m\"\n\nr = requests.get(base + \"?\" + q)          # send a GET, like curl\nprint(r.status_code)                      # 200 means OK\n\ndata = r.json()                           # JSON text -&gt; Python dictionary\nprint(data[\"current\"][\"temperature_2m\"])  # the path, one [] per step\n200\n19.2"
+  },
+  {
+    "objectID": "lectures/lecture-17/17-cloud2.html#the-final-project",
+    "href": "lectures/lecture-17/17-cloud2.html#the-final-project",
+    "title": "DATASCI 350 - Data Science Computing",
+    "section": "The final project",
+    "text": "The final project\nWhat you will build\n\n\n\n\nPull data from a web API with requests\nProcess it with pandas or DuckDB\nSave a snapshot in data/raw/. The report reads only that snapshot\nQuarto report: 1,500 to 2,500 words, two or more visualisations, visible code\nShip it in a Docker container, with the code on GitHub\nTrack A (default): the World Bank Indicators API, no key needed\nTrack B: a free, well-documented public API without OAuth, cleared with me first\nGroups of four to five. Email me the names by Thursday 5 November, or I assign you at random\n\n\n\n\n\nThe starter repository: https://github.com/danilofreire/datasci350-project-starter\n\n\n\n\nDue Tuesday 8 December. Send the repository link on Canvas\nFull instructions: project-instructions.pdf"
+  },
+  {
+    "objectID": "lectures/lecture-17/17-cloud2.html#the-final-project-1",
+    "href": "lectures/lecture-17/17-cloud2.html#the-final-project-1",
+    "title": "DATASCI 350 - Data Science Computing",
+    "section": "The final project",
+    "text": "The final project\nHow I grade it\n\n\n\n\nThe project is worth 20% of your course grade\n\n\n\n\n\nComponent\nWeight\n\n\n\n\nReproducibility\n30%\n\n\nAnalysis quality\n30%\n\n\nCommunication\n20%\n\n\nCode quality\n10%\n\n\nGit workflow\n10%\n\n\n\n\n\n\nSophistication is not graded. Careful descriptive work beats a regression you cannot explain\n\n\n\n\nEvery member commits to the shared repository, and I read the commit history\nNo meaningful contribution means a zero for the project\nClearly unequal shares change individual grades\nThe report ends with a contribution statement, which I check against the repository\n\n\nIf docker run on my machine does not reproduce your report, your project does not exist 😅"
   }
 ]

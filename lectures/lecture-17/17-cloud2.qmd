@@ -52,6 +52,76 @@ Cartoon by [Forrest Brazeal](https://forrestbrazeal.com/)
 :::
 :::
 
+## The final project
+### What you will build
+
+:::{style="margin-top: 20px; font-size: 23px;"}
+:::{.columns}
+::::{.column width="52%"}
+- Pull data from a web API with `requests`
+- Process it with [pandas or DuckDB]{.alert}
+- Save a snapshot in `data/raw/`. The report reads only that snapshot
+- Quarto report: 1,500 to 2,500 words, two or more visualisations, visible code
+- Ship it in a [Docker container]{.alert}, with the [code on GitHub]{.alert}
+- [Track A]{.alert} (default): the [World Bank Indicators API](https://datahelpdesk.worldbank.org/knowledgebase/topics/125589-developer-information), no key needed
+- [Track B]{.alert}: a free, well-documented public API without OAuth, cleared with me first
+- Groups of [four to five]{.alert}. Email me the names by [Thursday 5 November]{.alert}, or I assign you at random
+::::
+
+::::{.column width="48%"}
+:::{style="text-align: center; margin-top: -30px;"}
+[![](figures/project-starter-2026.png){width="100%"}](#){data-modal-type="image" data-modal-url="figures/project-starter-2026.png"}
+
+:::{style="font-size: 17px;"}
+The starter repository: <https://github.com/danilofreire/datasci350-project-starter>
+:::
+:::
+
+:::{style="margin-top: 15px; font-size: 21px;"}
+- Due [Tuesday 8 December]{.alert}. Send the repository link on Canvas
+- Full instructions: [project-instructions.pdf](https://github.com/danilofreire/datasci350/blob/main/project/project-instructions.pdf)
+:::
+::::
+:::
+:::
+
+## The final project
+### How I grade it
+
+:::{style="margin-top: 20px; font-size: 24px;"}
+:::{.columns}
+::::{.column width="50%"}
+- The project is worth [20%]{.alert} of your course grade
+
+:::{style="margin-top: 30px; font-size: 28px; margin-bottom: 30px;"}
+| Component | Weight |
+|---|---|
+| Reproducibility | 30% |
+| Analysis quality | 30% |
+| Communication | 20% |
+| Code quality | 10% |
+| Git workflow | 10% |
+:::
+
+:::{style="margin-top: 15px;"}
+- Sophistication is not graded. Careful descriptive work beats a regression you cannot explain
+:::
+::::
+
+::::{.column width="50%"}
+- Every member commits to the shared repository, and I read the [commit history]{.alert}
+- [No meaningful contribution means a zero for the project]{.alert}
+- Clearly unequal shares [change individual grades]{.alert}
+- The report ends with a [contribution statement]{.alert}, which I check against the repository
+
+:::{style="margin-top: 20px; background: rgba(230, 57, 70, 0.1); padding: 15px; border-radius: 10px; font-size: 23px;"}
+If `docker run` on my machine does not reproduce your report, your project does not exist 😅
+:::
+::::
+:::
+:::
+
+
 ## Today's plan 
 
 :::{style="margin-top: 30px; font-size: 24px;"}
