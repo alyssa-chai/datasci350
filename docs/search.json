@@ -4848,7 +4848,7 @@
     "href": "lectures/lecture-18/18-web-apis.html#lecture-17-a-machine-in-the-cloud",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Lecture 17: a machine in the cloud",
-    "text": "Lecture 17: a machine in the cloud\nWhat we did on AWS\n\n\n\n\nLaunched an EC2 t3.micro running Ubuntu 26.04\nConnected with a key pair and ssh -i\nInstalled software with apt\nMoved files with scp and wget\nRan Jupyter on the instance through a forwarded port\nMet AWS CloudShell, the browser terminal\nStopping pauses compute, but the disk still charges. Terminating deletes the machine\nA t3.micro left running costs about $12 a month\n\n\n\n\nSource: K21"
+    "text": "Lecture 17: a machine in the cloud\nWhat we did on AWS\n\n\n\n\nLaunched an EC2 t3.micro running Ubuntu 26.04\nConnected with a key pair and ssh -i\nInstalled software with apt\nMoved files with scp and wget\nChecked the instance details in the AWS Console\nMet AWS CloudShell, the browser terminal\nQueried AWS with the aws command line\nStopping pauses compute, but the disk still charges. Terminating deletes the machine\n\n\n\n\nSource: K21"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#check-your-aws-account",
@@ -4883,21 +4883,21 @@
     "href": "lectures/lecture-18/18-web-apis.html#you-have-already-used-an-api",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "You have already used an API",
-    "text": "You have already used an API\n\n\n\n\nIn Lecture 14, you saved an API key in a .env file\nPython sent your prompt to a model on OpenRouter, and the reply came back\nThat was an API call\nThe openai library made the request for you. Today we make requests ourselves\nAPIs also give you weather, economic data, census records and more\n\n\n\n# Lecture 14\nclient = OpenAI(\n    base_url=\"https://openrouter.ai/api/v1\",\n    api_key=os.environ[\"OPENROUTER_API_KEY\"],\n)\n\nresponse = client.chat.completions.create(\n    model=\"google/gemma-4-31b-it:free\",\n    messages=[{\"role\": \"user\", \"content\": \"Hi!\"}],\n)\nprint(response.choices[0].message.content)\nbase_url is a web address. Today you will see what the library sends there and what comes back"
+    "text": "You have already used an API\n\n\n\n\nIn Lecture 14, we saved an API key in a .env file\nWe used it to send prompts to a model on OpenRouter and get a reply\nThat exchange was an API call\nThe openai library sent the request for us. Today we write the requests ourselves\nOther APIs give you weather, economic data, census records and more\n\n\n\n# Lecture 14\nclient = OpenAI(\n    base_url=\"https://openrouter.ai/api/v1\",\n    api_key=os.environ[\"OPENROUTER_API_KEY\"],\n)\n\nresponse = client.chat.completions.create(\n    model=\"google/gemma-4-31b-it:free\",\n    messages=[{\"role\": \"user\", \"content\": \"Hi!\"}],\n)\nprint(response.choices[0].message.content)\nbase_url is a web address, and the library sends our request there. Today you will see the request and the reply"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#lecture-overview",
     "href": "lectures/lecture-18/18-web-apis.html#lecture-overview",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Lecture overview",
-    "text": "Lecture overview\nWhat we will cover today\n\n\n\n1. What an API is\n\nA contract between two programs\nThe client and the server\nWhy data scientists care\n\n2. URLs and status codes\n\nThe parts of a URL, and building one step by step\nThe codes a server sends back\n\n\n3. JSON\n\nThe format almost every API answers in\nHow to find one value inside a nested reply\n\n4. APIs from the terminal\n\ncurl, a browser for your terminal\nSaving a reply to a file\n\n5. A first taste of Python\n\nA few lines that do what curl did. Lecture 19 takes them apart"
+    "text": "Lecture overview\nWhat we will cover today\n\n\n\n1. What an API is\n\nA contract between two programs\nThe client and the server\nWhy data scientists care\n\n2. URLs and status codes\n\nThe parts of a URL, and building one step by step\nThe codes a server sends back\n\n\n3. JSON\n\nThe format almost every API uses\nHow to find one value inside a nested reply\n\n4. APIs from the terminal\n\ncurl, a browser for your terminal\nSaving a reply to a file\n\n5. A first taste of Python\n\nA few lines that do what curl did. Lecture 19 takes them apart"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#an-api-is-a-contract",
     "href": "lectures/lecture-18/18-web-apis.html#an-api-is-a-contract",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "An API is a contract",
-    "text": "An API is a contract\nAsk in this exact way, get an answer in that exact shape\n\n\n\n\nAs we have seen before, API stands for Application Programming Interface\nIt is a contract between two programs\nFor example, the World Bank API turns a URL ending in /country/BRA/indicator/SP.POP.TOTL into Brazil’s population, year by year\nNeither side needs to know how the other works inside\nTheir database, language, and servers are none of your business 😂"
+    "text": "An API is a contract\n\n\n\n\nAs we have seen before, API stands for Application Programming Interface\nIt is a contract between two programs\nFor example, the World Bank API turns a URL ending in /country/BRA/indicator/SP.POP.TOTL into Brazil’s population, year by year\nNeither side needs to know how the other works inside\nTheir database, language, and servers are none of your business 😂"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#the-restaurant",
@@ -4925,7 +4925,7 @@
     "href": "lectures/lecture-18/18-web-apis.html#why-this-matters-for-data-science",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Why this matters for data science",
-    "text": "Why this matters for data science\n\n\n\nThe data are already out there\n\nMany organisations share data through APIs:\n\nThe World Bank, the IMF, the US Census Bureau, the ECB, Eurostat\nGitHub, Wikipedia, and Emory’s course catalogue (Atlas)\nMost national statistics offices\n\nThe World Bank API alone has 29,544 indicators for 217 countries\nMost of these data are free\n\n\nA script instead of a download button\n\nThe URL is the query: GDP per capita, Brazil and Argentina, 2000 to 2023\n\n\napi.worldbank.org/v2/country/BRA;ARG/\n  indicator/NY.GDP.PCAP.CD\n  ?date=2000:2023\n\n\nA CSV does not record what you selected\nData get revised. Rerun the script for the latest figures\nSave a dated copy in data/raw/\nA short loop can fetch data for all 217 countries"
+    "text": "Why this matters for data science\n\n\n\nThe data are already out there\n\nMany organisations share data through APIs:\n\nThe World Bank, the IMF, the US Census Bureau, the ECB, Eurostat\nGitHub, Wikipedia, and Emory’s course catalogue (Atlas)\nMost national statistics offices\n\nThe World Bank API alone has ~16,000 indicators for over 200 countries\nMost of these data are free\n\n\nA script instead of a download button\n\nThe URL is the query: GDP per capita, Brazil and Argentina, 2000 to 2023\n\n\napi.worldbank.org/v2/country/BRA;ARG/\n  indicator/NY.GDP.PCAP.CD\n  ?date=2000:2023\n\n\nA CSV does not record what you selected\nData get revised. Rerun the script for the latest figures\nSave a dated copy in data/raw/\nA short loop can fetch data for all 200+ countries"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#three-kinds-of-api-you-will-meet",
@@ -4960,28 +4960,28 @@
     "href": "lectures/lecture-18/18-web-apis.html#status-codes",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Status codes",
-    "text": "Status codes\nHow to tell if it worked\n\n\nEvery response carries a three-digit number saying how it went\nThe first digit sums it up: 2xx worked, 4xx is your mistake, 5xx is theirs\n\n\n\n\n\n\n\n\n\n\nCode\nName\nWhat it really means\n\n\n\n\n200\nOK\nIt worked. Go ahead and read the data\n\n\n301 / 302\nMoved\nThe data lives elsewhere now. Browsers and requests follow these for you\n\n\n400\nBad Request\nYour URL is malformed. Check the query string\n\n\n401\nUnauthorized\nYou need a key, or yours is wrong\n\n\n403\nForbidden\nYour key works, but it does not give you access to this\n\n\n404\nNot Found\nNothing at that path. Usually a typo\n\n\n429\nToo Many Requests\nYou are asking too fast. Slow down\n\n\n500\nInternal Server Error\nTheir problem. Wait and retry\n\n\n\n\n\nSome APIs, like the World Bank, answer errors with 200 and hide the failure in the reply. A status check alone is not enough. We will see this in the terminal soon"
+    "text": "Status codes\n\n\nEvery response carries a three-digit number saying how it went\nThe first digit sums it up: 2xx worked, 4xx is your mistake, 5xx is theirs\n\n\n\n\n\n\n\n\n\n\nCode\nName\nWhat it means\n\n\n\n\n200\nOK\nIt worked. Go ahead and read the data\n\n\n301 / 302\nMoved\nThe data lives elsewhere now. Browsers and requests follow these for you\n\n\n400\nBad Request\nYour URL is malformed. Check the query string\n\n\n401\nUnauthorized\nYou need a key, or yours is wrong\n\n\n403\nForbidden\nYour key works, but it does not give you access to this\n\n\n404\nNot Found\nNothing at that path. Usually a typo\n\n\n429\nToo Many Requests\nYou are asking too fast. Slow down\n\n\n500\nInternal Server Error\nTheir problem. Wait and retry\n\n\n\n\n\nSome APIs, like the World Bank, answer errors with 200 and hide the failure in the reply. A status check alone is not enough. We will see this in the terminal soon"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#try-it-in-the-browser-first",
     "href": "lectures/lecture-18/18-web-apis.html#try-it-in-the-browser-first",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Try it in the browser first",
-    "text": "Try it in the browser first\nThe address bar is an HTTP client you already know\n\n\n\n\nBefore writing any code, paste the URL into your browser (try this one)\nThe browser sends a GET and shows the raw reply\nJSON on screen: the URL is right. If your code fails later, the problem is in the code\nAn error on screen: the URL is wrong\nThis habit will save you hours of debugging\nFirefox shows JSON as a tree you can open and close. Chrome only indents it, and Safari shows plain text\n\n\n\n\n\nOpen-Meteo answering a plain GET from the address bar, no code involved"
+    "text": "Try it in the browser first\nThe address bar is an HTTP client you already know\n\n\n\n\nBefore writing any code, paste the URL into your browser (try this one)\nThe browser sends a GET and shows the raw reply\nJSON on screen: the URL is right. If your code fails later, the problem is in the code\nAn error on screen: the URL is wrong\nIt’s a good habit to check the URL in the browser before writing code! 😉\n\n\n\n\n\nOpen-Meteo answering a plain GET from the address bar, no code involved"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#sec:exercise01",
     "href": "lectures/lecture-18/18-web-apis.html#sec:exercise01",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Try it yourself! 🤓",
-    "text": "Try it yourself! 🤓\nBuild a URL by hand in your browser\n\n\n\n\nOpen the Open-Meteo docs and start from https://api.open-meteo.com/v1/forecast\nAsk for the current temperature (temperature_2m) in Atlanta (latitude 33.75, longitude -84.39). You need three parameters\nWrite the query string yourself. Do not copy it from the docs\nPaste the URL into the address bar and press Enter\nTry another city, then delete longitude. What happens?\n\n\n\nWhat to look for\n\nA temperature and its units in the JSON\nA different number for the other city\nAn error message without longitude\n\n\nStuck, or want to compare your URL with mine?\nAppendix 01"
+    "text": "Try it yourself! 🤓\nBuild a URL by hand in your browser\n\n\n\n\nOpen the Open-Meteo docs and start from https://api.open-meteo.com/v1/forecast\nAsk for the current temperature (current=temperature_2m) in Atlanta (latitude 33.75, longitude -84.39). You need three parameters\nWrite the query string yourself. Do not copy it from the docs\nPaste the URL into the address bar and press Enter\nDelete longitude. What happens?\nTo covert the temperature to Fahrenheit, add &temperature_unit=fahrenheit to the URL\n\n\n\nWhat to look for\n\nA temperature and its units in the JSON\nA different number for the other city\nAn error message without longitude\n\n\nStuck, or want to compare your URL with mine?\nAppendix 01"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#what-json-is",
     "href": "lectures/lecture-18/18-web-apis.html#what-json-is",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "What JSON is",
-    "text": "What JSON is\nPlain text that every language can read\n\n\n\n\nJSON means JavaScript Object Notation. The name records its origin, not where it is used today\nIt is plain text, so any editor opens it\nAlmost every web API uses it, because every language can read it\nIt holds data only: no code, functions, or classes\nTwo building blocks, nested as deep as needed:\n\nAn object { } holds \"key\": value pairs\nAn array [ ] holds values in order\n\n\n{\n  \"city\": \"Atlanta\",\n  \"temperature\": 29.6,\n  \"raining\": false,\n  \"sensors\": [\"a1\", \"b2\"],\n  \"last_checked\": null\n}\n\n\nEach JSON type has a Python twin\n\n\n\nJSON\nPython\n\n\n\n\n{...} object\ndict (dictionary)\n\n\n[...] array\nlist\n\n\n\"text\"\nstr (string)\n\n\n42, 3.14\nint, float\n\n\ntrue / false\nTrue / False\n\n\nnull\nNone\n\n\n\n\n\nKeys are always text in double quotes\nNo comma after the last item\nIn the example, \"sensors\" is an array inside an object"
+    "text": "What JSON is\n\n\n\n\nJSON means JavaScript Object Notation. The name records its origin, not where it is used today\nIt is plain text, so any editor opens it\nAlmost every web API uses it, because every language can read it\nIt holds data only: no code, functions, or classes\nTwo building blocks, nested as deep as needed:\n\nAn object { } holds \"key\": value pairs\nAn array [ ] holds values in order\n\n\n{\n  \"city\": \"Atlanta\",\n  \"temperature\": 29.6,\n  \"raining\": false,\n  \"sensors\": [\"a1\", \"b2\"],\n  \"last_checked\": null\n}\n\n\nEach JSON type has a Python equivalent\n\n\n\nJSON\nPython\n\n\n\n\n{...} object\ndict (dictionary)\n\n\n[...] array\nlist\n\n\n\"text\"\nstr (string)\n\n\n42, 3.14\nint, float\n\n\ntrue / false\nTrue / False\n\n\nnull\nNone\n\n\n\n\n\nKeys are always text in double quotes\nNo comma after the last item\nIn the example, \"sensors\" is an array inside an object"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#reading-json-in-python",
@@ -5023,7 +5023,7 @@
     "href": "lectures/lecture-18/18-web-apis.html#sec:exercise02",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Try it yourself! 🤓",
-    "text": "Try it yourself! 🤓\nSay the paths out loud\n\n\n\nA reply from a fictional course API:\n\n{\n  \"term\": \"Fall 2026\",\n  \"courses\": [\n    {\"code\": \"DATASCI 350\", \"enrolled\": 40,\n     \"instructor\": {\"name\": \"Danilo Freire\"}},\n    {\"code\": \"DATASCI 101\", \"enrolled\": 65,\n     \"instructor\": {\"name\": \"Danilo Freire\"}}\n  ],\n  \"updated\": null\n}\n\n\nGive the path to each value, like term → “Fall 2026”:\n\nThe code of the second course\nThe name of the first course’s instructor\nThe value of updated. What does it become in Python?\n\n\nStuck, or want to compare your paths with mine?\nAppendix 02"
+    "text": "Try it yourself! 🤓\nWrite the paths in Python\n\n\n\n\nimport json\n\ntext = \"\"\"\n{\"term\": \"Fall 2026\",\n \"courses\": [\n   {\"code\": \"DATASCI 350\", \"enrolled\": 40,\n    \"instructor\": {\"name\": \"Danilo Freire\"}},\n   {\"code\": \"DATASCI 101\", \"enrolled\": 65,\n    \"instructor\": {\"name\": \"Danilo Freire\"}}],\n \"updated\": null}\n\"\"\"\nreply = json.loads(text)\n\nprint(reply[\"term\"])   # Fall 2026\n\n\n\nCopy the code into a notebook or a .py file and run it\nPrint the code of the second course\nPrint the name of the first course’s instructor\nPrint reply[\"updated\"]. What do you see, and why?\n\n\nStuck, or want to compare your paths with mine?\nAppendix 02"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#the-happy-path",
@@ -5079,14 +5079,14 @@
     "href": "lectures/lecture-18/18-web-apis.html#what-we-learned-today",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "What we learned today",
-    "text": "What we learned today\n\n\n\nConcepts\n\nAn API is a contract: ask this way, get that back\nA URL has a path (what) and a query string (how)\nA status code says how it went: 2xx, 4xx, 5xx\nJSON values are reached by a path of keys and positions\n\n\nHabits\n\nTest the URL in your browser first\nQuote URLs in the terminal\nCheck the status and the data\nSave a copy, then work from the file"
+    "text": "What we learned today\n\n\n\nConcepts\n\nAn API is a contract: ask this way, get that back\nA URL has a path (what) and a query string (how)\nA status code says how it went: 2xx, 4xx, 5xx\nJSON values are reached by a path of keys and positions\n\n\nGood habits\n\nTest the URL in your browser first\nQuote URLs in the terminal\nCheck the status and the data\nSave a copy, then work from the file"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#next-class",
     "href": "lectures/lecture-18/18-web-apis.html#next-class",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Next class",
-    "text": "Next class\nLecture 19, and what to do before it\n\n\n\n\nNext class we do all of this in Python\nReading JSON from a reply and from a file\nBuilding requests with params, and checking them for errors\nFrom the World Bank reply to a pandas DataFrame\nYour project’s pull script, line by line\n\n\n\nBefore then\n\nInstall the packages you will need next class\nCheck that your AWS bill reads zero\nRead the project instructions and form a group of four to five\nFinish Exercise 03 if you did not have time in class\n\npip install requests pandas pyarrow\n\nA list of keyless APIs to explore is in Appendix 06\n\n\nGroup names are due by Thursday 5 November, and I assign the rest at random"
+    "text": "Next class\n\n\n\n\nNext class we do all of this in Python\nReading JSON from a reply and from a file\nBuilding requests with params, and checking them for errors\nFrom the World Bank reply to a pandas DataFrame\nYour project’s pull script, line by line\n\n\n\nBefore then\n\nInstall the packages you will need next class (see below)\nCheck that your AWS bill reads zero\nRead the project instructions and form a group of four to five\nFinish Exercise 03 if you did not have time in class\n\npip install requests pandas pyarrow\n\nA list of keyless APIs to explore is in Appendix 06\n\n\nGroup names are due by Thursday 5 November"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#sec:appendix01",
@@ -5100,21 +5100,21 @@
     "href": "lectures/lecture-18/18-web-apis.html#sec:appendix02",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Appendix 02",
-    "text": "Appendix 02\nExercise 02 solution\n\n\n\n\ncourses → 1 → code → “DATASCI 101”\ncourses → 0 → instructor → name → “Danilo Freire”\nupdated → null, which becomes None in Python\n\nThe same paths in Python, which we write in Lecture 19:\ndata[\"courses\"][1][\"code\"]\ndata[\"courses\"][0][\"instructor\"][\"name\"]\n\n\ncourses is an array, so the second course is position 1, not 2\nThe name is four steps down: courses, then the course, then instructor, then name\nnull is JSON’s word for “no value”. It is not the text \"null\"\n\n\nBack to exercise"
+    "text": "Appendix 02\nExercise 02 solution\n\n\n\n\ncourses → 1 → code → “DATASCI 101”\ncourses → 0 → instructor → name → “Danilo Freire”\nupdated → null, which becomes None in Python\n\nThe same paths in Python:\nprint(reply[\"courses\"][1][\"code\"])                  # DATASCI 101\nprint(reply[\"courses\"][0][\"instructor\"][\"name\"])    # Danilo Freire\nprint(reply[\"updated\"])                             # None\n\n\ncourses is an array, so the second course is position 1, not 2\nThe name is four steps down: courses, then the course, then instructor, then name\nnull is JSON’s word for “no value”. It is not the text \"null\"\n\n\nBack to exercise"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#sec:exercise03",
     "href": "lectures/lecture-18/18-web-apis.html#sec:exercise03",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Try it yourself! 🤓",
-    "text": "Try it yourself! 🤓\nUruguay’s population, from the terminal\n\n\nType these four lines:\n\n\nBASE=\"https://api.worldbank.org/v2/country/URY/indicator/SP.POP.TOTL\"\nQ=\"format=json&date=2014:2025\"\ncurl -s -o wb_pop_ury.json \"$BASE?$Q\"\npython3 -m json.tool wb_pop_ury.json\n\n\nScroll the output and find the population in 2020\nBonus: change SP.POP.TOTL to SP.POP.TOTX, then run all four lines again. What does the file say now?\n\n\n\nWhat to look for\n\nTwelve records, newest first\nAbout 3.4 million people\n\n\n\nStuck, or want to compare with mine?\nAppendix 03"
+    "text": "Try it yourself! 🤓\nUruguay’s population, from the terminal\n\n\nType these four lines:\n\n\nBASE=\"https://api.worldbank.org/v2/country/URY/indicator/SP.POP.TOTL\"\nQ=\"format=json&date=2014:2025\"\ncurl -s -o wb_pop_ury.json \"$BASE?$Q\"\npython3 -m json.tool wb_pop_ury.json\n\n\n\n\nScroll the output and find the population in 2020\nBonus: now print the population in 2020 from Python\n\nWhat to look for\n\nTwelve records, newest first\nAbout 3.4 million people\n\n\n\nHint for step 3\n\nStart Python in the folder where you ran curl, then load the file:\n\n\nimport json\ndata = json.load(open(\"wb_pop_ury.json\"))\n\n\nThe records are in position 1, newest first\n\n\nStuck, or want to compare with mine? Appendix 03"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#sec:appendix03",
     "href": "lectures/lecture-18/18-web-apis.html#sec:appendix03",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Appendix 03",
-    "text": "Appendix 03\nExercise 03 solution\n\n\n\nPart of the output, around 2020:\n        {\n            ...\n            \"countryiso3code\": \"URY\",\n            \"date\": \"2020\",\n            \"value\": 3398968,\n            ...\n        },\n\nThe 2020 population is 3,398,968\nIts path: 1 → 5 → value. Records run newest first, so 2025 is position 0 and 2020 is position 5\n\nThe bonus reply, with status 200:\n[{\"message\":[{\"id\":\"120\",\"key\":\"Invalid value\",\n\"value\":\"The provided parameter value is not valid\"}]}]\n\n\nOnly the country and the indicator differ from the Brazil example\nUruguay’s population peaks in 2020 and falls a little every year after\nThe saved file is also in data/wb_pop_ury.json\n\n\nBack to exercise"
+    "text": "Appendix 03\nExercise 03 solution\n\n\n\nPart of the output, around 2020:\n        {\n            ...\n            \"countryiso3code\": \"URY\",\n            \"date\": \"2020\",\n            \"value\": 3398968,\n            ...\n        },\n\nThe 2020 population is 3,398,968\nIts path: 1 → 5 → value. Records run newest first, so 2025 is position 0 and 2020 is position 5\n\nStep 3, in Python:\nimport json\ndata = json.load(open(\"wb_pop_ury.json\"))\nprint(data[1][5][\"value\"])   # 3398968\n\n[1] is the list of records, [5] the 2020 record, and [\"value\"] its population\n\n\n\nOnly the country and the indicator differ from the Brazil example\nThe saved file is also in data/wb_pop_ury.json\n\nGot a FileNotFoundError?\n\nopen looks in the folder where you started Python, and it does not understand ~\nUse pwd and ls to find the file, then cd there before python3\nOr give the full path: open(\"/Users/yourname/wb_pop_ury.json\")\n\n\nBack to exercise"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#appendix-03-solution-continued",
@@ -5128,21 +5128,21 @@
     "href": "lectures/lecture-18/18-web-apis.html#sec:appendix04",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Appendix 04: percent-encoding",
-    "text": "Appendix 04: percent-encoding\nCharacters that need a code inside a value\n\n\n\n\n\n\nYou write\nIt travels as\n\nYou write\nIt travels as\n\n\n\n\nspace\n%20 or +\n\n=\n%3D\n\n\n/\n%2F\n\n:\n%3A\n\n\n?\n%3F\n\n#\n%23\n\n\n&\n%26\n\n%\n%25\n\n\n\n\n\nThe pattern is always the same: % and the character’s byte in hexadecimal (remember them from Lecture 02? 😉)\nAmerica/New_York becomes America%2FNew_York\nrequests encodes values for you, so you rarely write these by hand\nFull tables and rules: MDN, W3Schools, and RFC 3986 §2.1"
+    "text": "Appendix 04: percent-encoding\nCharacters that need a code inside a value\n\n\n\n\n\n\n\nYou write\nIt travels as\n\n\n\n\nspace\n%20 or +\n\n\n/\n%2F\n\n\n?\n%3F\n\n\n&\n%26\n\n\n=\n%3D\n\n\n:\n%3A\n\n\n#\n%23\n\n\n%\n%25\n\n\n\n\n\n\n\nThe pattern is always the same: % and the character’s byte in hexadecimal (remember them from Lecture 02? 😉)\nAmerica/New_York becomes America%2FNew_York\nrequests encodes values for you, so you rarely write these by hand\nFull tables and rules: MDN, W3Schools, and RFC 3986 §2.1\n\n\nBack to query string"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#sec:appendix05",
     "href": "lectures/lecture-18/18-web-apis.html#sec:appendix05",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Appendix 05: headers",
-    "text": "Appendix 05: headers\n\n\n\n\nEvery request and every reply carries headers: notes about the message itself\n\n\n\n\n\n\n\n\nHeader\nPurpose\n\n\n\n\nUser-Agent\nWho is asking. Browsers set this, and polite scripts should too\n\n\nAccept\nWhat format you want back (application/json)\n\n\nAuthorization\nYour API key, for APIs that need one\n\n\nContent-Type\nThe format of the data being sent\n\n\n\n\ncurl -sI \"https://api.worldbank.org/v2/country/BRA/indicator/NY.GDP.PCAP.KD?format=json&date=2014:2025\"\nHTTP/2 200\ncontent-type: application/json;charset=utf-8\ncache-control: public, max-age=86400\nserver: cloudflare\n...\n\n-I asks for the headers only, without the data\ncontent-type confirms the reply is JSON\nmax-age=86400 says the reply can be reused for a day (86,400 seconds)"
+    "text": "Appendix 05: headers\n\n\n\n\nEvery request and every reply carries headers: notes about the message itself\n\n\n\n\n\n\n\n\nHeader\nPurpose\n\n\n\n\nUser-Agent\nWho is asking. Browsers set this, and polite scripts should too\n\n\nAccept\nWhat format you want back (application/json)\n\n\nAuthorization\nYour API key, for APIs that need one\n\n\nContent-Type\nThe format of the data being sent\n\n\n\n\ncurl -sI \"https://api.worldbank.org/v2/country/BRA/indicator/NY.GDP.PCAP.KD?format=json&date=2014:2025\"\nHTTP/2 200\ncontent-type: application/json;charset=utf-8\ncache-control: public, max-age=86400\nserver: cloudflare\n...\n\n-I asks for the headers only, without the data\ncontent-type confirms the reply is JSON\nmax-age=86400 says the reply can be reused for a day (86,400 seconds)\n\n\nBack to the slide"
   },
   {
     "objectID": "lectures/lecture-19/19-apis-in-practice.html#where-we-got-to-last-class",
     "href": "lectures/lecture-19/19-apis-in-practice.html#where-we-got-to-last-class",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Where we got to last class",
-    "text": "Where we got to last class\nWeb APIs without writing code\n\n\n\n\nAn API is a contract: ask this way, get that back\nA URL has a host, a path (what you want), and a query string (how you want it)\nA status code says how it went: 2xx worked, 4xx is your mistake, 5xx is theirs\nThe World Bank answers some errors with 200, so look at the data too\nJSON is made of objects { } and arrays [ ]\nA value is reached by a path, such as current → temperature_2m\ncurl -o saved a reply to a file\nFour lines of Python did the same as curl\n\n\n\nToday we do it all in Python\n\nRead JSON from a file\nFollow a path with square brackets\nSend requests and check for errors\nTurn the reply into a DataFrame\nSave it for your report\nRead your project’s pull script, line by line"
+    "text": "Where we got to last class\nWeb APIs without writing code\n\n\n\n\nAn API is a contract: ask this way, get that back\nA URL has a host, a path (what you want), and a query string (how you want it)\nA status code says how it went: 2xx worked, 4xx is your mistake, 5xx is theirs\nThe World Bank answers some errors with 200, so look at the data too\nJSON is made of objects { } and arrays [ ]\nTo get a value, follow its keys from the outside in: current → temperature_2m\ncurl -o saved a reply to a file\nFour lines of Python did the same as curl\n\n\n\nToday we do it all in Python\n\nRead JSON from a file\nFollow a path with square brackets\nSend requests and check for errors\nTurn the reply into a DataFrame\nSave it for your report\nRead your project’s pull script"
   },
   {
     "objectID": "lectures/lecture-19/19-apis-in-practice.html#lecture-overview",
@@ -6983,7 +6983,7 @@
     "href": "lectures/lecture-18/18-web-apis.html#finding-a-value-follow-the-path",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Finding a value: follow the path",
-    "text": "Finding a value: follow the path\n\n\n\n\nA path lists the steps to a value, from the outside in\nIn an object, each step is a key name\nIn an array, each step is a position, starting at 0, as in Python\nIn Python, each step becomes a pair of square brackets\nGet the path right first. The Python is then easy\n\n\n\nTwo replies: the Open-Meteo one, and {\"sensors\": [\"a1\", \"b2\"]}\n\n\n\n\n\n\n\n\nPath\nValue\n\n\n\n\ncurrent → temperature_2m\n33.2\n\n\ncurrent_units → temperature_2m\n°C\n\n\nsensors → 0\n“a1”\n\n\nsensors → 1\n“b2”\n\n\n\n\nThe same paths in Python:\n\ndata[\"current\"][\"temperature_2m\"]   # 33.2\ndata[\"sensors\"][0]                  # \"a1\""
+    "text": "Finding a value: follow the path\n\n\n\n\nA path lists the steps to a value, from the outside in\nIn an object, each step is a key name\nIn an array, each step is a position, starting at 0, as in Python\nIn Python, each step becomes a pair of square brackets\nGet the path right first\n\n\n\nTwo replies: the Open-Meteo one, and {\"sensors\": [\"a1\", \"b2\"]}\n\n\n\n\n\n\n\n\nPath\nValue\n\n\n\n\ncurrent → temperature_2m\n33.2\n\n\ncurrent_units → temperature_2m\n°C\n\n\nsensors → 0\n“a1”\n\n\nsensors → 1\n“b2”\n\n\n\n\nThe same paths in Python:\n\ndata[\"current\"][\"temperature_2m\"]   # 33.2\ndata[\"sensors\"][0]                  # \"a1\""
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#curl-a-browser-for-your-terminal",
@@ -7025,7 +7025,7 @@
     "href": "lectures/lecture-18/18-web-apis.html#sec:appendix06",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Appendix 06: free APIs worth exploring",
-    "text": "Appendix 06: free APIs worth exploring\n\nAll of these answered a keyless request on 21 August 2026\n\n\n\nAPI\nWhat it gives you\nDocumentation\n\n\n\n\nOpen-Meteo\nWeather forecasts and history, anywhere\nhttps://open-meteo.com/en/docs\n\n\nWorld Bank\n29,544 development indicators, all countries\nhttps://datahelpdesk.worldbank.org/knowledgebase/topics/125589-developer-information\n\n\nNational Weather Service\nUS forecasts and alerts, from api.weather.gov/points/{lat},{lon}\nhttps://www.weather.gov/documentation/services-web-api\n\n\nGitHub\nRepositories, users, commits (keyless with low limits)\nhttps://docs.github.com/en/rest\n\n\nOpen Library\nBooks, authors, covers, by ISBN (occasionally flaky)\nhttps://openlibrary.org/developers/api\n\n\nUSGS Earthquakes\nEvery recorded earthquake, live\nhttps://earthquake.usgs.gov/fdsnws/event/1/\n\n\n\n\nPick one this week and fetch something from it, in the browser or with curl"
+    "text": "Appendix 06: free APIs worth exploring\n\nAll of these answered a keyless request on 21 August 2026\n\n\n\nAPI\nWhat it gives you\nDocumentation\n\n\n\n\nOpen-Meteo\nWeather forecasts and history, anywhere\nhttps://open-meteo.com/en/docs\n\n\nWorld Bank\n29,544 development indicators, all countries\nhttps://datahelpdesk.worldbank.org/knowledgebase/topics/125589-developer-information\n\n\nNational Weather Service\nUS forecasts and alerts, from api.weather.gov/points/{lat},{lon}\nhttps://www.weather.gov/documentation/services-web-api\n\n\nGitHub\nRepositories, users, commits (keyless with low limits)\nhttps://docs.github.com/en/rest\n\n\nOpen Library\nBooks, authors, covers, by ISBN (occasionally flaky)\nhttps://openlibrary.org/developers/api\n\n\nUSGS Earthquakes\nEvery recorded earthquake, live\nhttps://earthquake.usgs.gov/fdsnws/event/1/\n\n\n\n\nPick one this week and fetch something from it, in the browser or with curl\n\n\nBack to next class"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#building-a-url",
@@ -7039,7 +7039,7 @@
     "href": "lectures/lecture-18/18-web-apis.html#a-real-reply",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "A real reply",
-    "text": "A real reply\nWhat Open-Meteo sent back for Atlanta\n\n\n\n\n{\n  \"latitude\": 33.759865,\n  \"longitude\": -84.39586,\n  \"timezone\": \"America/New_York\",\n  \"elevation\": 316.0,\n  \"current_units\": {\n    \"time\": \"iso8601\",\n    \"temperature_2m\": \"°C\",\n    \"wind_speed_10m\": \"km/h\"\n  },\n  \"current\": {\n    \"time\": \"2026-08-21T16:00\",\n    \"temperature_2m\": 33.2,\n    \"wind_speed_10m\": 4.4\n  }\n}\n\n\nShortened from the saved reply, openmeteo_atlanta.json\n\n\n\nThe outer { } is an object. It has nine keys, and six are shown here\nTwo of them, current and current_units, hold objects of their own\nThat is what “nested” means: a box inside a box\nThe temperature is inside current. Its unit is inside current_units\ntime is text, because JSON has no date type\nThe API moved our coordinates slightly, to the nearest point on its own grid"
+    "text": "A real reply\n\n\n\n\n{\n  \"latitude\": 33.759865,\n  \"longitude\": -84.39586,\n  \"timezone\": \"America/New_York\",\n  \"elevation\": 316.0,\n  \"current_units\": {\n    \"time\": \"iso8601\",\n    \"temperature_2m\": \"°C\",\n    \"wind_speed_10m\": \"km/h\"\n  },\n  \"current\": {\n    \"time\": \"2026-08-21T16:00\",\n    \"temperature_2m\": 33.2,\n    \"wind_speed_10m\": 4.4\n  }\n}\n\n\nShortened from the saved reply, openmeteo_atlanta.json\n\n\n\nThe outer { } is an object. It has nine keys, and six are shown here\nTwo of them, current and current_units, hold objects of their own\nThat is what “nested” means: a box inside a box\nThe temperature is inside current. Its unit is inside current_units\ntime is text, because JSON has no date type"
   },
   {
     "objectID": "lectures/lecture-19/19-apis-in-practice.html#dictionaries-and-lists",
@@ -8656,7 +8656,7 @@
     "href": "lectures/lecture-18/18-web-apis.html#the-final-project",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "The final project",
-    "text": "The final project\nA quick reminder\n\n\nGroups of four to five. Email me the names by Thursday 5 November, or I assign you at random\nDue Tuesday 8 December. Send the repository link on Canvas\nToday’s lecture covers the first step: pulling data from a web API\nInstructions and starter repository"
+    "text": "The final project\nA quick reminder\n\n\nGroups of four to five. Email me the names by Thursday 5 November, or I assign you at random 😉\nDue Tuesday 8 December. Send the repository link on Canvas\nToday’s lecture covers the first step: pulling data from a web API\nInstructions and starter repository"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#the-final-project-1",
@@ -8677,14 +8677,14 @@
     "href": "lectures/lecture-18/18-web-apis.html#three-kinds-of-api",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Three kinds of API",
-    "text": "Three kinds of API\nSome are open, some need a key, and some charge you\n\n\n\n\n\n\n\n\n\n\n\nKind\nWhat it costs you\nExamples\n\n\n\n\nOpen and keyless\nNothing. Just fetch the URL\nOpen-Meteo, World Bank, National Weather Service, USGS earthquakes, GitHub\n\n\nFree but key-required\nA signup form, then a key in every request\nNASA, OpenWeatherMap, OpenRouter’s free models, GitHub for higher limits\n\n\nPaid\nA key and a bill\nOpenRouter’s paid models, most commercial data vendors\n\n\n\n\n\nAn API key is a password for programs. It tells the server who is asking\nGitHub answers keyless requests, up to 60 per hour per IP address\nToday we stay in the first row, so nobody needs an account\n\n\n\n\n\n\napi.github.com/users/danilofreire, fetched with no key at all (click to enlarge)"
+    "text": "Three kinds of API\nSome are open, some need a key, and some charge you\n\n\n\n\n\n\nKind\nWhat it costs you\nExamples\n\n\n\n\nOpen and keyless\nNothing. Just fetch the URL\nOpen-Meteo, World Bank, National Weather Service, USGS earthquakes, GitHub\n\n\nFree but key-required\nA signup form, then a key in every request\nNASA, OpenWeatherMap, OpenRouter’s free models, GitHub for higher limits\n\n\nPaid\nA key and a bill\nOpenRouter’s paid models, most commercial data vendors\n\n\n\n\n\nAn API key is a password for programs. It tells the server who is asking\nGitHub answers keyless requests, up to 60 per hour per IP address\nToday we stay in the first row, so nobody needs an account\n\n\n\n\n\n\napi.github.com/users/danilofreire, fetched with no key at all (click image to enlarge)"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#sec:appendix07",
     "href": "lectures/lecture-18/18-web-apis.html#sec:appendix07",
     "title": "DATASCI 350 - Data Science Computing",
     "section": "Appendix 07: the World Bank reply in detail",
-    "text": "Appendix 07: the World Bank reply in detail\n\n\n\nPosition 0: the metadata\n\n\n\n\n\n\n\n\nKey\nMeaning\n\n\n\n\npage\nWhich page this is\n\n\npages\nHow many pages there are\n\n\nper_page\nRecords per page: 50, unless you set per_page\n\n\ntotal\nRecords across all pages\n\n\nlastupdated\nWhen the indicator was last updated\n\n\n\n\n\nIf pages is above 1, you only have part of the data\nAdd &page=2, or raise per_page\ncountry/all for 2023 returns 266 records, so 6 pages of 50\nThe 266 include regions and income groups, not only countries\nEverything else is in the World Bank’s developer documentation\n\n\nPosition 1: one full record from wb_gdp_bra.json\n\n{\"indicator\": {\"id\": \"NY.GDP.PCAP.KD\",\n   \"value\": \"GDP per capita (constant 2015 US$)\"},\n \"country\": {\"id\": \"BR\", \"value\": \"Brazil\"},\n \"countryiso3code\": \"BRA\",\n \"date\": \"2025\",\n \"value\": 9747.99557762692,\n \"unit\": \"\",\n \"obs_status\": \"\",\n \"decimal\": 1}\n\n\nindicator and country are objects: a code and a readable name\ncountry.id is the two-letter code, countryiso3code the three-letter one\ndate is text, not a number\nvalue is null when a year has no data\n\n\nBack to the slide"
+    "text": "Appendix 07: the World Bank reply in detail\n\n\n\nPosition 0: the metadata\n\n\n\n\n\n\n\n\nKey\nMeaning\n\n\n\n\npage\nWhich page this is\n\n\npages\nHow many pages there are\n\n\nper_page\nRecords per page: 50, unless you set per_page\n\n\ntotal\nRecords across all pages\n\n\nlastupdated\nWhen the indicator was last updated\n\n\n\n\ndata[0][\"pages\"]   # 1\n\nIf pages is above 1, you only have part of the data\nAdd &page=2 to the URL, or raise per_page\ncountry/all for 2023 returns 266 records, so 6 pages of 50\nThe 266 include regions and income groups, not only countries\nEverything else is in the World Bank’s developer documentation\n\n\nPosition 1: one full record from wb_gdp_bra.json\n\n{\"indicator\": {\"id\": \"NY.GDP.PCAP.KD\",\n   \"value\": \"GDP per capita (constant 2015 US$)\"},\n \"country\": {\"id\": \"BR\", \"value\": \"Brazil\"},\n \"countryiso3code\": \"BRA\",\n \"date\": \"2025\",\n \"value\": 9747.99557762692,\n \"unit\": \"\",\n \"obs_status\": \"\",\n \"decimal\": 1}\n\n\ncountry.id is the two-letter code, countryiso3code the three-letter one\ndate is text, and value is null (Python’s None) when a year has no data\n\nfor record in data[1]:\n    year = int(record[\"date\"])         # date is text\n    if record[\"value\"] is not None:    # null becomes None\n        print(year, round(record[\"value\"]))\n\nBack to the slide"
   },
   {
     "objectID": "lectures/lecture-18/18-web-apis.html#readable-replies-and-status-codes",
@@ -8713,5 +8713,33 @@
     "title": "DATASCI 350 - Data Science Computing",
     "section": "The final project",
     "text": "The final project\nHow I grade it\n\n\n\n\nThe project is worth 20% of your course grade\n\n\n\n\n\nComponent\nWeight\n\n\n\n\nReproducibility\n30%\n\n\nAnalysis quality\n30%\n\n\nCommunication\n20%\n\n\nCode quality\n10%\n\n\nGit workflow\n10%\n\n\n\n\n\n\nSophistication is not graded. Careful descriptive work beats a regression you cannot explain\n\n\n\n\nEvery member commits to the shared repository, and I read the commit history\nNo meaningful contribution means a zero for the project\nClearly unequal shares change individual grades\nThe report ends with a contribution statement, which I check against the repository\n\n\nIf docker run on my machine does not reproduce your report, your project does not exist 😅"
+  },
+  {
+    "objectID": "lectures/lecture-18/18-web-apis.html#sec:query-string",
+    "href": "lectures/lecture-18/18-web-apis.html#sec:query-string",
+    "title": "DATASCI 350 - Data Science Computing",
+    "section": "Reading the query string",
+    "text": "Reading the query string\nEverything after the question mark\n\n\n\n\nThe query string starts at the ?\nEach option is key=value, and & joins them\n\n\n?format=json&date=2014:2025&per_page=100\n ^^^^^^^^^^^ ^^^^^^^^^^^^^^ ^^^^^^^^^^^^\n option 1    option 2       option 3\n\n\nOrder does not matter: ?a=1&b=2 and ?b=2&a=1 are the same request\nLeave out an option and the API uses its default\nMisspell a key and the API usually ignores it without telling you\n\n\n\nSome characters already have a job in a URL: ?, &, =, #, and the space\nTo put one inside a value, you percent-encode it\nA space becomes %20, and a / becomes %2F\nSo America/New_York travels as America%2FNew_York\nPython’s requests library does this for you, so you rarely type it\nThe full table is in Appendix 04"
+  },
+  {
+    "objectID": "lectures/lecture-18/18-web-apis.html#sec:wb-reply",
+    "href": "lectures/lecture-18/18-web-apis.html#sec:wb-reply",
+    "title": "DATASCI 350 - Data Science Computing",
+    "section": "The World Bank reply",
+    "text": "The World Bank reply\nAn array with metadata, then data\n\n\n\n\nThe reply is an array with two items\nPosition 0: metadata about the request\nPosition 1: the data, one object per year, newest first\n\n\n[\n  {\"page\": 1, \"pages\": 1, \"total\": 12, ...},\n  [\n    {\"country\": {\"id\": \"BR\", \"value\": \"Brazil\"},\n     \"date\": \"2025\", \"value\": 9747.99557762692},\n    ... 11 more years\n  ]\n]\n\n\nShortened from wb_gdp_bra.json, the reply to our Brazil URL\n\n\n\nimport json\ndata = json.load(open(\"wb_gdp_bra.json\"))\n\ndata[0][\"total\"]                 # 12\ndata[1][0][\"date\"]               # \"2025\"\ndata[1][0][\"value\"]              # 9747.99...\ndata[1][0][\"country\"][\"value\"]   # \"Brazil\"\n\n\nEvery path starts with a position, because the reply is an array\nA number picks an item from a [ ], a name picks one from a { }\nLook at the shape before you write any code\n\n\nMore about the World Bank API reply, and its official documentation: Appendix 07"
+  },
+  {
+    "objectID": "lectures/lecture-18/18-web-apis.html#sec:next-class",
+    "href": "lectures/lecture-18/18-web-apis.html#sec:next-class",
+    "title": "DATASCI 350 - Data Science Computing",
+    "section": "Next class",
+    "text": "Next class\n\n\n\n\nNext class we do all of this in Python\nReading JSON from a reply and from a file\nBuilding requests with params, and checking them for errors\nFrom the World Bank reply to a pandas DataFrame\nYour project’s pull script, line by line\n\n\n\nBefore then\n\nInstall the packages you will need next class (see below)\nCheck that your AWS bill reads zero\nRead the project instructions and form a group of four to five\nFinish Exercise 03 if you did not have time in class\n\npip install requests pandas pyarrow\n\nA list of keyless APIs to explore is in Appendix 06\n\n\nGroup names are due by Thursday 5 November"
+  },
+  {
+    "objectID": "lectures/lecture-18/18-web-apis.html#sec:readable-replies",
+    "href": "lectures/lecture-18/18-web-apis.html#sec:readable-replies",
+    "title": "DATASCI 350 - Data Science Computing",
+    "section": "Readable replies and status codes",
+    "text": "Readable replies and status codes\n\n\n\n\nPipe (|) the reply into Python’s JSON tool to indent it\n-s means “silent”: no progress bar\n\n\ncurl -s \"$BASE?$Q\" | python3 -m json.tool\n{\n    \"latitude\": 33.759865,\n    ...\n    \"current\": {\n        \"time\": \"2026-10-26T16:15\",\n        \"interval\": 900,\n        \"temperature_2m\": 18.9\n    }\n}\n\n\n\n-i adds the headers (Appendix 05). The first line is the status\n| head -n 1 keeps only that line\n\n\ncurl -si \"$BASE?$Q\" | head -n 1\nHTTP/1.1 200 OK\nWithout longitude:\ncurl -si \"$BASE?latitude=33.75\" | head -n 1\nHTTP/1.1 400 Bad Request\n\n\nThe World Bank answers 200 even for a country that does not exist (XYZ), and puts the error inside the JSON. Check the status and the data"
   }
 ]
