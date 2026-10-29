@@ -32,11 +32,11 @@ editor:
 :::{.columns}
 ::::{.column width="55%"}
 - An [API]{.alert} is a contract: ask this way, get that back
-- A URL has a [host]{.alert}, a [path]{.alert} (what you want), and a [query string]{.alert} (how you want it)
+- A URL has a host, a [path]{.alert} (what you want), and a [query string]{.alert} (how you want it)
 - A [status code]{.alert} says how it went: `2xx` worked, `4xx` is your mistake, `5xx` is theirs
 - The World Bank answers some errors with `200`, so look at the data too
 - [JSON]{.alert} is made of objects `{ }` and arrays `[ ]`
-- To get a value, follow its keys from the outside in: `current` → `temperature_2m`
+- A value is reached by a [path]{.alert}, such as `current` → `temperature_2m`
 - `curl -o` saved a reply to a file
 - Four lines of Python did the same as `curl`
 ::::
@@ -50,7 +50,7 @@ editor:
 - Send requests and check for errors
 - Turn the reply into a [DataFrame]{.alert}
 - Save it for your report
-- Read your project's pull script
+- Read your project's pull script, line by line
 :::
 ::::
 :::
