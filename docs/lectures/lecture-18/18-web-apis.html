@@ -237,10 +237,10 @@ Danilo Freire
 <li>Connected with a <span class="alert">key pair</span> and <code>ssh -i</code></li>
 <li>Installed software with <code>apt</code></li>
 <li>Moved files with <code>scp</code> and <code>wget</code></li>
-<li>Ran Jupyter on the instance through a forwarded port</li>
+<li>Checked the instance details in the <span class="alert">AWS Console</span></li>
 <li>Met <span class="alert">AWS CloudShell</span>, the browser terminal</li>
-<li>Stopping pauses compute, but the disk still charges. Terminating deletes the machine</li>
-<li>A <code>t3.micro</code> left running costs <span class="alert">about $12 a month</span></li>
+<li>Queried AWS with the <span class="alert"><code>aws</code></span> command line</li>
+<li>Stopping pauses compute, but the disk still charges. <span class="alert">Terminating deletes the machine</span></li>
 </ul>
 </div><div class="column" style="width:45%;">
 <div style="text-align: center; margin-top: -20px;">
@@ -280,7 +280,7 @@ Danilo Freire
 <h3 id="a-quick-reminder">A quick reminder</h3>
 <div style="margin-top: 30px; font-size: 26px;">
 <ul>
-<li>Groups of <span class="alert">four to five</span>. Email me the names by <span class="alert">Thursday 5 November</span>, or I assign you at random</li>
+<li>Groups of <span class="alert">four to five</span>. Email me the names by <span class="alert">Thursday 5 November</span>, or I assign you at random 😉</li>
 <li>Due <span class="alert">Tuesday 8 December</span>. Send the repository link on Canvas</li>
 <li>Today’s lecture covers the first step: pulling data from a <span class="alert">web API</span></li>
 <li><a href="https://github.com/danilofreire/datasci350/blob/main/project/project-instructions.pdf">Instructions</a> and <a href="https://github.com/danilofreire/datasci350-project-starter">starter repository</a></li>
@@ -298,11 +298,11 @@ Danilo Freire
 <div class="columns">
 <div class="column" style="width:45%;">
 <ul>
-<li>In <a href="https://danilofreire.github.io/datasci350/lectures/lecture-14/14-ai.html">Lecture 14</a>, you saved an API key in a <code>.env</code> file</li>
-<li>Python sent your prompt to a model on OpenRouter, and the reply came back</li>
-<li>That was an <span class="alert">API call</span></li>
-<li>The <code>openai</code> library made the request for you. <span class="alert">Today we make requests ourselves</span></li>
-<li>APIs also give you weather, economic data, census records and more</li>
+<li>In <a href="https://danilofreire.github.io/datasci350/lectures/lecture-14/14-ai.html">Lecture 14</a>, we saved an API key in a <code>.env</code> file</li>
+<li>We used it to send prompts to a model on OpenRouter and get a reply</li>
+<li>That exchange was an <span class="alert">API call</span></li>
+<li>The <code>openai</code> library sent the request for us. <span class="alert">Today we write the requests ourselves</span></li>
+<li>Other APIs give you weather, economic data, census records and more</li>
 </ul>
 </div><div class="column" style="width:55%;">
 <div style="margin-top: 20px; font-size: 22px;">
@@ -317,7 +317,7 @@ Danilo Freire
 <span id="cb1-9"><a></a>    messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Hi!"</span>}],</span>
 <span id="cb1-10"><a></a>)</span>
 <span id="cb1-11"><a></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].message.content)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>base_url</code> is a web address. Today you will see what the library sends there and what comes back</p>
+<p><code>base_url</code> is a web address, and the library sends our request there. Today you will see the request and the reply</p>
 </div>
 </div></div>
 </div>
@@ -342,7 +342,7 @@ Danilo Freire
 </div><div class="column" style="width:50%;">
 <p><span class="alert">3. JSON</span></p>
 <ul>
-<li>The format almost every API answers in</li>
+<li>The format almost every API uses</li>
 <li>How to find one value inside a nested reply</li>
 </ul>
 <p><span class="alert">4. APIs from the terminal</span></p>
@@ -364,8 +364,7 @@ Danilo Freire
 </section>
 <section id="an-api-is-a-contract" class="slide level2">
 <h2>An API is a contract</h2>
-<h3 id="ask-in-this-exact-way-get-an-answer-in-that-exact-shape">Ask in this exact way, get an answer in that exact shape</h3>
-<div style="margin-top: 20px; font-size: 24px;">
+<div style="margin-top: 40px; font-size: 24px;">
 <div class="columns">
 <div class="column" style="width:45%;">
 <ul>
@@ -404,7 +403,7 @@ Danilo Freire
 </section>
 <section id="what-makes-an-api-a-web-api" class="slide level2">
 <h2>What makes an API a web API</h2>
-<div style="margin-top: 20px; font-size: 24px;">
+<div style="margin-top: 40px; font-size: 24px;">
 <ul>
 <li>“API” is a broad word. <code>pandas</code> has an API, and so does your operating system</li>
 <li>We focus on <a href="https://en.wikipedia.org/wiki/Web_API">web APIs</a>:
@@ -435,7 +434,7 @@ Danilo Freire
 <li><a href="https://docs.github.com/en/rest">GitHub</a>, <a href="https://www.mediawiki.org/wiki/API:Main_page">Wikipedia</a>, and <a href="https://atlas.emory.edu/">Emory’s course catalogue (Atlas)</a></li>
 <li>Most national statistics offices</li>
 </ul></li>
-<li>The <a href="https://api.worldbank.org/v2/indicator?format=json">World Bank API</a> alone has <span class="alert">29,544 indicators</span> for 217 countries</li>
+<li>The <a href="https://api.worldbank.org/v2/indicator?format=json">World Bank API</a> alone has <span class="alert">~16,000 indicators</span> for over 200 countries</li>
 <li>Most of these data are free</li>
 </ul>
 </div><div class="column" style="width:50%;">
@@ -452,7 +451,7 @@ Danilo Freire
 <li>A CSV does not record what you selected</li>
 <li>Data get <span class="alert">revised</span>. Rerun the script for the latest figures</li>
 <li>Save a dated copy in <code>data/raw/</code></li>
-<li>A short loop can fetch data for all 217 countries</li>
+<li>A short loop can fetch data for all 200+ countries</li>
 </ul>
 </div></div>
 </div>
@@ -464,11 +463,6 @@ Danilo Freire
 <div class="columns">
 <div class="column" style="width:60%;">
 <table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Kind</th>
@@ -480,17 +474,17 @@ Danilo Freire
 <tr class="odd">
 <td><span class="alert">Open and keyless</span></td>
 <td>Nothing. Just fetch the URL</td>
-<td>Open-Meteo, World Bank, National Weather Service, USGS earthquakes, GitHub</td>
+<td><a href="https://open-meteo.com/">Open-Meteo</a>, <a href="https://data.worldbank.org/">World Bank</a>, <a href="https://www.weather.gov/documentation/services-web-api">National Weather Service</a>, <a href="https://earthquake.usgs.gov/fdsnws/event/1/">USGS earthquakes</a>, <a href="https://docs.github.com/en/rest">GitHub</a></td>
 </tr>
 <tr class="even">
 <td><span class="alert">Free but key-required</span></td>
 <td>A signup form, then a key in every request</td>
-<td>NASA, OpenWeatherMap, OpenRouter’s free models, GitHub for higher limits</td>
+<td><a href="https://api.nasa.gov/">NASA</a>, <a href="https://openweathermap.org/api">OpenWeatherMap</a>, <a href="https://openrouter.ai/">OpenRouter</a>’s free models, <a href="https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api">GitHub</a> for higher limits</td>
 </tr>
 <tr class="odd">
 <td><span class="alert">Paid</span></td>
 <td>A key and a bill</td>
-<td>OpenRouter’s paid models, most commercial data vendors</td>
+<td><a href="https://openrouter.ai/models">OpenRouter</a>’s paid models, most commercial data vendors</td>
 </tr>
 </tbody>
 </table>
@@ -505,7 +499,7 @@ Danilo Freire
 <div style="text-align: center;">
 <p><a href="#/" data-modal-type="image" data-modal-url="figures/github-api-2026.png"><img data-src="figures/github-api-2026.png" style="width:100.0%"></a></p>
 <div style="font-size: 19px;">
-<p><code>api.github.com/users/danilofreire</code>, fetched with no key at all (click to enlarge)</p>
+<p><a href="https://api.github.com/users/danilofreire"><code>api.github.com/users/danilofreire</code></a>, fetched with no key at all (click image to enlarge)</p>
 </div>
 </div>
 </div></div>
@@ -633,10 +627,10 @@ Danilo Freire
 </div></div>
 </div>
 </section>
-<section id="reading-the-query-string" class="slide level2">
+<section id="sec:query-string" class="slide level2">
 <h2>Reading the query string</h2>
 <h3 id="everything-after-the-question-mark">Everything after the question mark</h3>
-<div style="margin-top: 20px; font-size: 25px;">
+<div style="margin-top: 40px; font-size: 25px;">
 <div class="columns">
 <div class="column" style="width:55%;">
 <ul>
@@ -667,13 +661,12 @@ Danilo Freire
 </section>
 <section id="status-codes" class="slide level2">
 <h2>Status codes</h2>
-<h3 id="how-to-tell-if-it-worked">How to tell if it worked</h3>
-<div style="margin-top: 20px; font-size: 23px;">
+<div style="margin-top: 40px; font-size: 23px;">
 <ul>
-<li>Every response carries a three-digit number saying how it went</li>
-<li>The first digit sums it up: <code>2xx</code> worked, <code>4xx</code> is your mistake, <code>5xx</code> is theirs</li>
+<li>Every response carries a <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">three-digit number</a> saying how it went</li>
+<li>The first digit sums it up: <span class="alert"><code>2xx</code> worked, <code>4xx</code> is your mistake, <code>5xx</code> is theirs</span></li>
 </ul>
-<div style="font-size: 20px;">
+<div style="font-size: 22px;">
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -684,7 +677,7 @@ Danilo Freire
 <tr class="header">
 <th>Code</th>
 <th>Name</th>
-<th>What it really means</th>
+<th>What it means</th>
 </tr>
 </thead>
 <tbody>
@@ -739,7 +732,7 @@ Danilo Freire
 <section id="get-and-post" class="slide level2">
 <h2>GET and POST</h2>
 <h3 id="two-main-verbs">Two main verbs</h3>
-<div style="margin-top: 20px; font-size: 24px;">
+<div style="margin-top: 40px; font-size: 24px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <h4 id="get-please-send-me-this"><code>GET</code>: “please send me this”</h4>
@@ -768,7 +761,7 @@ Danilo Freire
 <section id="try-it-in-the-browser-first" class="slide level2">
 <h2>Try it in the browser first</h2>
 <h3 id="the-address-bar-is-an-http-client-you-already-know">The address bar is an HTTP client you already know</h3>
-<div style="margin-top: 20px; font-size: 24px;">
+<div style="margin-top: 40px; font-size: 24px;">
 <div class="columns">
 <div class="column" style="width:45%;">
 <ul>
@@ -776,8 +769,7 @@ Danilo Freire
 <li>The browser sends a <code>GET</code> and shows the raw reply</li>
 <li><span class="alert">JSON on screen</span>: the URL is right. If your code fails later, the problem is in the code</li>
 <li><span class="alert">An error on screen</span>: the URL is wrong</li>
-<li>This habit will save you hours of debugging</li>
-<li>Firefox shows JSON as a tree you can open and close. Chrome only indents it, and Safari shows plain text</li>
+<li>It’s a good habit to check the URL in the browser before writing code! 😉</li>
 </ul>
 </div><div class="column" style="width:55%;">
 <div style="text-align: center;">
@@ -792,15 +784,16 @@ Danilo Freire
 <section id="sec:exercise01" class="slide level2 scrollable">
 <h2>Try it yourself! 🤓</h2>
 <h3 id="build-a-url-by-hand-in-your-browser">Build a URL by hand in your browser</h3>
-<div style="margin-top: 30px; font-size: 24px;">
+<div style="margin-top: 40px; font-size: 24px;">
 <div class="columns">
 <div class="column" style="width:55%;">
 <ol type="1">
 <li>Open the <a href="https://open-meteo.com/en/docs#api_documentation">Open-Meteo docs</a> and start from <code>https://api.open-meteo.com/v1/forecast</code></li>
-<li>Ask for the <span class="alert">current temperature</span> (<code>temperature_2m</code>) in Atlanta (latitude <code>33.75</code>, longitude <code>-84.39</code>). You need three parameters</li>
+<li>Ask for the <span class="alert">current temperature</span> (<code>current=temperature_2m</code>) in Atlanta (latitude <code>33.75</code>, longitude <code>-84.39</code>). You need three parameters</li>
 <li><span class="alert">Write the query string yourself</span>. Do not copy it from the docs</li>
 <li>Paste the URL into the address bar and press Enter</li>
-<li>Try another city, then delete <code>longitude</code>. What happens?</li>
+<li>Delete <code>longitude</code>. What happens?</li>
+<li>To covert the temperature to Fahrenheit, add <code>&amp;temperature_unit=fahrenheit</code> to the URL</li>
 </ol>
 </div><div class="column" style="width:45%;">
 <div style="margin-top: -15px;">
@@ -825,8 +818,7 @@ Danilo Freire
 </section>
 <section id="what-json-is" class="slide level2">
 <h2>What JSON is</h2>
-<h3 id="plain-text-that-every-language-can-read">Plain text that every language can read</h3>
-<div style="margin-top: 20px; font-size: 22px;">
+<div style="margin-top: 40px; font-size: 22px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
@@ -849,7 +841,7 @@ Danilo Freire
 <span id="cb4-7"><a></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:50%;">
 <div style="margin-top: -15px;">
-<p>Each JSON type has a Python twin</p>
+<p>Each JSON type has a Python equivalent</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -897,8 +889,7 @@ Danilo Freire
 </section>
 <section id="a-real-reply" class="slide level2">
 <h2>A real reply</h2>
-<h3 id="what-open-meteo-sent-back-for-atlanta">What Open-Meteo sent back for Atlanta</h3>
-<div style="margin-top: 30px; font-size: 24px;">
+<div style="margin-top: 40px; font-size: 24px;">
 <div class="columns">
 <div class="column" style="width:52%;">
 <div style="font-size: 20px;">
@@ -929,14 +920,13 @@ Danilo Freire
 <li>That is what “nested” means: a box inside a box</li>
 <li>The temperature is inside <code>current</code>. Its unit is inside <code>current_units</code></li>
 <li><code>time</code> is text, because JSON has no date type</li>
-<li>The API moved our coordinates slightly, to the nearest point on its own grid</li>
 </ul>
 </div></div>
 </div>
 </section>
 <section id="finding-a-value-follow-the-path" class="slide level2">
 <h2>Finding a value: follow the path</h2>
-<div style="margin-top: 30px; font-size: 24px;">
+<div style="margin-top: 40px; font-size: 24px;">
 <div class="columns">
 <div class="column" style="width:45%;">
 <ul>
@@ -944,10 +934,10 @@ Danilo Freire
 <li>In an <span class="alert">object</span>, each step is a <span class="alert">key name</span></li>
 <li>In an <span class="alert">array</span>, each step is a <span class="alert">position</span>, starting at 0, as in Python</li>
 <li>In Python, each step becomes a pair of <span class="alert">square brackets</span></li>
-<li>Get the path right first. The Python is then easy</li>
+<li>Get the path right first</li>
 </ul>
 </div><div class="column" style="width:55%;">
-<div style="font-size: 24px;">
+<div style="font-size: 24px; margin-top: -20px;">
 <p>Two replies: the Open-Meteo one, and <code>{"sensors": ["a1", "b2"]}</code></p>
 <div style="font-size: 30px; margin: 10px 0 20px 0;">
 <table class="caption-top">
@@ -990,102 +980,79 @@ Danilo Freire
 </div></div>
 </div>
 </section>
-<section id="the-world-banks-little-surprise" class="slide level2">
-<h2>The World Bank’s little surprise</h2>
-<div style="margin-top: 20px; font-size: 24px;">
+<section id="sec:wb-reply" class="slide level2">
+<h2>The World Bank reply</h2>
+<h3 id="an-array-with-metadata-then-data">An array with metadata, then data</h3>
+<div style="margin-top: 40px; font-size: 22px;">
 <div class="columns">
-<div class="column" style="width:54%;">
-<p>The reply is an <span class="alert">array with two items</span></p>
-<p><span class="alert">Position 0</span>: metadata about the request</p>
-<div style="font-size: 24px;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb7-1"><a></a><span class="fu">{</span><span class="dt">"page"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span> <span class="dt">"pages"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span> <span class="dt">"per_page"</span><span class="fu">:</span> <span class="dv">100</span><span class="fu">,</span></span>
-<span id="cb7-2"><a></a> <span class="dt">"total"</span><span class="fu">:</span> <span class="dv">12</span><span class="fu">,</span> <span class="dt">"lastupdated"</span><span class="fu">:</span> <span class="st">"2026-07-13"</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><span class="alert">Position 1</span>: the data, one object per year, newest first</p>
-<div style="font-size: 24px;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb8-1"><a></a><span class="ot">[</span></span>
-<span id="cb8-2"><a></a>  <span class="fu">{</span><span class="dt">"country"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"id"</span><span class="fu">:</span> <span class="st">"BR"</span><span class="fu">,</span> <span class="dt">"value"</span><span class="fu">:</span> <span class="st">"Brazil"</span><span class="fu">},</span></span>
-<span id="cb8-3"><a></a>   <span class="dt">"date"</span><span class="fu">:</span> <span class="st">"2025"</span><span class="fu">,</span> <span class="dt">"value"</span><span class="fu">:</span> <span class="fl">9747.99557762692</span><span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb8-4"><a></a>  <span class="fu">{</span><span class="dt">"country"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"id"</span><span class="fu">:</span> <span class="st">"BR"</span><span class="fu">,</span> <span class="dt">"value"</span><span class="fu">:</span> <span class="st">"Brazil"</span><span class="fu">},</span></span>
-<span id="cb8-5"><a></a>   <span class="dt">"date"</span><span class="fu">:</span> <span class="st">"2024"</span><span class="fu">,</span> <span class="dt">"value"</span><span class="fu">:</span> <span class="fl">9566.74518687619</span><span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb8-6"><a></a>  <span class="er">...</span> <span class="dv">10</span> <span class="er">more</span> <span class="er">years</span></span>
-<span id="cb8-7"><a></a><span class="ot">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="column" style="width:50%;">
+<ul>
+<li>The reply is an <span class="alert">array</span> with two items</li>
+<li><span class="alert">Position 0</span>: metadata about the request</li>
+<li><span class="alert">Position 1</span>: the data, one object per year, newest first</li>
+</ul>
+<div style="font-size: 22px;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb7-1"><a></a><span class="ot">[</span></span>
+<span id="cb7-2"><a></a>  <span class="fu">{</span><span class="dt">"page"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span> <span class="dt">"pages"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span> <span class="dt">"total"</span><span class="fu">:</span> <span class="dv">12</span><span class="fu">,</span> <span class="er">...</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb7-3"><a></a>  <span class="ot">[</span></span>
+<span id="cb7-4"><a></a>    <span class="fu">{</span><span class="dt">"country"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"id"</span><span class="fu">:</span> <span class="st">"BR"</span><span class="fu">,</span> <span class="dt">"value"</span><span class="fu">:</span> <span class="st">"Brazil"</span><span class="fu">},</span></span>
+<span id="cb7-5"><a></a>     <span class="dt">"date"</span><span class="fu">:</span> <span class="st">"2025"</span><span class="fu">,</span> <span class="dt">"value"</span><span class="fu">:</span> <span class="fl">9747.99557762692</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb7-6"><a></a>    <span class="er">...</span> <span class="dv">11</span> <span class="er">more</span> <span class="er">years</span></span>
+<span id="cb7-7"><a></a>  <span class="ot">]</span></span>
+<span id="cb7-8"><a></a><span class="ot">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div style="font-size: 17px;">
 <p>Shortened from <a href="https://github.com/danilofreire/datasci350/blob/main/lectures/lecture-18/data/wb_gdp_bra.json"><code>wb_gdp_bra.json</code></a>, the reply to our Brazil URL</p>
 </div>
-</div><div class="column" style="width:46%;">
-<ul>
-<li>Open-Meteo replied with an object. The World Bank replies with an <span class="alert">array</span></li>
-<li>So every path starts with a <span class="alert">position</span></li>
-</ul>
-<div style="font-size: 26px; margin: 10px 0 20px 0;">
-<table class="caption-top">
-<colgroup>
-<col style="width: 70%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Path</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>0</code> → <code>total</code></td>
-<td><span class="alert">12</span></td>
-</tr>
-<tr class="even">
-<td><code>1</code> → <code>0</code> → <code>date</code></td>
-<td><span class="alert">“2025”</span></td>
-</tr>
-<tr class="odd">
-<td><code>1</code> → <code>0</code> → <code>value</code></td>
-<td><span class="alert">9747.99…</span></td>
-</tr>
-<tr class="even">
-<td><code>1</code> → <code>0</code> → <code>country</code> → <code>value</code></td>
-<td><span class="alert">“Brazil”</span></td>
-</tr>
-</tbody>
-</table>
+</div><div class="column" style="width:50%;">
+<div style="font-size: 24px;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="im">import</span> json</span>
+<span id="cb8-2"><a></a>data <span class="op">=</span> json.load(<span class="bu">open</span>(<span class="st">"wb_gdp_bra.json"</span>))</span>
+<span id="cb8-3"><a></a></span>
+<span id="cb8-4"><a></a>data[<span class="dv">0</span>][<span class="st">"total"</span>]                 <span class="co"># 12</span></span>
+<span id="cb8-5"><a></a>data[<span class="dv">1</span>][<span class="dv">0</span>][<span class="st">"date"</span>]               <span class="co"># "2025"</span></span>
+<span id="cb8-6"><a></a>data[<span class="dv">1</span>][<span class="dv">0</span>][<span class="st">"value"</span>]              <span class="co"># 9747.99...</span></span>
+<span id="cb8-7"><a></a>data[<span class="dv">1</span>][<span class="dv">0</span>][<span class="st">"country"</span>][<span class="st">"value"</span>]   <span class="co"># "Brazil"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
+<li>Every path starts with a <span class="alert">position</span>, because the reply is an array</li>
+<li>A <span class="alert">number</span> picks an item from a <code>[ ]</code>, a <span class="alert">name</span> picks one from a <code>{ }</code></li>
 <li>Look at the shape <span class="alert">before</span> you write any code</li>
 </ul>
 <div style="margin-top: 20px; background: rgba(27, 58, 107, 0.08); padding: 15px; border-radius: 10px; font-size: 20px;">
-<p>More about the World Bank API reply, and its <a href="https://datahelpdesk.worldbank.org/knowledgebase/topics/125589-developer-information">official documentation</a></p>
-<p><a href="#/sec:appendix07"><span class="button">Appendix 07</span></a></p>
+<p>More about the World Bank API reply, and its <a href="https://datahelpdesk.worldbank.org/knowledgebase/topics/125589-developer-information">official documentation</a>: <a href="#/sec:appendix07"><span class="button">Appendix 07</span></a></p>
 </div>
 </div></div>
 </div>
 </section>
 <section id="sec:exercise02" class="slide level2 scrollable">
 <h2>Try it yourself! 🤓</h2>
-<h3 id="say-the-paths-out-loud">Say the paths out loud</h3>
-<div style="margin-top: 20px; font-size: 24px;">
+<h3 id="write-the-paths-in-python">Write the paths in Python</h3>
+<div style="margin-top: 40px; font-size: 24px;">
 <div class="columns">
 <div class="column" style="width:55%;">
-<p>A reply from a fictional course API:</p>
-<div style="font-size: 26px;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb9-1"><a></a><span class="fu">{</span></span>
-<span id="cb9-2"><a></a>  <span class="dt">"term"</span><span class="fu">:</span> <span class="st">"Fall 2026"</span><span class="fu">,</span></span>
-<span id="cb9-3"><a></a>  <span class="dt">"courses"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb9-4"><a></a>    <span class="fu">{</span><span class="dt">"code"</span><span class="fu">:</span> <span class="st">"DATASCI 350"</span><span class="fu">,</span> <span class="dt">"enrolled"</span><span class="fu">:</span> <span class="dv">40</span><span class="fu">,</span></span>
-<span id="cb9-5"><a></a>     <span class="dt">"instructor"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Danilo Freire"</span><span class="fu">}}</span><span class="ot">,</span></span>
-<span id="cb9-6"><a></a>    <span class="fu">{</span><span class="dt">"code"</span><span class="fu">:</span> <span class="st">"DATASCI 101"</span><span class="fu">,</span> <span class="dt">"enrolled"</span><span class="fu">:</span> <span class="dv">65</span><span class="fu">,</span></span>
-<span id="cb9-7"><a></a>     <span class="dt">"instructor"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Danilo Freire"</span><span class="fu">}}</span></span>
-<span id="cb9-8"><a></a>  <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb9-9"><a></a>  <span class="dt">"updated"</span><span class="fu">:</span> <span class="kw">null</span></span>
-<span id="cb9-10"><a></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="font-size: 22px;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a><span class="im">import</span> json</span>
+<span id="cb9-2"><a></a></span>
+<span id="cb9-3"><a></a>text <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb9-4"><a></a><span class="st">{"term": "Fall 2026",</span></span>
+<span id="cb9-5"><a></a><span class="st"> "courses": [</span></span>
+<span id="cb9-6"><a></a><span class="st">   {"code": "DATASCI 350", "enrolled": 40,</span></span>
+<span id="cb9-7"><a></a><span class="st">    "instructor": {"name": "Danilo Freire"</span><span class="sc">}}</span><span class="st">,</span></span>
+<span id="cb9-8"><a></a><span class="st">   {"code": "DATASCI 101", "enrolled": 65,</span></span>
+<span id="cb9-9"><a></a><span class="st">    "instructor": {"name": "Danilo Freire"</span><span class="sc">}}</span><span class="st">],</span></span>
+<span id="cb9-10"><a></a><span class="st"> "updated": null}</span></span>
+<span id="cb9-11"><a></a><span class="st">"""</span></span>
+<span id="cb9-12"><a></a>reply <span class="op">=</span> json.loads(text)</span>
+<span id="cb9-13"><a></a></span>
+<span id="cb9-14"><a></a><span class="bu">print</span>(reply[<span class="st">"term"</span>])   <span class="co"># Fall 2026</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:45%;">
-<p>Give the path to each value, like <code>term</code> → “Fall 2026”:</p>
 <ol type="1">
-<li>The <span class="alert">code of the second course</span></li>
-<li>The <span class="alert">name of the first course’s instructor</span></li>
-<li>The value of <code>updated</code>. What does it become in Python?</li>
+<li>Copy the code into a notebook or a <code>.py</code> file and run it</li>
+<li>Print the <span class="alert">code of the second course</span></li>
+<li>Print the <span class="alert">name of the first course’s instructor</span></li>
+<li>Print <code>reply["updated"]</code>. What do you see, and why?</li>
 </ol>
 <div style="margin-top: 20px; background: rgba(27, 58, 107, 0.08); padding: 15px; border-radius: 10px; font-size: 20px;">
 <p>Stuck, or want to compare your paths with mine?</p>
@@ -1101,7 +1068,7 @@ Danilo Freire
 </section>
 <section id="curl-a-browser-for-your-terminal" class="slide level2">
 <h2><code>curl</code>: a browser for your terminal</h2>
-<div style="margin-top: 20px; font-size: 24px;">
+<div style="margin-top: 40px; font-size: 24px;">
 <ul>
 <li><code>curl</code> sends a <code>GET</code> to a URL and prints the reply, as one long line</li>
 <li>It comes with macOS, Linux and WSL. Missing in WSL? Run <code>sudo apt install curl</code></li>
@@ -1125,9 +1092,9 @@ Danilo Freire
 </div>
 </div>
 </section>
-<section id="readable-replies-and-status-codes" class="slide level2">
+<section id="sec:readable-replies" class="slide level2">
 <h2>Readable replies and status codes</h2>
-<div style="margin-top: 20px; font-size: 23px;">
+<div style="margin-top: 40px; font-size: 23px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
@@ -1166,11 +1133,11 @@ Danilo Freire
 </section>
 <section id="saving-a-reply-to-a-file" class="slide level2">
 <h2>Saving a reply to a file</h2>
-<div style="margin-top: 20px; font-size: 24px;">
+<div style="margin-top: 40px; font-size: 24px;">
 <ul>
 <li><code>-o</code> means “output”: save the reply to a file instead of printing it</li>
 </ul>
-<div style="font-size: 30px;">
+<div style="font-size: 30px; margin-top: 20px; margin-bottom: 20px;">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a></a><span class="va">BASE</span><span class="op">=</span><span class="st">"https://api.worldbank.org/v2/country/BRA/indicator/NY.GDP.PCAP.KD"</span></span>
 <span id="cb18-2"><a></a><span class="va">Q</span><span class="op">=</span><span class="st">"format=json&amp;date=2014:2025&amp;per_page=100"</span></span>
 <span id="cb18-3"><a></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-o</span> wb_gdp_bra.json <span class="st">"</span><span class="va">$BASE</span><span class="st">?</span><span class="va">$Q</span><span class="st">"</span></span>
@@ -1193,27 +1160,39 @@ Danilo Freire
 <ol type="1">
 <li>Type these four lines:</li>
 </ol>
-<div style="font-size: 30px;">
+<div style="font-size: 26px;">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a></a><span class="va">BASE</span><span class="op">=</span><span class="st">"https://api.worldbank.org/v2/country/URY/indicator/SP.POP.TOTL"</span></span>
 <span id="cb19-2"><a></a><span class="va">Q</span><span class="op">=</span><span class="st">"format=json&amp;date=2014:2025"</span></span>
 <span id="cb19-3"><a></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-o</span> wb_pop_ury.json <span class="st">"</span><span class="va">$BASE</span><span class="st">?</span><span class="va">$Q</span><span class="st">"</span></span>
 <span id="cb19-4"><a></a><span class="ex">python3</span> <span class="at">-m</span> json.tool wb_pop_ury.json</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="columns">
+<div class="column" style="width:50%;">
 <ol start="2" type="1">
 <li>Scroll the output and find the population in <span class="alert">2020</span></li>
-<li>Bonus: change <code>SP.POP.TOTL</code> to <code>SP.POP.TOTX</code>, then run all four lines again. What does the file say now?</li>
+<li>Bonus: now print the population in <span class="alert">2020</span> from Python</li>
 </ol>
-<div class="columns">
-<div class="column" style="width:55%;">
 <p><span class="alert">What to look for</span></p>
 <ul>
 <li>Twelve records, newest first</li>
 <li>About 3.4 million people</li>
 </ul>
-</div><div class="column" style="width:45%;">
+</div><div class="column" style="width:50%;">
+<div style="margin-top: -20px;">
+<p><span class="alert">Hint for step 3</span></p>
+<ul>
+<li>Start Python in the folder where you ran <code>curl</code>, then load the file:</li>
+</ul>
+<div style="font-size: 22px;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a><span class="im">import</span> json</span>
+<span id="cb20-2"><a></a>data <span class="op">=</span> json.load(<span class="bu">open</span>(<span class="st">"wb_pop_ury.json"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>The records are in position <code>1</code>, newest first</li>
+</ul>
 <div style="background: rgba(27, 58, 107, 0.08); padding: 15px; border-radius: 10px; font-size: 20px;">
-<p>Stuck, or want to compare with mine?</p>
-<p><a href="#/sec:appendix03"><span class="button">Appendix 03</span></a></p>
+<p>Stuck, or want to compare with mine? <a href="#/sec:appendix03"><span class="button">Appendix 03</span></a></p>
+</div>
 </div>
 </div></div>
 </div>
@@ -1231,18 +1210,18 @@ Danilo Freire
 <li><a href="https://github.com/psf/requests"><code>requests</code></a> is the Python library for web APIs. Install it once: <code>pip install requests</code></li>
 </ul>
 <div style="font-size: 30px;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a><span class="im">import</span> requests</span>
-<span id="cb20-2"><a></a></span>
-<span id="cb20-3"><a></a>base <span class="op">=</span> <span class="st">"https://api.open-meteo.com/v1/forecast"</span></span>
-<span id="cb20-4"><a></a>q <span class="op">=</span> <span class="st">"latitude=33.75&amp;longitude=-84.39&amp;current=temperature_2m"</span></span>
-<span id="cb20-5"><a></a></span>
-<span id="cb20-6"><a></a>r <span class="op">=</span> requests.get(base <span class="op">+</span> <span class="st">"?"</span> <span class="op">+</span> q)          <span class="co"># send a GET, like curl</span></span>
-<span id="cb20-7"><a></a><span class="bu">print</span>(r.status_code)                      <span class="co"># 200 means OK</span></span>
-<span id="cb20-8"><a></a></span>
-<span id="cb20-9"><a></a>data <span class="op">=</span> r.json()                           <span class="co"># JSON text -&gt; Python dictionary</span></span>
-<span id="cb20-10"><a></a><span class="bu">print</span>(data[<span class="st">"current"</span>][<span class="st">"temperature_2m"</span>])  <span class="co"># the path, one [] per step</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb21-1"><a></a>200</span>
-<span id="cb21-2"><a></a>19.2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a><span class="im">import</span> requests</span>
+<span id="cb21-2"><a></a></span>
+<span id="cb21-3"><a></a>base <span class="op">=</span> <span class="st">"https://api.open-meteo.com/v1/forecast"</span></span>
+<span id="cb21-4"><a></a>q <span class="op">=</span> <span class="st">"latitude=33.75&amp;longitude=-84.39&amp;current=temperature_2m"</span></span>
+<span id="cb21-5"><a></a></span>
+<span id="cb21-6"><a></a>r <span class="op">=</span> requests.get(base <span class="op">+</span> <span class="st">"?"</span> <span class="op">+</span> q)          <span class="co"># send a GET, like curl</span></span>
+<span id="cb21-7"><a></a><span class="bu">print</span>(r.status_code)                      <span class="co"># 200 means OK</span></span>
+<span id="cb21-8"><a></a></span>
+<span id="cb21-9"><a></a>data <span class="op">=</span> r.json()                           <span class="co"># JSON text -&gt; Python dictionary</span></span>
+<span id="cb21-10"><a></a><span class="bu">print</span>(data[<span class="st">"current"</span>][<span class="st">"temperature_2m"</span>])  <span class="co"># the path, one [] per step</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb22-1"><a></a>200</span>
+<span id="cb22-2"><a></a>19.2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section></section>
@@ -1264,7 +1243,7 @@ Danilo Freire
 <li><span class="alert">JSON</span> values are reached by a <span class="alert">path</span> of keys and positions</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<h4 id="habits">Habits</h4>
+<h4 id="good-habits">Good habits</h4>
 <ul>
 <li>Test the URL in your browser first</li>
 <li>Quote URLs in the terminal</li>
@@ -1274,10 +1253,9 @@ Danilo Freire
 </div></div>
 </div>
 </section>
-<section id="next-class" class="slide level2 scrollable">
+<section id="sec:next-class" class="slide level2 scrollable">
 <h2>Next class</h2>
-<h3 id="lecture-19-and-what-to-do-before-it">Lecture 19, and what to do before it</h3>
-<div style="margin-top: 20px; font-size: 24px;">
+<div style="margin-top: 40px; font-size: 24px;">
 <div class="columns">
 <div class="column" style="width:55%;">
 <ul>
@@ -1291,17 +1269,17 @@ Danilo Freire
 <div style="text-align: center; margin-top: -20px;">
 <p><span class="alert">Before then</span></p>
 <ol type="1">
-<li>Install the packages you will need next class</li>
+<li>Install the packages you will need next class (see below)</li>
 <li>Check that your AWS bill reads zero</li>
 <li>Read the project instructions and form a group of four to five</li>
 <li>Finish Exercise 03 if you did not have time in class</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a></a><span class="ex">pip</span> install requests pandas pyarrow</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a></a><span class="ex">pip</span> install requests pandas pyarrow</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="margin-top: 10px; font-size: 20px;">
 <p>A list of keyless APIs to explore is in <a href="#/sec:appendix06">Appendix 06</a></p>
 </div>
 <div style="margin-top: 15px; font-size: 20px;">
-<p>Group names are due by <span class="alert">Thursday 5 November</span>, and I assign the rest at random</p>
+<p>Group names are due by <span class="alert">Thursday 5 November</span></p>
 </div>
 </div>
 </div></div>
@@ -1326,8 +1304,8 @@ Danilo Freire
 &amp;longitude=-84.39&amp;current=temperature_2m
 &amp;timezone=America%2FNew_York</code></pre>
 <p>Without <code>longitude</code>, the page shows:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb25-1"><a></a>{"error":true,"reason":"Parameter 'latitude' and</span>
-<span id="cb25-2"><a></a>'longitude' must have the same number of elements"}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb26-1"><a></a>{"error":true,"reason":"Parameter 'latitude' and</span>
+<span id="cb26-2"><a></a>'longitude' must have the same number of elements"}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:45%;">
 <ul>
 <li>Both coordinates are required. The request fails without either one</li>
@@ -1352,9 +1330,10 @@ Danilo Freire
 <li><code>courses</code> → <code>0</code> → <code>instructor</code> → <code>name</code> → “Danilo Freire”</li>
 <li><code>updated</code> → <code>null</code>, which becomes <code>None</code> in Python</li>
 </ol>
-<p>The same paths in Python, which we write in Lecture 19:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a>data[<span class="st">"courses"</span>][<span class="dv">1</span>][<span class="st">"code"</span>]</span>
-<span id="cb26-2"><a></a>data[<span class="st">"courses"</span>][<span class="dv">0</span>][<span class="st">"instructor"</span>][<span class="st">"name"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The same paths in Python:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a></a><span class="bu">print</span>(reply[<span class="st">"courses"</span>][<span class="dv">1</span>][<span class="st">"code"</span>])                  <span class="co"># DATASCI 101</span></span>
+<span id="cb27-2"><a></a><span class="bu">print</span>(reply[<span class="st">"courses"</span>][<span class="dv">0</span>][<span class="st">"instructor"</span>][<span class="st">"name"</span>])    <span class="co"># Danilo Freire</span></span>
+<span id="cb27-3"><a></a><span class="bu">print</span>(reply[<span class="st">"updated"</span>])                             <span class="co"># None</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:45%;">
 <ul>
 <li><code>courses</code> is an array, so the second course is position <span class="alert"><code>1</code></span>, not 2</li>
@@ -1370,29 +1349,38 @@ Danilo Freire
 <section id="sec:appendix03" class="slide level2">
 <h2>Appendix 03</h2>
 <h3 id="exercise-03-solution">Exercise 03 solution</h3>
-<div style="margin-top: 20px; font-size: 22px;">
+<div style="margin-top: 20px; font-size: 19px;">
 <div class="columns">
 <div class="column" style="width:55%;">
 <p>Part of the output, around 2020:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb27-1"><a></a>        {</span>
-<span id="cb27-2"><a></a>            ...</span>
-<span id="cb27-3"><a></a>            "countryiso3code": "URY",</span>
-<span id="cb27-4"><a></a>            "date": "2020",</span>
-<span id="cb27-5"><a></a>            "value": 3398968,</span>
-<span id="cb27-6"><a></a>            ...</span>
-<span id="cb27-7"><a></a>        },</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb28-1"><a></a>        {</span>
+<span id="cb28-2"><a></a>            ...</span>
+<span id="cb28-3"><a></a>            "countryiso3code": "URY",</span>
+<span id="cb28-4"><a></a>            "date": "2020",</span>
+<span id="cb28-5"><a></a>            "value": 3398968,</span>
+<span id="cb28-6"><a></a>            ...</span>
+<span id="cb28-7"><a></a>        },</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>The 2020 population is <span class="alert">3,398,968</span></li>
 <li>Its path: <code>1</code> → <code>5</code> → <code>value</code>. Records run newest first, so 2025 is position <code>0</code> and 2020 is position <code>5</code></li>
 </ul>
-<p>The bonus reply, with status <code>200</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb28-1"><a></a>[{"message":[{"id":"120","key":"Invalid value",</span>
-<span id="cb28-2"><a></a>"value":"The provided parameter value is not valid"}]}]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Step 3, in Python:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a></a><span class="im">import</span> json</span>
+<span id="cb29-2"><a></a>data <span class="op">=</span> json.load(<span class="bu">open</span>(<span class="st">"wb_pop_ury.json"</span>))</span>
+<span id="cb29-3"><a></a><span class="bu">print</span>(data[<span class="dv">1</span>][<span class="dv">5</span>][<span class="st">"value"</span>])   <span class="co"># 3398968</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>[1]</code> is the list of records, <code>[5]</code> the 2020 record, and <code>["value"]</code> its population</li>
+</ul>
 </div><div class="column" style="width:45%;">
 <ul>
 <li>Only the country and the indicator differ from the Brazil example</li>
-<li>Uruguay’s population peaks in 2020 and falls a little every year after</li>
 <li>The saved file is also in <a href="https://github.com/danilofreire/datasci350/blob/main/lectures/lecture-18/data/wb_pop_ury.json"><code>data/wb_pop_ury.json</code></a></li>
+</ul>
+<p><span class="alert">Got a <code>FileNotFoundError</code>?</span></p>
+<ul>
+<li><code>open</code> looks in the folder where you started Python, and it does not understand <code>~</code></li>
+<li>Use <code>pwd</code> and <code>ls</code> to find the file, then <code>cd</code> there before <code>python3</code></li>
+<li>Or give the full path: <code>open("/Users/yourname/wb_pop_ury.json")</code></li>
 </ul>
 <div style="margin-top: 20px; background: rgba(27, 58, 107, 0.08); padding: 15px; border-radius: 10px; font-size: 20px;">
 <p><a href="#/sec:exercise03"><span class="button">Back to exercise</span></a></p>
@@ -1406,12 +1394,10 @@ Danilo Freire
 <div style="margin-top: 20px; font-size: 22px;">
 <div class="columns">
 <div class="column" style="width:50%;">
+<div style="margin-top: 40px; text-align: center; font-size: 25px;">
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th>You write</th>
-<th>It travels as</th>
-<th></th>
 <th>You write</th>
 <th>It travels as</th>
 </tr>
@@ -1420,40 +1406,50 @@ Danilo Freire
 <tr class="odd">
 <td>space</td>
 <td><code>%20</code> or <code>+</code></td>
-<td></td>
-<td><code>=</code></td>
-<td><code>%3D</code></td>
 </tr>
 <tr class="even">
 <td><code>/</code></td>
 <td><code>%2F</code></td>
-<td></td>
-<td><code>:</code></td>
-<td><code>%3A</code></td>
 </tr>
 <tr class="odd">
 <td><code>?</code></td>
 <td><code>%3F</code></td>
-<td></td>
-<td><code>#</code></td>
-<td><code>%23</code></td>
 </tr>
 <tr class="even">
 <td><code>&amp;</code></td>
 <td><code>%26</code></td>
-<td></td>
+</tr>
+<tr class="odd">
+<td><code>=</code></td>
+<td><code>%3D</code></td>
+</tr>
+<tr class="even">
+<td><code>:</code></td>
+<td><code>%3A</code></td>
+</tr>
+<tr class="odd">
+<td><code>#</code></td>
+<td><code>%23</code></td>
+</tr>
+<tr class="even">
 <td><code>%</code></td>
 <td><code>%25</code></td>
 </tr>
 </tbody>
 </table>
+</div>
 </div><div class="column" style="width:50%;">
+<div style="margin-top: 40px;">
 <ul>
 <li>The pattern is <span class="alert">always the same</span>: <code>%</code> and the character’s byte in hexadecimal (remember them from Lecture 02? 😉)</li>
 <li><code>America/New_York</code> becomes <code>America%2FNew_York</code></li>
 <li><code>requests</code> encodes values for you, so you rarely write these by hand</li>
 <li>Full tables and rules: <a href="https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding">MDN</a>, <a href="https://www.w3schools.com/tags/ref_urlencode.asp">W3Schools</a>, and <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.1">RFC 3986 §2.1</a></li>
 </ul>
+<div style="margin-top: 25px; background: rgba(27, 58, 107, 0.08); padding: 15px; border-radius: 10px; font-size: 20px;">
+<p><a href="#/sec:query-string"><span class="button">Back to query string</span></a></p>
+</div>
+</div>
 </div></div>
 </div>
 </section>
@@ -1496,17 +1492,20 @@ Danilo Freire
 </tbody>
 </table>
 </div><div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a></a><span class="ex">curl</span> <span class="at">-sI</span> <span class="st">"https://api.worldbank.org/v2/country/BRA/indicator/NY.GDP.PCAP.KD?format=json&amp;date=2014:2025"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb30-1"><a></a>HTTP/2 200</span>
-<span id="cb30-2"><a></a>content-type: application/json;charset=utf-8</span>
-<span id="cb30-3"><a></a>cache-control: public, max-age=86400</span>
-<span id="cb30-4"><a></a>server: cloudflare</span>
-<span id="cb30-5"><a></a>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a></a><span class="ex">curl</span> <span class="at">-sI</span> <span class="st">"https://api.worldbank.org/v2/country/BRA/indicator/NY.GDP.PCAP.KD?format=json&amp;date=2014:2025"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb31-1"><a></a>HTTP/2 200</span>
+<span id="cb31-2"><a></a>content-type: application/json;charset=utf-8</span>
+<span id="cb31-3"><a></a>cache-control: public, max-age=86400</span>
+<span id="cb31-4"><a></a>server: cloudflare</span>
+<span id="cb31-5"><a></a>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><code>-I</code> asks for the headers only, without the data</li>
 <li><code>content-type</code> confirms the reply is JSON</li>
 <li><code>max-age=86400</code> says the reply can be reused for a day (86,400 seconds)</li>
 </ul>
+<div style="margin-top: 25px; background: rgba(27, 58, 107, 0.08); padding: 15px; border-radius: 10px; font-size: 20px;">
+<p><a href="#/sec:readable-replies"><span class="button">Back to the slide</span></a></p>
+</div>
 </div></div>
 </div>
 </section>
@@ -1558,11 +1557,14 @@ Danilo Freire
 <div style="margin-top: 20px;">
 <p>Pick one this week and fetch something from it, in the browser or with <code>curl</code></p>
 </div>
+<div style="margin-top: 25px; background: rgba(27, 58, 107, 0.08); padding: 15px; border-radius: 10px; font-size: 20px;">
+<p><a href="#/sec:next-class"><span class="button">Back to next class</span></a></p>
+</div>
 </div>
 </section>
 <section id="sec:appendix07" class="slide level2">
 <h2>Appendix 07: the World Bank reply in detail</h2>
-<div style="margin-top: 20px; font-size: 21px;">
+<div style="margin-top: 20px; font-size: 19px;">
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><span class="alert">Position 0</span>: the metadata</p>
@@ -1602,9 +1604,10 @@ Danilo Freire
 </tbody>
 </table>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a></a>data[<span class="dv">0</span>][<span class="st">"pages"</span>]   <span class="co"># 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>If <code>pages</code> is above 1, you only have <span class="alert">part of the data</span></li>
-<li>Add <code>&amp;page=2</code>, or raise <code>per_page</code></li>
+<li>Add <code>&amp;page=2</code> to the URL, or raise <code>per_page</code></li>
 <li><code>country/all</code> for 2023 returns 266 records, so 6 pages of 50</li>
 <li>The 266 include regions and income groups, not only countries</li>
 <li>Everything else is in the <a href="https://datahelpdesk.worldbank.org/knowledgebase/topics/125589-developer-information">World Bank’s developer documentation</a></li>
@@ -1612,24 +1615,26 @@ Danilo Freire
 </div><div class="column" style="width:50%;">
 <p><span class="alert">Position 1</span>: one full record from <code>wb_gdp_bra.json</code></p>
 <div style="font-size: 22px;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb31-1"><a></a><span class="fu">{</span><span class="dt">"indicator"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"id"</span><span class="fu">:</span> <span class="st">"NY.GDP.PCAP.KD"</span><span class="fu">,</span></span>
-<span id="cb31-2"><a></a>   <span class="dt">"value"</span><span class="fu">:</span> <span class="st">"GDP per capita (constant 2015 US$)"</span><span class="fu">},</span></span>
-<span id="cb31-3"><a></a> <span class="dt">"country"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"id"</span><span class="fu">:</span> <span class="st">"BR"</span><span class="fu">,</span> <span class="dt">"value"</span><span class="fu">:</span> <span class="st">"Brazil"</span><span class="fu">},</span></span>
-<span id="cb31-4"><a></a> <span class="dt">"countryiso3code"</span><span class="fu">:</span> <span class="st">"BRA"</span><span class="fu">,</span></span>
-<span id="cb31-5"><a></a> <span class="dt">"date"</span><span class="fu">:</span> <span class="st">"2025"</span><span class="fu">,</span></span>
-<span id="cb31-6"><a></a> <span class="dt">"value"</span><span class="fu">:</span> <span class="fl">9747.99557762692</span><span class="fu">,</span></span>
-<span id="cb31-7"><a></a> <span class="dt">"unit"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
-<span id="cb31-8"><a></a> <span class="dt">"obs_status"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
-<span id="cb31-9"><a></a> <span class="dt">"decimal"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb33-1"><a></a><span class="fu">{</span><span class="dt">"indicator"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"id"</span><span class="fu">:</span> <span class="st">"NY.GDP.PCAP.KD"</span><span class="fu">,</span></span>
+<span id="cb33-2"><a></a>   <span class="dt">"value"</span><span class="fu">:</span> <span class="st">"GDP per capita (constant 2015 US$)"</span><span class="fu">},</span></span>
+<span id="cb33-3"><a></a> <span class="dt">"country"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"id"</span><span class="fu">:</span> <span class="st">"BR"</span><span class="fu">,</span> <span class="dt">"value"</span><span class="fu">:</span> <span class="st">"Brazil"</span><span class="fu">},</span></span>
+<span id="cb33-4"><a></a> <span class="dt">"countryiso3code"</span><span class="fu">:</span> <span class="st">"BRA"</span><span class="fu">,</span></span>
+<span id="cb33-5"><a></a> <span class="dt">"date"</span><span class="fu">:</span> <span class="st">"2025"</span><span class="fu">,</span></span>
+<span id="cb33-6"><a></a> <span class="dt">"value"</span><span class="fu">:</span> <span class="fl">9747.99557762692</span><span class="fu">,</span></span>
+<span id="cb33-7"><a></a> <span class="dt">"unit"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb33-8"><a></a> <span class="dt">"obs_status"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb33-9"><a></a> <span class="dt">"decimal"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
-<li><code>indicator</code> and <code>country</code> are objects: a code and a readable name</li>
 <li><code>country.id</code> is the two-letter code, <code>countryiso3code</code> the three-letter one</li>
-<li><code>date</code> is <span class="alert">text</span>, not a number</li>
-<li><code>value</code> is <span class="alert"><code>null</code></span> when a year has no data</li>
+<li><code>date</code> is <span class="alert">text</span>, and <code>value</code> is <span class="alert"><code>null</code></span> (Python’s <code>None</code>) when a year has no data</li>
 </ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a></a><span class="cf">for</span> record <span class="kw">in</span> data[<span class="dv">1</span>]:</span>
+<span id="cb34-2"><a></a>    year <span class="op">=</span> <span class="bu">int</span>(record[<span class="st">"date"</span>])         <span class="co"># date is text</span></span>
+<span id="cb34-3"><a></a>    <span class="cf">if</span> record[<span class="st">"value"</span>] <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:    <span class="co"># null becomes None</span></span>
+<span id="cb34-4"><a></a>        <span class="bu">print</span>(year, <span class="bu">round</span>(record[<span class="st">"value"</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="margin-top: 15px; background: rgba(27, 58, 107, 0.08); padding: 15px; border-radius: 10px; font-size: 20px;">
-<p><a href="#/the-world-banks-little-surprise"><span class="button">Back to the slide</span></a></p>
+<p><a href="#/sec:wb-reply"><span class="button">Back to the slide</span></a></p>
 </div>
 </div></div>
 </div>
